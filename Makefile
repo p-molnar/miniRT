@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/04/13 13:10:51 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/04/13 14:36:07 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,10 +67,10 @@ $(OBJ_PATH)%.o:	src/%.c
 	@$(CC) $(CFLAGS) -c $^ -o $@ 
 	@printf "[$(GREEN)DONE$(DEF)]\n"
 
-$(MLX42):	$(MLX42_DIR)
+$(MLX42):	$(MLX42_BUILD_DIR)
 	@make -C $(MLX42_BUILD_DIR)
 
-$(MLX42_DIR):
+$(MLX42_BUILD_DIR):
 	@git submodule update --init --remote --recursive MLX42
 	@cmake -S MLX42 -B $(MLX42_BUILD_DIR)
 	
