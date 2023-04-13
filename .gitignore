@@ -54,3 +54,4 @@ dkms.conf
 # miniRT specific rules
 *.pdf
 .DS_Store
+build
