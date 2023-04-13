@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   mrt_data_structs.h                                 :+:    :+:            */
+/*   mrt_data_struct.h                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/13 12:46:24 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/13 13:08:07 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MRT_DATA_STRUCTS_H
-# define MRT_DATA_STRUCTS_H
+#ifndef MRT_DATA_STRUCT_H
+# define MRT_DATA_STRUCT_H
 
 # include <libft.h>
 
@@ -42,7 +42,7 @@ typedef struct s_amb_light
 	char			*type;
 	unsigned int	brightness;
 	t_color			color;
-}	t_light;
+}	t_amb_light;
 
 typedef struct s_sphere
 {
@@ -80,7 +80,7 @@ typedef struct s_light
 
 typedef struct s_scn
 {
-t_list	*els;
+	t_list	*els;
 }	t_scn;
 
 #endif
