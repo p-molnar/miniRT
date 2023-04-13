@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/04/12 14:46:32 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/04/13 11:18:40 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,11 +58,12 @@ $(OBJ_PATH)%.o:	src/%.c
 	@printf "[$(GREEN)DONE$(DEF)]\n"
 
 $(MLX42):
-	@git submodule update --init --recursive MLX42
-	cmake -S MLX42 -B MLX42/
+	@git submodule update --init --remote --recursive MLX42
+	@cmake -S MLX42 -B MLX42/
+	@make -C MLX42
 
 $(LIBFT):
-	@git submodule update --init --recursive libft
+	@git submodule update --init --remote --recursive libft
 	@make libft.a -C libft
 
 clean:
