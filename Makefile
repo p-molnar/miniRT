@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/04/13 11:18:40 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/04/13 11:36:16 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ INCL			=	inc libft/inc MLX42/include/MLX42
 LIBFT_DIR		=	libft
 LIBFT			=	$(LIBFT_DIR)/libft.a
 MLX42_DIR		=	MLX42
-MLX42			=	$(MLX42_DIR)/libmlx42.a
+MLX42_BUILD_DIR	=	build
+MLX42			=	$(MLX42_BUILD_DIR)/libmlx42.a
 
 # PRINT FORMATTING
 P_NAME			=	[$(NAME)]
@@ -57,10 +58,13 @@ $(OBJ_PATH)%.o:	src/%.c
 	@$(CC) $(CFLAGS) -c $^ -o $@ 
 	@printf "[$(GREEN)DONE$(DEF)]\n"
 
-$(MLX42):
+$(MLX42):	$(MLX42_DIR)
+	@make -C $(MLX42_BUILD_DIR)
+
+$(MLX42_DIR):
 	@git submodule update --init --remote --recursive MLX42
-	@cmake -S MLX42 -B MLX42/
-	@make -C MLX42
+	@cmake -S MLX42 -B $(MLX42_BUILD_DIR)
+	
 
 $(LIBFT):
 	@git submodule update --init --remote --recursive libft
