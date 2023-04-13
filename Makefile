@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/04/13 11:36:16 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/04/13 13:10:51 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,8 +38,17 @@ STATUS_W		=	%-10s
 P_NAME_W		=	%-10s
 STATUS_FMT		=	$(BOLD)$(P_NAME_W) $(DEF) $(STATUS_W) $(SPACE_W)
 
-# ALL SOURCE FILES
-SRC				=	main.c 
+#	PARSER
+PARSER			=	$(addprefix	parser/,									\
+								parser.c									\
+								)
+
+ERROR			=	$(addprefix	error/, 									\
+								error.c										\
+								)
+
+#	SOURCE FILES
+SRC				=	main.c $(PARSER) $(ERROR)
 
 OBJ_PATH		=	obj/
 OBJ				=	$(addprefix $(OBJ_PATH), $(SRC:.c=.o))
