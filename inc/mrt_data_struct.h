@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/16 20:02:27 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/16 21:00:43 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ typedef struct s_coord_3d
 // typedef struct s_cam
 // {
 // 	int				type;
-// 	t_coord_3d		pos;
-// 	t_coord_3d		vec;
+// 	t_coord_3d		coord;
+// 	t_coord_3d		norm_vec;
 // 	unsigned int	fov;
 // }	t_cam;
 
@@ -47,7 +47,7 @@ typedef struct s_coord_3d
 // typedef struct s_sphere
 // {
 // 	int				type;
-// 	t_coord_3d		pos;
+// 	t_coord_3d		coord;
 // 	int				diamtr;
 // 	t_color			color;
 // }	t_sphere;
@@ -55,16 +55,16 @@ typedef struct s_coord_3d
 // typedef struct s_plane
 // {
 // 	int				type;
-// 	t_coord_3d		pos;
-// 	t_coord_3d		vec;
+// 	t_coord_3d		coord;
+// 	t_coord_3d		norm_vec;
 // 	t_color			color;
 // }	t_plane;
 
 // typedef struct s_cylinder
 // {
 // 	int				type;
-// 	t_coord_3d		pos;
-// 	t_coord_3d		vec;
+// 	t_coord_3d		coord;
+// 	t_coord_3d		norm_vec;
 // 	int				diamtr;
 // 	int				height;
 // 	t_color			color;
@@ -81,8 +81,8 @@ typedef struct s_coord_3d
 typedef struct s_scn_el
 {
 	int				type;
-	t_coord_3d		pos;
-	t_coord_3d		vec;
+	t_coord_3d		coord;
+	t_coord_3d		norm_vec;
 	int				diameter;
 	int				height;
 	unsigned int	fov;
