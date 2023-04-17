@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/16 21:12:28 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/17 09:23:42 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	parse_type_identifier(t_scn_el *el, char *line)
 	el->type = el_type;
 }
 
-void	parse_by_rule(t_scn_el *el, char **input, unsigned int flags)
+void	parse_elements(t_scn_el *el, char **input, unsigned int flags)
 {
 	int	col;
 
@@ -68,18 +68,18 @@ void	parse_data(t_scn_el *el, char **input)
 {
 	parse_type_identifier(el, input[0]);
 	if (el->type == AMB_LIGHT)
-		parse_by_rule(el, input, F_BRIGHT | F_COLOR);
+		parse_elements(el, input, F_BRIGHT | F_COLOR);
 	else if (el->type == CAM)
-		parse_by_rule(el, input, F_COORD | F_VEC | F_FOV);
+		parse_elements(el, input, F_COORD | F_VEC | F_FOV);
 	else if (el->type == LIGHT)
-		parse_by_rule(el, input, F_COORD | F_BRIGHT | F_COLOR);
+		parse_elements(el, input, F_COORD | F_BRIGHT | F_COLOR);
 	else if (el->type == SPHERE)
-		parse_by_rule(el, input, F_COORD | F_DMETER | F_COLOR);
+		parse_elements(el, input, F_COORD | F_DMETER | F_COLOR);
 	else if (el->type == PLANE)
-		parse_by_rule(el, input, F_COORD | F_VEC | F_COLOR);
+		parse_elements(el, input, F_COORD | F_VEC | F_COLOR);
 	else if (el->type == CYLYNDER)
 	{
-		parse_by_rule(el, input,
+		parse_elements(el, input,
 			F_COORD | F_VEC | F_DMETER | F_HEIGHT | F_COLOR);
 	}
 }
