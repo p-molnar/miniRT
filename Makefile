@@ -6,16 +6,16 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/04/13 14:36:07 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/04/17 12:54:10 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 CC 				= 	gcc
-# CFLAGS 			= 	-Wall -Werror -Wextra $(addprefix -I, $(INCL))
-CFLAGS 			= 	$(addprefix -I, $(INCL))
+CFLAGS 			= 	-Wall -Werror -Wextra $(addprefix -I, $(INCL))
+# CFLAGS 			= 	$(addprefix -I, $(INCL))
 LDFLAGS			=	-lglfw -L$(shell brew --prefix glfw)/lib
 CFLAGS			+=	-g # debug
-# CFLAGS			+=	-fsanitize=address
+CFLAGS			+=	-fsanitize=address
 NAME			=	minirt
 INCL			=	inc libft/inc MLX42/include/MLX42
 
@@ -33,7 +33,7 @@ GREEN			=	\033[0;32m
 YELLOW			=	\033[1;33m
 BOLD			=	\033[1m
 DEF				=	\033[0m
-SPACE_W 		= 	%-40s
+SPACE_W 		= 	%-50s
 STATUS_W		=	%-10s
 P_NAME_W		=	%-10s
 STATUS_FMT		=	$(BOLD)$(P_NAME_W) $(DEF) $(STATUS_W) $(SPACE_W)
@@ -41,14 +41,27 @@ STATUS_FMT		=	$(BOLD)$(P_NAME_W) $(DEF) $(STATUS_W) $(SPACE_W)
 #	PARSER
 PARSER			=	$(addprefix	parser/,									\
 								parser.c									\
+								parser_utils.c								\
+								$(EL_PARSER)								\
+								)
+
+EL_PARSER		=	$(addprefix	element_parser/,							\
+								color_parser.c								\
+								coordinate_parser.c							\
+								element_parser.c							\
+								float_parser.c								\
 								)
 
 ERROR			=	$(addprefix	error/, 									\
 								error.c										\
 								)
 
+FREE			=	$(addprefix	free/,										\
+								free.c										\
+								)
+
 #	SOURCE FILES
-SRC				=	main.c $(PARSER) $(ERROR)
+SRC				=	main.c $(PARSER) $(ERROR) $(FREE)
 
 OBJ_PATH		=	obj/
 OBJ				=	$(addprefix $(OBJ_PATH), $(SRC:.c=.o))
