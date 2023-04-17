@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/17 14:06:49 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/17 18:23:16 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,14 @@ void	parse_line(t_scn *scn, char *line)
 	el_info = ft_split(line, ' ');
 	el = ft_calloc(1, sizeof(t_scn_el));
 	if (!el_info || !el)
-		error(ft_strdup("Malloc error: __FILE__: __LINE__"), EXIT, 1);
-	printf("line: %s\n", line);
+		error(strconcat(4, "Malloc error: ", __FILE__, ":", ft_itoa(__LINE__)),
+			EXIT, 1);
+	// printf("line: %s\n", line);
 	parse_data(el, el_info);
 	list_el = ft_lstnew(el);
 	if (!list_el)
-		error(ft_strdup("Malloc error: __FILE__: __LINE__"), EXIT, 1);
+		error(strconcat(4, "Malloc error: ", __FILE__, ":", ft_itoa(__LINE__)),
+			EXIT, 1);
 	ft_lstadd_back(&scn->els, list_el);
 	free_arr(el_info);
 }
@@ -76,7 +78,8 @@ void	parse_scene(t_scn *scn, int argc, char *argv[])
 			tmp = line;
 			line = ft_strtrim(line, "\n");
 			if (!line)
-				error(ft_strdup("Malloc error: __FILE__: __LINE__"), EXIT, 1);
+				error(strconcat(4, "Malloc error: ", __FILE__, ": ",
+						ft_itoa(__LINE__)), EXIT, 1);
 			free(tmp);
 			parse_line(scn, line);
 		}
