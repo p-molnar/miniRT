@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 13:44:13 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/17 14:05:14 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/17 18:24:39 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,11 @@ void	parse_color(unsigned int *color, char *input, int n_lower, int n_upper)
 	int		color_code;
 
 	if (!color || !input)
-		error(ft_strdup("NULL Pointer error: __FILE__: __LINE__"), EXIT, 1);
+		error(ft_strdup("NULL Pointer error"), EXIT, 1);
 	colors = ft_split(input, ',');
 	if (!colors)
-		error(ft_strdup("Malloc error: __FILE__: __LINE__"), EXIT, 1);
+		error(strconcat(4, "Malloc error: ", __FILE__, ":", ft_itoa(__LINE__)),
+			EXIT, 1);
 	else if (get_arr_size(colors) != 3)
 		error(ft_strdup("Required color components: R, G, B"), EXIT, 1);
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:35:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/17 14:06:58 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/17 18:24:03 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	parse_coordinates(float *coord, char *input)
 
 	coords = ft_split(input, ',');
 	if (!coords)
-		error(ft_strdup("Malloc error: __FILE__: __LINE__"), EXIT, 1);
+		error(strconcat(4, "Malloc error: ", __FILE__, ":", ft_itoa(__LINE__)),
+			EXIT, 1);
 	if (get_arr_size(coords) != 3)
 		error(ft_strdup("Required coordinates: x, y, x"), EXIT, 1);
 	i = 0;
@@ -44,7 +45,8 @@ void	parse_norm_vec(float *coord, char *input)
 
 	coords = ft_split(input, ',');
 	if (!coords)
-		error(ft_strdup("Malloc error: __FILE__: __LINE__"), EXIT, 1);
+		error(strconcat(4, "Malloc error: ", __FILE__, ":", ft_itoa(__LINE__)),
+			EXIT, 1);
 	if (get_arr_size(coords) != 3)
 		error(ft_strdup("Required coordinates: x, y, x"), EXIT, 1);
 	i = 0;
