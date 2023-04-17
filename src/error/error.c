@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:50:50 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/13 13:19:24 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/17 11:32:59 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	error(char	*msg, int exit_method, int exit_code)
 	{
 		printf("%s\n", msg);
 		free(msg);
+		printf("Usage: ./minirt <path-to-map>\n");
 	}
 	if (exit_method == EXIT)
 		exit(exit_code);
