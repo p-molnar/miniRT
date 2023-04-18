@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/17 18:23:16 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/18 10:17:48 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,31 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-void	parse_data(t_scn_el *el, char **input)
+int	is_duplicate_el_type(int el_type, t_scn *scn)
 {
+	t_list	*tmp;
+	int		tmp_el_type;
+
+	tmp = scn->els;
+	while (tmp)
+	{
+		tmp_el_type = ((t_scn_el *)tmp->content)->type;
+		if (is_in_range_i(el_type, AMB_LIGHT, CAM) && tmp_el_type == el_type)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+void	parse_data(t_scn *scn, t_scn_el *el, char **input)
+{
+	const char	*type[7] = {"Undefined", "Ambient light", "Light",
+		"Camera", "Sphere", "Plane", "Cylinder"};
+
 	parse_type_identifier(el, input[0]);
+	if (is_duplicate_el_type(el->type, scn))
+		error(strconcat(2, "Duplicate element type: ", type[el->type]),
+			EXIT, 1);
 	if (el->type == AMB_LIGHT)
 		parse_elements(el, input, F_BRIGHT | F_COLOR);
 	else if (el->type == CAM)
@@ -50,7 +72,7 @@ void	parse_line(t_scn *scn, char *line)
 		error(strconcat(4, "Malloc error: ", __FILE__, ":", ft_itoa(__LINE__)),
 			EXIT, 1);
 	// printf("line: %s\n", line);
-	parse_data(el, el_info);
+	parse_data(scn, el, el_info);
 	list_el = ft_lstnew(el);
 	if (!list_el)
 		error(strconcat(4, "Malloc error: ", __FILE__, ":", ft_itoa(__LINE__)),
