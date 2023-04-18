@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:27:54 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/17 13:55:12 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/18 10:01:54 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	parse_type_identifier(t_scn_el *el, char *line)
 	int		len;
 
 	len = ft_strlen(line) + 1;
-	el_type = UNDEFINED;
+	el_type = TYPE_UNDEF;
 	if (ft_strncmp("A", line, len) == 0)
 		el_type = AMB_LIGHT;
 	else if (ft_strncmp("C", line, len) == 0)
@@ -35,7 +35,8 @@ void	parse_type_identifier(t_scn_el *el, char *line)
 	else if (ft_strncmp("cy", line, len) == 0)
 		el_type = CYLYNDER;
 	else
-		error(ft_strdup("Unkown type identifier"), EXIT, 1);
+		error(ft_strdup("Element type must be of type: A, C, L, sp, pl, cy"),
+			EXIT, 1);
 	el->type = el_type;
 }
 
