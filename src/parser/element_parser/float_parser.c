@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 12:37:52 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/17 13:51:28 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/18 16:08:00 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	parse_range(float *f, char *input, float n_lower, float n_upper)
 	*f = ft_atof(input);
 	snprintf(str_n_lower, 4, "%f", n_lower);
 	snprintf(str_n_upper, 4, "%f", n_upper);
-	if (f < 0)
+	if (!is_in_range_f(*f, n_lower, n_upper))
 		error(strconcat(6, "Number out of range: ", "[", str_n_lower, ", ",
 				str_n_upper, "]"), EXIT, 1);
 }
