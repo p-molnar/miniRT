@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/17 10:56:50 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/18 10:01:23 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ enum	e_error_handler
 
 enum	e_scn_el_type
 {
-	UNDEFINED,
+	TYPE_UNDEF,
 	AMB_LIGHT,
 	LIGHT,
 	CAM,
