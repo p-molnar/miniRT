@@ -6,13 +6,13 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:38:24 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/17 13:53:10 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/19 11:13:46 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-int	is_in_range_f(float n, float n_lower, float n_upper)
+int	is_in_range_f(double n, double n_lower, double n_upper)
 {
 	return (n >= n_lower && n <= n_upper);
 }

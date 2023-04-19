@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:27:54 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/18 10:25:36 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/19 11:13:46 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ void	parse_elements(t_scn_el *el, char **input, unsigned int flags)
 	if (flags & F_VEC)
 		parse_norm_vec(el->norm_vec, input[col++]);
 	if (flags & F_DMETER)
-		parse_float(&el->diameter, input[col++]);
+		parse_double(&el->diameter, input[col++]);
 	if (flags & F_HEIGHT)
-		parse_float(&el->height, input[col++]);
+		parse_double(&el->height, input[col++]);
 	if (flags & F_FOV)
 		parse_range(&el->fov, input[col++], 0.0, 180.0);
 	if (flags & F_BRIGHT)

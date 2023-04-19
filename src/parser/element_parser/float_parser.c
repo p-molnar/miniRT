@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   float_parser.c                                     :+:    :+:            */
+/*   double_parser.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
@@ -15,7 +15,7 @@
 #include <libft.h>
 #include <stdio.h>
 
-void	parse_float(float *f, char *input)
+void	parse_double(double *f, char *input)
 {
 	if (!f || !input)
 		error(ft_strdup("NULL Pointer error: __FILE__: __LINE__"), EXIT, 1);
@@ -27,7 +27,7 @@ void	parse_float(float *f, char *input)
 			EXIT, 1);
 }
 
-void	parse_range(float *f, char *input, float n_lower, float n_upper)
+void	parse_range(double *f, char *input, double n_lower, double n_upper)
 {
 	char	s_n_lower[4];
 	char	s_n_upper[4];

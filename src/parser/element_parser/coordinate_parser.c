@@ -6,18 +6,18 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:35:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/19 11:05:17 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/19 11:13:46 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 #include <mrt_macros.h>
 
-void	parse_coordinates(float *coord, char *input)
+void	parse_coordinates(double *coord, char *input)
 {
 	char	**coords;
 	int		i;
-	float	f[3];
+	double	f[3];
 
 	coords = ft_split(input, ',');
 	if (!coords)
@@ -37,11 +37,11 @@ void	parse_coordinates(float *coord, char *input)
 	free_arr(coords);
 }
 
-void	parse_norm_vec(float *coord, char *input)
+void	parse_norm_vec(double *coord, char *input)
 {
 	char	**coords;
 	int		i;
-	float	f[3];
+	double	f[3];
 
 	coords = ft_split(input, ',');
 	if (!coords)
