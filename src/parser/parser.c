@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/18 10:17:48 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/19 10:56:12 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,29 @@ int	is_duplicate_el_type(int el_type, t_scn *scn)
 		tmp = tmp->next;
 	}
 	return (0);
+}
+
+void	validate_scn_el_setup(t_scn *scn)
+{
+	t_scn_el		*el;
+	t_list			*tmp;
+	double			total_light_brightness;
+	unsigned int	els;
+
+	tmp = scn->els;
+	total_light_brightness = 0;
+	els = 0;
+	while (tmp)
+	{
+		el = tmp->content;
+		total_light_brightness += el->brightness;
+		els |= 1 << el->type;
+		tmp = tmp->next;
+	}
+	if (scn && (els & CAM) == 0)
+		error(ft_strdup("Add a camera to the scene."), EXIT, 1);
+	if (scn && total_light_brightness < 0.05)
+		warning(ft_strdup("Scene too dark, consider increasing brightness."));
 }
 
 void	parse_data(t_scn *scn, t_scn_el *el, char **input)
@@ -108,4 +131,5 @@ void	parse_scene(t_scn *scn, int argc, char *argv[])
 		free(line);
 		line = get_next_line(fd);
 	}
+	validate_scn_el_setup(scn);
 }
