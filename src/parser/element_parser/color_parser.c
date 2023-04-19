@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 13:44:13 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/17 18:24:39 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/19 11:03:08 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@
 int	parse_color_code(char *color, int n_lower, int n_upper)
 {
 	int		color_code;
-	char	str_n_lower[4];
-	char	str_n_upper[4];
+	char	s_n_lower[4];
+	char	s_n_upper[4];
 
 	if (!is_valid_number(color))
 		error(strconcat(2, "Invalid number: ", color), EXIT, 1);
 	color_code = ft_atoi(color);
-	snprintf(str_n_lower, 4, "%d", n_lower);
-	snprintf(str_n_upper, 4, "%d", n_upper);
+	snprintf(s_n_lower, 4, "%d", n_lower);
+	snprintf(s_n_upper, 4, "%d", n_upper);
 	if (!is_in_range_i(color_code, n_lower, n_upper))
-		error(strconcat(6, "Number out of range: ", "[", str_n_lower, ", ",
-				str_n_upper, "]"), EXIT, 1);
+		error(strconcat(6, "Number out of range [", s_n_lower,
+				", ", s_n_upper, "]: ", color), EXIT, 1);
 	return (color_code);
 }
 

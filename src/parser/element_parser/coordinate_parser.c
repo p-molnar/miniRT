@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:35:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/17 18:24:03 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/19 11:05:17 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	parse_norm_vec(float *coord, char *input)
 			error(strconcat(2, "Invalid number: ", coords[i]), EXIT, 1);
 		f[i] = ft_atof(coords[i]);
 		if (!is_in_range_f(f[i], -1.0, 1.0))
-			error(strconcat(2, "Number out of range [-1.0, 1.0]: ", coords[i]),
-				EXIT, 1);
+			error(strconcat(6, "Number out of range [", "-1.0", ", ",
+					"1.0", "]: ", coords[i]), EXIT, 1);
 		coord[i] = f[i];
 		i++;
 	}

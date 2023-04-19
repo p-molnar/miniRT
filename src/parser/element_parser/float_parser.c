@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 12:37:52 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/18 16:08:00 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/19 11:06:25 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,17 @@ void	parse_float(float *f, char *input)
 
 void	parse_range(float *f, char *input, float n_lower, float n_upper)
 {
-	char	str_n_lower[4];
-	char	str_n_upper[4];
+	char	s_n_lower[4];
+	char	s_n_upper[4];
 
 	if (!f || !input)
 		error(ft_strdup("NULL Pointer error: __FILE__: __LINE__"), EXIT, 1);
 	if (!is_valid_number(input))
 		error(strconcat(2, "Invalid number: ", input), EXIT, 1);
 	*f = ft_atof(input);
-	snprintf(str_n_lower, 4, "%f", n_lower);
-	snprintf(str_n_upper, 4, "%f", n_upper);
+	snprintf(s_n_lower, 4, "%f", n_lower);
+	snprintf(s_n_upper, 4, "%f", n_upper);
 	if (!is_in_range_f(*f, n_lower, n_upper))
-		error(strconcat(6, "Number out of range: ", "[", str_n_lower, ", ",
-				str_n_upper, "]"), EXIT, 1);
+		error(strconcat(6, "Number out of range [", s_n_lower,
+				", ", s_n_upper, "]: ", input), EXIT, 1);
 }
