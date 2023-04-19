@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/17 13:54:41 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/19 11:11:01 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,12 @@ typedef struct s_coord_3d
 typedef struct s_scn_el
 {
 	int				type;
-	float			coord[3];
-	float			norm_vec[3];
-	float			diameter;
-	float			height;
-	float			fov;
-	float			brightness;
+	double			coord[3];
+	double			norm_vec[3];
+	double			diameter;
+	double			height;
+	double			fov;
+	double			brightness;
 	unsigned int	color[3];
 }	t_scn_el;
 
