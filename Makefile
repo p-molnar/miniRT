@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/04/17 12:54:10 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/04/19 10:43:43 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ EL_PARSER		=	$(addprefix	element_parser/,							\
 
 ERROR			=	$(addprefix	error/, 									\
 								error.c										\
+								warning.c									\
 								)
 
 FREE			=	$(addprefix	free/,										\
