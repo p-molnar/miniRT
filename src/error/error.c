@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:50:50 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/17 11:32:59 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/19 10:51:43 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 #include <stdlib.h>
 
 #define RED "\033[0;31m"
-#define YLW "\033[0;32m"
-#define GRN "\033[1;33m"
 #define DEF "\033[0m"
 
 int	error(char	*msg, int exit_method, int exit_code)
