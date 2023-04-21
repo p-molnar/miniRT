@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/19 11:11:01 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/21 12:00:00 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MRT_DATA_STRUCT_H
 
 # include <libft.h>
+# include <MLX42.h>
 
 typedef struct s_color
 {
@@ -90,9 +91,10 @@ typedef struct s_scn_el
 	unsigned int	color[3];
 }	t_scn_el;
 
-typedef struct s_scn
+typedef struct s_data
 {
-	t_list	*els;
-}	t_scn;
+	t_list	*scn_el;
+	mlx_t	*mlx;
+}	t_data;
 
 #endif

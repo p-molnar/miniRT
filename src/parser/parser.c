@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/19 10:56:12 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/21 11:16:02 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-int	is_duplicate_el_type(int el_type, t_scn *scn)
+int	is_duplicate_el_type(int el_type, t_data *scn)
 {
 	t_list	*tmp;
 	int		tmp_el_type;
 
-	tmp = scn->els;
+	tmp = scn->scn_el;
 	while (tmp)
 	{
 		tmp_el_type = ((t_scn_el *)tmp->content)->type;
@@ -36,14 +36,14 @@ int	is_duplicate_el_type(int el_type, t_scn *scn)
 	return (0);
 }
 
-void	validate_scn_el_setup(t_scn *scn)
+void	validate_scn_el_setup(t_data *scn)
 {
 	t_scn_el		*el;
 	t_list			*tmp;
 	double			total_light_brightness;
 	unsigned int	els;
 
-	tmp = scn->els;
+	tmp = scn->scn_el;
 	total_light_brightness = 0;
 	els = 0;
 	while (tmp)
@@ -59,7 +59,7 @@ void	validate_scn_el_setup(t_scn *scn)
 		warning(ft_strdup("Scene too dark, consider increasing brightness."));
 }
 
-void	parse_data(t_scn *scn, t_scn_el *el, char **input)
+void	parse_data(t_data *scn, t_scn_el *el, char **input)
 {
 	const char	*type[7] = {"Undefined", "Ambient light", "Light",
 		"Camera", "Sphere", "Plane", "Cylinder"};
@@ -83,7 +83,7 @@ void	parse_data(t_scn *scn, t_scn_el *el, char **input)
 			F_COORD | F_VEC | F_DMETER | F_HEIGHT | F_COLOR);
 }
 
-void	parse_line(t_scn *scn, char *line)
+void	parse_line(t_data *scn, char *line)
 {
 	char		**el_info;
 	t_scn_el	*el;
@@ -100,11 +100,11 @@ void	parse_line(t_scn *scn, char *line)
 	if (!list_el)
 		error(strconcat(4, "Malloc error: ", __FILE__, ":", ft_itoa(__LINE__)),
 			EXIT, 1);
-	ft_lstadd_back(&scn->els, list_el);
+	ft_lstadd_back(&scn->scn_el, list_el);
 	free_arr(el_info);
 }
 
-void	parse_scene(t_scn *scn, int argc, char *argv[])
+void	parse_scene(t_data *scn, int argc, char *argv[])
 {
 	int		fd;
 	char	*line;

@@ -6,27 +6,33 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/17 18:12:01 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/21 12:12:53 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
+#include <mrt_macros.h>
+#include <MLX42.h>
 #include <mrt_data_struct.h>
 #include <stdlib.h>
 #include <stdio.h>
 
-void	init_scene(t_scn *scn)
+#define WIDTH  256
+#define HEIGHT 256
+
+
+void	init_scene(t_data *scn)
 {
-	scn->els = NULL;
+	scn->scn_el = NULL;
 }
 
-void	print_scene_el(t_scn *scn)
+void	print_scene_el(t_data *scn)
 {
 	t_list	*el;
 
 	el = NULL;
 	if (scn)
-		el = scn->els;
+		el = scn->scn_el;
 	while (el)
 	{
 		printf("- - - - - - - - - - - - - - - - - -\n");
@@ -34,7 +40,8 @@ void	print_scene_el(t_scn *scn)
 		printf("coord: x=%f, y=%f, z=%f\n", ((t_scn_el *)el->content)->coord[0],
 			((t_scn_el *)el->content)->coord[1],
 			((t_scn_el *)el->content)->coord[2]);
-		printf("norm_vec: x=%f, y=%f, z=%f\n", ((t_scn_el *)el->content)->norm_vec[0],
+		printf("norm_vec: x=%f, y=%f, z=%f\n",
+			((t_scn_el *)el->content)->norm_vec[0],
 			((t_scn_el *)el->content)->norm_vec[1],
 			((t_scn_el *)el->content)->norm_vec[2]);
 		printf("diameter: %f\n", ((t_scn_el *)el->content)->diameter);
@@ -50,11 +57,14 @@ void	print_scene_el(t_scn *scn)
 
 int	main(int argc, char *argv[])
 {
-	t_scn	scn;
+	t_data	d;
 
-	init_scene(&scn);
-	parse_scene(&scn, argc, argv);
-	print_scene_el(&scn);
+	init_scene(&d);
+	parse_scene(&d, argc, argv);
+	d.mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);
+	if (!d.mlx)
+		error(ft_strdup("MLX ERROR"), EXIT, 1);
+	// print_scene_el(&scn);	
 	// system("leaks minirt");
 	return (EXIT_SUCCESS);
 }

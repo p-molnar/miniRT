@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/19 11:13:57 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/21 11:16:02 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <mrt_data_struct.h>
 
 //	parser
-void	parse_scene(t_scn *scn, int argc, char *argv[]);
+void	parse_scene(t_data *scn, int argc, char *argv[]);
 void	parse_elements(t_scn_el *el, char **input, unsigned int flags);
 void	parse_type_identifier(t_scn_el *el, char *line);
 
