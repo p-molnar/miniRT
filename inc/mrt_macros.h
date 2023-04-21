@@ -6,12 +6,14 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/18 10:01:23 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/21 16:44:07 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MRT_MACROS_H
 # define MRT_MACROS_H
+# define WIDTH 500
+# define HEIGHT 500
 
 enum	e_error_handler
 {
