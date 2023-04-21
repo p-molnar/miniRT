@@ -6,14 +6,14 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/04/19 10:43:43 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/04/21 11:42:47 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 CC 				= 	gcc
 CFLAGS 			= 	-Wall -Werror -Wextra $(addprefix -I, $(INCL))
 # CFLAGS 			= 	$(addprefix -I, $(INCL))
-LDFLAGS			=	-lglfw -L$(shell brew --prefix glfw)/lib
+LDFLAGS			=	-L$(shell brew --prefix glfw)/lib -lglfw -framework Cocoa -framework OpenGL -framework IOKit
 CFLAGS			+=	-g # debug
 CFLAGS			+=	-fsanitize=address
 NAME			=	minirt
