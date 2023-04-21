@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/21 12:12:53 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/21 16:44:35 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@
 #include <mrt_data_struct.h>
 #include <stdlib.h>
 #include <stdio.h>
-
-#define WIDTH  256
-#define HEIGHT 256
-
+#include <string.h>
 
 void	init_scene(t_data *scn)
 {
@@ -55,6 +52,11 @@ void	print_scene_el(t_data *scn)
 	}
 }
 
+struct v_coord {
+	int	v_x;
+	int	v_y;
+}
+
 int	main(int argc, char *argv[])
 {
 	t_data	d;
@@ -63,7 +65,14 @@ int	main(int argc, char *argv[])
 	parse_scene(&d, argc, argv);
 	d.mlx = mlx_init(WIDTH, HEIGHT, "MiniRT", true);
 	if (!d.mlx)
-		error(ft_strdup("MLX ERROR"), EXIT, 1);
+		error(ft_strdup(mlx_strerror(mlx_errno)), EXIT, 1);
+	d.img = mlx_new_image(d.mlx, 256, 256);
+	if (!d.img || (mlx_image_to_window(d.mlx, d.img, 0, 0) < 0))
+		error(ft_strdup(mlx_strerror(mlx_errno)), EXIT, 1);
+	render_img(&d);
+	// mlx_loop_hook(d.mlx, ft_hook, d.mlx);
+	mlx_loop(d.mlx);
+	mlx_terminate(d.mlx);
 	// print_scene_el(&scn);	
 	// system("leaks minirt");
 	return (EXIT_SUCCESS);
