@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/21 12:00:00 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/21 16:07:49 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,9 @@ typedef struct s_scn_el
 
 typedef struct s_data
 {
-	t_list	*scn_el;
-	mlx_t	*mlx;
+	t_list			*scn_el;
+	mlx_t			*mlx;
+	mlx_image_t		*img;
 }	t_data;
 
 #endif
