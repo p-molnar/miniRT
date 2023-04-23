@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/21 16:44:35 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/21 21:16:29 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,6 @@ void	print_scene_el(t_data *scn)
 			((t_scn_el *)el->content)->color[2]);
 		el = el->next;
 	}
-}
-
-struct v_coord {
-	int	v_x;
-	int	v_y;
 }
 
 int	main(int argc, char *argv[])
