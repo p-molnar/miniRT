@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/21 11:16:02 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/21 21:16:15 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,8 @@ int		is_valid_number(char *c);
 //	error handling
 int		error(char *msg, int exit_method, int exit_code);
 void	warning(char *msg);
+
+//	renderer
+void	render_img(t_data *d);
 
 #endif
