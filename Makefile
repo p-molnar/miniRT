@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/04/21 11:42:47 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/04/21 21:27:30 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,8 +61,11 @@ FREE			=	$(addprefix	free/,										\
 								free.c										\
 								)
 
+RENDERER		=	$(addprefix	renderer/,										\
+								renderer.c										\
+								)
 #	SOURCE FILES
-SRC				=	main.c $(PARSER) $(ERROR) $(FREE)
+SRC				=	main.c $(PARSER) $(ERROR) $(FREE) $(RENDERER)
 
 OBJ_PATH		=	obj/
 OBJ				=	$(addprefix $(OBJ_PATH), $(SRC:.c=.o))
