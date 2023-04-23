@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/21 16:07:49 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/21 21:15:49 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,12 @@ typedef struct s_scn_el
 	double			brightness;
 	unsigned int	color[3];
 }	t_scn_el;
+
+typedef struct coord_2d
+{
+	int	x;
+	int	y;
+}	t_coord_2d;
 
 typedef struct s_data
 {
