@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 13:44:13 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/19 11:03:08 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/24 23:57:05 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,14 @@ int	parse_color_code(char *color, int n_lower, int n_upper)
 	return (color_code);
 }
 
-void	parse_color(unsigned int *color, char *input, int n_lower, int n_upper)
+void	parse_color(t_color *color, char *input, int n_lower, int n_upper)
 {
 	char	**colors;
 	int		i;
 	int		color_code;
+	int		parsed_color;
 
+	parsed_color = 0;
 	if (!color || !input)
 		error(ft_strdup("NULL Pointer error"), EXIT, 1);
 	colors = ft_split(input, ',');
@@ -50,8 +52,10 @@ void	parse_color(unsigned int *color, char *input, int n_lower, int n_upper)
 	while (colors[i])
 	{
 		color_code = parse_color_code(colors[i], n_lower, n_upper);
-		color[i] = color_code;
+		parsed_color |= color_code << (24 - (i * 8));
 		i++;
 	}
-	free_arr(colors);
+	parsed_color |= 255;
+	free_arr((void **) colors);
+	*color = parsed_color;
 }
