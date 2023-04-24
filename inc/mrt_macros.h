@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/21 21:14:33 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/24 23:26:41 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,28 @@
 # define HEIGHT 500
 # define VIEWPORT_W 500
 # define VIEWPORT_H 500
+# define INF 99999999
 
 enum	e_error_handler
 {
 	EXIT = 1,
 	RETURN = 2,
+};
+
+enum	e_coord
+{
+	X,
+	Y,
+	Z,
+	COORD_SIZE,
+};
+
+enum	e_color
+{
+	A,
+	B,
+	G,
+	R,
 };
 
 enum	e_scn_el_type
