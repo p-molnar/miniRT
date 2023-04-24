@@ -6,29 +6,30 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/24 13:13:10 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/24 23:15:41 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MRT_DATA_STRUCT_H
 # define MRT_DATA_STRUCT_H
 
-# include <libft.h>
 # include <MLX42.h>
+# include <libft.h>
+# include <mrt_macros.h>
 
-typedef struct s_color
-{
-	unsigned int	r;
-	unsigned int	g;
-	unsigned int	b;
-}	t_color;
+// typedef struct s_color
+// {
+// 	unsigned int	r;
+// 	unsigned int	g;
+// 	unsigned int	b;
+// }	t_color;
 
-typedef struct s_coord_3d
-{
-	int	x;	
-	int	y;	
-	int	z;	
-}	t_coord_3d;
+// typedef struct s_coord_3d
+// {
+// 	int	x;
+// 	int	y;
+// 	int	z;
+// }	t_coord_3d;
 
 // typedef struct s_cam
 // {
@@ -72,38 +73,45 @@ typedef struct s_coord_3d
 // }	t_cylinder;
 
 // typedef struct s_light
-// {	
+// {
 // 	int				type;
 // 	t_coord_3d		pos;
 // 	unsigned int	brightness;
 // 	t_color			color;
 // }	t_light;
 
-typedef int	t_el_type;
+typedef int				t_el_type;
+typedef int				t_color;
 
 typedef struct s_scn_el
 {
-	t_el_type		type;
-	double			coord[3];
-	double			norm_vec[3];
-	double			diameter;
-	double			height;
-	double			fov;
-	double			brightness;
-	unsigned int	color[3];
-}	t_scn_el;
+	t_el_type			type;
+	double				coord[COORD_SIZE];
+	double				norm_vec[COORD_SIZE];
+	double				diameter;
+	double				height;
+	double				fov;
+	double				brightness;
+	t_color				color;
+}						t_scn_el;
 
-typedef struct coord_2d
+// typedef struct coord_2d
+// {
+// 	int	x;
+// 	int	y;
+// }	t_coord_2d;
+
+typedef struct s_vec
 {
-	int	x;
-	int	y;
-}	t_coord_2d;
+	double				norm;
+	double				coord[COORD_SIZE];
+}						t_vec;
 
 typedef struct s_data
 {
-	t_list			*scn_el;
-	mlx_t			*mlx;
-	mlx_image_t		*img;
-}	t_data;
+	t_list				*scn_el;
+	mlx_t				*mlx;
+	mlx_image_t			*img;
+}						t_data;
 
 #endif
