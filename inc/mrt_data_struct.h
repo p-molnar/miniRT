@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/21 21:15:49 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/24 13:13:10 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,11 @@ typedef struct s_coord_3d
 // 	t_color			color;
 // }	t_light;
 
+typedef int	t_el_type;
+
 typedef struct s_scn_el
 {
-	int				type;
+	t_el_type		type;
 	double			coord[3];
 	double			norm_vec[3];
 	double			diameter;
