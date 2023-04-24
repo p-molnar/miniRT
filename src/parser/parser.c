@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/21 11:16:02 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/24 21:36:37 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	parse_line(t_data *scn, char *line)
 		error(strconcat(4, "Malloc error: ", __FILE__, ":", ft_itoa(__LINE__)),
 			EXIT, 1);
 	ft_lstadd_back(&scn->scn_el, list_el);
-	free_arr(el_info);
+	free_arr((void **) el_info);
 }
 
 void	parse_scene(t_data *scn, int argc, char *argv[])
