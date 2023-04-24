@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/04/21 21:27:30 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/04/24 21:43:13 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,11 +61,21 @@ FREE			=	$(addprefix	free/,										\
 								free.c										\
 								)
 
-RENDERER		=	$(addprefix	renderer/,										\
-								renderer.c										\
+RENDERER		=	$(addprefix	renderer/,									\
+								renderer.c									\
+								matrix_ops.c								\
 								)
+
+UTIL			=	$(addprefix	util/,										\
+								util.c										\
+								)
+
+COLOR			=	$(addprefix	color/,										\
+								color_ops.c									\
+								)
+
 #	SOURCE FILES
-SRC				=	main.c $(PARSER) $(ERROR) $(FREE) $(RENDERER)
+SRC				=	main.c $(PARSER) $(ERROR) $(FREE) $(RENDERER) $(UTIL) $(COLOR)
 
 OBJ_PATH		=	obj/
 OBJ				=	$(addprefix $(OBJ_PATH), $(SRC:.c=.o))
