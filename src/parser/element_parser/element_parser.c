@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:27:54 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/19 11:13:46 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/24 21:38:44 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,5 @@ void	parse_elements(t_scn_el *el, char **input, unsigned int flags)
 	if (flags & F_BRIGHT)
 		parse_range(&el->brightness, input[col++], 0.0, 1.0);
 	if (flags & F_COLOR)
-		parse_color(el->color, input[col++], 0, 255);
+		parse_color(&el->color, input[col++], 0, 255);
 }
