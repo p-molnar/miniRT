@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   double_parser.c                                     :+:    :+:            */
+/*   long double_parser.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
@@ -15,7 +15,7 @@
 #include <libft.h>
 #include <stdio.h>
 
-void	parse_double(double *f, char *input)
+void	parse_float(long double *f, char *input)
 {
 	if (!f || !input)
 		error(ft_strdup("NULL Pointer error: __FILE__: __LINE__"), EXIT, 1);
@@ -27,7 +27,7 @@ void	parse_double(double *f, char *input)
 			EXIT, 1);
 }
 
-void	parse_range(double *f, char *input, double n_lower, double n_upper)
+void	parse_range(long double *f, char *input, long double n_lower, long double n_upper)
 {
 	char	s_n_lower[4];
 	char	s_n_upper[4];
@@ -37,8 +37,8 @@ void	parse_range(double *f, char *input, double n_lower, double n_upper)
 	if (!is_valid_number(input))
 		error(strconcat(2, "Invalid number: ", input), EXIT, 1);
 	*f = ft_atof(input);
-	snprintf(s_n_lower, 4, "%f", n_lower);
-	snprintf(s_n_upper, 4, "%f", n_upper);
+	snprintf(s_n_lower, 4, "%Lf", n_lower);
+	snprintf(s_n_upper, 4, "%Lf", n_upper);
 	if (!is_in_range_f(*f, n_lower, n_upper))
 		error(strconcat(6, "Number out of range [", s_n_lower,
 				", ", s_n_upper, "]: ", input), EXIT, 1);
