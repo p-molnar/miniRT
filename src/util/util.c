@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 13:09:33 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/25 09:43:58 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/25 14:16:07 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ t_scn_el	**get_scn_els(t_list *list, t_el_type type)
 	i = 0;
 	tmp = list;
 	arr = NULL;
+	curr_el = NULL;
 	while (tmp)
 	{
 		curr_el = tmp->content;
-		if (curr_el->type == type)
+		if (curr_el && curr_el->type == type)
 		{
 			arr = ft_realloc(arr, i * sizeof(t_scn_el *),
 					(i + 2) * sizeof(t_scn_el *));
