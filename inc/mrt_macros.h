@@ -6,14 +6,14 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/25 14:48:40 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/25 15:53:13 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MRT_MACROS_H
 # define MRT_MACROS_H
-# define WIDTH 800
-# define HEIGHT 800
+# define CANVAS_W 800
+# define CANVAS_H 800
 # define INF 9999 
 
 enum	e_error_handler
