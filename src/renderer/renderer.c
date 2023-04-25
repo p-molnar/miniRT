@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/25 14:22:02 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/25 16:14:26 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 #include <math.h>
 #include <minirt.h>
 #include <mrt_macros.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 long double	*canvas_to_viewport(int x, int y, long double *viewport)
 {
@@ -25,17 +25,17 @@ long double	*canvas_to_viewport(int x, int y, long double *viewport)
 	coord = malloc(COORD_SIZE * sizeof(long double));
 	if (!coord)
 		error(ft_strdup("Malloc error\n"), EXIT, 1);
-	coord[X] = x * viewport[X] / WIDTH;
-	coord[Y] = y * viewport[Y] / HEIGHT;
+	coord[X] = x * viewport[X] / CANVAS_W;
+	coord[Y] = y * viewport[Y] / CANVAS_H;
 	return (coord);
 }
 
-long double	*get_intersection_points(long double *cam_position, long double *proj_plane,
-		t_scn_el *obj)
+long double	*get_intersection_points(long double *cam_position,
+		long double *proj_plane, t_scn_el *obj)
 {
 	long double	r;
-	t_vec	*CO;
-	t_vec	*D;
+	t_vec		*CO;
+	t_vec		*D;
 	long double	a;
 	long double	b;
 	long double	c;
@@ -46,19 +46,16 @@ long double	*get_intersection_points(long double *cam_position, long double *pro
 	CO = get_dir_vec(cam_position, obj->coord);
 	D = get_dir_vec(cam_position, proj_plane);
 	a = dot(D, D);
-	b = 2 * dot(CO, D);
+	b = 2.0 * dot(CO, D);
 	c = dot(CO, CO) - r * r;
 	discriminant = b * b - 4 * a * c;
 	arr = malloc(2 * sizeof(long double));
-	if (discriminant < 0)
+	arr[0] = INF;
+	arr[1] = INF;
+	if (discriminant >= 0)
 	{
-		arr[0] = INF;
-		arr[1] = INF;
-	}
-	else
-	{
-		arr[0] = (-b + sqrt(discriminant)) / (2 * a);
-		arr[1] = (-b - sqrt(discriminant)) / (2 * a);
+		arr[0] = (-b + sqrt(discriminant)) / (2.0 * a);
+		arr[1] = (-b - sqrt(discriminant)) / (2.0 * a);
 	}
 	return (arr);
 }
@@ -66,14 +63,14 @@ long double	*get_intersection_points(long double *cam_position, long double *pro
 t_color	trace_ray(t_data *data, long double *cam_pos, long double *proj_plane,
 		long double min, long double max)
 {
-	t_scn_el		*closest_el;
-	t_scn_el		**spheres;
-	long double			closest_t;
-	long double			*t;
-	int				i;
-	int				bgclr;
+	t_scn_el	*closest_el;
+	t_scn_el	**spheres;
+	long double	closest_t;
+	long double	*t;
+	int			i;
+	int			bgclr;
 
-	bgclr = get_rgba(173, 11, 173, 255);
+	bgclr = get_rgba(255, 255, 255, 255);
 	closest_t = INF;
 	closest_el = NULL;
 	spheres = get_scn_els(data->scn_el, SPHERE);
@@ -93,7 +90,7 @@ t_color	trace_ray(t_data *data, long double *cam_pos, long double *proj_plane,
 		}
 		i++;
 	}
-	// free_arr((void **)spheres);
+	free(spheres);
 	if (closest_el == NULL)
 		return (bgclr);
 	else
@@ -109,12 +106,12 @@ void	draw_axes(t_data *data)
 	int	y;
 
 	x = 0;
-	while (x < WIDTH)
+	while (x < CANVAS_W)
 	{
 		y = 0;
-		while (y < HEIGHT)
+		while (y < CANVAS_H)
 		{
-			if (y % ((HEIGHT / 2) - 1) == 0 || x % ((WIDTH / 2) - 1) == 0)
+			if (y % ((CANVAS_H / 2) - 1) == 0 || x % ((CANVAS_W / 2) - 1) == 0)
 				mlx_put_pixel(data->img, x, y, 0xFF1200FF);
 			y++;
 		}
@@ -133,16 +130,17 @@ void	render_img(t_data *data)
 	cam = get_scn_els(data->scn_el, CAM);
 	if (!cam)
 		error(ft_strdup("No camera found"), EXIT, 1);
-	x = -WIDTH / 2;
-	while (x < WIDTH / 2)
+	x = -CANVAS_W / 2;
+	while (x < CANVAS_W / 2)
 	{
-		y = -HEIGHT / 2;
-		while (y < HEIGHT / 2)
+		y = -CANVAS_H / 2;
+		while (y < CANVAS_H / 2)
 		{
 			vp_coord = canvas_to_viewport(x, y, data->viewport);
 			// printf("x: %Lf, y: %Lf\n",vp_coord[X], vp_coord[Y]);
 			color = trace_ray(data, cam[0]->coord, vp_coord, 1, INF);
-			mlx_put_pixel(data->img, x + WIDTH / 2, y + HEIGHT / 2, color);
+			mlx_put_pixel(data->img, x + CANVAS_W / 2, y + CANVAS_H / 2, color);
+			free(vp_coord);
 			y++;
 		}
 		x++;
