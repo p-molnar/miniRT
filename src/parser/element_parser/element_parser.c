@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:27:54 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/24 21:38:44 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/25 11:13:04 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	parse_type_identifier(t_scn_el *el, char *line)
 
 	len = ft_strlen(line) + 1;
 	el_type = TYPE_UNDEF;
+	if (line[0] == '#')
+		return ;
 	if (ft_strncmp("A", line, len) == 0)
 		el_type = AMB_LIGHT;
 	else if (ft_strncmp("C", line, len) == 0)
