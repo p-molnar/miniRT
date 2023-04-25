@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 15:01:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/24 21:40:49 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/25 14:13:26 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <mrt_macros.h>
 #include <math.h>
 
-t_vec	*get_dir_vec(double *init_point, double *terminal_point)
+t_vec	*get_dir_vec(long double *init_point, long double *terminal_point)
 {
 	t_vec	*vec;
 
@@ -31,9 +31,9 @@ t_vec	*get_dir_vec(double *init_point, double *terminal_point)
 	return (vec);
 }
 
-double	dot(t_vec *vec_1, t_vec *vec_2)
+long double	dot(t_vec *vec_1, t_vec *vec_2)
 {
-	double	result;
+	long double	result;
 
 	result = vec_1->coord[X] * vec_2->coord[X] \
 			+ vec_1->coord[Y] * vec_2->coord[Y] \
