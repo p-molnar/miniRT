@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:27:54 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/25 12:17:54 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/25 14:32:25 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ void	parse_type_identifier(t_scn_el *el, char *line)
 
 	str_len = ft_strlen(line) + 1;
 	el_type = TYPE_UNDEF;
-	if (line[0] == '#')
-		return ;
 	if (ft_strncmp("A", line, str_len) == 0)
 		el_type = AMB_LIGHT;
 	else if (ft_strncmp("C", line, str_len) == 0)
@@ -52,9 +50,9 @@ void	parse_elements(t_scn_el *el, char **input, unsigned int flags)
 	if (flags & F_VEC)
 		parse_norm_vec(el->norm_vec, input[col++]);
 	if (flags & F_DMETER)
-		parse_double(&el->diameter, input[col++]);
+		parse_float(&el->diameter, input[col++]);
 	if (flags & F_HEIGHT)
-		parse_double(&el->height, input[col++]);
+		parse_float(&el->height, input[col++]);
 	if (flags & F_FOV)
 		parse_range(&el->fov, input[col++], 0.0, 180.0);
 	if (flags & F_BRIGHT)
