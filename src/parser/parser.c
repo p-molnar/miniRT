@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/24 21:36:37 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/25 11:14:12 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ void	parse_line(t_data *scn, char *line)
 	if (!el_info || !el)
 		error(strconcat(4, "Malloc error: ", __FILE__, ":", ft_itoa(__LINE__)),
 			EXIT, 1);
-	// printf("line: %s\n", line);
 	parse_data(scn, el, el_info);
 	list_el = ft_lstnew(el);
 	if (!list_el)
