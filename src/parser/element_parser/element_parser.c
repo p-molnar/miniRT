@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:27:54 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/25 11:13:04 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/25 12:17:54 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,23 @@
 void	parse_type_identifier(t_scn_el *el, char *line)
 {
 	int		el_type;
-	int		len;
+	int		str_len;
 
-	len = ft_strlen(line) + 1;
+	str_len = ft_strlen(line) + 1;
 	el_type = TYPE_UNDEF;
 	if (line[0] == '#')
 		return ;
-	if (ft_strncmp("A", line, len) == 0)
+	if (ft_strncmp("A", line, str_len) == 0)
 		el_type = AMB_LIGHT;
-	else if (ft_strncmp("C", line, len) == 0)
+	else if (ft_strncmp("C", line, str_len) == 0)
 		el_type = CAM;
-	else if (ft_strncmp("L", line, len) == 0)
+	else if (ft_strncmp("L", line, str_len) == 0)
 		el_type = LIGHT;
-	else if (ft_strncmp("sp", line, len) == 0)
+	else if (ft_strncmp("sp", line, str_len) == 0)
 		el_type = SPHERE;
-	else if (ft_strncmp("pl", line, len) == 0)
+	else if (ft_strncmp("pl", line, str_len) == 0)
 		el_type = PLANE;
-	else if (ft_strncmp("cy", line, len) == 0)
+	else if (ft_strncmp("cy", line, str_len) == 0)
 		el_type = CYLYNDER;
 	else
 		error(strconcat(3, "Unknown element: '", line,
