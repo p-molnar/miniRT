@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/24 23:56:26 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/25 14:22:02 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,30 +18,29 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-double	*canvas_to_viewport(int x, int y, double d)
+long double	*canvas_to_viewport(int x, int y, long double *viewport)
 {
-	double	*coord;
+	long double	*coord;
 
-	coord = malloc(COORD_SIZE * sizeof(double));
+	coord = malloc(COORD_SIZE * sizeof(long double));
 	if (!coord)
 		error(ft_strdup("Malloc error\n"), EXIT, 1);
-	coord[X] = x * VIEWPORT_W / WIDTH;
-	coord[Y] = y * VIEWPORT_H / HEIGHT;
-	coord[Z] = d;
+	coord[X] = x * viewport[X] / WIDTH;
+	coord[Y] = y * viewport[Y] / HEIGHT;
 	return (coord);
 }
 
-double	*get_intersection_points(double *cam_position, double *proj_plane,
+long double	*get_intersection_points(long double *cam_position, long double *proj_plane,
 		t_scn_el *obj)
 {
-	double	r;
+	long double	r;
 	t_vec	*CO;
 	t_vec	*D;
-	double	a;
-	double	b;
-	double	c;
-	double	discriminant;
-	double	*arr;
+	long double	a;
+	long double	b;
+	long double	c;
+	long double	discriminant;
+	long double	*arr;
 
 	r = obj->diameter / 2;
 	CO = get_dir_vec(cam_position, obj->coord);
@@ -50,7 +49,7 @@ double	*get_intersection_points(double *cam_position, double *proj_plane,
 	b = 2 * dot(CO, D);
 	c = dot(CO, CO) - r * r;
 	discriminant = b * b - 4 * a * c;
-	arr = malloc(2 * sizeof(double));
+	arr = malloc(2 * sizeof(long double));
 	if (discriminant < 0)
 	{
 		arr[0] = INF;
@@ -64,17 +63,17 @@ double	*get_intersection_points(double *cam_position, double *proj_plane,
 	return (arr);
 }
 
-t_color	trace_ray(t_data *data, double *cam_pos, double *proj_plane,
-		int min, int max)
+t_color	trace_ray(t_data *data, long double *cam_pos, long double *proj_plane,
+		long double min, long double max)
 {
 	t_scn_el		*closest_el;
 	t_scn_el		**spheres;
-	int				closest_t;
-	double			*t;
+	long double			closest_t;
+	long double			*t;
 	int				i;
 	int				bgclr;
 
-	bgclr = get_rgba(173, 11, 173, 1);
+	bgclr = get_rgba(173, 11, 173, 255);
 	closest_t = INF;
 	closest_el = NULL;
 	spheres = get_scn_els(data->scn_el, SPHERE);
@@ -99,9 +98,27 @@ t_color	trace_ray(t_data *data, double *cam_pos, double *proj_plane,
 		return (bgclr);
 	else
 	{
-		// printf("closes col: %d\n", closest_el->color);
-		// printf("closes col: %d\n", closest_el->type);
+		// printf("something?\n");
 		return (closest_el->color);
+	}
+}
+
+void	draw_axes(t_data *data)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	while (x < WIDTH)
+	{
+		y = 0;
+		while (y < HEIGHT)
+		{
+			if (y % ((HEIGHT / 2) - 1) == 0 || x % ((WIDTH / 2) - 1) == 0)
+				mlx_put_pixel(data->img, x, y, 0xFF1200FF);
+			y++;
+		}
+		x++;
 	}
 }
 
@@ -110,25 +127,26 @@ void	render_img(t_data *data)
 	int			x;
 	int			y;
 	t_color		color;
-	double		*vp_coord;
+	long double	*vp_coord;
 	t_scn_el	**cam;
 
 	cam = get_scn_els(data->scn_el, CAM);
 	if (!cam)
 		error(ft_strdup("No camera found"), EXIT, 1);
 	x = -WIDTH / 2;
-	y = -HEIGHT / 2;
 	while (x < WIDTH / 2)
 	{
 		y = -HEIGHT / 2;
 		while (y < HEIGHT / 2)
 		{
-			vp_coord = canvas_to_viewport(x, y, 1);
+			vp_coord = canvas_to_viewport(x, y, data->viewport);
+			// printf("x: %Lf, y: %Lf\n",vp_coord[X], vp_coord[Y]);
 			color = trace_ray(data, cam[0]->coord, vp_coord, 1, INF);
-			// printf("x: %d, y: %d\n", 0xFF0000FF, x);
-			mlx_put_pixel(data->img, x + 250, y + 250, color);
+			mlx_put_pixel(data->img, x + WIDTH / 2, y + HEIGHT / 2, color);
 			y++;
 		}
 		x++;
 	}
+	draw_axes(data);
+	free(cam);
 }
