@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/25 16:31:41 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/25 16:42:03 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 void	init_scene(t_data *scn)
 {
-	scn->scn_el = NULL;
+	ft_memset(scn, 0, sizeof(t_data));
 }
 
 void	print_scene_el(t_data *scn)
