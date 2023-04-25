@@ -6,16 +6,17 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/24 23:51:43 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/25 14:26:24 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt.h>
-#include <mrt_macros.h>
 #include <MLX42.h>
+#include <math.h>
+#include <minirt.h>
 #include <mrt_data_struct.h>
-#include <stdlib.h>
+#include <mrt_macros.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 void	init_scene(t_data *scn)
@@ -34,24 +35,40 @@ void	print_scene_el(t_data *scn)
 	{
 		printf("- - - - - - - - - - - - - - - - - -\n");
 		printf("type: %d\n", ((t_scn_el *)el->content)->type);
-		printf("coord: x=%f, y=%f, z=%f\n", ((t_scn_el *)el->content)->coord[0],
-			((t_scn_el *)el->content)->coord[1],
-			((t_scn_el *)el->content)->coord[2]);
-		printf("norm_vec: x=%f, y=%f, z=%f\n",
-			((t_scn_el *)el->content)->norm_vec[0],
-			((t_scn_el *)el->content)->norm_vec[1],
-			((t_scn_el *)el->content)->norm_vec[2]);
-		printf("diameter: %f\n", ((t_scn_el *)el->content)->diameter);
-		printf("height: %f\n", ((t_scn_el *)el->content)->height);
-		printf("fov: %f\n", ((t_scn_el *)el->content)->fov);
-		printf("brightness: %f\n", ((t_scn_el *)el->content)->brightness);
+		printf("coord: x=%Lf, y=%Lf, z=%Lf\n", ((t_scn_el *)el->content)->coord[0],
+				((t_scn_el *)el->content)->coord[1],
+				((t_scn_el *)el->content)->coord[2]);
+		printf("norm_vec: x=%Lf, y=%Lf, z=%Lf\n",
+				((t_scn_el *)el->content)->norm_vec[0],
+				((t_scn_el *)el->content)->norm_vec[1],
+				((t_scn_el *)el->content)->norm_vec[2]);
+		printf("diameter: %Lf\n", ((t_scn_el *)el->content)->diameter);
+		printf("height: %Lf\n", ((t_scn_el *)el->content)->height);
+		printf("fov: %Lf\n", ((t_scn_el *)el->content)->fov);
+		printf("brightness: %Lf\n", ((t_scn_el *)el->content)->brightness);
 		// printf("color: r=%d, g=%d, b=%d, a=%d\n",
-		// 	get_r(((t_scn_el *)el->content)->color), 
-		// 	get_g(((t_scn_el *)el->content)->color), 
-		// 	get_b(((t_scn_el *)el->content)->color), 
+		// 	get_r(((t_scn_el *)el->content)->color),
+		// 	get_g(((t_scn_el *)el->content)->color),
+		// 	get_b(((t_scn_el *)el->content)->color),
 		// 	get_a(((t_scn_el *)el->content)->color));
 		el = el->next;
 	}
+}
+
+void	create_projection_plane(t_data *d)
+{
+	long double		proj_plane_d;
+	long double		proj_plane_size;
+	t_scn_el		**cam;
+
+	proj_plane_d = 1;
+	cam = get_scn_els(d->scn_el, CAM);
+	if (!cam)
+		error(ft_strdup("No camera found\n"), EXIT, 1);
+	proj_plane_size = tan(cam[0]->fov / 2.0) * (2.0 * proj_plane_d);
+	d->viewport[X] = proj_plane_size;
+	d->viewport[Y] = proj_plane_size;
+	free(cam);
 }
 
 int	main(int argc, char *argv[])
@@ -60,8 +77,9 @@ int	main(int argc, char *argv[])
 
 	init_scene(&d);
 	parse_scene(&d, argc, argv);
-	// print_scene_el(&d);
-	d.mlx = mlx_init(WIDTH+5, HEIGHT+5, "MiniRT", true);
+	create_projection_plane(&d);
+	print_scene_el(&d);
+	d.mlx = mlx_init(WIDTH + 5, HEIGHT + 5, "MiniRT", true);
 	if (!d.mlx)
 		error(ft_strdup(mlx_strerror(mlx_errno)), EXIT, 1);
 	d.img = mlx_new_image(d.mlx, WIDTH, HEIGHT);
