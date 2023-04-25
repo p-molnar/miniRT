@@ -6,28 +6,33 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 15:01:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/25 14:13:26 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/25 16:57:27 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
 #include <minirt.h>
 #include <mrt_data_struct.h>
 #include <mrt_macros.h>
-#include <math.h>
 
 t_vec	*get_dir_vec(long double *init_point, long double *terminal_point)
 {
-	t_vec	*vec;
+	t_vec		*vec;
+	int			i;
+	long double	sum_of_sqrs;
 
 	vec = ft_calloc(1, sizeof(t_vec));
 	if (!vec)
 		return (NULL);
-	vec->coord[X] = terminal_point[X] - init_point[X];
-	vec->coord[Y] = terminal_point[Y] - init_point[Y];
-	vec->coord[Z] = terminal_point[Z] - init_point[Z];
-	vec->norm = sqrt(pow(vec->coord[X], 2) \
-					+ pow(vec->coord[Y], 2) \
-					+ pow(vec->coord[Z], 2));
+	sum_of_sqrs = 0;
+	i = 0;
+	while (i < COORD_SIZE)
+	{
+		vec->coord[i] = terminal_point[i] - init_point[i];
+		sum_of_sqrs += pow(vec->coord[i], 2);
+		i++;
+	}
+	vec->norm = sqrt(sum_of_sqrs);
 	return (vec);
 }
 
@@ -35,8 +40,7 @@ long double	dot(t_vec *vec_1, t_vec *vec_2)
 {
 	long double	result;
 
-	result = vec_1->coord[X] * vec_2->coord[X] \
-			+ vec_1->coord[Y] * vec_2->coord[Y] \
-			+ vec_1->coord[Z] * vec_2->coord[Z];
+	result = vec_1->coord[X] * vec_2->coord[X] + vec_1->coord[Y]
+		* vec_2->coord[Y] + vec_1->coord[Z] * vec_2->coord[Z];
 	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/25 16:14:26 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/25 17:51:30 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_color	trace_ray(t_data *data, long double *cam_pos, long double *proj_plane,
 	int			i;
 	int			bgclr;
 
-	bgclr = get_rgba(255, 255, 255, 255);
+	bgclr = 0xFFFFFFFF;
 	closest_t = INF;
 	closest_el = NULL;
 	spheres = get_scn_els(data->scn_el, SPHERE);
@@ -78,6 +78,7 @@ t_color	trace_ray(t_data *data, long double *cam_pos, long double *proj_plane,
 	while (spheres && spheres[i])
 	{
 		t = get_intersection_points(cam_pos, proj_plane, spheres[i]);
+		// printf("t_1: %Lf, t_2: %Lf\n", t[0], t[1]);
 		if (t[0] >= min && t[0] <= max && t[0] < closest_t)
 		{
 			closest_t = t[0];
