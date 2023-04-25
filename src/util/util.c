@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 13:09:33 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/25 14:16:07 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/25 16:27:20 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <libft.h>
 #include <mrt_data_struct.h>
 
-t_scn_el	**get_scn_els(t_list *list, t_el_type type)
+t_scn_el	**get_scn_els(t_list *list, enum e_scn_el_type type)
 {
 	t_list		*tmp;
 	t_scn_el	*curr_el;

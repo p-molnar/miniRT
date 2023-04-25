@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/25 14:26:24 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/25 15:53:08 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ int	main(int argc, char *argv[])
 	parse_scene(&d, argc, argv);
 	create_projection_plane(&d);
 	print_scene_el(&d);
-	d.mlx = mlx_init(WIDTH + 5, HEIGHT + 5, "MiniRT", true);
+	d.mlx = mlx_init(CANVAS_W + 5, CANVAS_H + 5, "MiniRT", true);
 	if (!d.mlx)
 		error(ft_strdup(mlx_strerror(mlx_errno)), EXIT, 1);
-	d.img = mlx_new_image(d.mlx, WIDTH, HEIGHT);
+	d.img = mlx_new_image(d.mlx, CANVAS_W, CANVAS_H);
 	if (!d.img || (mlx_image_to_window(d.mlx, d.img, 0, 0) < 0))
 		error(ft_strdup(mlx_strerror(mlx_errno)), EXIT, 1);
 	render_img(&d);

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/25 14:13:49 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/25 16:27:06 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,11 @@
 // 	t_color			color;
 // }	t_light;
 
-typedef int				t_el_type;
 typedef int				t_color;
 
 typedef struct s_scn_el
 {
-	t_el_type			type;
+	enum e_scn_el_type		type;
 	long double				coord[COORD_SIZE];
 	long double				norm_vec[COORD_SIZE];
 	long double				diameter;
