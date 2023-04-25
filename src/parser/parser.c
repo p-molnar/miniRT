@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/25 11:14:12 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/25 14:50:00 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	validate_scn_el_setup(t_data *scn)
 {
 	t_scn_el		*el;
 	t_list			*tmp;
-	double			total_light_brightness;
-	unsigned int	els;
+	long double		total_light_brightness;
+	int				els;
 
 	tmp = scn->scn_el;
 	total_light_brightness = 0;
@@ -53,7 +53,7 @@ void	validate_scn_el_setup(t_data *scn)
 		els |= 1 << el->type;
 		tmp = tmp->next;
 	}
-	if (scn && (els & CAM) == 0)
+	if (!(els & (1 << CAM)))
 		error(ft_strdup("Add a camera to the scene."), EXIT, 1);
 	if (scn && total_light_brightness < 0.05)
 		warning(ft_strdup("Scene too dark, consider increasing brightness."));
@@ -125,7 +125,8 @@ void	parse_scene(t_data *scn, int argc, char *argv[])
 				error(strconcat(4, "Malloc error: ", __FILE__, ": ",
 						ft_itoa(__LINE__)), EXIT, 1);
 			free(tmp);
-			parse_line(scn, line);
+			if (*line != '#')
+				parse_line(scn, line);
 		}
 		free(line);
 		line = get_next_line(fd);
