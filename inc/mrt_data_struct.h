@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/26 10:29:52 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/26 13:58:48 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,9 @@ typedef struct s_scn_el
 
 typedef struct s_vec
 {
-	long double			norm;
+	long double			len;
 	long double			coord[COORD_SIZE];
+	long double			n_coord[COORD_SIZE];
 }						t_vec;
 
 typedef struct s_data
