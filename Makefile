@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/04/26 11:06:12 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/04/26 11:23:16 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,6 +73,7 @@ MATH			=	$(addprefix	math/,										\
 								quadratic_ops.c								\
 								matrix_ops.c								\
 								range.c										\
+								trigonometry.c								\
 								)
 
 COLOR			=	$(addprefix	color/,										\
