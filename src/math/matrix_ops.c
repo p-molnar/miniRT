@@ -6,14 +6,15 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 15:01:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/26 14:10:38 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/26 14:13:19 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
 #include <minirt.h>
-#include <mrt_data_struct.h>
 #include <mrt_macros.h>
+
+#include <math.h>
+#include <stdlib.h>
 
 t_vec	*get_dir_vec(long double *init_point, long double *terminal_point)
 {
