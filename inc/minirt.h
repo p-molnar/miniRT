@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/26 11:23:40 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/26 14:12:41 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_scn_el	**get_scn_els(t_list *list, enum e_scn_el_type type);
 
 //	math
 t_vec		*get_dir_vec(long double *init_point, long double *terminal_point);
+long double	*get_normal_vec(t_vec *vec);
 long double	dot(t_vec *vec_1, t_vec *vec_2);
 long double	*quad_eq_solver(long double a, long double b, long double c,
 				long double *disc);
