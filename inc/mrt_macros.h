@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/25 15:53:13 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/26 10:15:01 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,14 @@
 # define MRT_MACROS_H
 # define CANVAS_W 800
 # define CANVAS_H 800
-# define INF 9999 
+# define INF 9999
+
+enum e_range
+{
+	MIN,
+	MAX,
+	RANGE_SIZE,
+};
 
 enum	e_error_handler
 {
