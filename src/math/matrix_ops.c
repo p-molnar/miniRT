@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 15:01:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/25 16:57:27 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/26 14:08:41 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 
 t_vec	*get_dir_vec(long double *init_point, long double *terminal_point)
 {
-	t_vec		*vec;
-	int			i;
-	long double	sum_of_sqrs;
+	t_vec				*vec;
+	int					i;
+	long double			sum_of_sqrs;
 
 	vec = ft_calloc(1, sizeof(t_vec));
 	if (!vec)
@@ -32,9 +32,34 @@ t_vec	*get_dir_vec(long double *init_point, long double *terminal_point)
 		sum_of_sqrs += pow(vec->coord[i], 2);
 		i++;
 	}
-	vec->norm = sqrt(sum_of_sqrs);
+	vec->len = sqrt(sum_of_sqrs);
+	i = 0;
+	while (i < COORD_SIZE)
+	{
+		vec->n_coord[i] = vec->coord[i] / vec->len;
+		i++;
+	}
 	return (vec);
 }
+
+// long double	*get_normal_vec(t_vec *vec)
+// {
+// 	long double	*coord;
+// 	long double	vec_len;
+// 	int			i;
+
+// 	coord = malloc(1 * sizeof(long double));
+// 	if (!coord)
+// 		return (NULL);
+// 	vec_len = vec->len;
+// 	i = 0;
+// 	while (i < COORD_SIZE)
+// 	{
+// 		coord[i] = vec->coord[i] / vec_len;
+// 		i++;
+// 	}
+// 	return (coord);
+// }
 
 long double	dot(t_vec *vec_1, t_vec *vec_2)
 {
