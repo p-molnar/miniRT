@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/25 16:27:06 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/26 10:29:52 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,31 +84,26 @@ typedef int				t_color;
 
 typedef struct s_scn_el
 {
-	enum e_scn_el_type		type;
-	long double				coord[COORD_SIZE];
-	long double				norm_vec[COORD_SIZE];
-	long double				diameter;
-	long double				height;
-	long double				fov;
-	long double				brightness;
+	enum e_scn_el_type	type;
+	long double			coord[COORD_SIZE];
+	long double			norm_vec[COORD_SIZE];
+	long double			diameter;
+	long double			height;
+	long double			fov;
+	long double			brightness;
 	t_color				color;
 }						t_scn_el;
 
-// typedef struct coord_2d
-// {
-// 	int	x;
-// 	int	y;
-// }	t_coord_2d;
-
 typedef struct s_vec
 {
-	long double				norm;
-	long double				coord[COORD_SIZE];
+	long double			norm;
+	long double			coord[COORD_SIZE];
 }						t_vec;
 
 typedef struct s_data
 {
 	t_list				*scn_el;
+	t_color				bg;
 	long double			viewport[COORD_SIZE];
 	mlx_t				*mlx;
 	mlx_image_t			*img;
