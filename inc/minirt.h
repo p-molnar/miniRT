@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/26 10:49:23 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/26 11:23:40 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ t_vec		*get_dir_vec(long double *init_point, long double *terminal_point);
 long double	dot(t_vec *vec_1, t_vec *vec_2);
 long double	*quad_eq_solver(long double a, long double b, long double c,
 				long double *disc);
+long double	deg_to_rad(long double deg);
+long double	rad_to_deg(long double rad);
 
 //	color
 int			get_rgba(int r, int g, int b, int a);
