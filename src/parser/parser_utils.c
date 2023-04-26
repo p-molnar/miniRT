@@ -6,21 +6,11 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:38:24 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/25 12:22:21 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/26 10:57:16 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
-
-int	is_in_range_f(long double n, long double n_lower, long double n_upper)
-{
-	return (n >= n_lower && n <= n_upper);
-}
-
-int	is_in_range_i(int n, int n_lower, int n_upper)
-{
-	return (n >= n_lower && n <= n_upper);
-}
 
 int	get_arr_size(char **arr)
 {
