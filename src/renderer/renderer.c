@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/25 17:51:30 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/26 10:09:32 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ long double	*canvas_to_viewport(int x, int y, long double *viewport)
 		error(ft_strdup("Malloc error\n"), EXIT, 1);
 	coord[X] = x * viewport[X] / CANVAS_W;
 	coord[Y] = y * viewport[Y] / CANVAS_H;
+	coord[Z] = 1;
 	return (coord);
 }
 
@@ -43,7 +44,8 @@ long double	*get_intersection_points(long double *cam_position,
 	long double	*arr;
 
 	r = obj->diameter / 2;
-	CO = get_dir_vec(cam_position, obj->coord);
+	// CO = get_dir_vec(cam_position, obj->coord);
+	CO = get_dir_vec(obj->coord, cam_position);
 	D = get_dir_vec(cam_position, proj_plane);
 	a = dot(D, D);
 	b = 2.0 * dot(CO, D);
@@ -134,15 +136,15 @@ void	render_img(t_data *data)
 	x = -CANVAS_W / 2;
 	while (x < CANVAS_W / 2)
 	{
-		y = -CANVAS_H / 2;
-		while (y < CANVAS_H / 2)
+		y = CANVAS_H / 2;
+		while (y > -CANVAS_H / 2)
 		{
 			vp_coord = canvas_to_viewport(x, y, data->viewport);
 			// printf("x: %Lf, y: %Lf\n",vp_coord[X], vp_coord[Y]);
 			color = trace_ray(data, cam[0]->coord, vp_coord, 1, INF);
-			mlx_put_pixel(data->img, x + CANVAS_W / 2, y + CANVAS_H / 2, color);
+			mlx_put_pixel(data->img, x + CANVAS_W / 2, CANVAS_H / 2 - y, color);
 			free(vp_coord);
-			y++;
+			y--;
 		}
 		x++;
 	}
