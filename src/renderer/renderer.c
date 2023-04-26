@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/26 11:08:57 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/26 13:34:35 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ long double	*get_intersection_points(long double *cam_position,
 	long double	*t;
 
 	r = obj->diameter / 2;
-	// CO = get_dir_vec(cam_position, obj->coord);
 	vec[CO] = get_dir_vec(obj->coord, cam_position);
 	vec[D] = get_dir_vec(cam_position, proj_plane);
 	param[0] = dot(vec[D], vec[D]);
