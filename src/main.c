@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/25 16:42:03 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/26 11:26:39 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 void	init_scene(t_data *scn)
 {
 	ft_memset(scn, 0, sizeof(t_data));
+	scn->bg = 0xFFFFFFFF;
 }
 
 void	print_scene_el(t_data *scn)
@@ -59,13 +60,15 @@ void	create_projection_plane(t_data *d)
 {
 	long double		proj_plane_d;
 	long double		proj_plane_side_len;
+	long double		fov_rad;
 	t_scn_el		**cam;
 
 	proj_plane_d = 1;
 	cam = get_scn_els(d->scn_el, CAM);
 	if (!cam)
 		error(ft_strdup("No camera found\n"), EXIT, 1);
-	proj_plane_side_len = tan(cam[0]->fov / 2.0) * (2.0 * proj_plane_d);
+	fov_rad = deg_to_rad(cam[0]->fov / 2.0);
+	proj_plane_side_len = tan(fov_rad) * (2.0 * proj_plane_d);
 	d->viewport[X] = proj_plane_side_len;
 	d->viewport[Y] = proj_plane_side_len;
 	free(cam);
@@ -78,7 +81,7 @@ int	main(int argc, char *argv[])
 	init_scene(&d);
 	parse_scene(&d, argc, argv);
 	create_projection_plane(&d);
-	print_scene_el(&d);
+	// print_scene_el(&d);
 	d.mlx = mlx_init(CANVAS_W + 5, CANVAS_H + 5, "MiniRT", true);
 	if (!d.mlx)
 		error(ft_strdup(mlx_strerror(mlx_errno)), EXIT, 1);
