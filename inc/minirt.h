@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/26 14:12:41 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/28 10:17:01 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ void		warning(char *msg);
 
 //	renderer
 void		render_img(t_data *d);
+
+//	lighting
+long double	compute_lighting(long double *hit_point, t_vec *obj_wall_norm);
 
 //	util
 t_scn_el	**get_scn_els(t_list *list, enum e_scn_el_type type);

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/26 13:34:35 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/28 10:29:11 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ long double	*get_intersection_points(long double *cam_position,
 	long double	*t;
 
 	r = obj->diameter / 2;
-	vec[CO] = get_dir_vec(obj->coord, cam_position);
-	vec[D] = get_dir_vec(cam_position, proj_plane);
+	vec[CO] = create_vec(obj->coord, cam_position);
+	vec[D] = create_vec(cam_position, proj_plane);
 	param[0] = dot(vec[D], vec[D]);
 	param[1] = 2.0 * dot(vec[CO], vec[D]);
 	param[2] = dot(vec[CO], vec[CO]) - r * r;
@@ -122,7 +122,7 @@ void	render_img(t_data *data)
 	long double			*vp_coord;
 	t_scn_el			**cam;
 	const long double	range[RANGE_SIZE] = {1, INF};
-	
+
 	cam = get_scn_els(data->scn_el, CAM);
 	if (!cam)
 		error(ft_strdup("No camera found"), EXIT, 1);
