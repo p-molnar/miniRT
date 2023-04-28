@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/28 10:03:55 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/28 10:05:55 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 // typedef struct s_amb_light
 // {
 // 	int				type;
-// 	unsigned int	brightness;
+// 	unsigned int	intensity;
 // 	t_color			color;
 // }	t_amb_light;
 
@@ -76,7 +76,7 @@
 // {
 // 	int				type;
 // 	t_coord_3d		pos;
-// 	unsigned int	brightness;
+// 	unsigned int	intensity;
 // 	t_color			color;
 // }	t_light;
 
@@ -91,7 +91,7 @@ typedef struct s_scn_el
 	long double			diameter;
 	long double			height;
 	long double			fov;
-	long double			brightness;
+	long double			intensity;
 	t_color				color;
 }						t_scn_el;
 

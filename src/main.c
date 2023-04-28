@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/26 11:26:39 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/28 10:05:55 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	print_scene_el(t_data *scn)
 		printf("diameter: %Lf\n", ((t_scn_el *)el->content)->diameter);
 		printf("height: %Lf\n", ((t_scn_el *)el->content)->height);
 		printf("fov: %Lf\n", ((t_scn_el *)el->content)->fov);
-		printf("brightness: %Lf\n", ((t_scn_el *)el->content)->brightness);
+		printf("intensity: %Lf\n", ((t_scn_el *)el->content)->intensity);
 		// printf("color: r=%d, g=%d, b=%d, a=%d\n",
 		// 	get_r(((t_scn_el *)el->content)->color),
 		// 	get_g(((t_scn_el *)el->content)->color),

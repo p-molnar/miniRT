@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/25 14:50:00 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/28 10:05:55 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	validate_scn_el_setup(t_data *scn)
 	while (tmp)
 	{
 		el = tmp->content;
-		total_light_brightness += el->brightness;
+		total_light_brightness += el->intensity;
 		els |= 1 << el->type;
 		tmp = tmp->next;
 	}
