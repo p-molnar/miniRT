@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/28 10:05:55 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/28 14:32:24 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,7 @@ void	parse_scene(t_data *scn, int argc, char *argv[])
 
 	if (argc != 2)
 		error(ft_strdup("Invalid argument count"), EXIT, 1);
-	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
-		error(ft_strdup(strerror(errno)), EXIT, 1);
+	fd = open_file(argv[1]);
 	line = get_next_line(fd);
 	while (line)
 	{
