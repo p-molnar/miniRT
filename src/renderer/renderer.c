@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/28 13:13:43 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/28 14:47:40 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ t_color	trace_ray(t_data *data, long double *cam_pos, long double *proj_plane,
 		return (data->bg);
 	t_vec	*d = create_vec(cam_pos, proj_plane);
 	t_vec	*o = create_vec(cam_pos, cam_pos);
-	t_vec	*p = addition(o, scale_vec(closest_t, d));
+	t_vec	*p = add(o, scale_vec(closest_t, d));
 	t_vec	*n = create_vec(p->coord, closest_el->coord);
 	t_color new_color = 0;
 	for (int i = 0; i < 4; i++)
