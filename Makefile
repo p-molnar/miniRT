@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/04/26 11:23:16 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/04/28 12:17:33 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,8 +61,13 @@ FREE			=	$(addprefix	free/,										\
 								free.c										\
 								)
 
+LIGHTING		=	$(addprefix	lighting/,									\
+								lighting.c									\
+								)
+
 RENDERER		=	$(addprefix	renderer/,									\
 								renderer.c									\
+								$(LIGHTING)									\
 								)
 
 UTIL			=	$(addprefix	util/,										\
