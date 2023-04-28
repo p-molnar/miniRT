@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/28 10:05:55 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/28 12:20:24 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,35 +80,35 @@
 // 	t_color			color;
 // }	t_light;
 
-typedef int				t_color;
-typedef long double		*t_3d_coord;
+typedef int			t_color;
+typedef long double	*t_3d_coord;
 
 typedef struct s_scn_el
 {
-	enum e_scn_el_type	type;
-	long double			coord[COORD_SIZE];
-	long double			norm_vec[COORD_SIZE];
-	long double			diameter;
-	long double			height;
-	long double			fov;
-	long double			intensity;
-	t_color				color;
-}						t_scn_el;
+	int				type;
+	long double		coord[COORD_SIZE];
+	long double		norm_vec[COORD_SIZE];
+	long double		diameter;
+	long double		height;
+	long double		fov;
+	long double		intensity;
+	t_color			color;
+}					t_scn_el;
 
 typedef struct s_vec
 {
-	long double			len;
-	long double			coord[COORD_SIZE];
-	long double			n_coord[COORD_SIZE];
-}						t_vec;
+	long double		len;
+	long double		coord[COORD_SIZE];
+	long double		n_coord[COORD_SIZE];
+}					t_vec;
 
 typedef struct s_data
 {
-	t_list				*scn_el;
-	t_color				bg;
-	long double			viewport[COORD_SIZE];
-	mlx_t				*mlx;
-	mlx_image_t			*img;
-}						t_data;
+	t_list			*scn_el;
+	t_color			bg;
+	long double		viewport[COORD_SIZE];
+	mlx_t			*mlx;
+	mlx_image_t		*img;
+}					t_data;
 
 #endif
