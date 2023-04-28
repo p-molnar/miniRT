@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 15:01:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/26 14:13:19 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/28 10:28:08 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ t_vec	*get_dir_vec(long double *init_point, long double *terminal_point)
 {
 	t_vec				*vec;
 	int					i;
-	long double			sum_of_sqrs;
 
 	vec = ft_calloc(1, sizeof(t_vec));
 	if (!vec)
@@ -60,6 +59,32 @@ long double	*get_normal_vec(t_vec *vec)
 		i++;
 	}
 	return (coord);
+}
+
+void	scale_vec(long double scaler, t_vec *vec)
+{
+	int	i;
+
+	i = 0;
+	while (i < COORD_SIZE && vec)
+	{
+		vec->coord[i] = scaler * vec->coord[i];
+		i++;
+	}
+}
+
+void	calculate_vec_len(t_vec *vec)
+{
+	long double	sum_of_sqrs;
+	int			i;
+
+	sum_of_sqrs = 0;
+	i = 0;
+	while (i < COORD_SIZE)
+	{
+		sum_of_sqrs += pow(vec->coord[i], 2);
+	}
+	vec->len = sqrt(sum_of_sqrs);
 }
 
 long double	dot(t_vec *vec_1, t_vec *vec_2)
