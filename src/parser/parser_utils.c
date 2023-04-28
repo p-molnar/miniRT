@@ -6,11 +6,26 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:38:24 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/26 10:57:16 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/28 14:40:18 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <string.h>
+
+int	open_file(char *file_name)
+{
+	int	fd;
+
+	if (file_name == NULL)
+		error(ft_strdup("NULL error"), EXIT, 1);
+	fd = open(file_name, O_RDONLY);
+	if (fd == -1)
+		error(ft_strdup(strerror(errno)), EXIT, 1);
+	return (fd);
+}
 
 int	get_arr_size(char **arr)
 {

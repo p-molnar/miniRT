@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/28 12:19:07 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/28 14:39:44 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@ void		free_arr(void **arr);
 
 //	parser utils
 int			get_arr_size(char **arr);
-int			is_in_range_f(long double n, long double n_lower,
-				long double n_upper);
-int			is_in_range_i(int n, int n_lower, int n_upper);
+int			open_file(char *file_name);
 int			is_valid_number(char *c);
 
 //	error handling
@@ -58,9 +56,12 @@ void		compute_vec_len(t_vec *vec);
 void		compute_normal_vec(t_vec *vec);
 t_vec		*scale_vec(long double scaler, t_vec *vec);
 
+int			is_in_range_f(long double n, long double n_lower,
+				long double n_upper);
+int			is_in_range_i(int n, int n_lower, int n_upper);
+
 long double	dot(t_vec *vec_1, t_vec *vec_2);
-t_vec	*addition(t_vec *vec_1,
-				t_vec *vec_2);
+t_vec		*addition(t_vec *vec_1, t_vec *vec_2);
 long double	*quad_eq_solver(long double a,
 							long double b,
 							long double c,
