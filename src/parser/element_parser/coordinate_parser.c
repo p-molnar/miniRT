@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:35:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/25 12:22:21 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/28 14:24:22 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 
 void	parse_coordinates(long double *coord, char *input)
 {
-	char	**coords;
-	int		i;
+	char		**coords;
+	int			i;
 	long double	f[3];
 
 	coords = ft_split(input, ',');
 	if (!coords)
-		error(strconcat(4, "Malloc error: ", __FILE__, ":", ft_itoa(__LINE__)),
-			EXIT, 1);
+		error(strconcat(4, "Malloc error: ", __FILE__, ":",
+				ft_itoa(__LINE__)), EXIT, 1);
 	if (get_arr_size(coords) != 3)
 		error(ft_strdup("Required coordinates: x, y, x"), EXIT, 1);
 	i = 0;
@@ -34,19 +34,19 @@ void	parse_coordinates(long double *coord, char *input)
 		coord[i] = f[i];
 		i++;
 	}
-	free_arr((void **) coords);
+	free_arr((void **)coords);
 }
 
 void	parse_norm_vec(long double *coord, char *input)
 {
-	char	**coords;
-	int		i;
+	char		**coords;
+	int			i;
 	long double	f[3];
 
 	coords = ft_split(input, ',');
 	if (!coords)
-		error(strconcat(4, "Malloc error: ", __FILE__, ":", ft_itoa(__LINE__)),
-			EXIT, 1);
+		error(strconcat(4, "Malloc error: ", __FILE__, ":",
+				ft_itoa(__LINE__)), EXIT, 1);
 	if (get_arr_size(coords) != 3)
 		error(ft_strdup("Required coordinates: x, y, x"), EXIT, 1);
 	i = 0;
@@ -56,10 +56,10 @@ void	parse_norm_vec(long double *coord, char *input)
 			error(strconcat(2, "Invalid number: ", coords[i]), EXIT, 1);
 		f[i] = ft_atof(coords[i]);
 		if (!is_in_range_f(f[i], -1.0, 1.0))
-			error(strconcat(6, "Number out of range [", "-1.0", ", ",
-					"1.0", "]: ", coords[i]), EXIT, 1);
+			error(strconcat(6, "Number out of range [",
+					"-1.0", ", ", "1.0","]: ", coords[i]), EXIT, 1);
 		coord[i] = f[i];
 		i++;
 	}
-	free_arr((void **) coords);
+	free_arr((void **)coords);
 }
