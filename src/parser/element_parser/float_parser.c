@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   long double_parser.c                                     :+:    :+:            */
+/*   float_parser.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 12:37:52 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/19 11:06:25 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/28 14:57:04 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	parse_float(long double *f, char *input)
 			EXIT, 1);
 }
 
-void	parse_range(long double *f, char *input, long double n_lower, long double n_upper)
+void	parse_range(long double *f, char *input,
+	long double n_lower, long double n_upper)
 {
 	char	s_n_lower[4];
 	char	s_n_upper[4];

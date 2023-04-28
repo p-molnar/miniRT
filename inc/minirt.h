@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/28 14:39:44 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/28 16:28:03 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void		warning(char *msg);
 void		render_img(t_data *d);
 
 //	lighting
-long double	compute_lighting(t_data *data, long double *hit_point,
+long double	compute_lighting_intensity(t_data *data, long double *hit_point,
 				t_vec *obj_wall_norm);
 
 //	util
@@ -54,14 +54,15 @@ t_scn_el	**get_scn_els(t_list *list, int type);
 t_vec		*create_vec(long double *init_point, long double *terminal_point);
 void		compute_vec_len(t_vec *vec);
 void		compute_normal_vec(t_vec *vec);
-t_vec		*scale_vec(long double scaler, t_vec *vec);
 
 int			is_in_range_f(long double n, long double n_lower,
 				long double n_upper);
 int			is_in_range_i(int n, int n_lower, int n_upper);
 
 long double	dot(t_vec *vec_1, t_vec *vec_2);
-t_vec		*addition(t_vec *vec_1, t_vec *vec_2);
+t_vec		*add(t_vec *vec_1, t_vec *vec_2);
+void		scale(long double scaler, t_vec *vec);
+
 long double	*quad_eq_solver(long double a,
 							long double b,
 							long double c,

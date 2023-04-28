@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/28 13:23:41 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/28 15:45:15 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,16 @@ enum	e_error_handler
 {
 	EXIT = 1,
 	RETURN = 2,
+};
+
+enum	e_vec_params
+{
+	CO,
+	D,
+	O,
+	P,
+	N,
+	PARAM_SIZE,
 };
 
 enum	e_coord

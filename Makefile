@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/04/28 12:17:33 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/04/28 14:52:49 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,7 +76,8 @@ UTIL			=	$(addprefix	util/,										\
 
 MATH			=	$(addprefix	math/,										\
 								quadratic_ops.c								\
-								matrix_ops.c								\
+								vector_ops.c								\
+								vector_ops_2.c								\
 								range.c										\
 								trigonometry.c								\
 								)

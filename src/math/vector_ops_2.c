@@ -6,13 +6,13 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 14:48:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/28 14:49:08 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/28 14:51:07 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-void	scale_vec(long double scaler, t_vec *vec)
+void	scale(long double scaler, t_vec *vec)
 {
 	int	i;
 
