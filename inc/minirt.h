@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/28 10:17:01 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/28 12:19:07 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,25 @@ void		warning(char *msg);
 void		render_img(t_data *d);
 
 //	lighting
-long double	compute_lighting(long double *hit_point, t_vec *obj_wall_norm);
+long double	compute_lighting(t_data *data, long double *hit_point,
+				t_vec *obj_wall_norm);
 
 //	util
-t_scn_el	**get_scn_els(t_list *list, enum e_scn_el_type type);
+t_scn_el	**get_scn_els(t_list *list, int type);
 
 //	math
-t_vec		*get_dir_vec(long double *init_point, long double *terminal_point);
-long double	*get_normal_vec(t_vec *vec);
+t_vec		*create_vec(long double *init_point, long double *terminal_point);
+void		compute_vec_len(t_vec *vec);
+void		compute_normal_vec(t_vec *vec);
+t_vec		*scale_vec(long double scaler, t_vec *vec);
+
 long double	dot(t_vec *vec_1, t_vec *vec_2);
-long double	*quad_eq_solver(long double a, long double b, long double c,
-				long double *disc);
+t_vec	*addition(t_vec *vec_1,
+				t_vec *vec_2);
+long double	*quad_eq_solver(long double a,
+							long double b,
+							long double c,
+							long double *disc);
 long double	deg_to_rad(long double deg);
 long double	rad_to_deg(long double rad);
 
