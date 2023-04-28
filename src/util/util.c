@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 13:09:33 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/25 16:27:20 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/28 13:16:17 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <libft.h>
 #include <mrt_data_struct.h>
 
-t_scn_el	**get_scn_els(t_list *list, enum e_scn_el_type type)
+t_scn_el	**get_scn_els(t_list *list, int type)
 {
 	t_list		*tmp;
 	t_scn_el	*curr_el;
@@ -28,7 +28,7 @@ t_scn_el	**get_scn_els(t_list *list, enum e_scn_el_type type)
 	while (tmp)
 	{
 		curr_el = tmp->content;
-		if (curr_el && curr_el->type == type)
+		if (curr_el && type & curr_el->type)
 		{
 			arr = ft_realloc(arr, i * sizeof(t_scn_el *),
 					(i + 2) * sizeof(t_scn_el *));
