@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 15:01:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/28 14:52:21 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/01 14:00:08 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@ t_vec	*create_vec(long double *init_point, long double *terminal_point)
 {
 	t_vec				*vec;
 	int					i;
+	const long double	origin[3] = {0, 0, 0};
 
-	if (!init_point || !terminal_point)
+	if (!terminal_point)
 		return (NULL);
+	if (init_point == NULL)
+		init_point = (long double *)origin;
 	vec = ft_calloc(1, sizeof(t_vec));
 	if (!vec)
 		return (NULL);
