@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/01 11:27:49 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/01 22:02:26 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@
 void	init_scene(t_data *scn)
 {
 	ft_memset(scn, 0, sizeof(t_data));
-	scn->bg = 0xa3c4c0FF;
+	// scn->bg = 0xa3c4c0FF;
+	scn->bg = 0xFFFFFFFF;
+	// scn->bg = 0x000000FF;
 }
 
 void	print_scene_el(t_data *scn)
@@ -95,7 +97,7 @@ void	set_up_vars(t_data *d)
 int	main(int argc, char *argv[])
 {
 	t_data	d;
-
+	
 	init_scene(&d);
 	parse_scene(&d, argc, argv);
 	set_up_vars(&d);
