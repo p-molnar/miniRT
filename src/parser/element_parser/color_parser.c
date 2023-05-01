@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 13:44:13 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/24 23:57:05 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/01 21:21:03 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	parse_color(t_color *color, char *input, int n_lower, int n_upper)
 		parsed_color |= color_code << (24 - (i * 8));
 		i++;
 	}
-	parsed_color |= 255;
+	parsed_color |= 0x000000FF;
 	free_arr((void **) colors);
 	*color = parsed_color;
 }
