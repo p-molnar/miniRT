@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/28 10:05:55 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/01 11:27:49 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 void	init_scene(t_data *scn)
 {
 	ft_memset(scn, 0, sizeof(t_data));
-	scn->bg = 0xFFFFFFFF;
+	scn->bg = 0xa3c4c0FF;
 }
 
 void	print_scene_el(t_data *scn)
@@ -74,12 +74,31 @@ void	create_projection_plane(t_data *d)
 	free(cam);
 }
 
+void	set_up_vars(t_data *d)
+{
+	t_list		*ptr;
+	t_scn_el	*obj;
+	t_scn_el	**cam;
+
+	ptr = d->scn_el;
+	while (ptr)
+	{
+		obj = ptr->content;
+		obj->radius = obj->diameter / 2;
+		ptr = ptr->next;
+	}
+	cam = get_scn_els(d->scn_el, CAM);
+	if (cam)
+		d->cam = cam[0];
+}
+
 int	main(int argc, char *argv[])
 {
 	t_data	d;
 
 	init_scene(&d);
 	parse_scene(&d, argc, argv);
+	set_up_vars(&d);
 	create_projection_plane(&d);
 	// print_scene_el(&d);
 	d.mlx = mlx_init(CANVAS_W + 5, CANVAS_H + 5, "MiniRT", true);

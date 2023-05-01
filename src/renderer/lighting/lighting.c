@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/28 16:20:14 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/04/28 20:40:00 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ long double	compute_lighting_intensity(t_data *data, long double *hit_point, t_v
 		i++;
 	}
 	i = 0;
+	(void)total_light;
 	while (lights && lights[i])
 	{
 		if (lights[i]->type == AMB_LIGHT)

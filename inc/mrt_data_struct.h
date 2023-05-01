@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/28 12:20:24 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/01 11:26:09 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct s_scn_el
 	long double		coord[COORD_SIZE];
 	long double		norm_vec[COORD_SIZE];
 	long double		diameter;
+	long double		radius;
 	long double		height;
 	long double		fov;
 	long double		intensity;
@@ -105,8 +106,10 @@ typedef struct s_vec
 typedef struct s_data
 {
 	t_list			*scn_el;
+	t_scn_el		*cam;
 	t_color			bg;
 	long double		viewport[COORD_SIZE];
+	t_vec			*vec[PARAM_SIZE];
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 }					t_data;

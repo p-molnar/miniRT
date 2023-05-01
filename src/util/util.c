@@ -6,13 +6,25 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 13:09:33 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/28 13:16:17 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/01 09:46:01 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 #include <libft.h>
 #include <mrt_data_struct.h>
+
+void	init_vec(t_vec **arr, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		arr[i] = NULL;
+		i++;
+	}
+}
 
 t_scn_el	**get_scn_els(t_list *list, int type)
 {

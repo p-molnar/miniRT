@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/28 14:32:24 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/01 13:32:46 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,26 +61,28 @@ void	validate_scn_el_setup(t_data *scn)
 
 void	parse_data(t_data *scn, t_scn_el *el, char **input)
 {
-	const char	*type[7] = {"Undefined", "Ambient light", "Light",
-		"Camera", "Sphere", "Plane", "Cylinder"};
+	const char	*type[8] = {"Undefined", "Ambient light", "Light", "Dir. Light",
+		"Camera", "Sphere", "Plane", "Cylinder"}; // rewrite
 
 	parse_type_identifier(el, input[0]);
 	if (is_duplicate_el_type(el->type, scn))
 		error(strconcat(2, "Duplicate element type: ", type[el->type]),
 			EXIT, 1);
 	if (el->type == AMB_LIGHT)
-		parse_elements(el, input, F_BRIGHT | F_COLOR);
-	else if (el->type == CAM)
-		parse_elements(el, input, F_COORD | F_VEC | F_FOV);
+		parse_elements(el, input, F_INTENSITY | F_COLOR);
 	else if (el->type == LIGHT)
-		parse_elements(el, input, F_COORD | F_BRIGHT | F_COLOR);
+		parse_elements(el, input, F_COORD | F_INTENSITY | F_COLOR);
+	else if (el->type == DIR_LIGHT)
+		parse_elements(el, input, F_N_VEC | F_INTENSITY);
+	else if (el->type == CAM)
+		parse_elements(el, input, F_COORD | F_N_VEC | F_FOV);
 	else if (el->type == SPHERE)
 		parse_elements(el, input, F_COORD | F_DMETER | F_COLOR);
 	else if (el->type == PLANE)
-		parse_elements(el, input, F_COORD | F_VEC | F_COLOR);
+		parse_elements(el, input, F_COORD | F_N_VEC | F_COLOR);
 	else if (el->type == CYLYNDER)
 		parse_elements(el, input,
-			F_COORD | F_VEC | F_DMETER | F_HEIGHT | F_COLOR);
+			F_COORD | F_N_VEC | F_DMETER | F_HEIGHT | F_COLOR);
 }
 
 void	parse_line(t_data *scn, char *line)

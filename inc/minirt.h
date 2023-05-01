@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/28 16:28:03 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/01 09:45:50 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ long double	compute_lighting_intensity(t_data *data, long double *hit_point,
 
 //	util
 t_scn_el	**get_scn_els(t_list *list, int type);
+void		init_vec(t_vec **arr, int size);
+void		free_vec(t_vec **arr, int size);
 
 //	math
 t_vec		*create_vec(long double *init_point, long double *terminal_point);

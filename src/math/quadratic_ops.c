@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/26 10:38:04 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/26 11:04:38 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/01 10:17:07 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ long double	*quad_eq_solver(long double a, long double b, long double c,
 	long double	discriminant;
 	long double	*solution;
 
-	discriminant = b * b - 4 * a * c;
+	discriminant = pow(b, 2) - 4 * a * c;
 	if (disc != NULL)
 		*disc = discriminant;
 	if (discriminant < 0)

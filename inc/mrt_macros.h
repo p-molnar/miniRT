@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/28 15:45:15 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/01 13:06:59 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,10 @@ enum	e_scn_el_type
 	AMB_LIGHT = 1 << 0,
 	CAM = 1 << 1,
 	LIGHT = 1 << 2,
-	SPHERE = 1 << 3,
-	PLANE = 1 << 4,
-	CYLYNDER = 1 << 5,
+	DIR_LIGHT = 1 << 3,
+	SPHERE = 1 << 4,
+	PLANE = 1 << 5,
+	CYLYNDER = 1 << 6,
 };
 
 enum	e_groupped_el
@@ -76,11 +77,11 @@ enum	e_groupped_el
 enum	e_scn_el_member_flags
 {
 	F_COORD = 1 << 0,
-	F_VEC = 1 << 1,
+	F_N_VEC = 1 << 1,
 	F_DMETER = 1 << 2,
 	F_HEIGHT = 1 << 3,
 	F_FOV = 1 << 4,
-	F_BRIGHT = 1 << 5,
+	F_INTENSITY = 1 << 5,
 	F_COLOR = 1 << 6,
 };
 
