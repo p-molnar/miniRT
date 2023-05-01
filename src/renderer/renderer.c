@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/01 11:49:31 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/01 22:02:37 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@
 #include <mrt_macros.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-#define CO 0
-#define D 1
 
 long double	*convert_to_viewport(int x, int y, long double *viewport)
 {
@@ -34,21 +31,30 @@ long double	*convert_to_viewport(int x, int y, long double *viewport)
 	return (coord);
 }
 
-int	get_color(t_data *data, t_scn_el *closest_el, t_vec *P, t_vec *N)
+int	get_computed_color(t_data *data, t_color color)
 {
-	t_color		new_color;
-	t_color		col;
+	// t_color		c[4];
+	t_color		tmp_color;
+	long double	intensity;
 	int			i;
 
-	i = 0;
-	while (i < 4)
+	intensity = compute_lighting_intensity(data);
+	// if (intensity > 0.3)
+		// printf("intensity: %Lf\n", intensity);
+	i = 1;
+	while (i < COLOR_SIZE)
 	{
-		col = ((closest_el->color >> (i * 8)) & 0xFF)
-			* compute_lighting_intensity(data, P->coord, N);
-		new_color = new_color | col << (i * 8);
+		tmp_color = get_color(color, i);
+		color = update_color_channel(color, tmp_color * intensity, i);
 		i++;
 	}
-	return (new_color);
+	// c[R] = get_r(el_color) * intensity;
+	// c[G] = get_g(el_color) * intensity;
+	// c[B] = get_b(el_color) * intensity;
+	// c[A] = 255;
+	// c[A] = get_a(el_color) * intensity;
+	// return (get_rgba(c[R], c[G], c[B], c[A]));
+	return (color);
 }
 
 long double	*get_intersection_points(t_data *data, t_scn_el *obj)
@@ -121,7 +127,7 @@ t_color	trace_ray(t_data *data, long double *cam_coord,
 		scale(dist_to_el, data->vec[D]);
 		data->vec[P] = add(data->vec[O], data->vec[D]);
 		data->vec[N] = create_vec(data->vec[P]->coord, closest_el->coord);
-		return (get_color(data, closest_el, data->vec[P], data->vec[N]));
+		return (get_computed_color(data, closest_el->color));
 	}
 }
 

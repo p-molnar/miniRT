@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/01 09:45:50 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/01 21:14:27 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,11 @@ void		warning(char *msg);
 
 //	renderer
 void		render_img(t_data *d);
+// int			get_computed_color(t_data *data, t_scn_el *closest_el);
+int			get_computed_color(t_data *data, t_color color);
 
 //	lighting
-long double	compute_lighting_intensity(t_data *data, long double *hit_point,
-				t_vec *obj_wall_norm);
+long double	compute_lighting_intensity(t_data *data);
 
 //	util
 t_scn_el	**get_scn_els(t_list *list, int type);
@@ -73,11 +74,12 @@ long double	deg_to_rad(long double deg);
 long double	rad_to_deg(long double rad);
 
 //	color
-int			get_rgba(int r, int g, int b, int a);
-t_color		update_color_chanel(t_color curr, t_color new, int channel);
-int			get_r(int rgba);
-int			get_g(int rgba);
-int			get_b(int rgba);
-int			get_a(int rgba);
+t_color			get_rgba(int r, int g, int b, int a);
+t_color		update_color_channel(t_color curr_color, t_color new_color, int channel);
+t_color		get_color(t_color color, int channel);
+t_color		get_r(int rgba);
+t_color		get_g(int rgba);
+t_color		get_b(int rgba);
+t_color		get_a(int rgba);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/01 13:06:59 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/01 14:18:47 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ enum	e_vec_params
 	O,
 	P,
 	N,
+	L,
 	PARAM_SIZE,
 };
 
@@ -53,6 +54,7 @@ enum	e_color
 	B,
 	G,
 	R,
+	COLOR_SIZE,
 };
 
 enum	e_scn_el_type
@@ -69,7 +71,7 @@ enum	e_scn_el_type
 
 enum	e_groupped_el
 {
-	G_LIGHT = AMB_LIGHT | LIGHT,
+	G_LIGHT = AMB_LIGHT | LIGHT | DIR_LIGHT,
 	G_CAM = CAM,
 	G_OBJS = SPHERE | PLANE | CYLYNDER,
 };
