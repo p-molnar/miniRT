@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/01 22:02:37 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/02 11:36:19 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,30 +31,41 @@ long double	*convert_to_viewport(int x, int y, long double *viewport)
 	return (coord);
 }
 
-int	get_computed_color(t_data *data, t_color color)
+int	get_computed_color(t_data *data, t_color obj_color)
 {
-	// t_color		c[4];
 	t_color		tmp_color;
 	long double	intensity;
 	int			i;
 
+	// t_scn_el	**lights;
+	// long double	channel_intensity;
+	// int			j;
 	intensity = compute_lighting_intensity(data);
-	// if (intensity > 0.3)
-		// printf("intensity: %Lf\n", intensity);
+	// lights = get_scn_els(data->scn_el, G_LIGHT);
+	// i = 0;
+	// while (lights && lights[i])
+	// {
+	// 	j = 1;
+	// 	while (j < COLOR_SIZE)
+	// 	{
+	// 		channel_intensity = get_color(lights[i]->color, j) / 255.0;
+	// 		// printf("channel_int: %Lf\n", channel_intensity);
+	// 		tmp_color = get_color(obj_color, j);
+	// 		obj_color = update_color_channel(obj_color,
+	// 			tmp_color * intensity * channel_intensity, j);
+	// 		j++;
+	// 	}
+	// 	i++;
+	// }
 	i = 1;
 	while (i < COLOR_SIZE)
 	{
-		tmp_color = get_color(color, i);
-		color = update_color_channel(color, tmp_color * intensity, i);
+		tmp_color = get_color(obj_color, i);
+		// printf("int:%Lf, col: %d, res: %d\n", intensity, tmp_color, (int)(tmp_color * intensity));
+		obj_color = update_color_channel(obj_color, tmp_color * intensity, i);
 		i++;
 	}
-	// c[R] = get_r(el_color) * intensity;
-	// c[G] = get_g(el_color) * intensity;
-	// c[B] = get_b(el_color) * intensity;
-	// c[A] = 255;
-	// c[A] = get_a(el_color) * intensity;
-	// return (get_rgba(c[R], c[G], c[B], c[A]));
-	return (color);
+	return (obj_color);
 }
 
 long double	*get_intersection_points(t_data *data, t_scn_el *obj)
@@ -127,14 +138,15 @@ t_color	trace_ray(t_data *data, long double *cam_coord,
 		scale(dist_to_el, data->vec[D]);
 		data->vec[P] = add(data->vec[O], data->vec[D]);
 		data->vec[N] = create_vec(data->vec[P]->coord, closest_el->coord);
+		normalize_vec(data->vec[N]); // might not be needed
 		return (get_computed_color(data, closest_el->color));
 	}
 }
 
 void	draw_axes(t_data *data)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
 	t_color	c;
 
 	c = 0xFF0000FF;
@@ -143,7 +155,7 @@ void	draw_axes(t_data *data)
 		mlx_put_pixel(data->img, x++, CANVAS_H / 2, c);
 	y = 0;
 	while (y < CANVAS_H)
-	mlx_put_pixel(data->img, CANVAS_W / 2, y++, c);
+		mlx_put_pixel(data->img, CANVAS_W / 2, y++, c);
 }
 
 void	render_img(t_data *data)
@@ -166,7 +178,8 @@ void	render_img(t_data *data)
 			screen[X] = canvas[X] + CANVAS_W / 2;
 			screen[Y] = CANVAS_H / 2 - canvas[Y];
 			init_vec(data->vec, PARAM_SIZE);
-			vp_coord = convert_to_viewport(canvas[X], canvas[Y], data->viewport);
+			vp_coord = convert_to_viewport(canvas[X], canvas[Y],
+					data->viewport);
 			color = trace_ray(data, cam[0]->coord, vp_coord);
 			mlx_put_pixel(data->img, screen[X], screen[Y], color);
 			free(vp_coord);
