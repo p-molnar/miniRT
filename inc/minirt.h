@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/01 21:14:27 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/02 10:42:10 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void		free_vec(t_vec **arr, int size);
 t_vec		*create_vec(long double *init_point, long double *terminal_point);
 void		compute_vec_len(t_vec *vec);
 void		compute_normal_vec(t_vec *vec);
+void		normalize_vec(t_vec *vec);
 
 int			is_in_range_f(long double n, long double n_lower,
 				long double n_upper);
