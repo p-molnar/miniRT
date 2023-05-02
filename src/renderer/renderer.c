@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/02 16:20:05 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/02 16:53:04 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,21 @@ long double	*convert_to_viewport(int x, int y, long double *viewport)
 	return (coord);
 }
 
-int	get_computed_color(t_data *data, t_color obj_color)
+int	get_computed_color(t_data *data, t_scn_el *closest_el)
 {
 	t_color		tmp_color;
 	long double	intensity;
 	int			i;
 
-	intensity = compute_lighting_intensity(data);
+	intensity = compute_lighting_intensity(data, closest_el->specular);
 	i = 1;
 	while (i < COLOR_SIZE)
 	{
-		tmp_color = get_color(obj_color, i);
-		obj_color = update_color_channel(obj_color, tmp_color * intensity, i);
+		tmp_color = get_color(closest_el->color, i);
+		closest_el->color = update_color_channel(closest_el->color, tmp_color * intensity, i);
 		i++;
 	}
-	return (obj_color);
+	return (closest_el->color);
 }
 
 long double	*get_intersection_points(t_data *data, t_scn_el *obj)
@@ -115,11 +115,11 @@ t_color	trace_ray(t_data *data, long double *cam_coord,
 	else
 	{
 		data->vec[O] = create_vec(cam_coord, cam_coord);
-		scale(dist_to_el, data->vec[D]);
+		data->vec[Ds] = scale(dist_to_el, data->vec[D]);
 		data->vec[P] = add(data->vec[O], data->vec[D]);
-		data->vec[N] = create_vec(closest_el->coord, data->vec[P]->coord); //modified
+		data->vec[N] = create_vec(closest_el->coord, data->vec[P]->coord);
 		normalize_vec(data->vec[N]); // might not be needed
-		return (get_computed_color(data, closest_el->color));
+		return (get_computed_color(data, closest_el));
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/02 14:01:42 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/02 17:06:56 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	init_scene(t_data *scn)
 
 void	print_scene_el(t_data *scn)
 {
-	t_list	*el;
+	t_list	*scn_el;
 	char	*e[65];
 
 	e[AMB_LIGHT] = "AMB";
@@ -39,31 +39,32 @@ void	print_scene_el(t_data *scn)
 	e[SPHERE] = "Sphere";
 	e[PLANE] = "plane";
 	e[CYLINDER] = "cylinder";
-	el = NULL;
-	if (scn)
-		el = scn->scn_el;
-	while (el)
+	scn_el = scn->scn_el;
+	while (scn_el)
 	{
+		t_scn_el *el = scn_el->content;
 		printf("- - - - - - - - - - - - - - - - - -\n");
-		printf("type: %s\n", e[((t_scn_el *)el->content)->type]);
+		printf("type: %s\n", e[el->type]);
 		printf("coord: x=%Lf, y=%Lf, z=%Lf\n",
-				((t_scn_el *)el->content)->coord[0],
-				((t_scn_el *)el->content)->coord[1],
-				((t_scn_el *)el->content)->coord[2]);
+				el->coord[0],
+				el->coord[1],
+				el->coord[2]);
 		printf("norm_vec: x=%Lf, y=%Lf, z=%Lf\n",
-				((t_scn_el *)el->content)->norm_vec[0],
-				((t_scn_el *)el->content)->norm_vec[1],
-				((t_scn_el *)el->content)->norm_vec[2]);
-		printf("diameter: %Lf\n", ((t_scn_el *)el->content)->diameter);
-		printf("height: %Lf\n", ((t_scn_el *)el->content)->height);
-		printf("fov: %Lf\n", ((t_scn_el *)el->content)->fov);
-		printf("intensity: %Lf\n", ((t_scn_el *)el->content)->intensity);
-		// printf("color: r=%d, g=%d, b=%d, a=%d\n",
-		// 	get_r(((t_scn_el *)el->content)->color),
-		// 	get_g(((t_scn_el *)el->content)->color),
-		// 	get_b(((t_scn_el *)el->content)->color),
-		// 	get_a(((t_scn_el *)el->content)->color));
-		el = el->next;
+				el->norm_vec[0],
+				el->norm_vec[1],
+				el->norm_vec[2]);
+		printf("diameter: %Lf\n", el->diameter);
+		printf("radius: %Lf\n", el->radius);
+		printf("height: %Lf\n", el->height);
+		printf("fov: %Lf\n", el->fov);
+		printf("intensity: %Lf\n", el->intensity);
+		printf("specular: %Lf\n", el->specular);
+		printf("color: r=%d, g=%d, b=%d, a=%d\n",
+			get_color(el->color, R),
+			get_color(el->color, G),
+			get_color(el->color, B),
+			get_color(el->color, A));
+		scn_el = scn_el->next;
 	}
 }
 

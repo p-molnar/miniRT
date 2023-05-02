@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/02 10:42:10 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/02 16:52:01 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,10 @@ void		warning(char *msg);
 
 //	renderer
 void		render_img(t_data *d);
-// int			get_computed_color(t_data *data, t_scn_el *closest_el);
-int			get_computed_color(t_data *data, t_color color);
+int	get_computed_color(t_data *data, t_scn_el *closest_el);
 
 //	lighting
-long double	compute_lighting_intensity(t_data *data);
+long double	compute_lighting_intensity(t_data *data, int specular);
 
 //	util
 t_scn_el	**get_scn_els(t_list *list, int type);
@@ -65,7 +64,8 @@ int			is_in_range_i(int n, int n_lower, int n_upper);
 
 long double	dot(t_vec *vec_1, t_vec *vec_2);
 t_vec		*add(t_vec *vec_1, t_vec *vec_2);
-void		scale(long double scaler, t_vec *vec);
+t_vec		*scale(long double scaler, t_vec *vec);
+t_vec		*subtract(t_vec *vec_1, t_vec *vec_2);
 
 long double	*quad_eq_solver(long double a,
 							long double b,

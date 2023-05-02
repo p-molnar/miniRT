@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/02 15:03:51 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/02 17:06:16 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,14 @@ enum	e_vec_params
 {
 	CO,
 	D,
+	Ds,
 	O,
 	P,
 	N,
+	Ns,
 	L,
+	Rv,
+	V,
 	PARAM_SIZE,
 };
 

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/02 15:03:17 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/02 17:06:25 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ typedef struct s_scn_el
 	long double		height;
 	long double		fov;
 	long double		intensity;
-	int				specular;
+	long double		specular;
 	t_color			color;
 }					t_scn_el;
 
