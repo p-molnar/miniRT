@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/02 13:48:34 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/02 15:04:31 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,12 @@ void	parse_data(t_data *scn, t_scn_el *el, char **input)
 	else if (el->type == CAM)
 		parse_elements(el, input, F_COORD | F_N_VEC | F_FOV);
 	else if (el->type == SPHERE)
-		parse_elements(el, input, F_COORD | F_DMETER | F_COLOR);
+		parse_elements(el, input, F_COORD | F_DMETER | F_COLOR | F_SPECULAR);
 	else if (el->type == PLANE)
-		parse_elements(el, input, F_COORD | F_N_VEC | F_COLOR);
+		parse_elements(el, input, F_COORD | F_N_VEC | F_COLOR | F_SPECULAR);
 	else if (el->type == CYLINDER)
 		parse_elements(el, input,
-			F_COORD | F_N_VEC | F_DMETER | F_HEIGHT | F_COLOR);
+			F_COORD | F_N_VEC | F_DMETER | F_HEIGHT | F_COLOR | F_SPECULAR);
 }
 
 void	parse_line(t_data *scn, char *line)

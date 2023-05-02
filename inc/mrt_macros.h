@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/02 13:46:16 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/02 15:03:51 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ enum	e_scn_el_member_flags
 	F_FOV = 1 << 4,
 	F_INTENSITY = 1 << 5,
 	F_COLOR = 1 << 6,
+	F_SPECULAR = 1 << 7,
 };
 
 #endif
