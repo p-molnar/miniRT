@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/04/28 14:52:49 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/05/02 13:51:43 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -117,7 +117,7 @@ $(MLX42):	$(MLX42_BUILD_DIR)
 	@make -C $(MLX42_BUILD_DIR)
 
 $(MLX42_BUILD_DIR):
-	@git submodule update --init --remote --recursive MLX42
+	# @git submodule update --init --remote --recursive MLX42
 	@cmake -S MLX42 -B $(MLX42_BUILD_DIR)
 	
 
