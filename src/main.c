@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/02 12:16:37 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/02 14:01:42 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,15 @@ void	init_scene(t_data *scn)
 void	print_scene_el(t_data *scn)
 {
 	t_list	*el;
-	char *e[65] = {e[AMB_LIGHT] = "AMB", e[CAM] = "CAM", e[LIGHT] = "point light",
-					e[DIR_LIGHT] = "Dir light", e[SPHERE] = "Sphere", e[PLANE] = "plane", e[CYLYNDER]= "cylynder"};
+	char	*e[65];
 
+	e[AMB_LIGHT] = "AMB";
+	e[CAM] = "CAM";
+	e[LIGHT] = "point light";
+	e[DIR_LIGHT] = "Dir light";
+	e[SPHERE] = "Sphere";
+	e[PLANE] = "plane";
+	e[CYLINDER] = "cylinder";
 	el = NULL;
 	if (scn)
 		el = scn->scn_el;
@@ -40,7 +46,8 @@ void	print_scene_el(t_data *scn)
 	{
 		printf("- - - - - - - - - - - - - - - - - -\n");
 		printf("type: %s\n", e[((t_scn_el *)el->content)->type]);
-		printf("coord: x=%Lf, y=%Lf, z=%Lf\n", ((t_scn_el *)el->content)->coord[0],
+		printf("coord: x=%Lf, y=%Lf, z=%Lf\n",
+				((t_scn_el *)el->content)->coord[0],
 				((t_scn_el *)el->content)->coord[1],
 				((t_scn_el *)el->content)->coord[2]);
 		printf("norm_vec: x=%Lf, y=%Lf, z=%Lf\n",
@@ -62,10 +69,10 @@ void	print_scene_el(t_data *scn)
 
 void	create_projection_plane(t_data *d)
 {
-	long double		proj_plane_d;
-	long double		proj_plane_side_len;
-	long double		fov_rad;
-	t_scn_el		**cam;
+	long double	proj_plane_d;
+	long double	proj_plane_side_len;
+	long double	fov_rad;
+	t_scn_el	**cam;
 
 	proj_plane_d = 1;
 	cam = get_scn_els(d->scn_el, CAM);
@@ -99,7 +106,7 @@ void	set_up_vars(t_data *d)
 int	main(int argc, char *argv[])
 {
 	t_data	d;
-	
+
 	init_scene(&d);
 	parse_scene(&d, argc, argv);
 	set_up_vars(&d);
