@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/01 13:32:46 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/02 11:57:16 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	parse_data(t_data *scn, t_scn_el *el, char **input)
 	else if (el->type == LIGHT)
 		parse_elements(el, input, F_COORD | F_INTENSITY | F_COLOR);
 	else if (el->type == DIR_LIGHT)
-		parse_elements(el, input, F_N_VEC | F_INTENSITY);
+		parse_elements(el, input, F_COORD | F_INTENSITY | F_COLOR);
 	else if (el->type == CAM)
 		parse_elements(el, input, F_COORD | F_N_VEC | F_FOV);
 	else if (el->type == SPHERE)
