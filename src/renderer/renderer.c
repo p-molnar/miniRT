@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/02 13:25:47 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/02 16:20:05 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,31 +37,11 @@ int	get_computed_color(t_data *data, t_color obj_color)
 	long double	intensity;
 	int			i;
 
-	// t_scn_el	**lights;
-	// long double	channel_intensity;
-	// int			j;
 	intensity = compute_lighting_intensity(data);
-	// lights = get_scn_els(data->scn_el, G_LIGHT);
-	// i = 0;
-	// while (lights && lights[i])
-	// {
-	// 	j = 1;
-	// 	while (j < COLOR_SIZE)
-	// 	{
-	// 		channel_intensity = get_color(lights[i]->color, j) / 255.0;
-	// 		// printf("channel_int: %Lf\n", channel_intensity);
-	// 		tmp_color = get_color(obj_color, j);
-	// 		obj_color = update_color_channel(obj_color,
-	// 			tmp_color * intensity * channel_intensity, j);
-	// 		j++;
-	// 	}
-	// 	i++;
-	// }
 	i = 1;
 	while (i < COLOR_SIZE)
 	{
 		tmp_color = get_color(obj_color, i);
-		// printf("int:%Lf, col: %d, res: %d\n", intensity, tmp_color, (int)(tmp_color * intensity));
 		obj_color = update_color_channel(obj_color, tmp_color * intensity, i);
 		i++;
 	}
