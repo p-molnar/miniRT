@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/02 13:27:09 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/02 13:42:52 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ long double	compute_lighting_intensity(t_data *data)
 		else
 		{
 			if (lights[i]->type == DIR_LIGHT)
-				data->vec[L] = create_vec(NULL, lights[i]->norm_vec);
+				data->vec[L] = create_vec(NULL, lights[i]->coord);
 			else if (lights[i]->type == LIGHT)
 				data->vec[L] = create_vec(data->vec[P]->coord, lights[i]->coord);	
 			n_dot_l = dot(data->vec[N], data->vec[L]);
