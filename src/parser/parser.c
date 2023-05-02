@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/02 11:57:16 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/02 13:48:34 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	parse_data(t_data *scn, t_scn_el *el, char **input)
 		parse_elements(el, input, F_COORD | F_DMETER | F_COLOR);
 	else if (el->type == PLANE)
 		parse_elements(el, input, F_COORD | F_N_VEC | F_COLOR);
-	else if (el->type == CYLYNDER)
+	else if (el->type == CYLINDER)
 		parse_elements(el, input,
 			F_COORD | F_N_VEC | F_DMETER | F_HEIGHT | F_COLOR);
 }
