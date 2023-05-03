@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/03 09:57:14 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/03 14:09:34 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void		warning(char *msg);
 
 //	renderer
 void		render_img(t_data *d);
-int	get_computed_color(t_data *data, t_scn_el *closest_el);
+int	compute_color(t_data *data, t_scn_el *closest_el);
 
 //	lighting
 long double	compute_lighting_intensity(t_data *data, int specular);
