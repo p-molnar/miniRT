@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/03 14:12:55 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/03 15:25:46 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,13 @@ typedef struct s_scn_el
 	long double		specular;
 	t_color			color;
 }					t_scn_el;
+
+typedef struct	s_closest
+{
+	t_scn_el	*el;
+	long double	dist;
+}	t_closest;
+
 
 typedef struct s_vec
 {

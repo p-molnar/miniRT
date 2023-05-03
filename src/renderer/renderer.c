@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/03 14:40:57 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/03 15:41:42 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,15 @@ int	compute_color(t_data *data, t_scn_el *closest_el)
 	return (color);
 }
 
-long double	*get_intersection_points(t_data *data, t_scn_el *obj)
+long double	*get_intersection_points(t_data *data, long double start[3], t_vec *dir, t_scn_el *obj)
 {
 	long double	quad_param[3];
 	long double	d;
 	long double	*t;
 
-	quad_param[0] = dot(data->vec[D], data->vec[D]);
-	quad_param[1] = 2.0 * dot(data->vec[CO], data->vec[D]);
+	data->vec[CO] = create_vec(obj->coord, start);
+	quad_param[0] = dot(dir, dir);
+	quad_param[1] = 2.0 * dot(data->vec[CO], dir);
 	quad_param[2] = dot(data->vec[CO], data->vec[CO]) - pow(obj->radius, 2);
 	t = quad_eq_solver(quad_param[0], quad_param[1], quad_param[2], &d);
 	if (d < 0)
@@ -71,57 +72,55 @@ long double	*get_intersection_points(t_data *data, t_scn_el *obj)
 	return (t);
 }
 
-t_scn_el	*get_closest_el(t_data *data, long double *closest_t)
+t_closest	*get_closest_el(t_data *data, long double start[3], t_vec *dir)
 {
+	t_closest	*closest;
 	long double	*t;
-	t_scn_el	*closest_el;
 	t_scn_el	**spheres;
 	int			i;
 
-	closest_el = NULL;
+	closest = ft_calloc(1, sizeof(t_closest));
+	if (!closest)
+		return (NULL);
+	closest->dist = INF;
 	spheres = get_scn_els(data->scn_el, SPHERE);
 	i = 0;
 	while (spheres && spheres[i])
 	{
-		data->vec[CO] = create_vec(spheres[i]->coord, data->cam->coord);
-		t = get_intersection_points(data, spheres[i]);
-		if (is_in_range_f(t[0], 1, INF) && t[0] < *closest_t)
+		t = get_intersection_points(data, start, dir, spheres[i]);
+		if (is_in_range_f(t[0], 1, INF) && t[0] < closest->dist)
 		{
-			*closest_t = t[0];
-			closest_el = spheres[i];
-			// printf("intersection 0\n");
+			closest->dist = t[0];
+			closest->el = spheres[i];
 		}
-		if (is_in_range_f(t[1], 1, INF) && t[1] < *closest_t)
+		if (is_in_range_f(t[1], 1, INF) && t[1] < closest->dist)
 		{
-			*closest_t = t[1];
-			closest_el = spheres[i];
-			// printf("intersection 1\n");
+			closest->dist = t[1];
+			closest->el = spheres[i];
 		}
 		i++;
 	}
 	free(t);
-	return (closest_el);
+	return (closest);
 }
 
 t_color	trace_ray(t_data *data, long double *cam_coord,
 		long double *pplane_coord)
 {
-	t_scn_el	*closest_el;
-	long double	dist_to_el;
+	t_closest	*closest;
 	t_color		color;
 
-	dist_to_el = INF;
 	color = BACKGROUND_COLOR;
 	data->vec[D] = create_vec(cam_coord, pplane_coord);
-	closest_el = get_closest_el(data, &dist_to_el);
-	if (closest_el != NULL)
+	closest = get_closest_el(data, cam_coord, data->vec[D]);
+	if (closest->el != NULL)
 	{
 		data->vec[O] = create_vec(cam_coord, cam_coord);
-		data->vec[Ds] = scale(dist_to_el, data->vec[D]);
+		data->vec[Ds] = scale(closest->dist, data->vec[D]);
 		data->vec[P] = add(data->vec[O], data->vec[Ds]);
-		data->vec[N] = create_vec(closest_el->coord, data->vec[P]->coord);
+		data->vec[N] = create_vec(closest->el->coord, data->vec[P]->coord);
 		normalize_vec(data->vec[N]); // might not be needed
-		color = compute_color(data, closest_el);
+		color = compute_color(data, closest->el);
 		// if (color != 255)
 		// 	printf("color: %d\n", color);
 	}
