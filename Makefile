@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/05/03 09:55:18 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/05/03 16:16:23 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,9 +67,15 @@ LIGHTING		=	$(addprefix	lighting/,									\
 								diffuse_lighting.c							\
 								)
 
+RENDERER_COLOR	=	$(addprefix	color/,										\
+								render_color.c								\
+								)
+
 RENDERER		=	$(addprefix	renderer/,									\
 								renderer.c									\
+								renderer_util.c								\
 								$(LIGHTING)									\
+								$(RENDERER_COLOR)							\
 								)
 
 UTIL			=	$(addprefix	util/,										\

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 09:43:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/03 14:04:39 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/03 16:25:23 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ long double	get_diffuse_lighting(t_data *data, t_scn_el *light)
 		if (light->type == DIR_LIGHT)
 		{
 			data->vec[L] = create_vec(NULL, light->coord); // revise!
+			normalize_vec(data->vec[L]); // revise!
 			// data->vec[L] = scale(-1, data->vec[L]);
 		}
 		else if (light->type == LIGHT)

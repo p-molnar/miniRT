@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/03 14:09:34 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/03 16:15:29 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,12 @@ t_color		get_g(int rgba);
 t_color		get_b(int rgba);
 t_color		get_a(int rgba);
 
+//	render color
+int			compute_color(t_data *data, t_scn_el *closest_el);
+
+// render util
+void	draw_axes(t_data *data);
+t_closest	*get_closest_el(t_data *data, long double start[3], t_vec *dir, long double range[RANGE_SIZE]);
+long double	*get_intersection_points(t_data *data, long double start[3], t_vec *dir, t_scn_el *obj);
+long double	*convert_to_viewport(int x, int y, long double *viewport);
 #endif
