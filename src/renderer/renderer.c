@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/03 09:35:57 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/03 14:40:57 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,23 @@ long double	*convert_to_viewport(int x, int y, long double *viewport)
 	return (coord);
 }
 
-int	get_computed_color(t_data *data, t_scn_el *closest_el)
+int	compute_color(t_data *data, t_scn_el *closest_el)
 {
 	t_color		tmp_color;
+	t_color		color;
 	long double	intensity;
 	int			i;
 
 	intensity = compute_lighting_intensity(data, closest_el->specular);
+	color = 0xFFFFFFFF;
 	i = 1;
 	while (i < COLOR_SIZE)
 	{
 		tmp_color = get_color(closest_el->color, i);
-		closest_el->color = update_color_channel(closest_el->color, tmp_color * intensity, i);
+		color = update_color_channel(color, tmp_color * intensity, i);
 		i++;
 	}
-	return (closest_el->color);
+	return (color);
 }
 
 long double	*get_intersection_points(t_data *data, t_scn_el *obj)
@@ -106,21 +108,24 @@ t_color	trace_ray(t_data *data, long double *cam_coord,
 {
 	t_scn_el	*closest_el;
 	long double	dist_to_el;
+	t_color		color;
 
 	dist_to_el = INF;
+	color = BACKGROUND_COLOR;
 	data->vec[D] = create_vec(cam_coord, pplane_coord);
 	closest_el = get_closest_el(data, &dist_to_el);
-	if (closest_el == NULL)
-		return (data->bg);
-	else
+	if (closest_el != NULL)
 	{
 		data->vec[O] = create_vec(cam_coord, cam_coord);
 		data->vec[Ds] = scale(dist_to_el, data->vec[D]);
 		data->vec[P] = add(data->vec[O], data->vec[Ds]);
 		data->vec[N] = create_vec(closest_el->coord, data->vec[P]->coord);
 		normalize_vec(data->vec[N]); // might not be needed
-		return (get_computed_color(data, closest_el));
+		color = compute_color(data, closest_el);
+		// if (color != 255)
+		// 	printf("color: %d\n", color);
 	}
+	return (color);
 }
 
 void	draw_axes(t_data *data)
