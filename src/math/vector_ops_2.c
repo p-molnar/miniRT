@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 14:48:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/03 09:35:21 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/03 12:01:42 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ long double	dot(t_vec *vec_1, t_vec *vec_2)
 
 	result = 0;
 	i = 0;
-	while (i < COORD_SIZE)
+	while (i < COORD_SIZE && vec_1 && vec_2)
 	{
 		result += vec_1->coord[i] * vec_2->coord[i];
 		i++;
