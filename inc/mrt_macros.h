@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/02 17:06:16 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/03 13:08:46 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # define CANVAS_W 800
 # define CANVAS_H 800
 # define INF 99999
+# define BACKGROUND_COLOR 0xFFFFFFFF 
 
 enum e_range
 {
