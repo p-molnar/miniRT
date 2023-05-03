@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/02 17:06:25 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/03 14:12:55 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ typedef struct s_data
 {
 	t_list			*scn_el;
 	t_scn_el		*cam;
-	t_color			bg;
 	long double		viewport[COORD_SIZE];
 	t_vec			*vec[PARAM_SIZE];
 	mlx_t			*mlx;
