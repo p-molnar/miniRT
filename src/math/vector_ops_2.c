@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 14:48:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/02 16:57:16 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/03 09:35:21 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 t_vec	*scale(long double scaler, t_vec *vec)
 {
 	t_vec	*new;
-	int	i;
+	int		i;
 
 	new = malloc(1 * sizeof(t_vec));
 	if (!new)

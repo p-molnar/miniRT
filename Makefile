@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/05/02 13:51:43 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/05/03 09:55:18 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,8 @@ FREE			=	$(addprefix	free/,										\
 
 LIGHTING		=	$(addprefix	lighting/,									\
 								lighting.c									\
+								specular_lighting.c							\
+								diffuse_lighting.c							\
 								)
 
 RENDERER		=	$(addprefix	renderer/,									\

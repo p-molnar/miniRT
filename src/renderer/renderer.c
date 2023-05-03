@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/02 16:53:04 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/03 09:35:57 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ t_color	trace_ray(t_data *data, long double *cam_coord,
 	{
 		data->vec[O] = create_vec(cam_coord, cam_coord);
 		data->vec[Ds] = scale(dist_to_el, data->vec[D]);
-		data->vec[P] = add(data->vec[O], data->vec[D]);
+		data->vec[P] = add(data->vec[O], data->vec[Ds]);
 		data->vec[N] = create_vec(closest_el->coord, data->vec[P]->coord);
 		normalize_vec(data->vec[N]); // might not be needed
 		return (get_computed_color(data, closest_el));
