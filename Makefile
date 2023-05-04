@@ -6,18 +6,21 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/05/03 16:16:23 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/05/04 11:39:44 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 CC 				= 	gcc
 CFLAGS 			= 	-Wall -Werror -Wextra $(addprefix -I, $(INCL))
-# CFLAGS 			= 	$(addprefix -I, $(INCL))
 LDFLAGS			=	-L$(shell brew --prefix glfw)/lib -lglfw -framework Cocoa -framework OpenGL -framework IOKit
+MACRO_FLAGS		=	-DRECURSIVE_DEPTH=$(RECURSIVE_DEPTH)
 CFLAGS			+=	-g # debug
 CFLAGS			+=	-fsanitize=address
 NAME			=	minirt
 INCL			=	inc libft/inc MLX42/include/MLX42
+
+#	ENV VAR
+RECURSIVE_DEPTH	?=	0
 
 #	DEPENDENDENCIES
 LIBFT_DIR		=	libft
@@ -118,7 +121,7 @@ $(NAME):	$(LIBFT) $(MLX42) $(OBJ)
 $(OBJ_PATH)%.o:	src/%.c
 	@mkdir -p $(dir $@)
 	@printf "$(STATUS_FMT)" "$(P_NAME)" "building" "$<"
-	@$(CC) $(CFLAGS) -c $^ -o $@ 
+	@$(CC) $(CFLAGS) $(MACRO_FLAGS) -c $^ -o $@ 
 	@printf "[$(GREEN)DONE$(DEF)]\n"
 
 $(MLX42):	$(MLX42_BUILD_DIR)
