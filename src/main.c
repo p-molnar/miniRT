@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/03 14:11:39 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/04 11:01:11 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	print_scene_el(t_data *scn)
 		printf("fov: %Lf\n", el->fov);
 		printf("intensity: %Lf\n", el->intensity);
 		printf("specular: %Lf\n", el->specular);
+		printf("reflection: %Lf\n", el->reflection);
 		printf("color: r=%d, g=%d, b=%d, a=%d\n",
 			get_color(el->color, R),
 			get_color(el->color, G),

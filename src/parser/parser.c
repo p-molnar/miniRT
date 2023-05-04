@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/02 15:04:31 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/04 10:57:43 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,20 +69,19 @@ void	parse_data(t_data *scn, t_scn_el *el, char **input)
 		error(strconcat(2, "Duplicate element type: ", type[el->type]),
 			EXIT, 1);
 	if (el->type == AMB_LIGHT)
-		parse_elements(el, input, F_INTENSITY | F_COLOR);
+		parse_elements(el, input, F_AMB_LIGHT);
 	else if (el->type == LIGHT)
-		parse_elements(el, input, F_COORD | F_INTENSITY | F_COLOR);
+		parse_elements(el, input, F_LIGHT);
 	else if (el->type == DIR_LIGHT)
-		parse_elements(el, input, F_COORD | F_INTENSITY | F_COLOR);
+		parse_elements(el, input, F_DIR_LIGHT);
 	else if (el->type == CAM)
-		parse_elements(el, input, F_COORD | F_N_VEC | F_FOV);
+		parse_elements(el, input, F_CAM);
 	else if (el->type == SPHERE)
-		parse_elements(el, input, F_COORD | F_DMETER | F_COLOR | F_SPECULAR);
+		parse_elements(el, input, F_SPHERE);
 	else if (el->type == PLANE)
-		parse_elements(el, input, F_COORD | F_N_VEC | F_COLOR | F_SPECULAR);
+		parse_elements(el, input, F_PLANE);
 	else if (el->type == CYLINDER)
-		parse_elements(el, input,
-			F_COORD | F_N_VEC | F_DMETER | F_HEIGHT | F_COLOR | F_SPECULAR);
+		parse_elements(el, input, F_CYLINDER);
 }
 
 void	parse_line(t_data *scn, char *line)
