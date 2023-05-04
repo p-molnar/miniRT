@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/03 16:15:07 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/04 17:20:44 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,9 @@ void	draw_axes(t_data *data)
 		mlx_put_pixel(data->img, CANVAS_W / 2, y++, c);
 }
 
-t_closest	*get_closest_el(t_data *data, long double start[3], t_vec *dir, long double range[RANGE_SIZE])
+t_closest	*get_closest_el(t_scn_el **el_arr, long double start_coord[3], t_vec *dir, const long double *range)
 {
 	t_closest	*closest;
-	t_scn_el	**spheres;
 	long double	*t;
 	int			i;
 
@@ -41,20 +40,19 @@ t_closest	*get_closest_el(t_data *data, long double start[3], t_vec *dir, long d
 		return (NULL);
 	closest->el = NULL;
 	closest->dist = INF;
-	spheres = get_scn_els(data->scn_el, SPHERE);
 	i = 0;
-	while (spheres && spheres[i])
+	while (el_arr && el_arr[i])
 	{
-		t = get_intersection_points(data, start, dir, spheres[i]);
+		t = get_intersection_points(start_coord, dir, el_arr[i]);
 		if (is_in_range_f(t[0], range[MIN], range[MAX]) && t[0] < closest->dist)
 		{
 			closest->dist = t[0];
-			closest->el = spheres[i];
+			closest->el = el_arr[i];
 		}
 		if (is_in_range_f(t[1], range[MIN], range[MAX]) && t[1] < closest->dist)
 		{
 			closest->dist = t[1];
-			closest->el = spheres[i];
+			closest->el = el_arr[i];
 		}
 		i++;
 	}
@@ -62,17 +60,21 @@ t_closest	*get_closest_el(t_data *data, long double start[3], t_vec *dir, long d
 	return (closest);
 }
 
-long double	*get_intersection_points(t_data *data, long double start[3], t_vec *dir, t_scn_el *obj)
+long double	*get_intersection_points(long double start[3], t_vec *dir, t_scn_el *obj)
 {
 	long double	quad_param[3];
 	long double	d;
 	long double	*t;
+	t_vec		*CO;
 
-	data->vec[CO] = create_vec(obj->coord, start);
+	CO = create_vec(obj->coord, start);
+	if (!CO)
+		return (NULL);
 	quad_param[0] = dot(dir, dir);
-	quad_param[1] = 2.0 * dot(data->vec[CO], dir);
-	quad_param[2] = dot(data->vec[CO], data->vec[CO]) - pow(obj->radius, 2);
+	quad_param[1] = 2.0 * dot(CO, dir);
+	quad_param[2] = dot(CO, CO) - pow(obj->radius, 2);
 	t = quad_eq_solver(quad_param[0], quad_param[1], quad_param[2], &d);
+	free(CO);
 	if (d < 0)
 	{
 		t = malloc(2 * sizeof(long double));
