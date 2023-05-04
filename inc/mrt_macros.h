@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/04 11:02:14 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/04 13:44:45 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,12 @@
 # define CANVAS_W 800
 # define CANVAS_H 800
 # define INF 99999
-# define BACKGROUND_COLOR 0xFFFFFFFF
+// # define BACKGROUND_COLOR 0xFFFFFFFF
+# define BACKGROUND_COLOR 0x000000FF
+
+# ifndef RECURSIVE_DEPTH
+#  define RECURSIVE_DEPTH 0
+# endif
 
 enum	e_range
 {
@@ -35,6 +40,7 @@ enum	e_vec_params
 	CO,
 	D,
 	Ds,
+	Dneg,
 	O,
 	P,
 	N,
@@ -42,7 +48,7 @@ enum	e_vec_params
 	L,
 	Rv,
 	V,
-	PARAM_SIZE,
+	VEC_SIZE,
 };
 
 enum	e_coord
@@ -85,6 +91,7 @@ enum	e_scn_el_type
 	SPHERE = 1 << 4,
 	PLANE = 1 << 5,
 	CYLINDER = 1 << 6,
+	SCN_SIZE = CYLINDER + 1
 };
 
 enum	e_field_flags
