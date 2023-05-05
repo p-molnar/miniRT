@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/04 17:14:23 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/05 09:52:14 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void		warning(char *msg);
 
 //	renderer
 void		render_img(t_data *d);
+t_color	trace_ray(t_data *data, long double *start_coord, t_vec *dir,
+		const long double *range, int recursion_depth);
 int	get_incident_point_color(t_data *data, t_scn_el *closest_el);
 
 //	lighting
