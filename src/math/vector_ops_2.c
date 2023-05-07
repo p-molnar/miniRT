@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 14:48:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/07 23:20:09 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/08 00:29:43 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,15 +106,17 @@ t_vec	*product(long double *mx, t_vec *vec)
 	long double new_coords[3];
 	long double sum;
 	int i;
+	int j;
 
 	sum = 0;
 	i = 0;
+	j = 0;
 	while (i < 9)
 	{
 		sum += mx[i] * vec->coord[i % 3];
 		if ((i + 1) % 3 == 0)
 		{
-			new_coords[i % 3] = sum;
+			new_coords[j++] = sum;
 			sum = 0;
 		}
 		i++;	
