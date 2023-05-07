@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/05 17:23:36 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/07 23:45:39 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ t_vec		*add(t_vec *vec_1, t_vec *vec_2);
 t_vec		*scale(long double scaler, t_vec *vec);
 t_vec		*subtract(t_vec *vec_1, t_vec *vec_2);
 t_vec		*product(long double *mx, t_vec *vec);
+t_vec		*cross(t_vec *vec_1, t_vec *vec_2);
 
 long double	*quad_eq_solver(long double a,
 							long double b,
