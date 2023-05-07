@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:27:54 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/04 10:59:38 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/05 12:34:40 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,27 @@ void	parse_type_identifier(t_scn_el *el, char *line)
 	el->type = el_type;
 }
 
-void	parse_elements(t_scn_el *el, char **input, unsigned int flags)
+void	parse_elements(t_scn_el *el, char **input, unsigned int field)
 {
 	int	col;
 
 	col = 1;
-	if (flags & F_COORD)
+	if (field & F_COORD)
 		parse_coordinates(el->coord, input[col++]);
-	if (flags & F_N_VEC)
-		parse_norm_vec(el->norm_vec, input[col++]);
-	if (flags & F_DMETER)
+	if (field & F_N_VEC)
+		parse_norm_vec(&el->n_vec, input[col++]);
+	if (field & F_DMETER)
 		parse_float(&el->diameter, input[col++]);
-	if (flags & F_HEIGHT)
+	if (field & F_HEIGHT)
 		parse_float(&el->height, input[col++]);
-	if (flags & F_FOV)
+	if (field & F_FOV)
 		parse_range(&el->fov, input[col++], 0.0, 180.0);
-	if (flags & F_INTENSITY)
+	if (field & F_INTENSITY)
 		parse_range(&el->intensity, input[col++], 0.0, 1.0);
-	if (flags & F_COLOR)
+	if (field & F_COLOR)
 		parse_color(&el->color, input[col++], 0, 255);
-	if (flags & F_SPECULAR)
+	if (field & F_SPECULAR)
 		parse_range(&el->specular, input[col++], -1, 3000);
-	if (flags & F_REFLECTION)
+	if (field & F_REFLECTION)
 		parse_range(&el->reflection, input[col++], 0, 1);
 }

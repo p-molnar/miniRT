@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:35:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/04/28 14:56:27 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/05 12:34:50 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	parse_coordinates(long double *coord, char *input)
 	free_arr((void **)coords);
 }
 
-void	parse_norm_vec(long double *coord, char *input)
+void	parse_norm_vec(t_vec **vec, char *input)
 {
 	char		**coords;
 	int			i;
@@ -58,8 +58,10 @@ void	parse_norm_vec(long double *coord, char *input)
 		if (!is_in_range_f(f[i], -1.0, 1.0))
 			error(strconcat(6, "Number out of range [",
 					"-1.0", ", ", "1.0", "]: ", coords[i]), EXIT, 1);
-		coord[i] = f[i];
 		i++;
 	}
+	*vec = create_vec(NULL, f);
+	if (!vec)
+		error(ft_strdup("Malloc error at vector creation"), EXIT, 1);
 	free_arr((void **)coords);
 }
