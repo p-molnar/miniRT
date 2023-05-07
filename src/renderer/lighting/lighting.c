@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/04 17:16:44 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/07 15:48:20 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,19 @@ long double	get_lighting_intensity(t_data *data, int specular)
 
 	intensity = 0;
 	range[0] = 0.001;
-	init_vec(tmp_vec, VEC_SIZE);
 	lights = get_scn_els(data->scn_el, G_LIGHT);
+	shadow = NULL;
 	i = 0;
 	while (lights && lights[i])
 	{
+		init_vec(tmp_vec, VEC_SIZE);
 		if (lights[i]->type == AMB_LIGHT)
 			intensity += lights[i]->intensity;
 		else
 		{
 			if (lights[i]->type == DIR_LIGHT)
 			{
-				data->vec[L] = create_vec(NULL, lights[i]->coord); // revise!
+				tmp_vec[L] = create_vec(NULL, lights[i]->coord); // revise!
 				range[1] = INF;
 			}
 			else if (lights[i]->type == LIGHT)
@@ -67,13 +68,11 @@ long double	get_lighting_intensity(t_data *data, int specular)
 					intensity += lights[i]->intensity * pow(rv_dot_v
 							/ (tmp_vec[Rv]->len * tmp_vec[V]->len), specular);
 			}
-			// intensity += get_diffuse_lighting(data, lights[i]);
-			// intensity += get_specular_lighting(vec, lights[i], specular);
 			free(shadow);
+			free_vec(tmp_vec, VEC_SIZE);
 		}
 		i++;
 	}
-	free_vec(tmp_vec, VEC_SIZE);
 	free(lights);
 	return (intensity);
 }
