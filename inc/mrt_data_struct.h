@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/04 13:44:45 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/05 17:10:34 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,18 @@
 typedef int			t_color;
 typedef long double	*t_3d_coord;
 
+typedef struct s_vec
+{
+	long double		len;
+	long double		coord[COORD_SIZE];
+	long double		n_coord[COORD_SIZE];
+}					t_vec;
+
 typedef struct s_scn_el
 {
 	int				type;
 	long double		coord[COORD_SIZE];
-	long double		norm_vec[COORD_SIZE];
+	t_vec			*n_vec;
 	long double		diameter;
 	long double		radius;
 	long double		height;
@@ -103,14 +110,6 @@ typedef struct	s_closest
 	t_scn_el	*el;
 	long double	dist;
 }	t_closest;
-
-
-typedef struct s_vec
-{
-	long double		len;
-	long double		coord[COORD_SIZE];
-	long double		n_coord[COORD_SIZE];
-}					t_vec;
 
 typedef struct s_data
 {
