@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/04 11:01:11 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/08 00:13:41 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,13 @@ void	print_scene_el(t_data *scn)
 				el->coord[0],
 				el->coord[1],
 				el->coord[2]);
-		printf("norm_vec: x=%Lf, y=%Lf, z=%Lf\n",
-				el->norm_vec[0],
-				el->norm_vec[1],
-				el->norm_vec[2]);
+		if (el->n_vec)
+		{
+			printf("norm_vec: x=%Lf, y=%Lf, z=%Lf\n",
+					el->n_vec->n_coord[0],
+					el->n_vec->n_coord[1],
+					el->n_vec->n_coord[2]);
+		}
 		printf("diameter: %Lf\n", el->diameter);
 		printf("radius: %Lf\n", el->radius);
 		printf("height: %Lf\n", el->height);
@@ -110,7 +113,7 @@ int	main(int argc, char *argv[])
 	parse_scene(&d, argc, argv);
 	set_up_vars(&d);
 	create_projection_plane(&d);
-	print_scene_el(&d);
+	// print_scene_el(&d);
 	d.mlx = mlx_init(CANVAS_W + 5, CANVAS_H + 5, "MiniRT", true);
 	if (!d.mlx)
 		error(ft_strdup(mlx_strerror(mlx_errno)), EXIT, 1);
