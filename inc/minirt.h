@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/05 09:52:14 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/05 17:23:36 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void		parse_type_identifier(t_scn_el *el, char *line);
 
 //	element parser
 void		parse_coordinates(long double *coord, char *input);
-void		parse_norm_vec(long double *coord, char *input);
+void	parse_norm_vec(t_vec **vec, char *input);
 void		parse_float(long double *f, char *input);
 void		parse_range(long double *f, char *input, long double n_lower,
 				long double n_upper);
@@ -69,6 +69,7 @@ long double	dot(t_vec *vec_1, t_vec *vec_2);
 t_vec		*add(t_vec *vec_1, t_vec *vec_2);
 t_vec		*scale(long double scaler, t_vec *vec);
 t_vec		*subtract(t_vec *vec_1, t_vec *vec_2);
+t_vec		*product(long double *mx, t_vec *vec);
 
 long double	*quad_eq_solver(long double a,
 							long double b,
@@ -93,5 +94,9 @@ int			get_incident_point_color(t_data *data, t_scn_el *closest_el);
 void	draw_axes(t_data *data);
 t_closest	*get_closest_el(t_scn_el **el_arr, long double start_coord[3], t_vec *dir, const long double *range);
 long double	*get_intersection_points(long double start[3], t_vec *dir, t_scn_el *obj);
-long double	*convert_to_viewport(int x, int y, long double *viewport);
+long double	*convert_to_viewport(int x, int y, long double *viewport, t_3d_coord cam_coord);
+
+//	rotation 
+double long	*get_rotation_angles(t_vec *dir, t_vec *rotation_vec);
+long double	*get_rotation_mx(long double *angles);
 #endif
