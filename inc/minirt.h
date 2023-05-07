@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/07 23:45:39 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/08 00:14:48 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,5 @@ long double	*convert_to_viewport(int x, int y, long double *viewport, t_3d_coord
 
 //	rotation 
 double long	*get_rotation_angles(t_vec *dir, t_vec *rotation_vec);
-long double	*get_rotation_mx(long double *angles);
+long double	*get_rotation_mx(long double angle, t_vec *u);
 #endif
