@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/08 00:24:32 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/08 00:40:55 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,8 @@ long double	*get_rotation_mx(long double theta, t_vec *axis)
 	long double	*u;
 	long double	*mx;
 
-	sin_t = sin(theta);
-	cos_t = cos(theta);
+	sin_t = sin(deg_to_rad(theta));
+	cos_t = cos(deg_to_rad(theta));
 	u = axis->n_coord;
 	mx = malloc(9 * sizeof(long double));
 	mx[0] = cos_t + pow(u[0], 2) * (1 - cos_t);
@@ -139,6 +139,8 @@ void	render_img(t_data *data)
 	long double angle = rad_to_deg(acos(dot(z, data->cam->n_vec) / (z->len * data->cam->n_vec->len)));
 	t_vec	*rot_axis = cross(z, data->cam->n_vec);
 	long double *mx = get_rotation_mx(angle, rot_axis);
+	for (int i = 0; i < 9; i++)
+		printf("%Lf\n", mx[i]);
 	printf("ra: %Lf;%Lf;%Lf\n", rot_axis->coord[0], rot_axis->coord[1], rot_axis->coord[2]);
 	canvas[X] = -CANVAS_W / 2;
 	while (canvas[X] < CANVAS_W / 2)
@@ -150,14 +152,14 @@ void	render_img(t_data *data)
 			screen[Y] = CANVAS_H / 2 - canvas[Y];
 			init_vec(data->vec, VEC_SIZE);
 			pplane_coord = convert_to_viewport(canvas[X], canvas[Y],
-					data->viewport, data->cam->coord);
+					data->viewport);
 			data->vec[D] = create_vec(data->cam->coord, pplane_coord);
 			if (canvas[X] == 0 && canvas[Y] == 0)
 				printf("%Lf; %Lf; %Lf\n", data->vec[D]->coord[0], data->vec[D]->coord[1], data->vec[D]->coord[2]);
 			data->vec[D] = product(mx, data->vec[D]);
 			if (canvas[X] == 0 && canvas[Y] == 0)
 				printf("%Lf; %Lf; %Lf\n", data->vec[D]->coord[0], data->vec[D]->coord[1], data->vec[D]->coord[2]);
-			color = trace_ray(data, data->cam->coord, data->vec[D], range, 2);
+			color = trace_ray(data, data->cam->coord, data->vec[D], range, 0);
 			mlx_put_pixel(data->img, screen[X], screen[Y], color);
 			free_vec(data->vec, VEC_SIZE);
 			free(pplane_coord);
