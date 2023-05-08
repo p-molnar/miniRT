@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/08 13:56:50 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/08 20:28:06 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ long double	*convert_to_viewport(int x, int y, long double *viewport, t_scn_el *
 		error(ft_strdup("Malloc error\n"), EXIT, 1);
 	pplane[X] = x * viewport[X] / CANVAS_W + cam->coord[X];
 	pplane[Y] = y * viewport[Y] / CANVAS_H + cam->coord[Y];
-	pplane[Z] = cam->coord[Z] + 1;
+	pplane[Z] = viewport[Z] + cam->coord[Z];
 	return (pplane);
 }
 
