@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/08 20:02:52 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/08 23:00:24 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,10 @@ int			get_incident_point_color(t_data *data, t_scn_el *closest_el);
 
 // render util
 void	draw_axes(t_data *data);
-t_closest	*get_closest_el(t_scn_el **el_arr, long double start_coord[3], t_vec *dir, const long double *range);
+// t_closest	*get_closest_el(t_scn_el **el_arr, long double start_coord[3], t_vec *dir, const long double *range);
+t_closest	*get_closest_el(t_data *data, t_scn_el **el_arr, long double start_coord[3], t_vec *dir, const long double *range);
 long double	*get_intersection_points(long double start[3], t_vec *dir, t_scn_el *obj);
+long double	*get_plane_intersection(t_data *data, t_scn_el *obj);
 long double	*convert_to_viewport(int x, int y, long double *viewport, t_scn_el *cam);
 
 //	rotation 

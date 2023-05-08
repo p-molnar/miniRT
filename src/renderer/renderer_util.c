@@ -6,12 +6,13 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/08 20:28:06 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/08 23:14:30 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 
 void	draw_axes(t_data *data)
@@ -29,11 +30,12 @@ void	draw_axes(t_data *data)
 		mlx_put_pixel(data->img, CANVAS_W / 2, y++, c);
 }
 
-t_closest	*get_closest_el(t_scn_el **el_arr, long double start_coord[3], t_vec *dir, const long double *range)
+t_closest	*get_closest_el(t_data *data, t_scn_el **el_arr, long double start_coord[3], t_vec *dir, const long double *range)
 {
 	t_closest	*closest;
 	long double	*t;
 	int			i;
+	(void) start_coord, (void) dir;
 
 	closest = ft_calloc(1, sizeof(t_closest));
 	if (!closest)
@@ -43,7 +45,8 @@ t_closest	*get_closest_el(t_scn_el **el_arr, long double start_coord[3], t_vec *
 	i = 0;
 	while (el_arr && el_arr[i])
 	{
-		t = get_intersection_points(start_coord, dir, el_arr[i]);
+		t = get_plane_intersection(data, el_arr[i]);
+		// t = get_intersection_points(start_coord, dir, el_arr[i]);
 		if (is_in_range_f(t[0], range[MIN], range[MAX]) && t[0] < closest->dist)
 		{
 			closest->dist = t[0];
@@ -60,6 +63,22 @@ t_closest	*get_closest_el(t_scn_el **el_arr, long double start_coord[3], t_vec *
 	return (closest);
 }
 
+long double	*get_plane_intersection(t_data *data, t_scn_el *obj)
+{
+	long double	*t;
+	t_vec		*Q;
+	t_vec		*E;
+	t_vec		*Q_less_E;
+
+	t = malloc(2 * sizeof(long double));
+	Q = create_vec(NULL, obj->coord);
+	E = create_vec(NULL, data->cam->coord);
+	Q_less_E = subtract(Q, E);
+	t[0] = dot(obj->n_vec, Q_less_E) / dot(obj->n_vec, data->vec[D]);
+	printf("t: %Lf\n", t[0]);
+	t[1] = t[0];
+	return (t);
+}
 long double	*get_intersection_points(long double start[3], t_vec *dir, t_scn_el *obj)
 {
 	long double	quad_param[3];

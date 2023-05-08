@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/07 15:48:20 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/08 23:02:25 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 long double	get_lighting_intensity(t_data *data, int specular)
 {
 	long double	intensity;
-	t_closest	*shadow;
+	// t_closest	*shadow;
 	t_scn_el	**lights;
 	long double	range[RANGE_SIZE];
 	t_vec		*tmp_vec[VEC_SIZE];
@@ -27,7 +27,7 @@ long double	get_lighting_intensity(t_data *data, int specular)
 	intensity = 0;
 	range[0] = 0.001;
 	lights = get_scn_els(data->scn_el, G_LIGHT);
-	shadow = NULL;
+	// shadow = NULL;
 	i = 0;
 	while (lights && lights[i])
 	{
@@ -46,13 +46,13 @@ long double	get_lighting_intensity(t_data *data, int specular)
 				tmp_vec[L] = create_vec(data->vec[P]->coord, lights[i]->coord);
 				range[1] = 1;
 			}
-			shadow = get_closest_el(get_scn_els(data->scn_el, SPHERE), data->vec[P]->coord, tmp_vec[L], range);
-			if (shadow->el != NULL)
-			{
-				i++;
-				free(shadow);
-				continue ;
-			}
+			// shadow = get_closest_el(get_scn_els(data->scn_el, SPHERE), data->vec[P]->coord, tmp_vec[L], range);
+			// if (shadow->el != NULL)
+			// {
+			// 	i++;
+			// 	free(shadow);
+			// 	continue ;
+			// }
 			long double n_dot_l = dot(data->vec[N], tmp_vec[L]);
 			if (n_dot_l > 0)
 				intensity += lights[i]->intensity * n_dot_l / (tmp_vec[L]->len
@@ -68,7 +68,7 @@ long double	get_lighting_intensity(t_data *data, int specular)
 					intensity += lights[i]->intensity * pow(rv_dot_v
 							/ (tmp_vec[Rv]->len * tmp_vec[V]->len), specular);
 			}
-			free(shadow);
+			// free(shadow);
 			free_vec(tmp_vec, VEC_SIZE);
 		}
 		i++;

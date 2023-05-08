@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/08 20:39:33 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/08 23:02:02 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,9 @@ t_color	trace_ray(t_data *data, long double *start_coord, t_vec *dir,
 	long double			ref_factor;
 	const long double	ref_range[RANGE_SIZE] = {0.001, INF};
 
-	el_arr = get_scn_els(data->scn_el, SPHERE);
-	closest = get_closest_el(el_arr, start_coord, dir, range);
+	// el_arr = get_scn_els(data->scn_el, SPHERE);
+	el_arr = get_scn_els(data->scn_el, PLANE);
+	closest = get_closest_el(data, el_arr, start_coord, dir, range);
 	if (!closest || !closest->el)
 		return (BACKGROUND_COLOR);
 	data->vec[P] = get_incident_point(start_coord, dir, closest->dist);
