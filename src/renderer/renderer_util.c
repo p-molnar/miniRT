@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/08 13:33:59 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/08 13:56:50 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,12 @@ long double	*get_intersection_points(long double start[3], t_vec *dir, t_scn_el 
 long double	*convert_to_viewport(int x, int y, long double *viewport, t_scn_el *cam)
 {
 	long double	*pplane;
-	// (void) cam;
 
 	pplane = malloc(COORD_SIZE * sizeof(long double));
 	if (!pplane)
 		error(ft_strdup("Malloc error\n"), EXIT, 1);
 	pplane[X] = x * viewport[X] / CANVAS_W + cam->coord[X];
 	pplane[Y] = y * viewport[Y] / CANVAS_H + cam->coord[Y];
-	// pplane[X] = x * viewport[X] / CANVAS_W;
-	// pplane[Y] = y * viewport[Y] / CANVAS_H;
 	pplane[Z] = cam->coord[Z] + 1;
 	return (pplane);
 }
