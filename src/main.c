@@ -6,23 +6,16 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/08 00:13:41 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/08 13:35:12 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <MLX42.h>
 #include <math.h>
 #include <minirt.h>
-#include <mrt_data_struct.h>
-#include <mrt_macros.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-void	init_scene(t_data *scn)
-{
-	ft_memset(scn, 0, sizeof(t_data));
-}
 
 void	print_scene_el(t_data *scn)
 {
@@ -67,42 +60,6 @@ void	print_scene_el(t_data *scn)
 			get_color(el->color, A));
 		scn_el = scn_el->next;
 	}
-}
-
-void	create_projection_plane(t_data *d)
-{
-	long double	proj_plane_d;
-	long double	proj_plane_side_len;
-	long double	fov_rad;
-	t_scn_el	**cam;
-
-	proj_plane_d = 1;
-	cam = get_scn_els(d->scn_el, CAM);
-	if (!cam)
-		error(ft_strdup("No camera found\n"), EXIT, 1);
-	fov_rad = deg_to_rad(cam[0]->fov / 2.0);
-	proj_plane_side_len = tan(fov_rad) * (2.0 * proj_plane_d);
-	d->viewport[X] = proj_plane_side_len;
-	d->viewport[Y] = proj_plane_side_len;
-	free(cam);
-}
-
-void	set_up_vars(t_data *d)
-{
-	t_list		*ptr;
-	t_scn_el	*obj;
-	t_scn_el	**cam;
-
-	ptr = d->scn_el;
-	while (ptr)
-	{
-		obj = ptr->content;
-		obj->radius = obj->diameter / 2;
-		ptr = ptr->next;
-	}
-	cam = get_scn_els(d->scn_el, CAM);
-	if (cam)
-		d->cam = cam[0];
 }
 
 int	main(int argc, char *argv[])

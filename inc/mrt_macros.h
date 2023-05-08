@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/04 13:44:45 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/08 11:17:11 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,14 @@
 # ifndef RECURSIVE_DEPTH
 #  define RECURSIVE_DEPTH 0
 # endif
+
+enum	e_dim_size
+{
+	WIDTH,
+	HEIGHT,
+	DEPTH,
+	DIM_SIZE,
+};
 
 enum	e_range
 {

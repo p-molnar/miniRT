@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/04 17:20:44 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/08 13:33:59 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ long double	*get_intersection_points(long double start[3], t_vec *dir, t_scn_el 
 	t_vec		*CO;
 
 	CO = create_vec(obj->coord, start);
-	if (!CO)
-		return (NULL);
 	quad_param[0] = dot(dir, dir);
 	quad_param[1] = 2.0 * dot(CO, dir);
 	quad_param[2] = dot(CO, CO) - pow(obj->radius, 2);
@@ -86,15 +84,33 @@ long double	*get_intersection_points(long double start[3], t_vec *dir, t_scn_el 
 	return (t);
 }
 
-long double	*convert_to_viewport(int x, int y, long double *viewport)
+long double	*convert_to_viewport(int x, int y, long double *viewport, t_scn_el *cam)
 {
-	long double	*coord;
+	long double	*pplane;
+	// (void) cam;
 
-	coord = malloc(COORD_SIZE * sizeof(long double));
-	if (!coord)
+	pplane = malloc(COORD_SIZE * sizeof(long double));
+	if (!pplane)
 		error(ft_strdup("Malloc error\n"), EXIT, 1);
-	coord[X] = x * viewport[X] / CANVAS_W;
-	coord[Y] = y * viewport[Y] / CANVAS_H;
-	coord[Z] = 1;
-	return (coord);
+	pplane[X] = x * viewport[X] / CANVAS_W + cam->coord[X];
+	pplane[Y] = y * viewport[Y] / CANVAS_H + cam->coord[Y];
+	// pplane[X] = x * viewport[X] / CANVAS_W;
+	// pplane[Y] = y * viewport[Y] / CANVAS_H;
+	pplane[Z] = cam->coord[Z] + 1;
+	return (pplane);
+}
+
+t_vec	*get_ray_reflection(t_vec *ray, t_vec *norm)
+{
+	long double	ray_dot_norm;
+	t_vec		*scaled_vec;
+	t_vec		*scaled_minus_ray;
+
+	if (!ray || !norm)
+		return (NULL);
+	ray_dot_norm = 2 * dot(ray, norm);
+	scaled_vec = scale(ray_dot_norm, norm);
+	scaled_minus_ray = subtract(scaled_vec, ray);
+	free(scaled_vec);
+	return (scaled_minus_ray);
 }

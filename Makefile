@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/05/04 11:39:44 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/05/08 10:49:55 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,9 @@ P_NAME_W		=	%-10s
 STATUS_FMT		=	$(BOLD)$(P_NAME_W) $(DEF) $(STATUS_W) $(SPACE_W)
 
 #	PARSER
+INITAILISER		=	$(addprefix initialiser/,								\
+								init.c)
+
 PARSER			=	$(addprefix	parser/,									\
 								parser.c									\
 								parser_utils.c								\
@@ -99,6 +102,7 @@ COLOR			=	$(addprefix	color/,										\
 
 #	SOURCE FILES
 SRC				=	main.c													\
+					$(INITAILISER)											\
 					$(PARSER)												\
 					$(ERROR)												\
 					$(FREE)													\
