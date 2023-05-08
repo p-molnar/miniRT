@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/08 11:09:27 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/08 20:02:52 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void		parse_type_identifier(t_scn_el *el, char *line);
 
 //	element parser
 void		parse_coordinates(long double *coord, char *input);
-void	parse_norm_vec(t_vec **vec, char *input);
+void		parse_norm_vec(t_vec **vec, char *input);
 void		parse_float(long double *f, char *input);
 void		parse_range(long double *f, char *input, long double n_lower,
 				long double n_upper);
@@ -64,7 +64,7 @@ long double	get_specular_lighting(t_vec **vec, t_scn_el *light, long double spec
 t_scn_el	**get_scn_els(t_list *list, int type);
 void		init_vec(t_vec **arr, int size);
 void		free_vec(t_vec **arr, int size);
-t_vec	*get_ray_reflection(t_vec *ray, t_vec *norm);
+t_vec		*get_ray_reflection(t_vec *ray, t_vec *norm);
 
 //	math
 t_vec		*create_vec(long double *init_point, long double *terminal_point);
@@ -75,6 +75,7 @@ void		normalize_vec(t_vec *vec);
 int			is_in_range_f(long double n, long double n_lower,
 				long double n_upper);
 int			is_in_range_i(int n, int n_lower, int n_upper);
+int			is_within_range_f(long double n, long double n_lower, long double n_upper);
 
 long double	dot(t_vec *vec_1, t_vec *vec_2);
 t_vec		*add(t_vec *vec_1, t_vec *vec_2);
