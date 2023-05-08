@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 10:46:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/08 12:53:38 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/08 20:27:41 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,16 @@ void	init_scene(t_data *scn)
 
 void	create_projection_plane(t_data *d)
 {
-	long double	proj_plane_d;
-	long double	proj_plane_side_len;
 	long double	fov_rad;
 	t_scn_el	**cam;
 
-	proj_plane_d = 1;
 	cam = get_scn_els(d->scn_el, CAM);
 	if (!cam)
 		error(ft_strdup("No camera found\n"), EXIT, 1);
 	fov_rad = deg_to_rad(cam[0]->fov / 2.0);
-	proj_plane_side_len = tan(fov_rad) * (2.0 * proj_plane_d);
-	d->viewport[WIDTH] = proj_plane_side_len;
-	d->viewport[HEIGHT] = proj_plane_side_len;
+	d->viewport[WIDTH] = 1;
+	d->viewport[HEIGHT] = 1;
+	d->viewport[DEPTH] = 0.5 / tan(fov_rad);
 	free(cam);
 }
 
