@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 11:10:49 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/10 11:12:53 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/10 13:26:51 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-t_vec3	*product(long double *mx, t_vec3 *vec)
+t_vec3	*vec_times_mx(t_vec3 *vec, long double *mx)
 {
 	long double new_coords[3];
 	long double sum;
