@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/05/08 10:49:55 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/05/10 11:02:29 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,13 @@ EL_PARSER		=	$(addprefix	element_parser/,							\
 								float_parser.c								\
 								)
 
+ELEMENTS		=	$(addprefix	elements/, 									\
+								sphere.c									\
+								plane.c										\
+								cylinder.c									\
+								)
+
+
 ERROR			=	$(addprefix	error/, 									\
 								error.c										\
 								warning.c									\
@@ -82,6 +89,7 @@ RENDERER		=	$(addprefix	renderer/,									\
 								renderer_util.c								\
 								$(LIGHTING)									\
 								$(RENDERER_COLOR)							\
+								$(ELEMENTS)									\
 								)
 
 UTIL			=	$(addprefix	util/,										\
