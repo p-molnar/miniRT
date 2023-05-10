@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/08 11:27:41 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/10 10:38:48 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,20 +81,20 @@
 // }	t_light;
 
 typedef int			t_color;
-typedef long double	*t_3d_coord;
+typedef long double	t_coord3;
 
 typedef struct s_vec
 {
 	long double		len;
-	long double		coord[COORD_SIZE];
-	long double		n_coord[COORD_SIZE];
-}					t_vec;
+	t_coord3		coord[COORD_SIZE];
+	t_coord3		n_coord[COORD_SIZE];
+}					t_vec3;
 
 typedef struct s_scn_el
 {
 	int				type;
-	long double		coord[COORD_SIZE];
-	t_vec			*n_vec;
+	t_coord3		coord[COORD_SIZE];
+	t_vec3			*n_vec;
 	long double		diameter;
 	long double		radius;
 	long double		height;
@@ -116,7 +116,7 @@ typedef struct s_data
 	t_list			*scn_el;
 	t_scn_el		*cam;
 	long double		viewport[COORD_SIZE];
-	t_vec			*vec[VEC_SIZE];
+	t_vec3			*vec[VEC_SIZE];
 	long double		*rotation_mx;
 	mlx_t			*mlx;
 	mlx_image_t		*img;

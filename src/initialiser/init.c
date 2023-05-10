@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 10:46:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/08 20:27:41 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/10 10:37:32 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	create_projection_plane(t_data *d)
 	free(cam);
 }
 
-int	is_cam_rotated(t_vec *n_vec)
+int	is_cam_rotated(t_vec3 *n_vec)
 {
 	int	i;
 
@@ -52,10 +52,10 @@ int	is_cam_rotated(t_vec *n_vec)
 void	set_up_rotation_mx(t_data *data)
 {
 	const long double	def_cam_orientation[COORD_SIZE] = {0, 0, 1};
-	t_vec				*rot_axis;
+	t_vec3				*rot_axis;
 	long double			r_angle;
 
-	t_vec	*cam_orientation_vec = create_vec(NULL, (long double *) def_cam_orientation);
+	t_vec3	*cam_orientation_vec = create_vec(NULL, (long double *) def_cam_orientation);
 	if (is_cam_rotated(data->cam->n_vec))
 	{
 		normalize_vec(data->cam->n_vec);

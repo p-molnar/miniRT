@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 15:01:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/03 13:57:57 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/10 10:37:32 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 #include <math.h>
 #include <stdlib.h>
 
-t_vec	*create_vec(long double *init_point, long double *terminal_point)
+t_vec3	*create_vec(long double *init_point, long double *terminal_point)
 {
-	t_vec				*vec;
+	t_vec3				*vec;
 	int					i;
 	const long double	origin[3] = {0, 0, 0};
 
@@ -26,7 +26,7 @@ t_vec	*create_vec(long double *init_point, long double *terminal_point)
 		return (NULL);
 	if (init_point == NULL)
 		init_point = (long double *)origin;
-	vec = ft_calloc(1, sizeof(t_vec));
+	vec = ft_calloc(1, sizeof(t_vec3));
 	if (!vec)
 		return (NULL);
 	i = 0;
@@ -40,7 +40,7 @@ t_vec	*create_vec(long double *init_point, long double *terminal_point)
 	return (vec);
 }
 
-void	compute_vec_len(t_vec *vec)
+void	compute_vec_len(t_vec3 *vec)
 {
 	long double	sum_of_sqrs;
 	int			i;
@@ -55,7 +55,7 @@ void	compute_vec_len(t_vec *vec)
 	vec->len = sqrt(sum_of_sqrs);
 }
 
-void	compute_normal_vec(t_vec *vec)
+void	compute_normal_vec(t_vec3 *vec)
 {
 	int	i;
 
@@ -70,7 +70,7 @@ void	compute_normal_vec(t_vec *vec)
 	}
 }
 
-void	normalize_vec(t_vec *vec)
+void	normalize_vec(t_vec3 *vec)
 {
 	int	i;
 

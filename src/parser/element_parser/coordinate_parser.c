@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:35:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/05 12:34:50 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/10 10:37:32 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	parse_coordinates(long double *coord, char *input)
 	free_arr((void **)coords);
 }
 
-void	parse_norm_vec(t_vec **vec, char *input)
+void	parse_norm_vec(t_vec3 **vec, char *input)
 {
 	char		**coords;
 	int			i;

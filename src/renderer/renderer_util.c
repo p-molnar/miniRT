@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/08 23:14:30 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/10 10:37:32 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,31 @@ void	draw_axes(t_data *data)
 		mlx_put_pixel(data->img, CANVAS_W / 2, y++, c);
 }
 
-t_closest	*get_closest_el(t_data *data, t_scn_el **el_arr, long double start_coord[3], t_vec *dir, const long double *range)
+long double	*get_cylinder_intersection(t_data *data, t_scn_el *obj)
+{
+	long double	*t;
+	long double	a;
+	long double	b;
+	long double	c;
+	long double *r;
+
+	r = ft_calloc(2, sizeof(long double));
+	a = pow(data->vec[D]->coord[X], 2) + pow(data->vec[D]->coord[Y], 2);
+	b = 2 * data->cam->coord[X] * data->vec[D]->coord[X] + 2 * data->cam->coord[Y] * data->vec[D]->coord[Y];
+	c = pow(data->cam->coord[X], 2) + pow(data->cam->coord[Y], 2) - obj->diameter / 2;
+	t = quad_eq_solver(a, b, c, NULL);
+	if (!t)
+		return (r);
+	long double z1 = data->cam->coord[Z] + t[0] * data->vec[D]->coord[Z];
+	long double z2 = data->cam->coord[Z] + t[1] * data->vec[D]->coord[Z];
+	if (3 < z1 && z1 < 13)
+		r[0] = t[0];
+	if (3 < z2 && z2 < 13)
+		r[1] = t[1];
+	return (r);
+}
+
+t_closest	*get_closest_el(t_data *data, t_scn_el **el_arr, long double start_coord[3], t_vec3 *dir, const long double *range)
 {
 	t_closest	*closest;
 	long double	*t;
@@ -45,8 +69,12 @@ t_closest	*get_closest_el(t_data *data, t_scn_el **el_arr, long double start_coo
 	i = 0;
 	while (el_arr && el_arr[i])
 	{
-		t = get_plane_intersection(data, el_arr[i]);
-		// t = get_intersection_points(start_coord, dir, el_arr[i]);
+		if (el_arr[i]->type == SPHERE)
+			t = get_intersection_points(start_coord, dir, el_arr[i]);
+		else if (el_arr[i]->type == CYLINDER)
+			t = get_cylinder_intersection(data, el_arr[i]);
+		else if (el_arr[i]->type == PLANE)
+			t = get_plane_intersection(data, el_arr[i]);
 		if (is_in_range_f(t[0], range[MIN], range[MAX]) && t[0] < closest->dist)
 		{
 			closest->dist = t[0];
@@ -66,25 +94,35 @@ t_closest	*get_closest_el(t_data *data, t_scn_el **el_arr, long double start_coo
 long double	*get_plane_intersection(t_data *data, t_scn_el *obj)
 {
 	long double	*t;
-	t_vec		*Q;
-	t_vec		*E;
-	t_vec		*Q_less_E;
+	t_vec3		*Q;
+	t_vec3		*E;
+	t_vec3		*Q_less_E;
+	long double	denom;
 
 	t = malloc(2 * sizeof(long double));
 	Q = create_vec(NULL, obj->coord);
 	E = create_vec(NULL, data->cam->coord);
 	Q_less_E = subtract(Q, E);
-	t[0] = dot(obj->n_vec, Q_less_E) / dot(obj->n_vec, data->vec[D]);
-	printf("t: %Lf\n", t[0]);
-	t[1] = t[0];
+	denom = dot(obj->n_vec, data->vec[D]);
+	if (fabs(denom) > 0.0001)
+	{
+		t[0] = dot(obj->n_vec, Q_less_E) / denom;
+		t[1] = t[0];
+	}
+	else
+	{
+		t[0] = 0;
+		t[1] = 0;
+	}
 	return (t);
 }
-long double	*get_intersection_points(long double start[3], t_vec *dir, t_scn_el *obj)
+
+long double	*get_intersection_points(long double start[3], t_vec3 *dir, t_scn_el *obj)
 {
 	long double	quad_param[3];
 	long double	d;
 	long double	*t;
-	t_vec		*CO;
+	t_vec3		*CO;
 
 	CO = create_vec(obj->coord, start);
 	quad_param[0] = dot(dir, dir);
@@ -116,11 +154,11 @@ long double	*convert_to_viewport(int x, int y, long double *viewport, t_scn_el *
 	return (pplane);
 }
 
-t_vec	*get_ray_reflection(t_vec *ray, t_vec *norm)
+t_vec3	*get_ray_reflection(t_vec3 *ray, t_vec3 *norm)
 {
 	long double	ray_dot_norm;
-	t_vec		*scaled_vec;
-	t_vec		*scaled_minus_ray;
+	t_vec3		*scaled_vec;
+	t_vec3		*scaled_minus_ray;
 
 	if (!ray || !norm)
 		return (NULL);

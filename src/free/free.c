@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/16 19:24:09 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/01 09:46:06 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/10 10:37:32 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	free_arr(void **arr)
 		free(arr);
 }
 
-void	free_vec(t_vec **arr, int size)
+void	free_vec(t_vec3 **arr, int size)
 {
 	int	i;
 

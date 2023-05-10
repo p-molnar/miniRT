@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:57:27 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/08 11:09:10 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/10 10:37:32 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_color	mix_colors(t_color local_color, t_color reflected_color, long double ref
 	return (color);
 }
 
-t_color	get_reflected_color(t_data *data, t_vec *dir, const long double *range, int depth)
+t_color	get_reflected_color(t_data *data, t_vec3 *dir, const long double *range, int depth)
 {
 	t_color	reflected_color;
 

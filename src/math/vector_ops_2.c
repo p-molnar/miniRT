@@ -6,19 +6,19 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 14:48:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/08 00:29:43 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/10 10:37:32 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 #include <stdlib.h>
 
-t_vec	*scale(long double scaler, t_vec *vec)
+t_vec3	*scale(long double scaler, t_vec3 *vec)
 {
-	t_vec	*new;
+	t_vec3	*new;
 	int		i;
 
-	new = malloc(1 * sizeof(t_vec));
+	new = malloc(1 * sizeof(t_vec3));
 	if (!new)
 		return (NULL);
 	i = 0;
@@ -32,7 +32,7 @@ t_vec	*scale(long double scaler, t_vec *vec)
 	return (new);
 }
 
-long double	dot(t_vec *vec_1, t_vec *vec_2)
+long double	dot(t_vec3 *vec_1, t_vec3 *vec_2)
 {
 	long double	result;
 	int			i;
@@ -47,12 +47,12 @@ long double	dot(t_vec *vec_1, t_vec *vec_2)
 	return (result);
 }
 
-t_vec	*add(t_vec *vec_1, t_vec *vec_2)
+t_vec3	*add(t_vec3 *vec_1, t_vec3 *vec_2)
 {
-	t_vec	*new_vec;
+	t_vec3	*new_vec;
 	int		i;
 
-	new_vec = ft_calloc(1, sizeof(t_vec));
+	new_vec = ft_calloc(1, sizeof(t_vec3));
 	if (!new_vec || !vec_1 || !vec_2)
 		return (NULL);
 	i = 0;
@@ -66,10 +66,10 @@ t_vec	*add(t_vec *vec_1, t_vec *vec_2)
 	return (new_vec);
 }
 
-t_vec	*subtract(t_vec *vec_1, t_vec *vec_2)
+t_vec3	*subtract(t_vec3 *vec_1, t_vec3 *vec_2)
 {
-	t_vec	*new;
-	t_vec	*scaled_vec;
+	t_vec3	*new;
+	t_vec3	*scaled_vec;
 
 	if (!vec_1 || !vec_2)
 		return (NULL);
@@ -83,9 +83,9 @@ t_vec	*subtract(t_vec *vec_1, t_vec *vec_2)
 	return (new);
 }
 
-t_vec	*cross(t_vec *vec_1, t_vec *vec_2)
+t_vec3	*cross(t_vec3 *vec_1, t_vec3 *vec_2)
 {
-	t_vec	*vec;
+	t_vec3	*vec;
 	long double	tmp[3];
 	int	i;
 
@@ -101,7 +101,7 @@ t_vec	*cross(t_vec *vec_1, t_vec *vec_2)
 }
 
 
-t_vec	*product(long double *mx, t_vec *vec)
+t_vec3	*product(long double *mx, t_vec3 *vec)
 {
 	long double new_coords[3];
 	long double sum;

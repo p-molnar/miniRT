@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 13:09:33 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/01 09:46:01 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/10 10:37:32 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <libft.h>
 #include <mrt_data_struct.h>
 
-void	init_vec(t_vec **arr, int size)
+void	init_vec(t_vec3 **arr, int size)
 {
 	int	i;
 

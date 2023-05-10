@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/08 23:02:02 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/10 10:37:32 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-t_vec	*get_incident_point(long double *start_coord, t_vec *direction,
+t_vec3	*get_incident_point(long double *start_coord, t_vec3 *direction,
 		long double distance)
 {
-	t_vec	*O;
-	t_vec	*scaled_dir;
-	t_vec	*incident_point;
+	t_vec3	*O;
+	t_vec3	*scaled_dir;
+	t_vec3	*incident_point;
 
-	O = create_vec(start_coord, start_coord);
+	// O = create_vec(start_coord, start_coord);
 	O = create_vec(NULL, start_coord);
 	scaled_dir = scale(distance, direction);
 	incident_point = add(O, scaled_dir);
@@ -34,7 +34,7 @@ t_vec	*get_incident_point(long double *start_coord, t_vec *direction,
 	return (incident_point);
 }
 
-t_color	trace_ray(t_data *data, long double *start_coord, t_vec *dir,
+t_color	trace_ray(t_data *data, long double *start_coord, t_vec3 *dir,
 		const long double *range, int recursion_depth)
 {
 	t_closest			*closest;
@@ -44,7 +44,7 @@ t_color	trace_ray(t_data *data, long double *start_coord, t_vec *dir,
 	const long double	ref_range[RANGE_SIZE] = {0.001, INF};
 
 	// el_arr = get_scn_els(data->scn_el, SPHERE);
-	el_arr = get_scn_els(data->scn_el, PLANE);
+	el_arr = get_scn_els(data->scn_el, PLANE | SPHERE | CYLINDER);
 	closest = get_closest_el(data, el_arr, start_coord, dir, range);
 	if (!closest || !closest->el)
 		return (BACKGROUND_COLOR);
@@ -60,7 +60,7 @@ t_color	trace_ray(t_data *data, long double *start_coord, t_vec *dir,
 	return (mix_colors(color[0], color[1], ref_factor));
 }
 
-long double	*get_rotation_mx(long double theta, t_vec *axis)
+long double	*get_rotation_mx(long double theta, t_vec3 *axis)
 {
 	long double	sin_t;
 	long double	cos_t;
@@ -83,9 +83,9 @@ long double	*get_rotation_mx(long double theta, t_vec *axis)
 	return (mx);
 }
 
-t_vec	*rotate_ray(t_vec *ray, long double *rotation_mx)
+t_vec3	*rotate_ray(t_vec3 *ray, long double *rotation_mx)
 {
-	t_vec	*r_ray;
+	t_vec3	*r_ray;
 
 	r_ray = product(rotation_mx, ray);
 	free(ray);
@@ -113,7 +113,10 @@ void	render_img(t_data *data)
 					data->viewport, data->cam);
 			data->vec[D] = create_vec(data->cam->coord, pplane_coord);
 			data->vec[D] = rotate_ray(data->vec[D], data->rotation_mx);
-			color = trace_ray(data, data->cam->coord, data->vec[D], range, 0);
+			// if (data->vec[D]->coord[0] == 0 && data->vec[D]->coord[1] == 0 && data->vec[D]->coord[2] == 1)
+			// 	printf("this\n");	
+			// printf("%Lf, %Lf, %Lf\n", data->vec[D]->coord[0], data->vec[D]->coord[1], data->vec[D]->coord[2]);
+			color = trace_ray(data, data->cam->coord, data->vec[D], range, 3);
 			mlx_put_pixel(data->img, screen[X], screen[Y], color);
 			free_vec(data->vec, VEC_SIZE);
 			free(pplane_coord);

@@ -6,20 +6,20 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 09:50:16 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/04 17:21:19 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/10 10:37:32 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 #include <math.h>
 
-long double	get_specular_lighting(t_vec **vec, t_scn_el *light,
+long double	get_specular_lighting(t_vec3 **vec, t_scn_el *light,
 		long double specular)
 {
 	long double intensity;
 	long double n_dot_l;
 	long double rv_dot_v;
-	t_vec	*tmp_vec[VEC_SIZE];
+	t_vec3	*tmp_vec[VEC_SIZE];
 
 	intensity = 0;
 	if (specular != -1)

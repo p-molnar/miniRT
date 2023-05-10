@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/08 23:02:25 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/10 10:37:32 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ long double	get_lighting_intensity(t_data *data, int specular)
 	// t_closest	*shadow;
 	t_scn_el	**lights;
 	long double	range[RANGE_SIZE];
-	t_vec		*tmp_vec[VEC_SIZE];
+	t_vec3		*tmp_vec[VEC_SIZE];
 	int			i;
 
 	intensity = 0;
