@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 14:48:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/10 10:37:32 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/10 11:12:07 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,28 +98,4 @@ t_vec3	*cross(t_vec3 *vec_1, t_vec3 *vec_2)
 	}
 	vec = create_vec(NULL, tmp);
 	return (vec);
-}
-
-
-t_vec3	*product(long double *mx, t_vec3 *vec)
-{
-	long double new_coords[3];
-	long double sum;
-	int i;
-	int j;
-
-	sum = 0;
-	i = 0;
-	j = 0;
-	while (i < 9)
-	{
-		sum += mx[i] * vec->coord[i % 3];
-		if ((i + 1) % 3 == 0)
-		{
-			new_coords[j++] = sum;
-			sum = 0;
-		}
-		i++;	
-	}
-	return (create_vec(NULL, new_coords));
 }
