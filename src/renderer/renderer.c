@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/10 10:37:32 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/10 11:10:27 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,29 +58,6 @@ t_color	trace_ray(t_data *data, long double *start_coord, t_vec3 *dir,
 		return (color[0]);
 	color[1] = get_reflected_color(data, dir, ref_range, recursion_depth);
 	return (mix_colors(color[0], color[1], ref_factor));
-}
-
-long double	*get_rotation_mx(long double theta, t_vec3 *axis)
-{
-	long double	sin_t;
-	long double	cos_t;
-	long double	*u;
-	long double	*mx;
-
-	sin_t = sin(deg_to_rad(theta));
-	cos_t = cos(deg_to_rad(theta));
-	u = axis->n_coord;
-	mx = malloc(9 * sizeof(long double));
-	mx[0] = cos_t + pow(u[0], 2) * (1 - cos_t);
-	mx[1] = u[0] * u[1] * (1 - cos_t) - u[2] * sin_t;
-	mx[2] = u[0] * u[2] * (1 - cos_t) + u[1] * sin_t;
-	mx[3] = u[1] * u[0] * (1 - cos_t) + u[2] * sin_t;
-	mx[4] = cos_t + pow(u[1], 2) * (1 - cos_t);
-	mx[5] = u[1] * u[2] * (1 - cos_t) - u[0] * sin_t;
-	mx[6] = u[2] * u[0] * (1 - cos_t) - u[1] * sin_t;
-	mx[7] = u[2] * u[1] * (1 - cos_t) + u[0] * sin_t;
-	mx[8] = cos_t + pow(u[2], 2) * (1 - cos_t);
-	return (mx);
 }
 
 t_vec3	*rotate_ray(t_vec3 *ray, long double *rotation_mx)
