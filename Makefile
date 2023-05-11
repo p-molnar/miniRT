@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/05/10 11:02:29 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/05/10 11:12:43 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,6 +100,7 @@ MATH			=	$(addprefix	math/,										\
 								quadratic_ops.c								\
 								vector_ops.c								\
 								vector_ops_2.c								\
+								matrix_ops.c								\
 								range.c										\
 								trigonometry.c								\
 								)
