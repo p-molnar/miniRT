@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/11 11:49:12 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/11 12:08:07 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	draw_axes(t_data *data)
 }
 
 
-t_closest	*get_closest_el(t_data *data, t_scn_el **el_arr, long double start_coord[3], t_vec3 *dir, const long double *range)
+t_closest	*get_closest_el(t_data *data, t_scn_el **el_arr, long double origin[3], t_vec3 *dir, const long double *range)
 {
 	t_closest	*closest;
 	long double	*t;
@@ -86,9 +86,9 @@ t_closest	*get_closest_el(t_data *data, t_scn_el **el_arr, long double start_coo
 	while (el_arr && el_arr[i])
 	{
 		if (el_arr[i]->type == SPHERE)
-			t = get_sphere_intersections(start_coord, dir, el_arr[i]);
+			t = get_sphere_intersections(origin, dir, el_arr[i]);
 		else if (el_arr[i]->type == CYLINDER)
-			t = get_cylinder_intersection(data, start_coord, el_arr[i]);
+			t = get_cylinder_intersection(data, origin, el_arr[i]);
 		else if (el_arr[i]->type == PLANE)
 			t = get_plane_intersection(data, el_arr[i]);
 		if (is_in_range_f(t[0], range[MIN], range[MAX]) && t[0] < closest->dist)
