@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/10 11:10:27 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/11 11:49:03 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,6 @@
 #include <mrt_macros.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-t_vec3	*get_incident_point(long double *start_coord, t_vec3 *direction,
-		long double distance)
-{
-	t_vec3	*O;
-	t_vec3	*scaled_dir;
-	t_vec3	*incident_point;
-
-	// O = create_vec(start_coord, start_coord);
-	O = create_vec(NULL, start_coord);
-	scaled_dir = scale(distance, direction);
-	incident_point = add(O, scaled_dir);
-	free(O);
-	free(scaled_dir);
-	return (incident_point);
-}
 
 t_color	trace_ray(t_data *data, long double *start_coord, t_vec3 *dir,
 		const long double *range, int recursion_depth)
@@ -49,7 +33,16 @@ t_color	trace_ray(t_data *data, long double *start_coord, t_vec3 *dir,
 	if (!closest || !closest->el)
 		return (BACKGROUND_COLOR);
 	data->vec[P] = get_incident_point(start_coord, dir, closest->dist);
-	data->vec[N] = create_vec(closest->el->coord, data->vec[P]->coord);
+	if (closest->el->type == CYLINDER)
+	{
+		long double z = data->vec[P]->coord[Z];
+		long double a[3] = {0, 0, z};
+		data->vec[N] = create_vec(a, data->vec[P]->coord);
+	}
+	else if (closest->el->type == SPHERE)
+		data->vec[N] = create_vec(closest->el->coord, data->vec[P]->coord);
+	else if (closest->el->type == PLANE)
+		data->vec[N] = create_vec(closest->el->coord, data->vec[P]->coord);
 	normalize_vec(data->vec[N]);
 	color[0] = get_incident_point_color(data, closest->el);
 	ref_factor = closest->el->reflection;
@@ -64,7 +57,7 @@ t_vec3	*rotate_ray(t_vec3 *ray, long double *rotation_mx)
 {
 	t_vec3	*r_ray;
 
-	r_ray = product(rotation_mx, ray);
+	r_ray = vec_times_mx(ray, rotation_mx);
 	free(ray);
 	return (r_ray);
 }
@@ -85,7 +78,7 @@ void	render_img(t_data *data)
 		{
 			screen[X] = canvas[X] + CANVAS_W / 2;
 			screen[Y] = CANVAS_H / 2 - canvas[Y];
-			init_vec(data->vec, VEC_SIZE);
+			// init_vec(data->vec, VEC_SIZE);
 			pplane_coord = convert_to_viewport(canvas[X], canvas[Y],
 					data->viewport, data->cam);
 			data->vec[D] = create_vec(data->cam->coord, pplane_coord);
@@ -93,9 +86,9 @@ void	render_img(t_data *data)
 			// if (data->vec[D]->coord[0] == 0 && data->vec[D]->coord[1] == 0 && data->vec[D]->coord[2] == 1)
 			// 	printf("this\n");	
 			// printf("%Lf, %Lf, %Lf\n", data->vec[D]->coord[0], data->vec[D]->coord[1], data->vec[D]->coord[2]);
-			color = trace_ray(data, data->cam->coord, data->vec[D], range, 3);
+			color = trace_ray(data, data->cam->coord, data->vec[D], range, 0);
 			mlx_put_pixel(data->img, screen[X], screen[Y], color);
-			free_vec(data->vec, VEC_SIZE);
+			// free_vec(data->vec, VEC_SIZE);
 			free(pplane_coord);
 			canvas[Y]--;
 		}

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/11 10:44:46 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/11 11:49:12 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,22 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+
+t_vec3	*get_incident_point(long double *start_coord, t_vec3 *direction,
+		long double distance)
+{
+	t_vec3	*O;
+	t_vec3	*scaled_dir;
+	t_vec3	*incident_point;
+
+	// O = create_vec(start_coord, start_coord);
+	O = create_vec(NULL, start_coord);
+	scaled_dir = scale(distance, direction);
+	incident_point = add(O, scaled_dir);
+	free(O);
+	free(scaled_dir);
+	return (incident_point);
+}
 
 void	draw_axes(t_data *data)
 {
