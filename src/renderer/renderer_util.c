@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/11 12:08:07 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/15 22:06:59 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	draw_axes(t_data *data)
 }
 
 
-t_closest	*get_closest_el(t_data *data, t_scn_el **el_arr, long double origin[3], t_vec3 *dir, const long double *range)
+t_closest	*get_closest_el(t_data *data, t_scn_el **el, long double origin[3], t_vec3 *dir, const long double *range)
 {
 	t_closest	*closest;
 	long double	*t;
@@ -83,29 +83,28 @@ t_closest	*get_closest_el(t_data *data, t_scn_el **el_arr, long double origin[3]
 	closest->dist = INF;
 	t = NULL;
 	i = 0;
-	while (el_arr && el_arr[i])
+	while (el && el[i])
 	{
-		if (el_arr[i]->type == SPHERE)
-			t = get_sphere_intersections(origin, dir, el_arr[i]);
-		else if (el_arr[i]->type == CYLINDER)
-			t = get_cylinder_intersection(data, origin, el_arr[i]);
-		else if (el_arr[i]->type == PLANE)
-			t = get_plane_intersection(data, el_arr[i]);
-		if (is_in_range_f(t[0], range[MIN], range[MAX]) && t[0] < closest->dist)
+		if (el[i]->type == SPHERE)
+			t = get_sphere_intersections(origin, dir, el[i]);
+		else if (el[i]->type == CYLINDER)
+			t = get_cylinder_intersection(data, origin, el[i]);
+		else if (el[i]->type == PLANE)
+			t = get_plane_intersection(data, el[i]);
+		if (t && is_in_range_f(t[0], range[MIN], range[MAX]) && t[0] < closest->dist)
 		{
 			closest->dist = t[0];
-			closest->el = el_arr[i];
+			closest->el = el[i];
 		}
-		if (is_in_range_f(t[1], range[MIN], range[MAX]) && t[1] < closest->dist)
+		if (t && is_in_range_f(t[1], range[MIN], range[MAX]) && t[1] < closest->dist)
 		{
 			closest->dist = t[1];
-			closest->el = el_arr[i];
+			closest->el = el[i];
 		}
 		i++;
 	}
-	// free(t);
-	// if (closest->el && closest->el->type == CYLINDER)
-	// 		// printf("%Lf, %Lf, %Lf\n", dir->coord[X], dir->coord[Y], dir->coord[Z]);
+	if (t)
+		free(t);
 	return (closest);
 }
 

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/11 11:49:03 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/11 13:25:12 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,12 @@ t_color	trace_ray(t_data *data, long double *start_coord, t_vec3 *dir,
 		long double z = data->vec[P]->coord[Z];
 		long double a[3] = {0, 0, z};
 		data->vec[N] = create_vec(a, data->vec[P]->coord);
+		// data->vec[N] = create_vec(NULL, closest->el->n_vec->n_coord);
 	}
 	else if (closest->el->type == SPHERE)
 		data->vec[N] = create_vec(closest->el->coord, data->vec[P]->coord);
 	else if (closest->el->type == PLANE)
-		data->vec[N] = create_vec(closest->el->coord, data->vec[P]->coord);
+		data->vec[N] = create_vec(NULL, closest->el->n_vec->n_coord);
 	normalize_vec(data->vec[N]);
 	color[0] = get_incident_point_color(data, closest->el);
 	ref_factor = closest->el->reflection;

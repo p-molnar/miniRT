@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/11 12:08:46 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/12 08:28:41 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_color	get_reflected_color(t_data *data, t_vec3 *dir, const long double *range,
 t_color	mix_colors(t_color local_color, t_color reflected_color, long double ref_factor);
 
 //	lighting
-long double	get_lighting_intensity(t_data *data, int specular);
+long double	get_lighting_intensity(t_data *data, t_scn_el *obj);
 long double	get_diffuse_lighting(t_data *data, t_scn_el *light);
 long double	get_specular_lighting(t_vec3 **vec, t_scn_el *light, long double specular);
 

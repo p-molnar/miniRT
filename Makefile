@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/05/10 11:12:43 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/05/12 08:29:51 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -146,7 +146,7 @@ $(MLX42_BUILD_DIR):
 	
 
 $(LIBFT):
-	@git submodule update --init --remote --recursive libft
+	# @git submodule update --init --remote --recursive libft
 	@make libft.a -C libft
 
 clean:

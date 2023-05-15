@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:57:27 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/10 10:37:32 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/12 08:28:13 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	get_incident_point_color(t_data *data, t_scn_el *closest_el)
 	long double	intensity;
 	int			i;
 
-	intensity = get_lighting_intensity(data, closest_el->specular);
+	intensity = get_lighting_intensity(data, closest_el);
 	color = 0xFFFFFFFF;
 	i = 1;
 	while (i < COLOR_SIZE)
