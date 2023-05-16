@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/11 13:25:12 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/16 09:42:59 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,31 @@
 #include <mrt_macros.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+t_vec3	*get_incident_point_norm(t_data *data, t_vec3 *incident_p, t_closest *obj)
+{
+	t_vec3	*norm;
+	t_vec3	*offset;
+	(void) data;
+
+	norm = NULL;
+	if (obj->el->type == CYLINDER)
+	{
+		long double z = incident_p->coord[Z];
+		long double a[3] = {0, 0, z};
+		norm = create_vec(a, incident_p->coord);
+	}
+	else if (obj->el->type == SPHERE)
+		norm = create_vec(obj->el->coord, incident_p->coord);
+	else if (obj->el->type == PLANE)
+	{
+		offset = subtract(incident_p, obj->el->n_vec);
+		norm = add(offset, obj->el->n_vec);
+		free(offset);
+	}
+	normalize_vec(norm);
+	return (norm); 
+}
 
 t_color	trace_ray(t_data *data, long double *start_coord, t_vec3 *dir,
 		const long double *range, int recursion_depth)
@@ -33,18 +58,7 @@ t_color	trace_ray(t_data *data, long double *start_coord, t_vec3 *dir,
 	if (!closest || !closest->el)
 		return (BACKGROUND_COLOR);
 	data->vec[P] = get_incident_point(start_coord, dir, closest->dist);
-	if (closest->el->type == CYLINDER)
-	{
-		long double z = data->vec[P]->coord[Z];
-		long double a[3] = {0, 0, z};
-		data->vec[N] = create_vec(a, data->vec[P]->coord);
-		// data->vec[N] = create_vec(NULL, closest->el->n_vec->n_coord);
-	}
-	else if (closest->el->type == SPHERE)
-		data->vec[N] = create_vec(closest->el->coord, data->vec[P]->coord);
-	else if (closest->el->type == PLANE)
-		data->vec[N] = create_vec(NULL, closest->el->n_vec->n_coord);
-	normalize_vec(data->vec[N]);
+	data->vec[N] = get_incident_point_norm(data, data->vec[P], closest);
 	color[0] = get_incident_point_color(data, closest->el);
 	ref_factor = closest->el->reflection;
 	free(closest);
