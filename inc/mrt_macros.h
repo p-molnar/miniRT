@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/08 11:17:11 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/16 12:09:27 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ enum	e_scn_el_type
 	SPHERE = 1 << 4,
 	PLANE = 1 << 5,
 	CYLINDER = 1 << 6,
-	SCN_SIZE = CYLINDER + 1
+	CYLINDER_CAP = 1 << 7,
+	SCN_SIZE = CYLINDER_CAP + 1
 };
 
 enum	e_field_flags
