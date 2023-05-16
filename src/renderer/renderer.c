@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/16 09:42:59 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/16 14:45:07 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,5 @@ void	render_img(t_data *data)
 		}
 		canvas[X]++;
 	}
-	draw_axes(data);
+	// draw_axes(data);
 }

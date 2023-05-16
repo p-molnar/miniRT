@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/15 22:06:59 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/16 15:25:08 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,14 @@ void	draw_axes(t_data *data)
 t_closest	*get_closest_el(t_data *data, t_scn_el **el, long double origin[3], t_vec3 *dir, const long double *range)
 {
 	t_closest	*closest;
-	long double	*t;
+	long double	t;
 	int			i;
 
-	// (void) start_coord, (void) dir;
 	closest = ft_calloc(1, sizeof(t_closest));
 	if (!closest)
 		return (NULL);
 	closest->el = NULL;
 	closest->dist = INF;
-	t = NULL;
 	i = 0;
 	while (el && el[i])
 	{
@@ -91,20 +89,18 @@ t_closest	*get_closest_el(t_data *data, t_scn_el **el, long double origin[3], t_
 			t = get_cylinder_intersection(data, origin, el[i]);
 		else if (el[i]->type == PLANE)
 			t = get_plane_intersection(data, el[i]);
-		if (t && is_in_range_f(t[0], range[MIN], range[MAX]) && t[0] < closest->dist)
+		if (is_in_range_f(t, range[MIN], range[MAX]) && t < closest->dist)
 		{
-			closest->dist = t[0];
+			closest->dist = t;
 			closest->el = el[i];
 		}
-		if (t && is_in_range_f(t[1], range[MIN], range[MAX]) && t[1] < closest->dist)
+		if (is_in_range_f(t, range[MIN], range[MAX]) && t < closest->dist)
 		{
-			closest->dist = t[1];
+			closest->dist = t;
 			closest->el = el[i];
 		}
 		i++;
 	}
-	if (t)
-		free(t);
 	return (closest);
 }
 

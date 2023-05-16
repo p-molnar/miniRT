@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/15 13:51:40 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/16 15:33:15 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 long double	get_lighting_intensity(t_data *data, t_scn_el *obj)
 {
 	long double	intensity;
-	// t_closest	*shadow;
+	t_closest	*shadow;
 	t_scn_el	**lights;
 	long double	range[RANGE_SIZE];
 	int			i;
@@ -43,20 +43,16 @@ long double	get_lighting_intensity(t_data *data, t_scn_el *obj)
 				data->vec[L] = create_vec(data->vec[P]->coord, lights[i]->coord);
 				range[1] = 1;
 			}
-			// if (obj->type == CYLINDER)
-			// {	
-			// 	range[0] = 0;
-			// 	range[0] = 0;
-			// 	shadow = get_closest_el(data, get_scn_els(data->scn_el, SPHERE | PLANE | CYLINDER), data->vec[P]->coord, data->vec[L], range);
-			// }
-			// else
-				// shadow = get_closest_el(data, get_scn_els(data->scn_el, SPHERE | PLANE | CYLINDER), data->vec[P]->coord, data->vec[L], range);
-			// if (shadow->el != NULL)
-			// {
-			// 	i++;
-			// 	free(shadow);
-			// 	continue ;
-			// }
+			// printf("L: %Lf, %Lf, %Lf\n", data->vec[L]->coord[X], data->vec[L]->coord[Y], data->vec[L]->coord[Z]);
+			// printf("P: %Lf, %Lf, %Lf\n", data->vec[P]->coord[X], data->vec[P]->coord[Y], data->vec[P]->coord[Z]);
+			t_scn_el **els = get_scn_els(data->scn_el, PLANE | CYLINDER);
+			shadow = get_closest_el(data, els, data->vec[P]->coord, data->vec[L], range);
+			if (shadow->el != NULL)
+			{
+				i++;
+				free(shadow);
+				continue ;
+			}
 			long double n_dot_l = dot(data->vec[N], data->vec[L]);
 			if (n_dot_l > 0)
 				intensity += lights[i]->intensity * n_dot_l / (data->vec[L]->len
