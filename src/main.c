@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/10 11:28:59 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/16 13:47:18 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 void	print_scene_el(t_data *scn)
 {
 	t_list	*scn_el;
-	char	*e[65];
+	char	*e[SCN_SIZE];
 
 	e[AMB_LIGHT] = "AMB";
 	e[CAM] = "CAM";
@@ -29,6 +29,7 @@ void	print_scene_el(t_data *scn)
 	e[SPHERE] = "Sphere";
 	e[PLANE] = "plane";
 	e[CYLINDER] = "cylinder";
+	e[CYLINDER_CAP] = "cylinder cap";
 	scn_el = scn->scn_el;
 	while (scn_el)
 	{
@@ -62,6 +63,48 @@ void	print_scene_el(t_data *scn)
 	}
 }
 
+void	add_cylinder_properties(t_scn_el *pl, t_scn_el *cy, char cap_type)
+{
+	int			is_btm;
+	t_coord3	*term;
+
+	is_btm = cap_type == 'B';
+	pl->type = CYLINDER_CAP;
+	pl->color = cy->color;
+	pl->reflection = cy->reflection;
+	pl->specular = cy->specular;
+	ft_memcpy(pl->coord, cy->coord, COORD_SIZE * sizeof(long double));
+	if (is_btm)
+	{
+		pl->coord[Z] = cy->coord[Z] - cy->height / 2;
+		term = create_coord(pl->coord[X], pl->coord[Y], pl->coord[Z] - 1);
+	}
+	else
+	{
+		pl->coord[Z] = cy->coord[Z] + cy->height / 2;
+		term = create_coord(pl->coord[X], pl->coord[Y], pl->coord[Z] + 1);
+	}
+	pl->n_vec = create_vec(pl->coord, term);
+}
+
+void	add_cylinder_caps(t_data *d, t_scn_el **el)
+{
+	t_scn_el	*pl;
+	int			i;
+
+	i = 0;	
+	while (el && el[i])
+	{
+		pl = ft_calloc(2, sizeof(t_scn_el));
+		add_cylinder_properties(&pl[0], el[i], 'T');
+		add_cylinder_properties(&pl[1], el[i], 'B');
+		ft_lstadd_back(&d->scn_el, ft_lstnew(&pl[0]));
+		ft_lstadd_back(&d->scn_el, ft_lstnew(&pl[1]));
+		i++;
+	}	
+	free(el);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_data	d;
@@ -70,6 +113,7 @@ int	main(int argc, char *argv[])
 	parse_scene(&d, argc, argv);
 	set_up_vars(&d);
 	create_projection_plane(&d);
+	add_cylinder_caps(&d, get_scn_els(d.scn_el, CYLINDER));
 	print_scene_el(&d);
 	d.mlx = mlx_init(CANVAS_W + 5, CANVAS_H + 5, "MiniRT", true);
 	if (!d.mlx)
