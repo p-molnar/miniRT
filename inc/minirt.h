@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/12 08:28:41 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/16 14:17:45 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ t_vec3		*subtract(t_vec3 *vec_1, t_vec3 *vec_2);
 t_vec3		*vec_times_mx(t_vec3 *vec, long double *mx);
 t_vec3		*cross(t_vec3 *vec_1, t_vec3 *vec_2);
 
+t_coord3	*create_coord(long double x,long double y, long double z);
+
 long double	*quad_eq_solver(long double a,
 							long double b,
 							long double c,
@@ -112,9 +114,9 @@ t_closest	*get_closest_el(t_data *data, t_scn_el **el_arr, long double origin[3]
 long double	*convert_to_viewport(int x, int y, long double *viewport, t_scn_el *cam);
 
 //	elements
-long double	*get_sphere_intersections(long double start[3], t_vec3 *dir, t_scn_el *obj);
-long double	*get_plane_intersection(t_data *data, t_scn_el *obj);
-long double	*get_cylinder_intersection(t_data *data, long double *origin, t_scn_el *obj);
+long double	get_sphere_intersections(long double start[3], t_vec3 *dir, t_scn_el *obj);
+long double	get_plane_intersection(t_data *data, t_scn_el *obj);
+long double	get_cylinder_intersection(t_data *data, long double *origin, t_scn_el *obj);
 
 //	rotation 
 double long	*get_rotation_angles(t_vec3 *dir, t_vec3 *rotation_vec);
