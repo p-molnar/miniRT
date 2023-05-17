@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/17 12:17:40 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/17 14:38:56 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,6 @@ enum	e_groupped_el
 {
 	G_LIGHT = AMB_LIGHT | LIGHT | DIR_LIGHT,
 	G_CAM = CAM,
-	G_OBJS = SPHERE | PLANE | CYLINDER,
+	G_OBJS = SPHERE | PLANE | CYLINDER | CYLINDER_CAP,
 };
 #endif
