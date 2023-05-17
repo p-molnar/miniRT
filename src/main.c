@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/16 13:47:18 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/17 14:43:06 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,12 @@ void	add_cylinder_properties(t_scn_el *pl, t_scn_el *cy, char cap_type)
 	ft_memcpy(pl->coord, cy->coord, COORD_SIZE * sizeof(long double));
 	if (is_btm)
 	{
-		pl->coord[Z] = cy->coord[Z] - cy->height / 2;
+		pl->coord[Z] = cy->coord[Z] - cy->height / 2 - EPS;
 		term = create_coord(pl->coord[X], pl->coord[Y], pl->coord[Z] - 1);
 	}
 	else
 	{
-		pl->coord[Z] = cy->coord[Z] + cy->height / 2;
+		pl->coord[Z] = cy->coord[Z] + cy->height / 2 + EPS;
 		term = create_coord(pl->coord[X], pl->coord[Y], pl->coord[Z] + 1);
 	}
 	pl->n_vec = create_vec(pl->coord, term);
