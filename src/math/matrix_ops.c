@@ -6,13 +6,80 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 11:10:49 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/17 14:13:16 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/17 16:43:10 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
+
+t_mx4	*create_translation_mx(t_coord3 *coord)
+{
+	t_mx4	*mx;
+	int		mx_dim;
+	int		i;
+	int		j;
+	int		k;
+	int		l;
+
+	if (!coord)
+		return (NULL);
+	mx_dim = 4 * 4;
+	mx = malloc(mx_dim * sizeof(long double));
+	if (!mx)
+		return (NULL);
+	i = 0;
+	j = 0;
+	k = 0;
+	l = 0;
+	while(i < mx_dim)
+	{
+		if (i == j)
+		{
+			mx[i] = 1;
+			j += 4;
+		}
+		else if (i == k)
+		{
+			mx[i] = coord[l++];
+			k += 4;
+		}
+		printf("mx[%d] = %Lf\n", i, mx[i]);
+		i++;
+	}
+	return (mx);
+}
+
+t_vec3	*translate(t_vec3 *vec, long double *translation_mx, int mx_dimension)
+{
+	// t_vec3		*vec;
+	t_coord4	coord[COORD_SIZE + 1];
+	t_coord3	new_coord[COORD_SIZE];
+	long double	sum;
+	int			i;
+	int			j;
+	(void)		mx_dimension;
+
+	ft_memcpy(coord, vec->coord, COORD_SIZE * sizeof(long double));
+	coord[3] = 1;
+	sum = 0;
+	i = 0;
+	while(i < 3)
+	{
+		j = 0;
+		while (j < 4)
+		{
+			sum += coord[i] * translation_mx[i + j];
+			j++;
+		}
+		new_coord[i] = sum;
+		sum = 0;
+		i++;
+	}
+	return (create_vec(NULL, new_coord));
+}
 
 t_vec3	*vec_times_mx(t_vec3 *vec, long double *mx, int mx_dimension)
 {

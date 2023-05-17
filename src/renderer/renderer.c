@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/17 14:13:56 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/17 16:42:32 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 t_vec3	*get_incident_point_norm(t_data *data, t_vec3 *incident_p, t_closest *obj)
 {
 	t_vec3	*norm;
-	t_vec3	*offset;
+	// t_vec3	*offset;
 	(void) data;
 
 	norm = NULL;
@@ -33,11 +33,11 @@ t_vec3	*get_incident_point_norm(t_data *data, t_vec3 *incident_p, t_closest *obj
 	}
 	else if (obj->el->type == SPHERE)
 		norm = create_vec(obj->el->coord, incident_p->coord);
-	else if (obj->el->type == PLANE)
+	else if (obj->el->type == PLANE || obj->el->type == CYLINDER_CAP)
 	{
-		offset = subtract(incident_p, obj->el->n_vec);
-		norm = add(offset, obj->el->n_vec);
-		free(offset);
+		// t_coord3 c = create_coord();
+		// t_mx4 trans_mx = create_translation_mx(c);
+		// norm = translate(obj->el->n_vec,)
 	}
 	normalize_vec(norm);
 	return (norm); 
@@ -50,7 +50,7 @@ t_color	trace_ray(t_data *data, long double *start_coord, t_vec3 *dir,
 	t_scn_el			**el_arr;
 	t_color				color[2];
 	long double			ref_factor;
-	const long double	ref_range[RANGE_SIZE] = {0.001, INF};
+	const long double	ref_range[RANGE_SIZE] = {0 + EPS, INF};
 
 	// el_arr = get_scn_els(data->scn_el, SPHERE);
 	el_arr = get_scn_els(data->scn_el, PLANE | SPHERE | CYLINDER);
@@ -101,7 +101,7 @@ void	render_img(t_data *data)
 			// if (data->vec[D]->coord[0] == 0 && data->vec[D]->coord[1] == 0 && data->vec[D]->coord[2] == 1)
 			// 	printf("this\n");	
 			// printf("%Lf, %Lf, %Lf\n", data->vec[D]->coord[0], data->vec[D]->coord[1], data->vec[D]->coord[2]);
-			color = trace_ray(data, data->cam->coord, data->vec[D], range, 2);
+			color = trace_ray(data, data->cam->coord, data->vec[D], range, 0);
 			mlx_put_pixel(data->img, screen[X], screen[Y], color);
 			// free_vec(data->vec, VEC_SIZE);
 			free(pplane_coord);
