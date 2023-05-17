@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/17 12:08:26 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/17 14:14:15 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ long double	dot(t_vec3 *vec_1, t_vec3 *vec_2);
 t_vec3		*add(t_vec3 *vec_1, t_vec3 *vec_2);
 t_vec3		*scale(long double scaler, t_vec3 *vec);
 t_vec3		*subtract(t_vec3 *vec_1, t_vec3 *vec_2);
-t_vec3		*vec_times_mx(t_vec3 *vec, long double *mx);
+t_vec3		*vec_times_mx(t_vec3 *vec, long double *mx, int mx_dimension);
 t_vec3		*cross(t_vec3 *vec_1, t_vec3 *vec_2);
 
 t_coord3	*create_coord(long double x,long double y, long double z);
@@ -122,5 +122,5 @@ long double	get_cylinder_intersection(t_data *data, long double *origin, t_scn_e
 
 //	rotation 
 double long	*get_rotation_angles(t_vec3 *dir, t_vec3 *rotation_vec);
-long double	*get_rotation_mx(long double angle, t_vec3 *u);
+long double	*create_rotation_mx(long double angle, t_vec3 *u);
 #endif

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 11:10:49 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/10 13:26:51 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/17 14:13:16 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-t_vec3	*vec_times_mx(t_vec3 *vec, long double *mx)
+t_vec3	*vec_times_mx(t_vec3 *vec, long double *mx, int mx_dimension)
 {
 	long double new_coords[3];
 	long double sum;
@@ -24,7 +24,7 @@ t_vec3	*vec_times_mx(t_vec3 *vec, long double *mx)
 	sum = 0;
 	i = 0;
 	j = 0;
-	while (i < 9)
+	while (i < mx_dimension)
 	{
 		sum += mx[i] * vec->coord[i % 3];
 		if ((i + 1) % 3 == 0)
@@ -32,12 +32,12 @@ t_vec3	*vec_times_mx(t_vec3 *vec, long double *mx)
 			new_coords[j++] = sum;
 			sum = 0;
 		}
-		i++;	
+		i++;
 	}
 	return (create_vec(NULL, new_coords));
 }
 
-long double	*get_rotation_mx(long double theta, t_vec3 *axis)
+long double	*create_rotation_mx(long double theta, t_vec3 *axis)
 {
 	long double	sin_t;
 	long double	cos_t;

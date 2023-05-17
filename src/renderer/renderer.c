@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/16 14:45:07 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/17 14:13:56 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_vec3	*rotate_ray(t_vec3 *ray, long double *rotation_mx)
 {
 	t_vec3	*r_ray;
 
-	r_ray = vec_times_mx(ray, rotation_mx);
+	r_ray = vec_times_mx(ray, rotation_mx, 3 * 3);
 	free(ray);
 	return (r_ray);
 }
@@ -101,7 +101,7 @@ void	render_img(t_data *data)
 			// if (data->vec[D]->coord[0] == 0 && data->vec[D]->coord[1] == 0 && data->vec[D]->coord[2] == 1)
 			// 	printf("this\n");	
 			// printf("%Lf, %Lf, %Lf\n", data->vec[D]->coord[0], data->vec[D]->coord[1], data->vec[D]->coord[2]);
-			color = trace_ray(data, data->cam->coord, data->vec[D], range, 0);
+			color = trace_ray(data, data->cam->coord, data->vec[D], range, 2);
 			mlx_put_pixel(data->img, screen[X], screen[Y], color);
 			// free_vec(data->vec, VEC_SIZE);
 			free(pplane_coord);

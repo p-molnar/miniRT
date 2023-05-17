@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 10:46:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/10 10:37:32 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/17 14:13:16 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	set_up_rotation_mx(t_data *data)
 	}
 	printf("angle: %Lf\n", r_angle);
 	printf("rotation axis: %Lf, %Lf, %Lf\n", rot_axis->coord[0], rot_axis->coord[1], rot_axis->coord[2]);
-	data->rotation_mx = get_rotation_mx(r_angle, rot_axis);
+	data->rotation_mx = create_rotation_mx(r_angle, rot_axis);
 	free(cam_orientation_vec);
 	free(rot_axis);
 }
