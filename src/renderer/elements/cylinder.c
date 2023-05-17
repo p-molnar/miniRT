@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:59:42 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/16 14:45:40 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/17 14:54:33 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ long double	get_cylinder_intersection(t_data *data, long double *origin, t_scn_e
 	z[0] = origin[Z] + intersect[3] * data->vec[D]->coord[Z];
 	if (pow(origin[X] + intersect[3] * data->vec[D]->coord[X], 2) + pow(origin[Y] + intersect[3] * data->vec[D]->coord[Y], 2) > pow(obj->diameter / 2, 2))
 		intersect[3] = 0;
-	// printf("0: %Lf, 1: %Lf, 2: %Lf, 3: %Lf\n", intersect[0], intersect[1], intersect[2], intersect[3]);
 	r = yield_smallest_positive(intersect);
-	// printf("r: %Lf\n", r);
 	return (r);
 }
