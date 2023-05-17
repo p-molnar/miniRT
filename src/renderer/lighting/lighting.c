@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/16 15:33:15 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/17 12:13:41 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+
+t_vec3	*get_light_ray(t_vec3 *inc_p, t_scn_el *light, long double *range)
+{
+	t_vec3	*vec;
+
+	vec = NULL;
+	range[0] = 0 + EPS;
+	if (light->type == DIR_LIGHT)
+	{
+		vec = create_vec(NULL, light->coord); // revise!
+		range[1] = INF;
+	}
+	else if (light->type == LIGHT)
+	{
+		vec = create_vec(inc_p->coord, light->coord);
+		range[1] = 1;
+	}
+	return (vec);
+}
 
 long double	get_lighting_intensity(t_data *data, t_scn_el *obj)
 {
@@ -24,7 +43,6 @@ long double	get_lighting_intensity(t_data *data, t_scn_el *obj)
 	int			i;
 
 	intensity = 0;
-	range[0] = 0.001;
 	lights = get_scn_els(data->scn_el, G_LIGHT);
 	i = 0;
 	while (lights && lights[i])
@@ -33,20 +51,8 @@ long double	get_lighting_intensity(t_data *data, t_scn_el *obj)
 			intensity += lights[i]->intensity;
 		else
 		{
-			if (lights[i]->type == DIR_LIGHT)
-			{
-				data->vec[L] = create_vec(NULL, lights[i]->coord); // revise!
-				range[1] = INF;
-			}
-			else if (lights[i]->type == LIGHT)
-			{
-				data->vec[L] = create_vec(data->vec[P]->coord, lights[i]->coord);
-				range[1] = 1;
-			}
-			// printf("L: %Lf, %Lf, %Lf\n", data->vec[L]->coord[X], data->vec[L]->coord[Y], data->vec[L]->coord[Z]);
-			// printf("P: %Lf, %Lf, %Lf\n", data->vec[P]->coord[X], data->vec[P]->coord[Y], data->vec[P]->coord[Z]);
-			t_scn_el **els = get_scn_els(data->scn_el, PLANE | CYLINDER);
-			shadow = get_closest_el(data, els, data->vec[P]->coord, data->vec[L], range);
+			data->vec[L] = get_light_ray(data->vec[P], lights[i], range);
+			shadow = cast_shadow(data, range);
 			if (shadow->el != NULL)
 			{
 				i++;
@@ -58,17 +64,8 @@ long double	get_lighting_intensity(t_data *data, t_scn_el *obj)
 				intensity += lights[i]->intensity * n_dot_l / (data->vec[L]->len
 						* data->vec[N]->len);
 			if (obj->specular != -1)
-			{
-				n_dot_l = dot(data->vec[N], data->vec[L]);
-				data->vec[Ns] = scale(2 * n_dot_l, data->vec[N]);
-				data->vec[Rv] = subtract(data->vec[Ns], data->vec[L]);
-				data->vec[V] = scale(-1, data->vec[D]);
-				long double rv_dot_v = dot(data->vec[Rv], data->vec[V]);
-				if (rv_dot_v > 0)
-					intensity += lights[i]->intensity * pow(rv_dot_v
-							/ (data->vec[Rv]->len * data->vec[V]->len), obj->specular);
-			}
-			// free(shadow);
+				intensity += get_specular_lighting(data, lights[i], obj->specular);
+			free(shadow);
 		}
 		i++;
 	}
