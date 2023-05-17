@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/10 10:38:48 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/17 16:16:45 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,9 @@
 
 typedef int			t_color;
 typedef long double	t_coord3;
+typedef long double	t_coord4;
+typedef long double	t_mx4;
+typedef long double	t_mx3;
 
 typedef struct s_vec
 {
