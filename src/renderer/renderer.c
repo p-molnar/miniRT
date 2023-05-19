@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/19 10:48:57 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/19 13:19:37 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 t_vec3	*get_incident_point_norm(t_data *data, t_vec3 *incident_p, t_closest *obj)
 {
 	t_vec3	*norm;
-	// t_vec3	*offset;
+	long double end[2];
 	(void) data;
 
 	norm = NULL;
@@ -29,16 +29,19 @@ t_vec3	*get_incident_point_norm(t_data *data, t_vec3 *incident_p, t_closest *obj
 	{
 		long double z = incident_p->coord[Z];
 		long double a[3] = {0, 0, z};
-		norm = create_vec(a, incident_p->coord);
+
+		end[0] = obj->el->coord[Z] - obj->el->height / 2;
+		end[1] = obj->el->coord[Z] + obj->el->height / 2;
+		if ((incident_p->coord[Z] > end[0] && incident_p->coord[Z] < end[1]))
+			norm = create_vec(a, incident_p->coord);
+		else
+			norm = create_vec(NULL, create_coord(0, 0, -1));
 	}
 	else if (obj->el->type == SPHERE)
 		norm = create_vec(obj->el->coord, incident_p->coord);
-	else if (obj->el->type == PLANE || obj->el->type == CYLINDER_CAP)
+	else if (obj->el->type == PLANE)
 	{	
 		norm = create_vec(NULL, obj->el->n_vec->coord);
-		// t_coord3 c = create_coord();
-		// t_mx4 trans_mx = create_translation_mx(c);
-		// norm = translate(obj->el->n_vec,)
 	}
 	normalize_vec(norm);
 	return (norm); 
@@ -100,12 +103,10 @@ void	render_img(t_data *data)
 					data->viewport, data->cam);
 			data->vec[D] = create_vec(data->cam->coord, pplane_coord);
 			data->vec[D] = rotate_ray(data->vec[D], data->rotation_mx);
-			
+			// printf("%d\n", counter);
 			// if (data->vec[D]->coord[0] == 0 && data->vec[D]->coord[1] == 0 && data->vec[D]->coord[2] == 1)
 			// 	printf("this\n");	
 			// printf("%Lf, %Lf, %Lf\n", data->vec[D]->coord[0], data->vec[D]->coord[1], data->vec[D]->coord[2]);
-			if (counter == 109335)
-				printf("this\n");
 			color = trace_ray(data, data->cam->coord, data->vec[D], range, 0);
 			mlx_put_pixel(data->img, screen[X], screen[Y], color);
 			free(pplane_coord);
