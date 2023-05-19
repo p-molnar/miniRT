@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/18 23:04:34 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/19 09:50:17 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	render_img(t_data *data)
 		{
 			screen[X] = canvas[X] + CANVAS_W / 2;
 			screen[Y] = CANVAS_H / 2 - canvas[Y];
-			// init_vec(data->vec, VEC_SIZE);
+			init_vec(data->vec, VEC_SIZE);
 			pplane_coord = convert_to_viewport(canvas[X], canvas[Y],
 					data->viewport, data->cam);
 			data->vec[D] = create_vec(data->cam->coord, pplane_coord);
@@ -105,10 +105,10 @@ void	render_img(t_data *data)
 			// 	printf("this\n");	
 			// printf("%Lf, %Lf, %Lf\n", data->vec[D]->coord[0], data->vec[D]->coord[1], data->vec[D]->coord[2]);
 			if (counter == 109335)
-				printf("this");
+				printf("this\n");
 			color = trace_ray(data, data->cam->coord, data->vec[D], range, 0);
 			mlx_put_pixel(data->img, screen[X], screen[Y], color);
-			// free_vec(data->vec, VEC_SIZE);
+			free_vec(data->vec, VEC_SIZE);
 			free(pplane_coord);
 			counter++;
 			canvas[Y]--;
