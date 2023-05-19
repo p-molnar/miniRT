@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/18 19:56:48 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/19 12:49:44 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define INF 99999
 // # define BACKGROUND_COLOR 0xFFFFFFFF
 # define BACKGROUND_COLOR 0x000000FF
-# define EPS 0.00000001
+# define EPS 0.0001
 
 # ifndef RECURSIVE_DEPTH
 #  define RECURSIVE_DEPTH 0
@@ -95,7 +95,7 @@ enum	e_scn_el_type
 	TYPE_UNDEF = 0,
 	AMB_LIGHT = 1 << 0,
 	CAM = 1 << 1,
-	LIGHT = 1 << 2,
+	POINT_LIGHT = 1 << 2,
 	DIR_LIGHT = 1 << 3,
 	SPHERE = 1 << 4,
 	PLANE = 1 << 5,
@@ -118,7 +118,7 @@ enum	e_field_flags
 
 enum	e_groupped_el
 {
-	G_LIGHT = AMB_LIGHT | LIGHT | DIR_LIGHT,
+	G_LIGHT = AMB_LIGHT | POINT_LIGHT | DIR_LIGHT,
 	G_CAM = CAM,
 	G_OBJS = SPHERE | PLANE | CYLINDER,
 };
