@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/19 09:50:17 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/19 10:48:57 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ t_vec3	*get_incident_point_norm(t_data *data, t_vec3 *incident_p, t_closest *obj
 	else if (obj->el->type == SPHERE)
 		norm = create_vec(obj->el->coord, incident_p->coord);
 	else if (obj->el->type == PLANE || obj->el->type == CYLINDER_CAP)
-	{
-		norm = obj->el->n_vec;
+	{	
+		norm = create_vec(NULL, obj->el->n_vec->coord);
 		// t_coord3 c = create_coord();
 		// t_mx4 trans_mx = create_translation_mx(c);
 		// norm = translate(obj->el->n_vec,)
@@ -108,8 +108,8 @@ void	render_img(t_data *data)
 				printf("this\n");
 			color = trace_ray(data, data->cam->coord, data->vec[D], range, 0);
 			mlx_put_pixel(data->img, screen[X], screen[Y], color);
-			free_vec(data->vec, VEC_SIZE);
 			free(pplane_coord);
+			free_vec(data->vec, VEC_SIZE);
 			counter++;
 			canvas[Y]--;
 		}

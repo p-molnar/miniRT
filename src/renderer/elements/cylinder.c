@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:59:42 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/19 10:02:25 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/19 11:54:56 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,20 @@ long double	get_cylinder_intersection(t_data *data, long double *origin, t_vec3 
 			intersect[1] = -1;
 		free(t);
 	}
-	intersect[2] = get_plane_intersection(data, caps[0]);
+	intersect[2] = get_plane_intersection(origin, dir, caps[0]);
 	long double x = origin[X] + intersect[2] * dir->coord[X];
 	long double y = origin[Y] + intersect[2] * dir->coord[Y];
 	if (pow(x, 2) + pow(y, 2) >= pow(obj->diameter / 2, 2))
 		intersect[2] = -1;
-	intersect[3] = get_plane_intersection(data, caps[1]);
+	// else
+	// 	printf("in circle\n");
+	intersect[3] = get_plane_intersection(origin, dir, caps[1]);
 	x = origin[X] + intersect[3] * dir->coord[X];
 	y = origin[Y] + intersect[3] * dir->coord[Y];
 	if (pow(x, 2) + pow(y, 2) >= pow(obj->diameter / 2, 2))
 		intersect[3] = -1;
+	// else
+	// 	printf("in circle\n");
 	r = yield_smallest_positive(intersect);
 	// printf("1: %Lf, 2: %Lf, 3: %Lf, 4: %Lf\n", intersect[0], intersect[1], intersect[2], intersect[3]);
 	// printf("r: %Lf\n", r);

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 11:00:13 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/16 14:26:05 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/19 11:54:11 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 #include <math.h>
 #include <stdlib.h>
 
-long double	get_plane_intersection(t_data *data, t_scn_el *obj)
+long double	get_plane_intersection(t_coord3 *origin, t_vec3 *dir, t_scn_el *obj)
 {
 	long double	t;
 	t_vec3		*EQ;
 	long double	denom;
 
 	t = -1;
-	EQ = create_vec(data->cam->coord, obj->coord);
-	denom = dot(obj->n_vec, data->vec[D]);
-	if (fabsl(denom) > 0.0001)
+	EQ = create_vec(origin, obj->coord);
+	denom = dot(obj->n_vec, dir);
+	if (fabsl(denom) > EPS)
 		t = dot(obj->n_vec, EQ) / denom;
 	return (t);
 }
