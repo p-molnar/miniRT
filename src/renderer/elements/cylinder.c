@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:59:42 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/17 14:54:33 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/18 23:00:42 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ long double	get_cylinder_intersection(t_data *data, long double *origin, t_scn_e
 	long double *t;
 	long double	end[2];
 	long double	z[2];
-	long double	intersect[4] = {0, 0, 0, 0};
+	long double	intersect[4] = {-1, -1, -1, -1};
 	long double	r;
 	t_scn_el		**caps;
 
@@ -58,17 +58,21 @@ long double	get_cylinder_intersection(t_data *data, long double *origin, t_scn_e
 		if (!(z[0] > end[0] && z[0] < end[1]))
 			intersect[0] = 0;
 		if (!(z[1] > end[0] && z[1] < end[1]))
-			intersect[1] = 0;
+			intersect[1] = -1;
 		free(t);
 	}
 	intersect[2] = get_plane_intersection(data, caps[0]);
-	z[0] = origin[Z] + intersect[2] * data->vec[D]->coord[Z];
-	if (pow(origin[X] + intersect[2] * data->vec[D]->coord[X], 2) + pow(origin[Y] + intersect[2] * data->vec[D]->coord[Y], 2) > pow(obj->diameter / 2, 2))
-		intersect[2] = 0;
+	long double x = origin[X] + intersect[2] * data->vec[D]->coord[X];
+	long double y = origin[Y] + intersect[2] * data->vec[D]->coord[Y];
+	if (pow(x, 2) + pow(y, 2) >= pow(obj->diameter / 2, 2))
+		intersect[2] = -1;
 	intersect[3] = get_plane_intersection(data, caps[1]);
-	z[0] = origin[Z] + intersect[3] * data->vec[D]->coord[Z];
-	if (pow(origin[X] + intersect[3] * data->vec[D]->coord[X], 2) + pow(origin[Y] + intersect[3] * data->vec[D]->coord[Y], 2) > pow(obj->diameter / 2, 2))
-		intersect[3] = 0;
+	x = origin[X] + intersect[3] * data->vec[D]->coord[X];
+	y = origin[Y] + intersect[3] * data->vec[D]->coord[Y];
+	if (pow(x, 2) + pow(y, 2) >= pow(obj->diameter / 2, 2))
+		intersect[3] = -1;
 	r = yield_smallest_positive(intersect);
+	// printf("1: %Lf, 2: %Lf, 3: %Lf, 4: %Lf\n", intersect[0], intersect[1], intersect[2], intersect[3]);
+	// printf("r: %Lf\n", r);
 	return (r);
 }

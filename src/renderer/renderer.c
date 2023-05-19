@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/17 16:42:32 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/18 23:04:34 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_vec3	*get_incident_point_norm(t_data *data, t_vec3 *incident_p, t_closest *obj
 		norm = create_vec(obj->el->coord, incident_p->coord);
 	else if (obj->el->type == PLANE || obj->el->type == CYLINDER_CAP)
 	{
+		norm = obj->el->n_vec;
 		// t_coord3 c = create_coord();
 		// t_mx4 trans_mx = create_translation_mx(c);
 		// norm = translate(obj->el->n_vec,)
@@ -52,8 +53,7 @@ t_color	trace_ray(t_data *data, long double *start_coord, t_vec3 *dir,
 	long double			ref_factor;
 	const long double	ref_range[RANGE_SIZE] = {0 + EPS, INF};
 
-	// el_arr = get_scn_els(data->scn_el, SPHERE);
-	el_arr = get_scn_els(data->scn_el, PLANE | SPHERE | CYLINDER);
+	el_arr = get_scn_els(data->scn_el, G_OBJS);
 	closest = get_closest_el(data, el_arr, start_coord, dir, range);
 	if (!closest || !closest->el)
 		return (BACKGROUND_COLOR);
@@ -81,11 +81,13 @@ void	render_img(t_data *data)
 {
 	int					canvas[2];
 	int					screen[2];
+	int					counter;
 	t_color				color;
 	long double			*pplane_coord;
 	const long double	range[RANGE_SIZE] = {1, INF};
 	
 	canvas[X] = -CANVAS_W / 2;
+	counter = 0;
 	while (canvas[X] < CANVAS_W / 2)
 	{
 		canvas[Y] = CANVAS_H / 2;
@@ -98,13 +100,17 @@ void	render_img(t_data *data)
 					data->viewport, data->cam);
 			data->vec[D] = create_vec(data->cam->coord, pplane_coord);
 			data->vec[D] = rotate_ray(data->vec[D], data->rotation_mx);
+			
 			// if (data->vec[D]->coord[0] == 0 && data->vec[D]->coord[1] == 0 && data->vec[D]->coord[2] == 1)
 			// 	printf("this\n");	
 			// printf("%Lf, %Lf, %Lf\n", data->vec[D]->coord[0], data->vec[D]->coord[1], data->vec[D]->coord[2]);
+			if (counter == 109335)
+				printf("this");
 			color = trace_ray(data, data->cam->coord, data->vec[D], range, 0);
 			mlx_put_pixel(data->img, screen[X], screen[Y], color);
 			// free_vec(data->vec, VEC_SIZE);
 			free(pplane_coord);
+			counter++;
 			canvas[Y]--;
 		}
 		canvas[X]++;

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/16 15:25:08 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/18 22:45:49 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,6 @@ t_closest	*get_closest_el(t_data *data, t_scn_el **el, long double origin[3], t_
 	}
 	return (closest);
 }
-
-
 
 long double	*convert_to_viewport(int x, int y, long double *viewport, t_scn_el *cam)
 {
