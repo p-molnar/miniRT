@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/17 14:43:06 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/19 13:26:48 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	print_scene_el(t_data *scn)
 
 	e[AMB_LIGHT] = "AMB";
 	e[CAM] = "CAM";
-	e[LIGHT] = "point light";
+	e[POINT_LIGHT] = "point light";
 	e[DIR_LIGHT] = "Dir light";
 	e[SPHERE] = "Sphere";
 	e[PLANE] = "plane";

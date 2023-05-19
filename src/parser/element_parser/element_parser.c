@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:27:54 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/05 12:34:40 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/19 13:26:48 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	parse_type_identifier(t_scn_el *el, char *line)
 	if (ft_strncmp("A", line, str_len) == 0)
 		el_type = AMB_LIGHT;
 	else if (ft_strncmp("L", line, str_len) == 0)
-		el_type = LIGHT;
+		el_type = POINT_LIGHT;
 	else if (ft_strncmp("DL", line, str_len) == 0)
 		el_type = DIR_LIGHT;
 	else if (ft_strncmp("C", line, str_len) == 0)

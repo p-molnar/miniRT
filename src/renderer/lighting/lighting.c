@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/18 22:41:44 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/19 13:26:48 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_vec3	*get_light_ray(t_vec3 *inc_p, t_scn_el *light, long double *range)
 		vec = create_vec(NULL, light->coord); // revise!
 		range[1] = INF;
 	}
-	else if (light->type == LIGHT)
+	else if (light->type == POINT_LIGHT)
 	{
 		vec = create_vec(inc_p->coord, light->coord);
 		range[1] = 1;
