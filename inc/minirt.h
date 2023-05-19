@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/17 14:14:15 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/19 10:02:51 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ long double	*convert_to_viewport(int x, int y, long double *viewport, t_scn_el *
 //	elements
 long double	get_sphere_intersections(long double start[3], t_vec3 *dir, t_scn_el *obj);
 long double	get_plane_intersection(t_data *data, t_scn_el *obj);
-long double	get_cylinder_intersection(t_data *data, long double *origin, t_scn_el *obj);
+long double	get_cylinder_intersection(t_data *data, long double *origin, t_vec3 *dir, t_scn_el *obj);
 
 //	rotation 
 double long	*get_rotation_angles(t_vec3 *dir, t_vec3 *rotation_vec);

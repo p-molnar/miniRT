@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:59:42 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/18 23:00:42 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/19 10:02:25 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ long double	yield_smallest_positive(long double *arr)
 	return (smallest);
 }
 
-long double	get_cylinder_intersection(t_data *data, long double *origin, t_scn_el *obj)
+long double	get_cylinder_intersection(t_data *data, long double *origin, t_vec3 *dir, t_scn_el *obj)
 {
 	long double	param[3];
 	long double *t;
@@ -46,29 +46,29 @@ long double	get_cylinder_intersection(t_data *data, long double *origin, t_scn_e
 	caps = get_scn_els(data->scn_el, CYLINDER_CAP);
 	end[0] = obj->coord[Z] - obj->height / 2;
 	end[1] = obj->coord[Z] + obj->height / 2;
-	param[0] = pow(data->vec[D]->coord[X], 2) + pow(data->vec[D]->coord[Y], 2);
-	param[1] = 2 * origin[X] * data->vec[D]->coord[X] + 2 * origin[Y] * data->vec[D]->coord[Y];
+	param[0] = pow(dir->coord[X], 2) + pow(dir->coord[Y], 2);
+	param[1] = 2 * origin[X] * dir->coord[X] + 2 * origin[Y] * dir->coord[Y];
 	param[2] = pow(origin[X], 2) + pow(origin[Y], 2) - pow(obj->diameter / 2, 2);
 	t = quad_eq_solver(param[0], param[1], param[2], NULL);
 	if (t != NULL)
 	{
 		ft_memcpy(intersect, t, 2 * sizeof(long double));
-		z[0] = origin[Z] + t[0] * data->vec[D]->coord[Z];
-		z[1] = origin[Z] + t[1] * data->vec[D]->coord[Z];
+		z[0] = origin[Z] + t[0] * dir->coord[Z];
+		z[1] = origin[Z] + t[1] * dir->coord[Z];
 		if (!(z[0] > end[0] && z[0] < end[1]))
-			intersect[0] = 0;
+			intersect[0] = -1;
 		if (!(z[1] > end[0] && z[1] < end[1]))
 			intersect[1] = -1;
 		free(t);
 	}
 	intersect[2] = get_plane_intersection(data, caps[0]);
-	long double x = origin[X] + intersect[2] * data->vec[D]->coord[X];
-	long double y = origin[Y] + intersect[2] * data->vec[D]->coord[Y];
+	long double x = origin[X] + intersect[2] * dir->coord[X];
+	long double y = origin[Y] + intersect[2] * dir->coord[Y];
 	if (pow(x, 2) + pow(y, 2) >= pow(obj->diameter / 2, 2))
 		intersect[2] = -1;
 	intersect[3] = get_plane_intersection(data, caps[1]);
-	x = origin[X] + intersect[3] * data->vec[D]->coord[X];
-	y = origin[Y] + intersect[3] * data->vec[D]->coord[Y];
+	x = origin[X] + intersect[3] * dir->coord[X];
+	y = origin[Y] + intersect[3] * dir->coord[Y];
 	if (pow(x, 2) + pow(y, 2) >= pow(obj->diameter / 2, 2))
 		intersect[3] = -1;
 	r = yield_smallest_positive(intersect);
