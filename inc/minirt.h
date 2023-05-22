@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/22 13:38:04 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/22 13:56:18 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ t_color	trace_ray(t_data *data, long double *start_coord, t_vec3 *dir,
 		const long double *range, int recursion_depth);
 
 //	renderer/color
-int	get_incident_point_color(t_data *data, t_scn_el *closest_el);
 t_color	get_reflected_color(t_data *data, t_vec3 *dir, const long double *range, int depth);
 t_color	mix_colors(t_color local_color, t_color reflected_color, long double ref_factor);
 
@@ -106,7 +105,7 @@ t_color		get_b(int rgba);
 t_color		get_a(int rgba);
 
 //	render color
-int			get_incident_point_color(t_data *data, t_scn_el *closest_el);
+t_color get_incident_point_color(t_data *data, t_coord3 *inc_p, t_scn_el *closest_el);
 
 // render util
 void	draw_axes(t_data *data);

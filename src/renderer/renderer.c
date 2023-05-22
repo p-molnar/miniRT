@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/22 13:42:13 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/22 13:57:29 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_color	trace_ray(t_data *data, long double *origin, t_vec3 *dir,
 		return (BACKGROUND_COLOR);
 	data->p[INCIDENT] = get_incident_point(origin, dir, closest_obj->dist);
 	data->v[NORM] = get_incident_point_norm(data->p[INCIDENT], closest_obj);
-	color[0] = get_incident_point_color(data, closest_obj->el);
+	color[0] = get_incident_point_color(data, data->p[INCIDENT], closest_obj->el);
 	ref_factor = closest_obj->el->reflection;
 	free(closest_obj);
 	if (recursion_depth <= 0 || ref_factor <= 0)
