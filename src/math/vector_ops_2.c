@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 14:48:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/10 11:12:07 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/22 12:20:20 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,17 +85,33 @@ t_vec3	*subtract(t_vec3 *vec_1, t_vec3 *vec_2)
 
 t_vec3	*cross(t_vec3 *vec_1, t_vec3 *vec_2)
 {
-	t_vec3	*vec;
+	t_vec3		*vec;
 	long double	tmp[3];
-	int	i;
+	int			i;
 
 	i = 0;
 	while (i < 3)
 	{
-		tmp[i] = vec_1->n_coord[(i + 1) % 3] * vec_2->n_coord[(i + 2) % 3] - 
+		tmp[i] = vec_1->n_coord[(i + 1) % 3] * vec_2->n_coord[(i + 2) % 3] -
 			vec_1->n_coord[(i + 2) % 3] * vec_2->n_coord[(i + 1) % 3];
 		i++;
 	}
 	vec = create_vec(NULL, tmp);
 	return (vec);
 }
+
+t_coord3	*offset(t_coord3 *p, t_vec3 *vec)
+{
+	long double val[COORD_SIZE];
+	int i;
+
+	if (!(p && vec))
+		return (NULL);
+	i = 0;
+	while (i < COORD_SIZE)
+	{
+		val[i] = p[i] + vec->coord[i];
+		i++;
+	}
+	return (create_coord(val[X], val[Y], val[Z]));
+};

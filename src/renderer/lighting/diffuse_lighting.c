@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 09:43:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/19 13:26:48 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/22 13:39:46 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ long double	get_diffuse_lighting(t_data *data, t_scn_el *light)
 	intensity = 0;
 	if (light->type == DIR_LIGHT)
 	{
-		data->vec[L] = create_vec(NULL, light->coord); // revise!
+		data->v[LIGHT] = create_vec(NULL, light->coord); // revise!
 	}
 	else if (light->type == POINT_LIGHT)
-		data->vec[L] = create_vec(data->vec[P]->coord, light->coord);
-	n_dot_l = dot(data->vec[N], data->vec[L]);
+		data->v[LIGHT] = create_vec(data->p[INCIDENT], light->coord);
+	n_dot_l = dot(data->v[NORM], data->v[LIGHT]);
 	if (n_dot_l > 0)
-		intensity += light->intensity * n_dot_l / (data->vec[L]->len
-				* data->vec[N]->len);
+		intensity += light->intensity * n_dot_l / (data->v[LIGHT]->len
+				* data->v[NORM]->len);
 	return (intensity);
 }

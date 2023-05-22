@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/17 16:16:45 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/22 13:25:11 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_scn_el
 	long double		intensity;
 	long double		specular;
 	long double		reflection;
+	struct s_scn_el	*cap;
 	t_color			color;
 }					t_scn_el;
 
@@ -119,7 +120,8 @@ typedef struct s_data
 	t_list			*scn_el;
 	t_scn_el		*cam;
 	long double		viewport[COORD_SIZE];
-	t_vec3			*vec[VEC_SIZE];
+	t_vec3			*v[VEC_SIZE];
+	t_coord3		*p[POINT_SIZE];
 	long double		*rotation_mx;
 	mlx_t			*mlx;
 	mlx_image_t		*img;

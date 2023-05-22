@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/19 13:26:48 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/22 13:41:22 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,26 @@
 #include <stdlib.h>
 #include <math.h>
 
-t_vec3	*get_light_ray(t_vec3 *inc_p, t_scn_el *light, long double *range)
+t_vec3	*cast_light_ray(t_coord3 *inc_p, t_coord3 *light, int type, long double *range)
 {
 	t_vec3	*vec;
 
 	vec = NULL;
 	range[0] = 0 + EPS;
-	if (light->type == DIR_LIGHT)
+	if (type == DIR_LIGHT)
 	{
-		vec = create_vec(NULL, light->coord); // revise!
+		vec = create_vec(NULL, light); // revise!
 		range[1] = INF;
 	}
-	else if (light->type == POINT_LIGHT)
+	else if (type == POINT_LIGHT)
 	{
-		vec = create_vec(inc_p->coord, light->coord);
+		vec = create_vec(inc_p, light);
 		range[1] = 1;
 	}
 	return (vec);
 }
 
-long double	get_lighting_intensity(t_data *data, t_scn_el *obj)
+long double	get_lighting_intensity(t_data *data, t_coord3 *inc_p, t_scn_el *obj)
 {
 	long double	intensity;
 	t_closest	*shadow;
@@ -51,20 +51,20 @@ long double	get_lighting_intensity(t_data *data, t_scn_el *obj)
 			intensity += lights[i]->intensity;
 		else
 		{
-			data->vec[L] = get_light_ray(data->vec[P], lights[i], range);
-			shadow = cast_shadow(data, range);
+			data->v[LIGHT] = cast_light_ray(inc_p, lights[i]->coord, lights[i]->type, range);
+			shadow = cast_shadow(data, inc_p, data->v[LIGHT], range);
 			if (shadow->el != NULL)
 			{
 				i++;
 				free(shadow);
 				continue ;
 			}
-			long double n_dot_l = dot(data->vec[N], data->vec[L]);
+			long double n_dot_l = dot(data->v[NORM], data->v[LIGHT]);
 			if (n_dot_l > 0)
-				intensity += lights[i]->intensity * n_dot_l / (data->vec[L]->len
-						* data->vec[N]->len);
+				intensity += lights[i]->intensity * n_dot_l / (data->v[LIGHT]->len
+						* data->v[NORM]->len);
 			if (obj->specular != -1)
-				intensity += get_specular_lighting(data, lights[i], obj->specular);
+				intensity += get_specular_lighting(data->v[RAY], data->v[LIGHT], data->v[NORM], intensity, obj->specular);
 			free(shadow);
 		}
 		i++;

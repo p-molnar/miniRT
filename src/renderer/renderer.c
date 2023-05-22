@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/19 13:19:37 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/22 13:42:13 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-t_vec3	*get_incident_point_norm(t_data *data, t_vec3 *incident_p, t_closest *obj)
+t_vec3	*get_incident_point_norm(t_coord3 *inc_p, t_closest *obj)
 {
 	t_vec3	*norm;
-	long double end[2];
-	(void) data;
 
 	norm = NULL;
 	if (obj->el->type == CYLINDER)
 	{
-		long double z = incident_p->coord[Z];
-		long double a[3] = {0, 0, z};
-
-		end[0] = obj->el->coord[Z] - obj->el->height / 2;
-		end[1] = obj->el->coord[Z] + obj->el->height / 2;
-		if ((incident_p->coord[Z] > end[0] && incident_p->coord[Z] < end[1]))
-			norm = create_vec(a, incident_p->coord);
+		if ((inc_p[Z] > obj->el->cap[0].coord[Z] && inc_p[Z] < obj->el->cap[1].coord[Z]))
+			norm = create_vec(create_coord(0, 0, inc_p[Z]), inc_p);	
 		else
-			norm = create_vec(NULL, create_coord(0, 0, -1));
+		{
+			if (inc_p[Z] < obj->el->coord[Z])
+				norm = create_vec(inc_p, create_coord(inc_p[X], inc_p[Y], inc_p[Z] - 1));
+			else
+				norm = create_vec(inc_p, create_coord(inc_p[X], inc_p[Y], inc_p[Z] + 1));
+		}
 	}
 	else if (obj->el->type == SPHERE)
-		norm = create_vec(obj->el->coord, incident_p->coord);
+		norm = create_vec(obj->el->coord, inc_p);
 	else if (obj->el->type == PLANE)
 	{	
 		norm = create_vec(NULL, obj->el->n_vec->coord);
@@ -47,24 +45,24 @@ t_vec3	*get_incident_point_norm(t_data *data, t_vec3 *incident_p, t_closest *obj
 	return (norm); 
 }
 
-t_color	trace_ray(t_data *data, long double *start_coord, t_vec3 *dir,
+t_color	trace_ray(t_data *data, long double *origin, t_vec3 *dir,
 		const long double *range, int recursion_depth)
 {
-	t_closest			*closest;
+	t_closest			*closest_obj;
 	t_scn_el			**el_arr;
 	t_color				color[2];
 	long double			ref_factor;
 	const long double	ref_range[RANGE_SIZE] = {0 + EPS, INF};
 
 	el_arr = get_scn_els(data->scn_el, G_OBJS);
-	closest = get_closest_el(data, el_arr, start_coord, dir, range);
-	if (!closest || !closest->el)
+	closest_obj = get_closest_el(el_arr, origin, dir, range);
+	if (!closest_obj || !closest_obj->el)
 		return (BACKGROUND_COLOR);
-	data->vec[P] = get_incident_point(start_coord, dir, closest->dist);
-	data->vec[N] = get_incident_point_norm(data, data->vec[P], closest);
-	color[0] = get_incident_point_color(data, closest->el);
-	ref_factor = closest->el->reflection;
-	free(closest);
+	data->p[INCIDENT] = get_incident_point(origin, dir, closest_obj->dist);
+	data->v[NORM] = get_incident_point_norm(data->p[INCIDENT], closest_obj);
+	color[0] = get_incident_point_color(data, closest_obj->el);
+	ref_factor = closest_obj->el->reflection;
+	free(closest_obj);
 	if (recursion_depth <= 0 || ref_factor <= 0)
 		return (color[0]);
 	color[1] = get_reflected_color(data, dir, ref_range, recursion_depth);
@@ -98,19 +96,19 @@ void	render_img(t_data *data)
 		{
 			screen[X] = canvas[X] + CANVAS_W / 2;
 			screen[Y] = CANVAS_H / 2 - canvas[Y];
-			init_vec(data->vec, VEC_SIZE);
+			init_vec(data->v, VEC_SIZE);
 			pplane_coord = convert_to_viewport(canvas[X], canvas[Y],
 					data->viewport, data->cam);
-			data->vec[D] = create_vec(data->cam->coord, pplane_coord);
-			data->vec[D] = rotate_ray(data->vec[D], data->rotation_mx);
+			data->v[RAY] = create_vec(data->cam->coord, pplane_coord);
+			data->v[RAY] = rotate_ray(data->v[RAY], data->rotation_mx);
 			// printf("%d\n", counter);
 			// if (data->vec[D]->coord[0] == 0 && data->vec[D]->coord[1] == 0 && data->vec[D]->coord[2] == 1)
 			// 	printf("this\n");	
 			// printf("%Lf, %Lf, %Lf\n", data->vec[D]->coord[0], data->vec[D]->coord[1], data->vec[D]->coord[2]);
-			color = trace_ray(data, data->cam->coord, data->vec[D], range, 0);
+			color = trace_ray(data, data->cam->coord, data->v[RAY], range, 0);
 			mlx_put_pixel(data->img, screen[X], screen[Y], color);
 			free(pplane_coord);
-			free_vec(data->vec, VEC_SIZE);
+			free_vec(data->v, VEC_SIZE);
 			counter++;
 			canvas[Y]--;
 		}

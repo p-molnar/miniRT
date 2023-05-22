@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/19 13:26:48 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/22 13:30:35 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,17 @@ enum	e_error_handler
 
 enum	e_vec_params
 {
-	CO,
-	D,
-	Ds,
-	Dneg,
-	O,
-	P,
-	N,
-	Ns,
-	L,
-	Rv,
-	V,
+	RAY,
+	NORM,
+	REFLECTION,
+	LIGHT,
 	VEC_SIZE,
+};
+
+enum	e_points
+{
+	INCIDENT,
+	POINT_SIZE,
 };
 
 enum	e_coord

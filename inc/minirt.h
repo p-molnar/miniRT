@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/19 11:54:28 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/22 13:38:04 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,17 @@ t_color	get_reflected_color(t_data *data, t_vec3 *dir, const long double *range,
 t_color	mix_colors(t_color local_color, t_color reflected_color, long double ref_factor);
 
 //	lighting
-long double	get_lighting_intensity(t_data *data, t_scn_el *obj);
+long double	get_lighting_intensity(t_data *data, t_coord3 *inc_p, t_scn_el *obj);
 long double	get_diffuse_lighting(t_data *data, t_scn_el *light);
-long double	get_specular_lighting(t_data *data, t_scn_el *light,
-		long double specular);
-t_closest	*cast_shadow(t_data *data, long double *range);
+long double	get_specular_lighting(t_vec3 *dir, t_vec3 *light, t_vec3 *obj_norm, long double intensity, long double spec);
+t_closest	*cast_shadow(t_data *data, t_coord3 *inc_p, t_vec3 *dir, long double *range);
 
 //	util
 t_scn_el	**get_scn_els(t_list *list, int type);
 void		init_vec(t_vec3 **arr, int size);
 void		free_vec(t_vec3 **arr, int size);
 t_vec3		*get_ray_reflection(t_vec3 *ray, t_vec3 *norm);
-t_vec3	*get_incident_point(long double *start_coord, t_vec3 *direction,
-		long double distance);
+t_coord3	*get_incident_point(t_coord3 *origin, t_vec3 *dir, long double t);
 
 //	math
 t_vec3		*create_vec(long double *init_point, long double *terminal_point);
@@ -87,6 +85,7 @@ t_vec3		*scale(long double scaler, t_vec3 *vec);
 t_vec3		*subtract(t_vec3 *vec_1, t_vec3 *vec_2);
 t_vec3		*vec_times_mx(t_vec3 *vec, long double *mx, int mx_dimension);
 t_vec3		*cross(t_vec3 *vec_1, t_vec3 *vec_2);
+t_coord3	*offset(t_coord3 *p, t_vec3 *vec);
 
 t_coord3	*create_coord(long double x,long double y, long double z);
 
@@ -111,14 +110,13 @@ int			get_incident_point_color(t_data *data, t_scn_el *closest_el);
 
 // render util
 void	draw_axes(t_data *data);
-// t_closest	*get_closest_el(t_scn_el **el_arr, long double start_coord[3], t_vec *dir, const long double *range);
-t_closest	*get_closest_el(t_data *data, t_scn_el **el_arr, long double origin[3], t_vec3 *dir, const long double *range);
+t_closest	*get_closest_el(t_scn_el **el, long double origin[3], t_vec3 *dir, const long double *range);
 long double	*convert_to_viewport(int x, int y, long double *viewport, t_scn_el *cam);
 
 //	elements
 long double	get_sphere_intersections(long double start[3], t_vec3 *dir, t_scn_el *obj);
 long double	get_plane_intersection(t_coord3 *origin, t_vec3 *dir, t_scn_el *obj);
-long double	get_cylinder_intersection(t_data *data, long double *origin, t_vec3 *dir, t_scn_el *obj);
+long double	get_cylinder_intersection(t_coord3 *origin, t_vec3 *dir, t_scn_el *obj);
 
 //	rotation 
 double long	*get_rotation_angles(t_vec3 *dir, t_vec3 *rotation_vec);

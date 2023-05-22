@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/19 11:58:23 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/22 13:08:21 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,12 @@
 #include <stdio.h>
 #include <math.h>
 
-t_vec3	*get_incident_point(long double *start_coord, t_vec3 *direction,
-		long double distance)
+t_coord3	*get_incident_point(t_coord3 *origin, t_vec3 *dir, long double t)
 {
-	t_vec3	*O;
-	t_vec3	*scaled_dir;
-	t_vec3	*incident_point;
+	t_coord3	*inc_p;
 
-	// O = create_vec(start_coord, start_coord);
-	O = create_vec(NULL, start_coord);
-	scaled_dir = scale(distance, direction);
-	incident_point = add(O, scaled_dir);
-	free(O);
-	free(scaled_dir);
-	return (incident_point);
+	inc_p = offset(origin, scale(t, dir));
+	return (inc_p);
 }
 
 void	draw_axes(t_data *data)
@@ -69,7 +61,7 @@ void	draw_axes(t_data *data)
 }
 
 
-t_closest	*get_closest_el(t_data *data, t_scn_el **el, long double origin[3], t_vec3 *dir, const long double *range)
+t_closest	*get_closest_el(t_scn_el **el, long double origin[3], t_vec3 *dir, const long double *range)
 {
 	t_closest	*closest;
 	long double	t;
@@ -86,7 +78,7 @@ t_closest	*get_closest_el(t_data *data, t_scn_el **el, long double origin[3], t_
 		if (el[i]->type == SPHERE)
 			t = get_sphere_intersections(origin, dir, el[i]);
 		else if (el[i]->type == CYLINDER)
-			t = get_cylinder_intersection(data, origin, dir, el[i]);
+			t = get_cylinder_intersection(origin, dir, el[i]);
 		else if (el[i]->type == PLANE)
 			t = get_plane_intersection(origin, dir, el[i]);
 		if (is_in_range_f(t, range[MIN], range[MAX]) && t < closest->dist)

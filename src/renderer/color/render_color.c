@@ -6,11 +6,12 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:57:27 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/12 08:28:13 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/22 13:46:01 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
+#include <stdlib.h>
 
 int	get_incident_point_color(t_data *data, t_scn_el *closest_el)
 {
@@ -19,7 +20,7 @@ int	get_incident_point_color(t_data *data, t_scn_el *closest_el)
 	long double	intensity;
 	int			i;
 
-	intensity = get_lighting_intensity(data, closest_el);
+	intensity = get_lighting_intensity(data, data->p[INCIDENT], closest_el);
 	color = 0xFFFFFFFF;
 	i = 1;
 	while (i < COLOR_SIZE)
@@ -53,9 +54,13 @@ t_color	mix_colors(t_color local_color, t_color reflected_color, long double ref
 t_color	get_reflected_color(t_data *data, t_vec3 *dir, const long double *range, int depth)
 {
 	t_color	reflected_color;
+	t_vec3	*neg_dir;
+	t_vec3	*dir_reflection;
 
-	data->vec[Dneg] = scale(-1, dir);
-	data->vec[Rv] = get_ray_reflection(data->vec[Dneg], data->vec[N]);
-	reflected_color = trace_ray(data, data->vec[P]->coord, data->vec[Rv], range, depth - 1);
+	neg_dir = scale(-1, dir);
+	dir_reflection = get_ray_reflection(neg_dir, data->v[NORM]);
+	reflected_color = trace_ray(data, data->p[INCIDENT], dir_reflection, range, depth - 1);
+	free(neg_dir);
+	free(dir_reflection);
 	return (reflected_color);
 }
