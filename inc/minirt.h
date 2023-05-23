@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/22 13:56:18 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/23 13:49:00 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,12 @@ void		compute_vec_len(t_vec3 *vec);
 void		compute_normal_vec(t_vec3 *vec);
 void		normalize_vec(t_vec3 *vec);
 
+
+t_mx4	*get_inverse_mx(t_mx4 *mx);
+t_mx4	*create_scale_mx(t_coord3 x, t_coord3 y, t_coord3 z);
+t_mx4	*create_translation_mx(long double translation, t_coord3 x, t_coord3 y, t_coord3 z);
+t_mx4	*create_rotation_mx(long double rotation);
+
 int			is_in_range_f(long double n, long double n_lower,
 				long double n_upper);
 int			is_in_range_i(int n, int n_lower, int n_upper);
@@ -118,6 +124,5 @@ long double	get_plane_intersection(t_coord3 *origin, t_vec3 *dir, t_scn_el *obj)
 long double	get_cylinder_intersection(t_coord3 *origin, t_vec3 *dir, t_scn_el *obj);
 
 //	rotation 
-double long	*get_rotation_angles(t_vec3 *dir, t_vec3 *rotation_vec);
-long double	*create_rotation_mx(long double angle, t_vec3 *u);
+t_mx3	*create_rotation_mx3(long double theta, t_vec3 *axis);
 #endif

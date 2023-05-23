@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 11:10:49 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/17 16:43:10 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/23 13:37:13 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-
-t_mx4	*create_translation_mx(t_coord3 *coord)
-{
-	t_mx4	*mx;
-	int		mx_dim;
-	int		i;
-	int		j;
-	int		k;
-	int		l;
-
-	if (!coord)
-		return (NULL);
-	mx_dim = 4 * 4;
-	mx = malloc(mx_dim * sizeof(long double));
-	if (!mx)
-		return (NULL);
-	i = 0;
-	j = 0;
-	k = 0;
-	l = 0;
-	while(i < mx_dim)
-	{
-		if (i == j)
-		{
-			mx[i] = 1;
-			j += 4;
-		}
-		else if (i == k)
-		{
-			mx[i] = coord[l++];
-			k += 4;
-		}
-		printf("mx[%d] = %Lf\n", i, mx[i]);
-		i++;
-	}
-	return (mx);
-}
 
 t_vec3	*translate(t_vec3 *vec, long double *translation_mx, int mx_dimension)
 {
@@ -102,27 +65,4 @@ t_vec3	*vec_times_mx(t_vec3 *vec, long double *mx, int mx_dimension)
 		i++;
 	}
 	return (create_vec(NULL, new_coords));
-}
-
-long double	*create_rotation_mx(long double theta, t_vec3 *axis)
-{
-	long double	sin_t;
-	long double	cos_t;
-	long double	*u;
-	long double	*mx;
-
-	sin_t = sin(deg_to_rad(theta));
-	cos_t = cos(deg_to_rad(theta));
-	u = axis->n_coord;
-	mx = malloc(9 * sizeof(long double));
-	mx[0] = cos_t + pow(u[0], 2) * (1 - cos_t);
-	mx[1] = u[0] * u[1] * (1 - cos_t) - u[2] * sin_t;
-	mx[2] = u[0] * u[2] * (1 - cos_t) + u[1] * sin_t;
-	mx[3] = u[1] * u[0] * (1 - cos_t) + u[2] * sin_t;
-	mx[4] = cos_t + pow(u[1], 2) * (1 - cos_t);
-	mx[5] = u[1] * u[2] * (1 - cos_t) - u[0] * sin_t;
-	mx[6] = u[2] * u[0] * (1 - cos_t) - u[1] * sin_t;
-	mx[7] = u[2] * u[1] * (1 - cos_t) + u[0] * sin_t;
-	mx[8] = cos_t + pow(u[2], 2) * (1 - cos_t);
-	return (mx);
 }

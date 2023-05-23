@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/05/17 12:11:28 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/05/23 13:44:58 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -106,6 +106,7 @@ MATH			=	$(addprefix	math/,										\
 								vector_ops_2.c								\
 								coord_ops.c									\
 								matrix_ops.c								\
+								matrix_creation.c							\
 								range.c										\
 								trigonometry.c								\
 								)
