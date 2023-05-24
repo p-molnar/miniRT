@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/22 13:25:11 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/24 14:40:06 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,13 @@ typedef long double	t_coord3;
 typedef long double	t_coord4;
 typedef long double	t_mx4;
 typedef long double	t_mx3;
+
+typedef struct s_mx
+{
+	long double	*m;
+	int			r;
+	int			c;
+}	t_mx;
 
 typedef struct s_vec
 {

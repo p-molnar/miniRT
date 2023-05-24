@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/23 13:49:00 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/24 16:15:53 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,11 @@ void		compute_normal_vec(t_vec3 *vec);
 void		normalize_vec(t_vec3 *vec);
 
 
-t_mx4	*get_inverse_mx(t_mx4 *mx);
-t_mx4	*create_scale_mx(t_coord3 x, t_coord3 y, t_coord3 z);
-t_mx4	*create_translation_mx(long double translation, t_coord3 x, t_coord3 y, t_coord3 z);
-t_mx4	*create_rotation_mx(long double rotation);
+t_mx	*get_inverse_mx(t_mx *mx);
+t_mx	*mx_times_mx(t_mx *mx1, t_mx *mx2);
+t_mx	*scale_mx(t_mx *mx, t_coord3 sx, t_coord3 sy, t_coord3 sz);
+t_mx	*translate_mx(t_mx *mx, t_coord3 tx, t_coord3 ty, t_coord3 tz);
+t_mx	*rotate_mx(t_mx *mx, long double rotation);
 
 int			is_in_range_f(long double n, long double n_lower,
 				long double n_upper);
