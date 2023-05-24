@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 14:48:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/22 12:20:20 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/24 16:53:26 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_vec3	*scale(long double scaler, t_vec3 *vec)
 	i = 0;
 	while (i < COORD_SIZE && vec)
 	{
-		new->coord[i] = scaler * vec->coord[i];
+		new->dir[i] = scaler * vec->dir[i];
 		i++;
 	}
 	compute_vec_len(new);
@@ -41,7 +41,7 @@ long double	dot(t_vec3 *vec_1, t_vec3 *vec_2)
 	i = 0;
 	while (i < COORD_SIZE && vec_1 && vec_2)
 	{
-		result += vec_1->coord[i] * vec_2->coord[i];
+		result += vec_1->dir[i] * vec_2->dir[i];
 		i++;
 	}
 	return (result);
@@ -58,7 +58,7 @@ t_vec3	*add(t_vec3 *vec_1, t_vec3 *vec_2)
 	i = 0;
 	while (i < COORD_SIZE)
 	{
-		new_vec->coord[i] = vec_1->coord[i] + vec_2->coord[i];
+		new_vec->dir[i] = vec_1->dir[i] + vec_2->dir[i];
 		i++;
 	}
 	compute_vec_len(new_vec);
@@ -92,8 +92,8 @@ t_vec3	*cross(t_vec3 *vec_1, t_vec3 *vec_2)
 	i = 0;
 	while (i < 3)
 	{
-		tmp[i] = vec_1->n_coord[(i + 1) % 3] * vec_2->n_coord[(i + 2) % 3] -
-			vec_1->n_coord[(i + 2) % 3] * vec_2->n_coord[(i + 1) % 3];
+		tmp[i] = vec_1->n_dir[(i + 1) % 3] * vec_2->n_dir[(i + 2) % 3] -
+			vec_1->n_dir[(i + 2) % 3] * vec_2->n_dir[(i + 1) % 3];
 		i++;
 	}
 	vec = create_vec(NULL, tmp);
@@ -110,7 +110,7 @@ t_coord3	*offset(t_coord3 *p, t_vec3 *vec)
 	i = 0;
 	while (i < COORD_SIZE)
 	{
-		val[i] = p[i] + vec->coord[i];
+		val[i] = p[i] + vec->dir[i];
 		i++;
 	}
 	return (create_coord(val[X], val[Y], val[Z]));

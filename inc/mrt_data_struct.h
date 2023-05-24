@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/24 14:40:06 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/24 16:53:26 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ typedef struct s_mx
 typedef struct s_vec
 {
 	long double		len;
-	t_coord3		coord[COORD_SIZE];
-	t_coord3		n_coord[COORD_SIZE];
+	t_coord3		dir[COORD_SIZE];
+	t_coord3		n_dir[COORD_SIZE];
 }					t_vec3;
 
 typedef struct s_scn_el

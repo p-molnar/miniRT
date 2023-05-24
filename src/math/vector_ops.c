@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 15:01:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/10 10:37:32 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/24 16:53:26 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_vec3	*create_vec(long double *init_point, long double *terminal_point)
 	i = 0;
 	while (i < COORD_SIZE)
 	{
-		vec->coord[i] = terminal_point[i] - init_point[i];
+		vec->dir[i] = terminal_point[i] - init_point[i];
 		i++;
 	}
 	compute_vec_len(vec);
@@ -49,7 +49,7 @@ void	compute_vec_len(t_vec3 *vec)
 	i = 0;
 	while (i < COORD_SIZE)
 	{
-		sum_of_sqrs += pow(vec->coord[i], 2);
+		sum_of_sqrs += pow(vec->dir[i], 2);
 		i++;
 	}
 	vec->len = sqrt(sum_of_sqrs);
@@ -63,9 +63,9 @@ void	compute_normal_vec(t_vec3 *vec)
 	while (i < COORD_SIZE && vec)
 	{
 		if (vec->len != 0)
-			vec->n_coord[i] = vec->coord[i] / vec->len;
+			vec->n_dir[i] = vec->dir[i] / vec->len;
 		else
-			vec->n_coord[i] = 0;
+			vec->n_dir[i] = 0;
 		i++;
 	}
 }
@@ -77,7 +77,7 @@ void	normalize_vec(t_vec3 *vec)
 	i = 0;
 	while (i < COORD_SIZE && vec)
 	{
-		vec->coord[i] = vec->n_coord[i];
+		vec->dir[i] = vec->n_dir[i];
 		i++;
 	}
 	compute_vec_len(vec);

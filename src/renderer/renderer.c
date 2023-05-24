@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/22 13:57:29 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/24 16:52:05 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_vec3	*get_incident_point_norm(t_coord3 *inc_p, t_closest *obj)
 		norm = create_vec(obj->el->coord, inc_p);
 	else if (obj->el->type == PLANE)
 	{	
-		norm = create_vec(NULL, obj->el->n_vec->coord);
+		norm = create_vec(NULL, obj->el->n_vec->dir);
 	}
 	normalize_vec(norm);
 	return (norm); 

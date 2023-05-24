@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 11:10:49 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/24 16:41:03 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/24 16:53:26 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_vec3	*vec_times_mx(t_vec3 *vec, long double *mx, int mx_dimension)
 	j = 0;
 	while (i < mx_dimension)
 	{
-		sum += mx[i] * vec->coord[i % 3];
+		sum += mx[i] * vec->dir[i % 3];
 		if ((i + 1) % 3 == 0)
 		{
 			new_coords[j++] = sum;
@@ -145,7 +145,7 @@ t_mx3	*create_rotation_mx3(long double theta, t_vec3 *axis)
 
 	sin_t = sin(deg_to_rad(theta));
 	cos_t = cos(deg_to_rad(theta));
-	u = axis->n_coord;
+	u = axis->n_dir;
 	mx = malloc(9 * sizeof(long double));
 	mx[0] = cos_t + pow(u[0], 2) * (1 - cos_t);
 	mx[1] = u[0] * u[1] * (1 - cos_t) - u[2] * sin_t;

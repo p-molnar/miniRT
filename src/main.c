@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/22 12:35:38 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/24 16:53:26 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ void	print_scene_el(t_data *scn)
 		if (el->n_vec)
 		{
 			printf("norm_vec: x=%Lf, y=%Lf, z=%Lf\n",
-					el->n_vec->n_coord[0],
-					el->n_vec->n_coord[1],
-					el->n_vec->n_coord[2]);
+					el->n_vec->n_dir[0],
+					el->n_vec->n_dir[1],
+					el->n_vec->n_dir[2]);
 		}
 		printf("diameter: %Lf\n", el->diameter);
 		printf("radius: %Lf\n", el->radius);
@@ -106,6 +106,21 @@ void	add_cylinder_caps(t_scn_el **cy)
 
 int	main(int argc, char *argv[])
 {
+	// (void) argc, (void) argv;
+	// t_mx mx;
+	// mx.c = 4;
+	// mx.r = 4;
+	// long double m[16] = {5, 8, 1, 5, 12, -5, -6, 8, 4, 12, -6, 0, -7.5, 9, 0, 5};
+	// mx.m = m;
+	// t_mx *inv_mx = get_inverse_mx(&mx);
+	// printf("[\n");
+	// for (int i = 0; i < 16; i++)
+	// {
+	// 	printf("%Lf  ", inv_mx->m[i]);
+	// 	if (!((i + 1) % 4))
+	// 		printf("\n");
+	// }
+	// printf("]\n");
 	t_data	d;
 
 	init_scene(&d);

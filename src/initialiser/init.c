@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 10:46:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/23 13:47:29 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/24 16:52:05 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	is_cam_rotated(t_vec3 *n_vec)
 	i = 0;
 	while (i < COORD_SIZE && n_vec)
 	{
-		if (n_vec->coord[i] != 0)
+		if (n_vec->dir[i] != 0)
 			return (1);
 		i++;
 	}
@@ -68,7 +68,7 @@ void	set_up_rotation_mx(t_data *data)
 		rot_axis = cross(cam_orientation_vec, cam_orientation_vec);
 	}
 	printf("angle: %Lf\n", r_angle);
-	printf("rotation axis: %Lf, %Lf, %Lf\n", rot_axis->coord[0], rot_axis->coord[1], rot_axis->coord[2]);
+	printf("rotation axis: %Lf, %Lf, %Lf\n", rot_axis->dir[0], rot_axis->dir[1], rot_axis->dir[2]);
 	data->rotation_mx = create_rotation_mx3(r_angle, rot_axis);
 	free(cam_orientation_vec);
 	free(rot_axis);
