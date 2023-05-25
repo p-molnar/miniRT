@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 11:10:49 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/24 23:11:17 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/25 22:20:54 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,30 +95,30 @@ t_mx	*translate_mx(t_mx *mx, t_coord3 tx, t_coord3 ty, t_coord3 tz)
 	return (multiply_mx(mx, &trans_mx));
 }
 
-t_mx	*rotate_mx(t_mx *mx, t_mx *axis, long double angle)
+t_mx	*rotate_mx(t_mx *mx, t_mx *axis, long double angle_r)
 {
 	t_mx		rotation_mx;
 	long double	m[16];
-	long double	angle_s;
-	long double	angle_c;
+	long double	sin_ang;
+	long double	cos_ang;
 
 	if (!mx || !axis)
 		return (NULL);
-	angle_s = sin(angle);
-	angle_c = cos(angle);
+	sin_ang = sin(angle_r);
+	cos_ang = cos(angle_r);
 	rotation_mx.r = 4;
 	rotation_mx.c = 4;
 	rotation_mx.m = m;
 	ft_memset(m, 0, 16 * sizeof(long double));
-	m[0] = angle_c + pow(axis->m[0], 2) * (1 - angle_c);
-	m[1] = axis->m[0] * axis->m[1] * (1 - angle_c) - axis->m[2] * angle_s;
-	m[2] = axis->m[0] * axis->m[2] * (1 - angle_c) + axis->m[1] * angle_s;
-	m[4] = axis->m[1] * axis->m[0] * (1 - angle_c) + axis->m[2] * angle_s;
-	m[5] = angle_c + pow(axis->m[1], 2) * (1 - angle_c);
-	m[6] = axis->m[1] * axis->m[2] * (1 - angle_c) - axis->m[0] * angle_s;
-	m[8] = axis->m[2] * axis->m[0] * (1 - angle_c) - axis->m[1] * angle_s;
-	m[9] = axis->m[2] * axis->m[1] * (1 - angle_c) + axis->m[0] * angle_s;
-	m[10] = angle_c + pow(axis->m[2], 2) * (1 - angle_c);
+	m[0] = cos_ang + pow(axis->m[X], 2) * (1 - cos_ang);
+	m[1] = axis->m[X] * axis->m[Y] * (1 - cos_ang) - axis->m[Z] * sin_ang;
+	m[2] = axis->m[X] * axis->m[Z] * (1 - cos_ang) + axis->m[Y] * sin_ang;
+	m[4] = axis->m[Y] * axis->m[X] * (1 - cos_ang) + axis->m[Z] * sin_ang;
+	m[5] = cos_ang + pow(axis->m[Y], 2) * (1 - cos_ang);
+	m[6] = axis->m[Y] * axis->m[Z] * (1 - cos_ang) - axis->m[X] * sin_ang;
+	m[8] = axis->m[Z] * axis->m[X] * (1 - cos_ang) - axis->m[Y] * sin_ang;
+	m[9] = axis->m[Z] * axis->m[Y] * (1 - cos_ang) + axis->m[X] * sin_ang;
+	m[10] = cos_ang + pow(axis->m[Z], 2) * (1 - cos_ang);
 	m[15] = 1;
 	return (multiply_mx(mx, &rotation_mx));
 }
