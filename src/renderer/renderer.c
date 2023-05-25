@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/24 23:53:48 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/25 21:44:04 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	render_img(t_data *data)
 			pplane_coord = convert_to_viewport(canvas[X], canvas[Y],
 					data->viewport, data->cam);
 			data->v[RAY] = create_vec(data->cam->coord, pplane_coord);
-			// data->v[RAY] = rotate_ray(data->v[RAY], data->rot_angle, data->rot_axis);
+			data->v[RAY] = rotate_ray(data->v[RAY], data->rot_angle, data->rot_axis);
 			// printf("%d\n", counter);
 			// if (data->vec[D]->coord[0] == 0 && data->vec[D]->coord[1] == 0 && data->vec[D]->coord[2] == 1)
 			// 	printf("this\n");	
