@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/24 10:10:58 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/24 16:03:56 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/24 21:59:55 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,21 @@ t_mx	*get_inverse_mx(t_mx *mx)
 		i++;
 	}
 	return (inv_mx);
+}
+
+t_mx	*coord_to_mx(t_coord3 *c)
+{
+	t_mx	*mx;
+
+	if (!c)
+		return (NULL);
+	mx = malloc(sizeof(t_mx));
+	mx->c = 4;
+	mx->r = 1;
+	mx->m = malloc(4 * sizeof(long double));
+	if (!mx->m)
+		return (NULL); // !free the whole thing!
+	ft_memcpy(mx->m, c, 3 * sizeof(long double));
+	mx->m[3] = 1;
+	return (mx);
 }

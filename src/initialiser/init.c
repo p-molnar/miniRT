@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 10:46:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/24 16:52:05 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/24 23:15:18 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,15 @@ int	is_cam_rotated(t_vec3 *n_vec)
 
 void	set_up_rotation_mx(t_data *data)
 {
-	const long double	def_cam_orientation[COORD_SIZE] = {0, 0, 1};
+	t_coord3	*default_orientation;
 	t_vec3				*rot_axis;
 	long double			r_angle;
 
-	t_vec3	*cam_orientation_vec = create_vec(NULL, (long double *) def_cam_orientation);
+	default_orientation = create_coord(0, 0, 1);
+	t_vec3	*cam_orientation_vec = create_vec(NULL, default_orientation);
 	if (is_cam_rotated(data->cam->n_vec))
 	{
-		normalize_vec(data->cam->n_vec);
+		data->cam->n_vec = get_normal_vec(data->cam->n_vec);
 		r_angle = rad_to_deg(acos(dot(cam_orientation_vec, data->cam->n_vec)));
 		rot_axis = cross(cam_orientation_vec, data->cam->n_vec);
 	}
@@ -67,9 +68,10 @@ void	set_up_rotation_mx(t_data *data)
 		r_angle = rad_to_deg(0);
 		rot_axis = cross(cam_orientation_vec, cam_orientation_vec);
 	}
-	printf("angle: %Lf\n", r_angle);
-	printf("rotation axis: %Lf, %Lf, %Lf\n", rot_axis->dir[0], rot_axis->dir[1], rot_axis->dir[2]);
-	data->rotation_mx = create_rotation_mx3(r_angle, rot_axis);
+	// printf("angle: %Lf\n", r_angle);
+	// printf("rotation axis: %Lf, %Lf, %Lf\n", rot_axis->dir[0], rot_axis->dir[1], rot_axis->dir[2]);
+	data->rot_axis = rot_axis;
+	data->rot_angle = r_angle;
 	free(cam_orientation_vec);
 	free(rot_axis);
 }

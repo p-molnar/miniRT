@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/22 13:41:22 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/25 16:16:09 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,6 @@ long double	get_lighting_intensity(t_data *data, t_coord3 *inc_p, t_scn_el *obj)
 		i++;
 	}
 	free(lights);
+	// printf("int: %Lf\n", intensity);
 	return (intensity);
 }

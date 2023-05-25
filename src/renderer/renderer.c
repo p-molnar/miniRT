@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/24 16:52:05 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/24 23:53:48 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_vec3	*get_incident_point_norm(t_coord3 *inc_p, t_closest *obj)
 	{	
 		norm = create_vec(NULL, obj->el->n_vec->dir);
 	}
-	normalize_vec(norm);
+	norm = get_normal_vec(norm);
 	return (norm); 
 }
 
@@ -69,13 +69,16 @@ t_color	trace_ray(t_data *data, long double *origin, t_vec3 *dir,
 	return (mix_colors(color[0], color[1], ref_factor));
 }
 
-t_vec3	*rotate_ray(t_vec3 *ray, long double *rotation_mx)
+t_vec3	*rotate_ray(t_vec3 *ray, long double angle, t_vec3 *axis)
 {
-	t_vec3	*r_ray;
+	t_mx *ray_mx;
+	t_mx *axis_mx;
+	t_mx *rotated_mx;
 
-	r_ray = vec_times_mx(ray, rotation_mx, 3 * 3);
-	free(ray);
-	return (r_ray);
+	ray_mx = coord_to_mx(ray->dir);
+	axis_mx = coord_to_mx(axis->dir);
+	rotated_mx = rotate_mx(ray_mx, axis_mx, angle);
+	return (create_vec(NULL, create_coord(rotated_mx->m[0], rotated_mx->m[1], rotated_mx->m[2])));
 }
 
 void	render_img(t_data *data)
@@ -100,7 +103,7 @@ void	render_img(t_data *data)
 			pplane_coord = convert_to_viewport(canvas[X], canvas[Y],
 					data->viewport, data->cam);
 			data->v[RAY] = create_vec(data->cam->coord, pplane_coord);
-			data->v[RAY] = rotate_ray(data->v[RAY], data->rotation_mx);
+			// data->v[RAY] = rotate_ray(data->v[RAY], data->rot_angle, data->rot_axis);
 			// printf("%d\n", counter);
 			// if (data->vec[D]->coord[0] == 0 && data->vec[D]->coord[1] == 0 && data->vec[D]->coord[2] == 1)
 			// 	printf("this\n");	

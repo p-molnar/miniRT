@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/24 16:53:26 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/24 23:10:45 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,6 @@ void	print_scene_el(t_data *scn)
 				el->coord[0],
 				el->coord[1],
 				el->coord[2]);
-		if (el->n_vec)
-		{
-			printf("norm_vec: x=%Lf, y=%Lf, z=%Lf\n",
-					el->n_vec->n_dir[0],
-					el->n_vec->n_dir[1],
-					el->n_vec->n_dir[2]);
-		}
 		printf("diameter: %Lf\n", el->diameter);
 		printf("radius: %Lf\n", el->radius);
 		printf("height: %Lf\n", el->height);
@@ -106,17 +99,22 @@ void	add_cylinder_caps(t_scn_el **cy)
 
 int	main(int argc, char *argv[])
 {
-	// (void) argc, (void) argv;
-	// t_mx mx;
-	// mx.c = 4;
-	// mx.r = 4;
-	// long double m[16] = {5, 8, 1, 5, 12, -5, -6, 8, 4, 12, -6, 0, -7.5, 9, 0, 5};
-	// mx.m = m;
-	// t_mx *inv_mx = get_inverse_mx(&mx);
+	(void) argc, (void) argv;
+	// t_mx mx1;
+	// t_mx mx2;
+	// mx1.c = 4;
+	// mx1.r = 4;
+	// long double m1[16] = {5, 8, 1, 5, 12, -5, -6, 8, 4, 12, -6, 0, -7.5, 9, 0, 5};
+	// mx1.m = m1;
+	// long double m2[16] = {5, 8, 32, -234.5, 23, -67.2, 28, 6, 8, 4, -22.2, 3,-1523, -2151, -61, 0};
+	// mx2.c = 4;
+	// mx2.r = 4;
+	// mx2.m = m2;
+	// t_mx *mx_m = multiply_mx(&mx1, &mx2);
 	// printf("[\n");
 	// for (int i = 0; i < 16; i++)
 	// {
-	// 	printf("%Lf  ", inv_mx->m[i]);
+	// 	printf("%Lf  ", mx_m->m[i]);
 	// 	if (!((i + 1) % 4))
 	// 		printf("\n");
 	// }

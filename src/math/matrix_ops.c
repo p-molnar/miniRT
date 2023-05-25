@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 11:10:49 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/24 16:53:26 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/24 23:11:17 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,6 @@
 #include <minirt.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-t_vec3	*vec_times_mx(t_vec3 *vec, long double *mx, int mx_dimension)
-{
-	long double	new_coords[3];
-	long double	sum;
-	int			i;
-	int			j;
-
-	sum = 0;
-	i = 0;
-	j = 0;
-	while (i < mx_dimension)
-	{
-		sum += mx[i] * vec->dir[i % 3];
-		if ((i + 1) % 3 == 0)
-		{
-			new_coords[j++] = sum;
-			sum = 0;
-		}
-		i++;
-	}
-	return (create_vec(NULL, new_coords));
-}
 
 static long double	calc_dot(int row, int col, t_mx *mx1, t_mx *mx2)
 {
@@ -53,7 +30,7 @@ static long double	calc_dot(int row, int col, t_mx *mx1, t_mx *mx2)
 	return (dot);
 }
 
-t_mx	*mx_times_mx(t_mx *mx1, t_mx *mx2)
+t_mx	*multiply_mx(t_mx *mx1, t_mx *mx2)
 {
 	t_mx	*mx;
 	int		mx_pos;
@@ -62,7 +39,7 @@ t_mx	*mx_times_mx(t_mx *mx1, t_mx *mx2)
 
 	if (!mx1 || !mx2 || (mx1->c != mx2->r))
 		return (NULL);
-	mx = ft_calloc(1, sizeof(mx));
+	mx = ft_calloc(1, sizeof(t_mx));
 	if (!mx)
 		return (mx);
 	mx->r = mx1->r;
@@ -96,7 +73,7 @@ t_mx	*scale_mx(t_mx *mx, t_coord3 sx, t_coord3 sy, t_coord3 sz)
 	m[5] = sy;
 	m[10] = sz;
 	m[15] = 1;
-	return (mx_times_mx(mx, &scale_mx));
+	return (multiply_mx(mx, &scale_mx));
 }
 
 t_mx	*translate_mx(t_mx *mx, t_coord3 tx, t_coord3 ty, t_coord3 tz)
@@ -115,46 +92,33 @@ t_mx	*translate_mx(t_mx *mx, t_coord3 tx, t_coord3 ty, t_coord3 tz)
 	m[3] = tx;
 	m[6] = ty;
 	m[9] = tz;
-	return (mx_times_mx(mx, &trans_mx));
+	return (multiply_mx(mx, &trans_mx));
 }
 
-t_mx	*rotate_mx(t_mx *mx, long double rotation)
+t_mx	*rotate_mx(t_mx *mx, t_mx *axis, long double angle)
 {
 	t_mx		rotation_mx;
 	long double	m[16];
+	long double	angle_s;
+	long double	angle_c;
 
+	if (!mx || !axis)
+		return (NULL);
+	angle_s = sin(angle);
+	angle_c = cos(angle);
 	rotation_mx.r = 4;
 	rotation_mx.c = 4;
 	rotation_mx.m = m;
 	ft_memset(m, 0, 16 * sizeof(long double));
-	m[0] = 1;
+	m[0] = angle_c + pow(axis->m[0], 2) * (1 - angle_c);
+	m[1] = axis->m[0] * axis->m[1] * (1 - angle_c) - axis->m[2] * angle_s;
+	m[2] = axis->m[0] * axis->m[2] * (1 - angle_c) + axis->m[1] * angle_s;
+	m[4] = axis->m[1] * axis->m[0] * (1 - angle_c) + axis->m[2] * angle_s;
+	m[5] = angle_c + pow(axis->m[1], 2) * (1 - angle_c);
+	m[6] = axis->m[1] * axis->m[2] * (1 - angle_c) - axis->m[0] * angle_s;
+	m[8] = axis->m[2] * axis->m[0] * (1 - angle_c) - axis->m[1] * angle_s;
+	m[9] = axis->m[2] * axis->m[1] * (1 - angle_c) + axis->m[0] * angle_s;
+	m[10] = angle_c + pow(axis->m[2], 2) * (1 - angle_c);
 	m[15] = 1;
-	m[5] = cos(rotation);
-	m[6] = -1 * sin(rotation);
-	m[10] = sin(rotation);
-	m[11] = cos(rotation);
-	return (mx_times_mx(mx, &rotation_mx));
-}
-
-t_mx3	*create_rotation_mx3(long double theta, t_vec3 *axis)
-{
-	long double	sin_t;
-	long double	cos_t;
-	t_coord3	*u;
-	t_mx3		*mx;
-
-	sin_t = sin(deg_to_rad(theta));
-	cos_t = cos(deg_to_rad(theta));
-	u = axis->n_dir;
-	mx = malloc(9 * sizeof(long double));
-	mx[0] = cos_t + pow(u[0], 2) * (1 - cos_t);
-	mx[1] = u[0] * u[1] * (1 - cos_t) - u[2] * sin_t;
-	mx[2] = u[0] * u[2] * (1 - cos_t) + u[1] * sin_t;
-	mx[3] = u[1] * u[0] * (1 - cos_t) + u[2] * sin_t;
-	mx[4] = cos_t + pow(u[1], 2) * (1 - cos_t);
-	mx[5] = u[1] * u[2] * (1 - cos_t) - u[0] * sin_t;
-	mx[6] = u[2] * u[0] * (1 - cos_t) - u[1] * sin_t;
-	mx[7] = u[2] * u[1] * (1 - cos_t) + u[0] * sin_t;
-	mx[8] = cos_t + pow(u[2], 2) * (1 - cos_t);
-	return (mx);
+	return (multiply_mx(mx, &rotation_mx));
 }

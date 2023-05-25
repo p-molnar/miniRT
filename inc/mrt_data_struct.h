@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/24 16:53:26 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/24 22:27:04 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ typedef struct s_vec
 {
 	long double		len;
 	t_coord3		dir[COORD_SIZE];
-	t_coord3		n_dir[COORD_SIZE];
 }					t_vec3;
 
 typedef struct s_scn_el
@@ -129,7 +128,8 @@ typedef struct s_data
 	long double		viewport[COORD_SIZE];
 	t_vec3			*v[VEC_SIZE];
 	t_coord3		*p[POINT_SIZE];
-	long double		*rotation_mx;
+	t_vec3			*rot_axis;
+	long double		rot_angle;
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 }					t_data;
