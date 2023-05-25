@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/24 10:10:58 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/24 21:59:55 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/25 19:43:27 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_mx	*get_inverse_mx(t_mx *mx)
 
 	if (!mx)
 		return (NULL);
-	inv_mx = malloc(4 * 4 * sizeof(long double));
+	inv_mx = malloc(sizeof(t_mx));
 	if (!inv_mx)
 		return (NULL);
 	inv_mx->c = mx->c;
