@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/24 22:27:04 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/26 10:23:54 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct s_scn_el
 {
 	int				type;
 	t_coord3		coord[COORD_SIZE];
+	t_coord3		tg_coord[COORD_SIZE];
 	t_vec3			*n_vec;
 	long double		diameter;
 	long double		radius;

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/24 23:10:45 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/26 12:20:35 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	print_scene_el(t_data *scn)
 
 	e[AMB_LIGHT] = "AMB";
 	e[CAM] = "CAM";
+	e[TG_CAM] = "Target cam";
 	e[POINT_LIGHT] = "point light";
 	e[DIR_LIGHT] = "Dir light";
 	e[SPHERE] = "Sphere";
@@ -40,6 +41,10 @@ void	print_scene_el(t_data *scn)
 				el->coord[0],
 				el->coord[1],
 				el->coord[2]);
+		printf("tg_coord: x=%Lf, y=%Lf, z=%Lf\n",
+				el->tg_coord[0],
+				el->tg_coord[1],
+				el->tg_coord[2]);
 		printf("diameter: %Lf\n", el->diameter);
 		printf("radius: %Lf\n", el->radius);
 		printf("height: %Lf\n", el->height);
@@ -123,10 +128,10 @@ int	main(int argc, char *argv[])
 
 	init_scene(&d);
 	parse_scene(&d, argc, argv);
+	print_scene_el(&d);
 	set_up_vars(&d);
 	create_projection_plane(&d);
 	add_cylinder_caps(get_scn_els(d.scn_el, CYLINDER));
-	print_scene_el(&d);
 	d.mlx = mlx_init(CANVAS_W + 5, CANVAS_H + 5, "MiniRT", true);
 	if (!d.mlx)
 		error(ft_strdup(mlx_strerror(mlx_errno)), EXIT, 1);

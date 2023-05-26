@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/25 21:44:04 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/26 22:27:51 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,23 @@ t_color	trace_ray(t_data *data, long double *origin, t_vec3 *dir,
 	return (mix_colors(color[0], color[1], ref_factor));
 }
 
-t_vec3	*rotate_ray(t_vec3 *ray, long double angle, t_vec3 *axis)
+t_vec3	*rotate_ray(t_data *d, t_vec3 *ray, long double agl, t_vec3 *ax)
 {
 	t_mx *ray_mx;
 	t_mx *axis_mx;
 	t_mx *rotated_mx;
 
+	(void) d;
 	ray_mx = coord_to_mx(ray->dir);
-	axis_mx = coord_to_mx(axis->dir);
-	rotated_mx = rotate_mx(ray_mx, axis_mx, angle);
+	axis_mx = coord_to_mx(ax->dir);
+	rotated_mx = rotate_mx(ray_mx, axis_mx, agl);
+	if (fabsl(agl) > M_PI_2 && ax->dir[X] == 1)
+	{
+		t_vec3 *cam_tg = get_normal_vec(create_vec(d->cam->coord, d->cam->tg_coord));
+		t_mx *ax_mx = coord_to_mx(cam_tg->dir);
+		// t_mx *ax_mx = coord_to_mx(create_coord(0, 0, 1));
+		rotated_mx = rotate_mx(rotated_mx, ax_mx, M_PI);
+	}
 	return (create_vec(NULL, create_coord(rotated_mx->m[0], rotated_mx->m[1], rotated_mx->m[2])));
 }
 
@@ -103,12 +111,12 @@ void	render_img(t_data *data)
 			pplane_coord = convert_to_viewport(canvas[X], canvas[Y],
 					data->viewport, data->cam);
 			data->v[RAY] = create_vec(data->cam->coord, pplane_coord);
-			data->v[RAY] = rotate_ray(data->v[RAY], data->rot_angle, data->rot_axis);
+			data->v[RAY] = rotate_ray(data, data->v[RAY], data->rot_angle, data->rot_axis);
 			// printf("%d\n", counter);
 			// if (data->vec[D]->coord[0] == 0 && data->vec[D]->coord[1] == 0 && data->vec[D]->coord[2] == 1)
 			// 	printf("this\n");	
 			// printf("%Lf, %Lf, %Lf\n", data->vec[D]->coord[0], data->vec[D]->coord[1], data->vec[D]->coord[2]);
-			color = trace_ray(data, data->cam->coord, data->v[RAY], range, 0);
+			color = trace_ray(data, data->cam->coord, data->v[RAY], range, 2);
 			mlx_put_pixel(data->img, screen[X], screen[Y], color);
 			free(pplane_coord);
 			free_vec(data->v, VEC_SIZE);
@@ -117,5 +125,5 @@ void	render_img(t_data *data)
 		}
 		canvas[X]++;
 	}
-	// draw_axes(data);
+	draw_axes(data);
 }

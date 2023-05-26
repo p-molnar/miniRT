@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:35:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/25 22:04:49 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/26 10:45:58 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ void	parse_norm_vec(t_vec3 **vec, char *input)
 	i = 0;
 	while (coords[i])
 	{
-		// if (!is_valid_number(coords[i]))
-		// 	error(strconcat(2, "Invalid number: ", coords[i]), EXIT, 1);
+		if (!is_valid_number(coords[i]))
+			error(strconcat(2, "Invalid number: ", coords[i]), EXIT, 1);
 		f[i] = ft_atof(coords[i]);
-		// if (!is_in_range_f(f[i], -1.0, 1.0))
-		// 	error(strconcat(6, "Number out of range [",
-		// 			"-1.0", ", ", "1.0", "]: ", coords[i]), EXIT, 1);
+		if (!is_in_range_f(f[i], -1.0, 1.0))
+			error(strconcat(6, "Number out of range [",
+					"-1.0", ", ", "1.0", "]: ", coords[i]), EXIT, 1);
 		i++;
 	}
 	*vec = create_vec(NULL, f);

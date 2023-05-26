@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/22 13:30:35 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/26 10:44:30 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,15 @@ enum	e_color
 enum	e_scn_el_member_flags
 {
 	F_COORD = 1 << 0,
-	F_N_VEC = 1 << 1,
-	F_DMETER = 1 << 2,
-	F_HEIGHT = 1 << 3,
-	F_FOV = 1 << 4,
-	F_INTENSITY = 1 << 5,
-	F_COLOR = 1 << 6,
-	F_SPECULAR = 1 << 7,
-	F_REFLECTION = 1 << 8,
+	F_TG_COORD = 1 << 1,
+	F_N_VEC = 1 << 2,
+	F_DMETER = 1 << 3,
+	F_HEIGHT = 1 << 4,
+	F_FOV = 1 << 5,
+	F_INTENSITY = 1 << 6,
+	F_COLOR = 1 << 7,
+	F_SPECULAR = 1 << 8,
+	F_REFLECTION = 1 << 9,
 };
 
 enum	e_scn_el_type
@@ -94,12 +95,13 @@ enum	e_scn_el_type
 	TYPE_UNDEF = 0,
 	AMB_LIGHT = 1 << 0,
 	CAM = 1 << 1,
-	POINT_LIGHT = 1 << 2,
-	DIR_LIGHT = 1 << 3,
-	SPHERE = 1 << 4,
-	PLANE = 1 << 5,
-	CYLINDER = 1 << 6,
-	CYLINDER_CAP = 1 << 7,
+	TG_CAM = 1 << 2,
+	POINT_LIGHT = 1 << 3,
+	DIR_LIGHT = 1 << 4,
+	SPHERE = 1 << 5,
+	PLANE = 1 << 6,
+	CYLINDER = 1 << 7,
+	CYLINDER_CAP = 1 << 8,
 	SCN_SIZE = CYLINDER_CAP + 1
 };
 
@@ -109,6 +111,7 @@ enum	e_field_flags
 	F_LIGHT = F_COORD | F_INTENSITY | F_COLOR,
 	F_DIR_LIGHT = F_COORD | F_INTENSITY | F_COLOR,
 	F_CAM = F_COORD | F_N_VEC | F_FOV,
+	F_TG_CAM = F_COORD | F_TG_COORD | F_FOV,
 	F_SPHERE = F_COORD | F_DMETER | F_COLOR | F_SPECULAR | F_REFLECTION,
 	F_PLANE = F_COORD | F_N_VEC | F_COLOR | F_SPECULAR | F_REFLECTION,
 	F_CYLINDER = F_COORD | F_N_VEC | F_DMETER | F_HEIGHT | F_COLOR | \
@@ -118,7 +121,7 @@ enum	e_field_flags
 enum	e_groupped_el
 {
 	G_LIGHT = AMB_LIGHT | POINT_LIGHT | DIR_LIGHT,
-	G_CAM = CAM,
+	G_CAM = CAM | TG_CAM,
 	G_OBJS = SPHERE | PLANE | CYLINDER,
 };
 #endif

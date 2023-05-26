@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/19 13:26:48 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/26 11:45:13 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	is_duplicate_el_type(int el_type, t_data *scn)
 	while (tmp)
 	{
 		tmp_el_type = ((t_scn_el *)tmp->content)->type;
-		if (is_in_range_i(el_type, AMB_LIGHT, CAM) && tmp_el_type == el_type)
+		if (is_in_range_i(el_type, AMB_LIGHT, TG_CAM) && tmp_el_type == el_type)
 			return (1);
 		tmp = tmp->next;
 	}
@@ -53,7 +53,7 @@ void	validate_scn_el_setup(t_data *scn)
 		els |= 1 << el->type;
 		tmp = tmp->next;
 	}
-	if (!(els & (1 << CAM)))
+	if (!((els & F_CAM) || (els & F_TG_CAM)))
 		error(ft_strdup("Add a camera to the scene."), EXIT, 1);
 	if (scn && total_light_brightness < 0.05)
 		warning(ft_strdup("Scene too dark, consider increasing brightness."));
@@ -76,6 +76,8 @@ void	parse_data(t_data *scn, t_scn_el *el, char **input)
 		parse_elements(el, input, F_DIR_LIGHT);
 	else if (el->type == CAM)
 		parse_elements(el, input, F_CAM);
+	else if (el->type == TG_CAM)
+		parse_elements(el, input, F_TG_CAM);
 	else if (el->type == SPHERE)
 		parse_elements(el, input, F_SPHERE);
 	else if (el->type == PLANE)
