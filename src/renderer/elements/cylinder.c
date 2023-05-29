@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:59:42 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/24 16:52:05 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/29 15:46:12 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,14 @@ long double	get_cylinder_intersection(long double *origin, t_vec3 *dir, t_scn_el
 	long double *t;
 	long double	z[2];
 	long double	intersect[4] = {-1, -1, -1, -1};
+	t_coord3	std_pos[3] = {0, 0, 0};
+	// t_vec3		std_orientation;
 	long double	r;
 
+	// std_orientation = create_vec(0, 1, 0);
+	// printf("origin: %Lf, %Lf, %Lf\n", origin[X], origin[Y], origin[Z]);
+	t_coord3 *diff = get_coord_diff(std_pos, obj->coord);
+	origin = get_inv_SRT(origin, diff);
 	param[0] = pow(dir->dir[X], 2) + pow(dir->dir[Y], 2);
 	param[1] = 2 * origin[X] * dir->dir[X] + 2 * origin[Y] * dir->dir[Y];
 	param[2] = pow(origin[X], 2) + pow(origin[Y], 2) - pow(obj->diameter / 2, 2);

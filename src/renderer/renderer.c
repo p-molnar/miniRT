@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/29 14:17:31 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/29 15:41:00 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,22 +72,25 @@ t_color	trace_ray(t_data *data, long double *origin, t_vec3 *dir,
 t_vec3	*rotate_ray(t_data *d, t_vec3 *ray, long double agl, t_vec3 *ax)
 {
 	t_mx *ray_mx;
-	t_mx *axis_mx;
-	t_mx *rotated_mx;
+	t_mx *pivot_ax_mx;
+	t_mx *rot_mx;
 
-	(void) d;
 	ray_mx = coord_to_mx(ray->dir, 3, 1);
 	ray_mx = expand_mx(ray_mx, 4, 1, 1);
-	axis_mx = coord_to_mx(ax->dir, 3, 1);
-	axis_mx = expand_mx(axis_mx, 4, 1, 1);
-	rotated_mx = rotate_mx(ray_mx, axis_mx, agl);
+	pivot_ax_mx = coord_to_mx(ax->dir, 3, 1);
+	pivot_ax_mx = expand_mx(pivot_ax_mx, 4, 1, 1);
+	rot_mx = get_rotation_mx(pivot_ax_mx, agl);
+	ray_mx = multiply_mx(rot_mx, ray_mx);
 	if (fabsl(agl) > M_PI_2 && ax->dir[X] == 1)
 	{
 		t_vec3 *cam_tg = get_normal_vec(create_vec(d->cam->coord, d->cam->tg_coord));
-		t_mx *ax_mx = expand_mx(coord_to_mx(cam_tg->dir, 3, 1), 4, 4, 1);	
-		rotated_mx = rotate_mx(rotated_mx, ax_mx, M_PI);
+		pivot_ax_mx = expand_mx(coord_to_mx(cam_tg->dir, 3, 1), 4, 4, 1);	
+		ray_mx = coord_to_mx(ray->dir, 3, 1);
+		ray_mx = expand_mx(ray_mx, 4, 1, 1);
+		rot_mx = get_rotation_mx(pivot_ax_mx, M_PI);
+		ray_mx = multiply_mx(rot_mx, ray_mx);
 	}
-	return (create_vec(NULL, create_coord(rotated_mx->m[0], rotated_mx->m[1], rotated_mx->m[2])));
+	return (create_vec(NULL, create_coord(ray_mx->m[0], ray_mx->m[1], ray_mx->m[2])));
 }
 
 void	render_img(t_data *data)
