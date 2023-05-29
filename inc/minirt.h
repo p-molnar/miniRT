@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/29 11:41:08 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/29 14:14:07 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,11 @@ t_mx		*multiply_mx(t_mx *mx1, t_mx *mx2);
 t_mx		*scale_mx(t_mx *mx, t_coord3 sx, t_coord3 sy, t_coord3 sz);
 t_mx		*translate_mx(t_mx *mx, t_coord3 tx, t_coord3 ty, t_coord3 tz);
 t_mx		*rotate_mx(t_mx *mx, t_mx *axis, long double rot_angle);
-t_mx		*coord_to_mx(t_coord3 *c);
+t_mx		*coord_to_mx(t_coord3 *coord, int r, int c);
 t_mx		*expand_mx(t_mx *mx, int r, int c, long double val);
+
+//	transformation
+t_coord3	*get_inv_SRT(t_coord3 *c, t_coord3 *obj_coord);
 
 int			is_in_range_f(long double n, long double n_lower,
 				long double n_upper);
@@ -100,6 +103,7 @@ t_vec3		*cross(t_vec3 *vec_1, t_vec3 *vec_2);
 t_coord3	*offset(t_coord3 *p, t_vec3 *vec);
 
 t_coord3	*create_coord(long double x, long double y, long double z);
+t_coord3	*get_coord_diff(t_coord3 *p1, t_coord3 *p2);
 
 long double	*quad_eq_solver(long double a,
 							long double b,

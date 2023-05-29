@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 11:10:49 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/25 22:20:54 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/29 14:21:23 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_mx	*scale_mx(t_mx *mx, t_coord3 sx, t_coord3 sy, t_coord3 sz)
 	m[5] = sy;
 	m[10] = sz;
 	m[15] = 1;
-	return (multiply_mx(mx, &scale_mx));
+	return (multiply_mx(&scale_mx, mx));
 }
 
 t_mx	*translate_mx(t_mx *mx, t_coord3 tx, t_coord3 ty, t_coord3 tz)
@@ -92,7 +92,7 @@ t_mx	*translate_mx(t_mx *mx, t_coord3 tx, t_coord3 ty, t_coord3 tz)
 	m[3] = tx;
 	m[6] = ty;
 	m[9] = tz;
-	return (multiply_mx(mx, &trans_mx));
+	return (multiply_mx(&trans_mx, mx));
 }
 
 t_mx	*rotate_mx(t_mx *mx, t_mx *axis, long double angle_r)
@@ -120,5 +120,5 @@ t_mx	*rotate_mx(t_mx *mx, t_mx *axis, long double angle_r)
 	m[9] = axis->m[Z] * axis->m[Y] * (1 - cos_ang) + axis->m[X] * sin_ang;
 	m[10] = cos_ang + pow(axis->m[Z], 2) * (1 - cos_ang);
 	m[15] = 1;
-	return (multiply_mx(mx, &rotation_mx));
+	return (multiply_mx(&rotation_mx, mx));
 }

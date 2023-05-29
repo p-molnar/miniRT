@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/22 13:08:21 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/29 11:59:28 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_closest	*get_closest_el(t_scn_el **el, long double origin[3], t_vec3 *dir, con
 	long double	t;
 	int			i;
 
-	closest = ft_calloc(1, sizeof(t_closest));
+	closest = malloc(sizeof(t_closest));
 	if (!closest)
 		return (NULL);
 	closest->el = NULL;

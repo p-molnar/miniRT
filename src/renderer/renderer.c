@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/29 11:41:08 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/29 14:17:31 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,15 @@ t_vec3	*rotate_ray(t_data *d, t_vec3 *ray, long double agl, t_vec3 *ax)
 	t_mx *rotated_mx;
 
 	(void) d;
-	ray_mx = coord_to_mx(ray->dir);
-	ray_mx = expand_mx(ray_mx, 4, 4, 1);
-	axis_mx = coord_to_mx(ax->dir);
-	axis_mx = expand_mx(axis_mx, 4, 4, 1);
+	ray_mx = coord_to_mx(ray->dir, 3, 1);
+	ray_mx = expand_mx(ray_mx, 4, 1, 1);
+	axis_mx = coord_to_mx(ax->dir, 3, 1);
+	axis_mx = expand_mx(axis_mx, 4, 1, 1);
 	rotated_mx = rotate_mx(ray_mx, axis_mx, agl);
 	if (fabsl(agl) > M_PI_2 && ax->dir[X] == 1)
 	{
 		t_vec3 *cam_tg = get_normal_vec(create_vec(d->cam->coord, d->cam->tg_coord));
-		t_mx *ax_mx = expand_mx(coord_to_mx(cam_tg->dir), 4, 4, 1);	
+		t_mx *ax_mx = expand_mx(coord_to_mx(cam_tg->dir, 3, 1), 4, 4, 1);	
 		rotated_mx = rotate_mx(rotated_mx, ax_mx, M_PI);
 	}
 	return (create_vec(NULL, create_coord(rotated_mx->m[0], rotated_mx->m[1], rotated_mx->m[2])));
@@ -117,7 +117,7 @@ void	render_img(t_data *data)
 			// if (data->vec[D]->coord[0] == 0 && data->vec[D]->coord[1] == 0 && data->vec[D]->coord[2] == 1)
 			// 	printf("this\n");	
 			// printf("%Lf, %Lf, %Lf\n", data->vec[D]->coord[0], data->vec[D]->coord[1], data->vec[D]->coord[2]);
-			color = trace_ray(data, data->cam->coord, data->v[RAY], range, 2);
+			color = trace_ray(data, data->cam->coord, data->v[RAY], range, 0);
 			mlx_put_pixel(data->img, screen[X], screen[Y], color);
 			free(pplane_coord);
 			free_vec(data->v, VEC_SIZE);
