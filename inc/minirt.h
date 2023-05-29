@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/29 14:14:07 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/29 15:40:46 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ t_vec3		*get_normal_vec(t_vec3 *vec);
 
 t_mx		*get_inverse_mx(t_mx *mx);
 t_mx		*multiply_mx(t_mx *mx1, t_mx *mx2);
-t_mx		*scale_mx(t_mx *mx, t_coord3 sx, t_coord3 sy, t_coord3 sz);
-t_mx		*translate_mx(t_mx *mx, t_coord3 tx, t_coord3 ty, t_coord3 tz);
-t_mx		*rotate_mx(t_mx *mx, t_mx *axis, long double rot_angle);
+t_mx		*get_scaler_mx(t_coord3 sx, t_coord3 sy, t_coord3 sz);
+t_mx		*get_translation_mx(t_coord3 tx, t_coord3 ty, t_coord3 tz);
+t_mx		*get_rotation_mx(t_mx *axis, long double rot_angle);
 t_mx		*coord_to_mx(t_coord3 *coord, int r, int c);
 t_mx		*expand_mx(t_mx *mx, int r, int c, long double val);
 

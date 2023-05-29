@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/26 12:20:35 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/29 14:16:45 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,23 +104,27 @@ void	add_cylinder_caps(t_scn_el **cy)
 
 int	main(int argc, char *argv[])
 {
-	(void) argc, (void) argv;
+	// (void) argc, (void) argv;
 	// t_mx mx1;
-	// t_mx mx2;
-	// mx1.c = 4;
-	// mx1.r = 4;
-	// long double m1[16] = {5, 8, 1, 5, 12, -5, -6, 8, 4, 12, -6, 0, -7.5, 9, 0, 5};
+	// // t_mx mx2;
+	// mx1.r = 3;
+	// mx1.c = 1;
+	// // long double m1[16] = {5, 8, 1, 5, 12, -5, -6, 8, 4, 12, -6, 0, -7.5, 9, 0, 5};
+	// long double m1[3] = {1, 2, 3};
 	// mx1.m = m1;
-	// long double m2[16] = {5, 8, 32, -234.5, 23, -67.2, 28, 6, 8, 4, -22.2, 3,-1523, -2151, -61, 0};
-	// mx2.c = 4;
-	// mx2.r = 4;
-	// mx2.m = m2;
-	// t_mx *mx_m = multiply_mx(&mx1, &mx2);
+	// t_mx *mx_n = expand_mx(&mx1, 4, 4, 1);
+	// // t_mx * mx_n = &mx1;
+	// // long double m2[16] = {5, 8, 32, -234.5, 23, -67.2, 28, 6, 8, 4, -22.2, 3,-1523, -2151, -61, 0};
+	// // mx2.c = 4;
+	// // mx2.r = 4;
+	// // mx2.m = m2;
+	// // t_mx *mx_m = multiply_mx(&mx1, &mx2);
 	// printf("[\n");
-	// for (int i = 0; i < 16; i++)
+	// int dim = mx_n->r * mx_n->c;
+	// for (int i = 0; i < dim; i++)
 	// {
-	// 	printf("%Lf  ", mx_m->m[i]);
-	// 	if (!((i + 1) % 4))
+	// 	printf("%Lf  ", mx_n->m[i]);
+	// 	if (!((i + 1) % mx_n->c))
 	// 		printf("\n");
 	// }
 	// printf("]\n");

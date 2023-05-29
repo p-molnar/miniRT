@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/24 10:10:58 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/29 14:15:07 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/29 16:48:49 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ t_mx	*coord_to_mx(t_coord3 *coord, int r, int c)
 		return (NULL);
 	mx->r = r;
 	mx->c = c;
-	mx->m = ft_calloc(r * c, sizeof(long double));
+	mx->m = malloc(r * c * sizeof(long double));
 	if (!mx->m)
 	{
 		free(mx);

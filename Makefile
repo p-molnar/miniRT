@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/05/24 14:14:48 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/05/29 12:25:50 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,6 +87,9 @@ RENDERER_COLOR	=	$(addprefix	color/,										\
 SHADOW			=	$(addprefix	shadow/,									\
 								shadow.c)									\
 
+TRANSFORMATION	=	$(addprefix	transformation/,							\
+								transformation.c)							\
+
 RENDERER		=	$(addprefix	renderer/,									\
 								renderer.c									\
 								renderer_util.c								\
@@ -94,6 +97,7 @@ RENDERER		=	$(addprefix	renderer/,									\
 								$(RENDERER_COLOR)							\
 								$(ELEMENTS)									\
 								$(SHADOW)									\
+								$(TRANSFORMATION)							\
 								)
 
 UTIL			=	$(addprefix	util/,										\

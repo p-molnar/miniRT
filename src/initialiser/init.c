@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 10:46:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/26 16:56:34 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/29 16:50:08 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	set_up_rotation_mx(t_data *data)
 	else
 	{
 		tg_dir = get_normal_vec(create_vec(data->cam->coord, data->cam->tg_coord));
-		rot_agl = -acos(dot(cam_orientation_vec, tg_dir) / (cam_orientation_vec->len * tg_dir->len));
+		rot_agl = acos(dot(cam_orientation_vec, tg_dir) / (cam_orientation_vec->len * tg_dir->len));
 		rot_ax = cross(cam_orientation_vec, tg_dir);
 		printf("cam dir: %Lf, %Lf, %Lf\n", tg_dir->dir[0],
 				tg_dir->dir[1], tg_dir->dir[2]);
