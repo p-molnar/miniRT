@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/26 22:27:51 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/29 11:41:08 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,14 @@ t_vec3	*rotate_ray(t_data *d, t_vec3 *ray, long double agl, t_vec3 *ax)
 
 	(void) d;
 	ray_mx = coord_to_mx(ray->dir);
+	ray_mx = expand_mx(ray_mx, 4, 4, 1);
 	axis_mx = coord_to_mx(ax->dir);
+	axis_mx = expand_mx(axis_mx, 4, 4, 1);
 	rotated_mx = rotate_mx(ray_mx, axis_mx, agl);
 	if (fabsl(agl) > M_PI_2 && ax->dir[X] == 1)
 	{
 		t_vec3 *cam_tg = get_normal_vec(create_vec(d->cam->coord, d->cam->tg_coord));
-		t_mx *ax_mx = coord_to_mx(cam_tg->dir);
-		// t_mx *ax_mx = coord_to_mx(create_coord(0, 0, 1));
+		t_mx *ax_mx = expand_mx(coord_to_mx(cam_tg->dir), 4, 4, 1);	
 		rotated_mx = rotate_mx(rotated_mx, ax_mx, M_PI);
 	}
 	return (create_vec(NULL, create_coord(rotated_mx->m[0], rotated_mx->m[1], rotated_mx->m[2])));

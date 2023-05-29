@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/24 10:10:58 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/25 19:43:27 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/29 11:41:08 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,43 @@ t_mx	*get_inverse_mx(t_mx *mx)
 	return (inv_mx);
 }
 
+t_mx	*expand_mx(t_mx *mx, int r, int c, long double val)
+{
+	t_mx	*exp_mx;
+	int		row;
+	int		col;
+	int		v;
+
+	if (!mx || (r <= mx->r && c <= mx->c))
+		return (NULL);
+	exp_mx = malloc(sizeof(t_mx));
+	if (r > mx->r)
+		exp_mx->r = r;
+	else
+		exp_mx->r = mx->r;
+	if (c > mx->c)
+		exp_mx->c = c;
+	else
+		exp_mx->c = mx->c;
+	exp_mx->m = ft_calloc(exp_mx->r * exp_mx->c, sizeof(long double));
+	row = 0;
+	v = 0;
+	while (row < exp_mx->r)
+	{
+		col = 0;
+		while (col < exp_mx->c)
+		{
+			if (row < mx->r && col < mx->c)
+				exp_mx->m[row * exp_mx->c + col] = mx->m[v++];
+			else if (row == r - 1 && col == c - 1)
+				exp_mx->m[row * exp_mx->c + col] = val;
+			col++;
+		}
+		row++;
+	}
+	return (exp_mx);
+}
+
 t_mx	*coord_to_mx(t_coord3 *c)
 {
 	t_mx	*mx;
@@ -97,12 +134,11 @@ t_mx	*coord_to_mx(t_coord3 *c)
 	if (!c)
 		return (NULL);
 	mx = malloc(sizeof(t_mx));
-	mx->c = 4;
+	mx->c = 3;
 	mx->r = 1;
-	mx->m = malloc(4 * sizeof(long double));
+	mx->m = malloc(3 * sizeof(long double));
 	if (!mx->m)
 		return (NULL); // !free the whole thing!
 	ft_memcpy(mx->m, c, 3 * sizeof(long double));
-	mx->m[3] = 1;
 	return (mx);
 }
