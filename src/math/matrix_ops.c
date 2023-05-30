@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 11:10:49 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/29 16:45:59 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/30 11:06:51 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_mx	*multiply_mx(t_mx *mx1, t_mx *mx2)
 	return (mx);
 }
 
-t_mx	*get_scaler_mx(t_coord3 sx, t_coord3 sy, t_coord3 sz)
+t_mx	*get_scaling_mx(t_coord3 sx, t_coord3 sy, t_coord3 sz)
 {
 	t_mx	*scale_mx;
 
@@ -102,8 +102,8 @@ t_mx	*get_translation_mx(t_coord3 tx, t_coord3 ty, t_coord3 tz)
 	trans_mx->m[10] = 1;
 	trans_mx->m[15] = 1;
 	trans_mx->m[3] = tx;
-	trans_mx->m[6] = ty;
-	trans_mx->m[9] = tz;
+	trans_mx->m[7] = ty;
+	trans_mx->m[11] = tz;
 	return (trans_mx);
 }
 
