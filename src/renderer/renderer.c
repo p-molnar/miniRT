@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/29 16:45:41 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/30 11:19:45 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_color	trace_ray(t_data *data, long double *origin, t_vec3 *dir,
 	closest_obj = get_closest_el(el_arr, origin, dir, range);
 	if (!closest_obj || !closest_obj->el)
 		return (BACKGROUND_COLOR);
-	data->p[INCIDENT] = get_incident_point(origin, dir, closest_obj->dist);
+	data->p[INCIDENT] = get_incident_point(origin, dir, closest_obj);
 	data->v[NORM] = get_incident_point_norm(data->p[INCIDENT], closest_obj);
 	color[0] = get_incident_point_color(data, data->p[INCIDENT], closest_obj->el);
 	ref_factor = closest_obj->el->reflection;

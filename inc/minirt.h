@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/30 09:49:13 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/30 11:18:56 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_scn_el	**get_scn_els(t_list *list, int type);
 void		init_vec(t_vec3 **arr, int size);
 void		free_vec(t_vec3 **arr, int size);
 t_vec3		*get_ray_reflection(t_vec3 *ray, t_vec3 *norm);
-t_coord3	*get_incident_point(t_coord3 *origin, t_vec3 *dir, long double t);
+t_coord3	*get_incident_point(t_coord3 *origin, t_vec3 *dir, t_closest *obj);
 
 //	math
 t_vec3		*create_vec(long double *init_point, long double *terminal_point);
@@ -79,7 +79,7 @@ t_vec3		*get_normal_vec(t_vec3 *vec);
 
 t_mx		*get_inverse_mx(t_mx *mx);
 t_mx		*multiply_mx(t_mx *mx1, t_mx *mx2);
-t_mx		*get_scaler_mx(t_coord3 sx, t_coord3 sy, t_coord3 sz);
+t_mx		*get_scaling_mx(t_coord3 sx, t_coord3 sy, t_coord3 sz);
 t_mx		*get_translation_mx(t_coord3 tx, t_coord3 ty, t_coord3 tz);
 t_mx		*get_rotation_mx(t_mx *axis, long double rot_angle);
 t_mx		*coord_to_mx(t_coord3 *coord, int r, int c);
