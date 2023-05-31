@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/30 11:19:45 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/31 15:09:02 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ t_vec3	*get_incident_point_norm(t_coord3 *inc_p, t_closest *obj)
 			norm = create_vec(create_coord(0, 0, inc_p[Z]), inc_p);	
 		else
 		{
-			if (inc_p[Z] < obj->el->coord[Z])
-				norm = create_vec(inc_p, create_coord(inc_p[X], inc_p[Y], inc_p[Z] - 1));
+			if (inc_p[Z] <= obj->el->cap[0].coord[Z])
+				norm = create_vec(NULL, obj->el->cap[0].n_vec->dir);
 			else
-				norm = create_vec(inc_p, create_coord(inc_p[X], inc_p[Y], inc_p[Z] + 1));
+				norm = create_vec(NULL, obj->el->cap[1].n_vec->dir);
 		}
 	}
 	else if (obj->el->type == SPHERE)
@@ -52,7 +52,7 @@ t_color	trace_ray(t_data *data, long double *origin, t_vec3 *dir,
 	t_scn_el			**el_arr;
 	t_color				color[2];
 	long double			ref_factor;
-	const long double	ref_range[RANGE_SIZE] = {0 + EPS, INF};
+	const long double	ref_range[RANGE_SIZE] = {EPS, INF};
 
 	el_arr = get_scn_els(data->scn_el, G_OBJS);
 	closest_obj = get_closest_el(el_arr, origin, dir, range);
@@ -81,10 +81,33 @@ t_vec3	*rotate_ray(t_data *d, t_vec3 *ray, long double agl, t_vec3 *ax)
 	pivot_ax_mx = expand_mx(pivot_ax_mx, 4, 1, 1);
 	rot_mx = get_rotation_mx(pivot_ax_mx, agl);
 	ray_mx = multiply_mx(rot_mx, ray_mx);
+	
+	
+	// agl = -acos(dot(ax, create_vec(NULL, create_coord(1, 0, 0))));
+	// printf("agl: %Lf\n", agl);
+	// pivot_ax_mx = coord_to_mx(cam_tg->dir, 3, 1);
+	// pivot_ax_mx = expand_mx(pivot_ax_mx, 4, 1, 1);
+	// rot_mx = get_rotation_mx(pivot_ax_mx, agl);
+	// ray_mx = multiply_mx(rot_mx, ray_mx);
+
+	agl = -acos(dot(ax, create_vec(NULL, create_coord(0, 1, 0))));
+	// printf("agl: %Lf\n", agl);
+	pivot_ax_mx = coord_to_mx(create_coord(1, 0, 0), 3, 1);
+	pivot_ax_mx = expand_mx(pivot_ax_mx, 4, 1, 1);
+	rot_mx = get_rotation_mx(pivot_ax_mx, agl);
+	ray_mx = multiply_mx(rot_mx, ray_mx);
+
+	// agl = -acos(dot(ax, create_vec(NULL, create_coord(0, 0, 1))));
+	// // printf("agl: %Lf\n", agl);
+	// pivot_ax_mx = coord_to_mx(cam_tg->dir, 3, 1);
+	// pivot_ax_mx = expand_mx(pivot_ax_mx, 4, 1, 1);
+	// rot_mx = get_rotation_mx(pivot_ax_mx, agl);
+	// ray_mx = multiply_mx(rot_mx, ray_mx);
+
 	if (fabsl(agl) > M_PI_2 && ax->dir[X] == 1)
 	{
 		t_vec3 *cam_tg = get_normal_vec(create_vec(d->cam->coord, d->cam->tg_coord));
-		pivot_ax_mx = expand_mx(coord_to_mx(cam_tg->dir, 3, 1), 4, 4, 1);	
+		pivot_ax_mx = expand_mx(coord_to_mx(cam_tg->dir, 3, 1), 4, 1, 1);	
 		ray_mx = coord_to_mx(ray->dir, 3, 1);
 		ray_mx = expand_mx(ray_mx, 4, 1, 1);
 		rot_mx = get_rotation_mx(pivot_ax_mx, M_PI);
@@ -92,6 +115,31 @@ t_vec3	*rotate_ray(t_data *d, t_vec3 *ray, long double agl, t_vec3 *ax)
 	}
 	return (create_vec(NULL, create_coord(ray_mx->m[0], ray_mx->m[1], ray_mx->m[2])));
 }
+
+// t_vec3	*rotate_ray(t_data *d, t_vec3 *ray, long double agl, t_vec3 *ax)
+// {
+// 	t_mx *ray_mx;
+// 	t_mx *pivot_ax_mx;
+// 	t_mx *rot_mx;
+
+// 	ray_mx = coord_to_mx(ray->dir, 3, 1);
+// 	ray_mx = expand_mx(ray_mx, 4, 1, 1);
+// 	pivot_ax_mx = coord_to_mx(ax->dir, 3, 1);
+// 	pivot_ax_mx = expand_mx(pivot_ax_mx, 4, 1, 1);
+// 	rot_mx = get_rotation_mx(pivot_ax_mx, agl);
+// 	ray_mx = multiply_mx(rot_mx, ray_mx);
+
+// 	if (fabsl(agl) > M_PI_2 && ax->dir[X] == 1)
+// 	{
+// 		t_vec3 *cam_tg = get_normal_vec(create_vec(d->cam->coord, d->cam->tg_coord));
+// 		pivot_ax_mx = expand_mx(coord_to_mx(cam_tg->dir, 3, 1), 4, 4, 1);	
+// 		ray_mx = coord_to_mx(ray->dir, 3, 1);
+// 		ray_mx = expand_mx(ray_mx, 4, 1, 1);
+// 		rot_mx = get_rotation_mx(pivot_ax_mx, M_PI);
+// 		ray_mx = multiply_mx(rot_mx, ray_mx);
+// 	}
+// 	return (create_vec(NULL, create_coord(ray_mx->m[0], ray_mx->m[1], ray_mx->m[2])));
+// }
 
 void	render_img(t_data *data)
 {

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 10:46:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/29 16:50:08 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/31 13:40:08 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	set_up_rotation_mx(t_data *data)
 		if (is_cam_rotated(data->cam->n_vec))
 		{
 			data->cam->n_vec = get_normal_vec(data->cam->n_vec);
-			rot_agl = -acos(dot(cam_orientation_vec, data->cam->n_vec));
+			rot_agl = acos(dot(cam_orientation_vec, data->cam->n_vec));
 			rot_ax = cross(cam_orientation_vec, data->cam->n_vec);
 		}
 		else
@@ -92,6 +92,41 @@ void	set_up_rotation_mx(t_data *data)
 	free(rot_ax);
 }
 
+void	set_up_rotation_mx2(t_data *data)
+{
+	long double *angles;
+	int			i;
+	t_vec3		*tmp;
+	t_vec3		*cam_orientation;
+	t_coord3	o[3] = {0, 0, 0};
+
+	angles = ft_calloc(3, sizeof(long double));
+	if (!angles)
+		return ;
+	if (data->cam->type == CAM)
+	{
+		if (is_cam_rotated(data->cam->n_vec))
+			cam_orientation = create_vec(NULL, data->cam->n_vec->dir);
+		else
+			cam_orientation = create_vec(NULL, create_coord(0, 0, 1));
+
+	}
+	else
+		cam_orientation = create_vec(data->cam->coord, data->cam->tg_coord);
+	i = 0;
+	while (i < COORD_SIZE)
+	{
+		o[i] = 1;
+		tmp = create_vec(NULL, o);
+		angles[i] = acos(dot(cam_orientation, tmp) / (cam_orientation->len * tmp->len));
+		o[i] = 0;
+		printf("angle_r %c = %Lf, angle_d %c = %Lf\n", "abg"[i], angles[i], "abg"[i], rad_to_deg(angles[i]));
+		free (tmp);
+		i++;
+	}
+	data->rot_angles = angles;
+}
+
 void	set_up_vars(t_data *data)
 {
 	t_list *ptr;
@@ -109,4 +144,5 @@ void	set_up_vars(t_data *data)
 	if (cam)
 		data->cam = cam[0];
 	set_up_rotation_mx(data);
+	// set_up_rotation_mx2(data);
 }

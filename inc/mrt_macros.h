@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/30 10:08:06 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/30 16:07:16 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define INF 99999
 // # define BACKGROUND_COLOR 0xFFFFFFFF
 # define BACKGROUND_COLOR 0x000000FF
-# define EPS 0.0001
+# define EPS 0.00001
 
 # ifndef RECURSIVE_DEPTH
 #  define RECURSIVE_DEPTH 0

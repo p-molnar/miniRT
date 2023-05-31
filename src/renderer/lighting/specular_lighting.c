@@ -6,12 +6,13 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 09:50:16 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/22 13:38:40 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/30 16:38:17 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 #include <minirt.h>
+#include <stdio.h>
 
 long double	get_specular_lighting(t_vec3 *dir, t_vec3 *light, t_vec3 *obj_norm, long double intensity, long double spec)
 {

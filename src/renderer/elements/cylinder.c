@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:59:42 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/30 12:38:15 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/31 10:43:25 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,12 @@ long double	get_cylinder_intersection(long double *origin, t_vec3 *dir, t_scn_el
 	long double *t;
 	long double	z[2];
 	long double	intersect[4] = {-1, -1, -1, -1};
-	// t_coord3	std_pos[3] = {0, 0, 0};
 	long double	r;
 
 	// printf("origin: %Lf, %Lf, %Lf\n", origin[X], origin[Y], origin[Z]);
 	// t_coord3 *diff = get_coord_diff(std_pos, obj->coord);
 	// printf("diff: %Lf, %Lf, %Lf\n", diff[X], diff[Y], diff[Z]);
-	origin = get_inv_SRT(origin, obj->coord);
+	// origin = get_SiRiTi(origin, obj->coord);
 	// printf("trans origin: %Lf, %Lf, %Lf\n", origin[X], origin[Y], origin[Z]);
 	param[0] = pow(dir->dir[X], 2) + pow(dir->dir[Y], 2);
 	param[1] = 2 * origin[X] * dir->dir[X] + 2 * origin[Y] * dir->dir[Y];
@@ -65,12 +64,12 @@ long double	get_cylinder_intersection(long double *origin, t_vec3 *dir, t_scn_el
 	intersect[2] = get_plane_intersection(origin, dir, &obj->cap[0]);
 	long double x = origin[X] + intersect[2] * dir->dir[X];
 	long double y = origin[Y] + intersect[2] * dir->dir[Y];
-	if (pow(x, 2) + pow(y, 2) >= pow(obj->diameter / 2, 2))
+	if (pow(x, 2) + pow(y, 2) > pow(obj->diameter / 2.0, 2))
 		intersect[2] = -1;
 	intersect[3] = get_plane_intersection(origin, dir, &obj->cap[1]);
 	x = origin[X] + intersect[3] * dir->dir[X];
 	y = origin[Y] + intersect[3] * dir->dir[Y];
-	if (pow(x, 2) + pow(y, 2) >= pow(obj->diameter / 2, 2))
+	if (pow(x, 2) + pow(y, 2) > pow(obj->diameter / 2.0, 2))
 		intersect[3] = -1;
 	r = yield_smallest_positive(intersect);
 	// printf("1: %Lf, 2: %Lf, 3: %Lf, 4: %Lf\n", intersect[0], intersect[1], intersect[2], intersect[3]);

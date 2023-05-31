@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/26 10:23:54 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/31 13:17:06 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ typedef struct s_data
 	t_coord3		*p[POINT_SIZE];
 	t_vec3			*rot_axis;
 	long double		rot_angle;
+	long double		*rot_angles;
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 }					t_data;
