@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/29 11:59:28 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/05/30 16:09:27 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,14 @@
 #include <stdio.h>
 #include <math.h>
 
-t_coord3	*get_incident_point(t_coord3 *origin, t_vec3 *dir, long double t)
+t_coord3	*get_incident_point(t_coord3 *origin, t_vec3 *dir, t_closest *obj)
 {
 	t_coord3	*inc_p;
 
-	inc_p = offset(origin, scale(t, dir));
+	// origin = get_inv_SRT(origin, obj->el->coord);
+	inc_p = offset(origin, scale(obj->dist, dir));
+	// if (obj->el->type == CYLINDER)
+	// 	inc_p = get_SiRiTi(inc_p, obj->el->coord);
 	return (inc_p);
 }
 
@@ -61,7 +64,7 @@ void	draw_axes(t_data *data)
 }
 
 
-t_closest	*get_closest_el(t_scn_el **el, long double origin[3], t_vec3 *dir, const long double *range)
+t_closest	*get_closest_el(t_scn_el **el, t_coord3 *origin, t_vec3 *dir, const long double *range)
 {
 	t_closest	*closest;
 	long double	t;
