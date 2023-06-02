@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/31 15:09:02 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/02 13:22:15 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,34 @@ t_vec3	*rotate_ray(t_data *d, t_vec3 *ray, long double agl, t_vec3 *ax)
 	t_mx *ray_mx;
 	t_mx *pivot_ax_mx;
 	t_mx *rot_mx;
+	long double	*euler_agls;
+	t_vec3	*tmp_vec;
+	(void) d;
+	(void) agl;
 
 	ray_mx = coord_to_mx(ray->dir, 3, 1);
 	ray_mx = expand_mx(ray_mx, 4, 1, 1);
 	pivot_ax_mx = coord_to_mx(ax->dir, 3, 1);
 	pivot_ax_mx = expand_mx(pivot_ax_mx, 4, 1, 1);
 	rot_mx = get_rotation_mx(pivot_ax_mx, agl);
+	euler_agls = get_euler_agls(rot_mx);
+	// printf("%Lf, %Lf, %Lf\n", euler_agls[0], euler_agls[1], euler_agls[2]);
+	// long double rot_x = atan2(ax->dir[Y], ax->dir[Z]) / 2;
+	// long double rot_y = asin(ax->dir[X]);
+	// printf("x: %Lf, y: %Lf\n", rot_x, rot_y);
+
+	tmp_vec = create_vec(NULL, create_coord(1, 0, 0));
+	pivot_ax_mx = coord_to_mx(tmp_vec->dir, 3, 1);
+	pivot_ax_mx = expand_mx(pivot_ax_mx, 4, 1, 1);
+	rot_mx = get_rotation_mx(pivot_ax_mx, 0.785);
 	ray_mx = multiply_mx(rot_mx, ray_mx);
-	
-	
+
+	tmp_vec = create_vec(NULL, create_coord(0, 1, 0));
+	pivot_ax_mx = coord_to_mx(tmp_vec->dir, 3, 1);
+	pivot_ax_mx = expand_mx(pivot_ax_mx, 4, 1, 1);
+	rot_mx = get_rotation_mx(pivot_ax_mx, -0.6954);
+	ray_mx = multiply_mx(rot_mx, ray_mx);
+
 	// agl = -acos(dot(ax, create_vec(NULL, create_coord(1, 0, 0))));
 	// printf("agl: %Lf\n", agl);
 	// pivot_ax_mx = coord_to_mx(cam_tg->dir, 3, 1);
@@ -90,12 +109,12 @@ t_vec3	*rotate_ray(t_data *d, t_vec3 *ray, long double agl, t_vec3 *ax)
 	// rot_mx = get_rotation_mx(pivot_ax_mx, agl);
 	// ray_mx = multiply_mx(rot_mx, ray_mx);
 
-	agl = -acos(dot(ax, create_vec(NULL, create_coord(0, 1, 0))));
+	// agl = -acos(dot(ax, create_vec(NULL, create_coord(0, 1, 0))));
 	// printf("agl: %Lf\n", agl);
-	pivot_ax_mx = coord_to_mx(create_coord(1, 0, 0), 3, 1);
-	pivot_ax_mx = expand_mx(pivot_ax_mx, 4, 1, 1);
-	rot_mx = get_rotation_mx(pivot_ax_mx, agl);
-	ray_mx = multiply_mx(rot_mx, ray_mx);
+	// pivot_ax_mx = coord_to_mx(create_coord(1, 0, 0), 3, 1);
+	// pivot_ax_mx = expand_mx(pivot_ax_mx, 4, 1, 1);
+	// rot_mx = get_rotation_mx(pivot_ax_mx, agl);
+	// ray_mx = multiply_mx(rot_mx, ray_mx);
 
 	// agl = -acos(dot(ax, create_vec(NULL, create_coord(0, 0, 1))));
 	// // printf("agl: %Lf\n", agl);
@@ -104,15 +123,15 @@ t_vec3	*rotate_ray(t_data *d, t_vec3 *ray, long double agl, t_vec3 *ax)
 	// rot_mx = get_rotation_mx(pivot_ax_mx, agl);
 	// ray_mx = multiply_mx(rot_mx, ray_mx);
 
-	if (fabsl(agl) > M_PI_2 && ax->dir[X] == 1)
-	{
-		t_vec3 *cam_tg = get_normal_vec(create_vec(d->cam->coord, d->cam->tg_coord));
-		pivot_ax_mx = expand_mx(coord_to_mx(cam_tg->dir, 3, 1), 4, 1, 1);	
-		ray_mx = coord_to_mx(ray->dir, 3, 1);
-		ray_mx = expand_mx(ray_mx, 4, 1, 1);
-		rot_mx = get_rotation_mx(pivot_ax_mx, M_PI);
-		ray_mx = multiply_mx(rot_mx, ray_mx);
-	}
+	// if (fabsl(agl) > M_PI_2 && ax->dir[X] == 1)
+	// {
+	// 	t_vec3 *cam_tg = get_normal_vec(create_vec(d->cam->coord, d->cam->tg_coord));
+	// 	pivot_ax_mx = expand_mx(coord_to_mx(cam_tg->dir, 3, 1), 4, 1, 1);	
+	// 	ray_mx = coord_to_mx(ray->dir, 3, 1);
+	// 	ray_mx = expand_mx(ray_mx, 4, 1, 1);
+	// 	rot_mx = get_rotation_mx(pivot_ax_mx, M_PI);
+	// 	ray_mx = multiply_mx(rot_mx, ray_mx);
+	// }
 	return (create_vec(NULL, create_coord(ray_mx->m[0], ray_mx->m[1], ray_mx->m[2])));
 }
 
