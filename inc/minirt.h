@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/31 13:30:22 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/02 11:11:45 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,10 @@ long double	*quad_eq_solver(long double a,
 							long double *disc);
 long double	deg_to_rad(long double deg);
 long double	rad_to_deg(long double rad);
+long double	*get_euler_agls(t_mx *rot_mx);
+long double	get_agl_between_d(t_vec3 *vec_1, t_vec3 *vec_2);
+long double	get_agl_between_r(t_vec3 *vec_1, t_vec3 *vec_2);
+
 
 //	color
 t_color		get_rgba(int r, int g, int b, int a);
