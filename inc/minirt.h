@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/06 15:18:22 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/07 17:55:53 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@
 # include <mrt_macros.h>
 
 //	parser
-void		parse_scene(t_data *scn, int argc, char *argv[]);
+void		parse_input(t_data *scn, int argc, char *argv[]);
 void		parse_elements(t_scn_el *el, char **input, unsigned int flags);
 void		parse_type_identifier(t_scn_el *el, char *line);
+void		add_cylinder_caps(t_scn_el *cylinder);
 
 //	element parser
 void		parse_coordinates(long double *coord, char *input);
@@ -40,14 +41,14 @@ int			is_valid_number(char *c);
 void		init_scene(t_data *scn);
 void		print_mx(t_mx *mx);
 void		create_projection_plane(t_data *d);
-void		set_up_vars(t_data *d);
+void		set_up_scene(t_data *d);
 
 //	error handling
 int			error(char *msg, int exit_method, int exit_code);
 void		warning(char *msg);
 
 //	renderer
-void		render_img(t_data *d);
+void		render_scene(t_data *d);
 t_color		trace_ray(t_data *data, long double *start_coord, t_vec3 *dir,
 				const long double *range, int recursion_depth);
 
@@ -120,7 +121,6 @@ long double	rad_to_deg(long double rad);
 long double	*get_euler_agls(t_mx *rot_mx);
 long double	get_agl_between_d(t_vec3 *vec_1, t_vec3 *vec_2);
 long double	get_agl_between_r(t_vec3 *vec_1, t_vec3 *vec_2);
-
 
 //	color
 t_color		get_rgba(int r, int g, int b, int a);

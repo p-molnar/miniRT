@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/30 12:02:44 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/07 18:02:23 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@
 
 void	print_scene_el(t_scn_el *el)
 {
-	char	*e[SCN_SIZE];
+	char	*e[F_SCN_SIZE];
 
-	e[AMB_LIGHT] = "AMB";
-	e[CAM] = "CAM";
-	e[TG_CAM] = "Target cam";
-	e[POINT_LIGHT] = "point light";
-	e[DIR_LIGHT] = "Dir light";
-	e[SPHERE] = "Sphere";
-	e[PLANE] = "plane";
-	e[CYLINDER] = "cylinder";
-	e[CYLINDER_CAP] = "cylinder cap";
+	e[F_AMB_LIGHT] = "AMB";
+	e[F_CAM] = "CAM";
+	e[F_TG_CAM] = "Target cam";
+	e[F_POINT_LIGHT] = "point light";
+	e[F_DIR_LIGHT] = "Dir light";
+	e[F_SPHERE] = "Sphere";
+	e[F_PLANE] = "plane";
+	e[F_CYLINDER] = "cylinder";
+	e[F_CYLINDER_CAP] = "cylinder cap";
 	printf("- - - - - - - - - - - - - - - - - -\n");
 	printf("type: %s\n", e[el->type]);
 	printf("coord: x=%Lf, y=%Lf, z=%Lf\n",
@@ -66,96 +66,26 @@ void	print_scene_el(t_scn_el *el)
 	}
 }
 
-void	populate_cylinder_properties(t_scn_el *pl, t_scn_el *cy, char cap_type)
-{
-	int			is_btm;
-	t_coord3	*norm;
-	t_coord3	std_pos[3] = {0, 0, 0};
-
-	is_btm = cap_type == 'B';
-	pl->type = CYLINDER_CAP;
-	pl->color = cy->color;
-	pl->reflection = cy->reflection;
-	pl->specular = cy->specular;
-	ft_memcpy(pl->coord, std_pos, COORD_SIZE * sizeof(long double));
-	if (is_btm)
-	{
-		pl->coord[Z] = std_pos[Z] - cy->height / 2;
-		norm = create_coord(pl->coord[X], pl->coord[Y], pl->coord[Z] - 1);
-	}
-	else
-	{
-		pl->coord[Z] = std_pos[Z] + cy->height / 2;
-		norm = create_coord(pl->coord[X], pl->coord[Y], pl->coord[Z] + 1);
-	}
-	pl->n_vec = create_vec(pl->coord, norm);
-}
-
-void	add_cylinder_caps(t_scn_el **cy)
-{
-	t_scn_el	*caps;
-	int			i;
-
-	i = 0;	
-	while (cy && cy[i])
-	{
-		caps = ft_calloc(2, sizeof(t_scn_el));
-		populate_cylinder_properties(&caps[0], cy[i], 'B');
-		populate_cylinder_properties(&caps[1], cy[i], 'T');
-		cy[i]->cap = caps;
-		i++;
-	}	
-	free(cy);
-}
-
 int	main(int argc, char *argv[])
 {
-	(void) argc, (void) argv;
-	// t_mx mx1;
-	// // t_mx mx2;
-	// mx1.r = 4;
-	// mx1.c = 1;
-	// // long double m1[16] = {5, 8, 1, 5, 12, -5, -6, 8, 4, 12, -6, 0, -7.5, 9, 0, 5};
-	// long double m1[4] = {0, 0, 0, 1};
-	// mx1.m = m1;
-	// t_mx *mx_n = get_translation_mx(315, 151, 134);
-	// // t_mx *mx_n = multiply_mx(inv, &mx1);
-	// // t_mx *mx_n = expand_mx(&mx1, 4, 4, 1);
-	// // t_mx * mx_n = &mx1;
-	// // long double m2[16] = {5, 8, 32, -234.5, 23, -67.2, 28, 6, 8, 4, -22.2, 3,-1523, -2151, -61, 0};
-	// // mx2.c = 4;
-	// // mx2.r = 4;
-	// // mx2.m = m2;
-	// // t_mx *mx_m = multiply_mx(&mx1, &mx2);
-	// printf("[\n");
-	// int dim = mx_n->r * mx_n->c;
-	// for (int i = 0; i < dim; i++)
-	// {
-	// 	printf("%Lf  ", mx_n->m[i]);
-	// 	if (!((i + 1) % mx_n->c))
-	// 		printf("\n");
-	// }
-	// printf("]\n");
 	t_data	d;
 
-	init_scene(&d);
-	parse_scene(&d, argc, argv);
-	set_up_vars(&d);
-	create_projection_plane(&d);
-	add_cylinder_caps(get_scn_els(d.scn_el, CYLINDER));
-	t_list *ptr = d.scn_el;
+	ft_memset(&d, 0, sizeof(t_data));
+	parse_input(&d, argc, argv);
+	t_list *ptr = d.all_scn_el;
 	while (ptr)
 	{
 		print_scene_el(ptr->content);
 		ptr = ptr->next;
 	}
+	set_up_scene(&d);
 	d.mlx = mlx_init(CANVAS_W + 5, CANVAS_H + 5, "MiniRT", true);
 	if (!d.mlx)
 		error(ft_strdup(mlx_strerror(mlx_errno)), EXIT, 1);
 	d.img = mlx_new_image(d.mlx, CANVAS_W, CANVAS_H);
 	if (!d.img || (mlx_image_to_window(d.mlx, d.img, 0, 0) < 0))
 		error(ft_strdup(mlx_strerror(mlx_errno)), EXIT, 1);
-	render_img(&d);
+	render_scene(&d);
 	// mlx_loop_hook(d.mlx, ft_hook, d.mlx);
 	mlx_loop(d.mlx);
 	mlx_terminate(d.mlx);

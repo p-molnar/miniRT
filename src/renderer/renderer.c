@@ -23,7 +23,7 @@ t_vec3	*get_incident_point_norm(t_coord3 *inc_p, t_closest *obj)
 	t_vec3	*norm;
 
 	norm = NULL;
-	if (obj->el->type == CYLINDER)
+	if (obj->el->type == F_CYLINDER)
 	{
 		if ((inc_p[Z] > obj->el->cap[0].coord[Z] && inc_p[Z] < obj->el->cap[1].coord[Z]))
 			norm = create_vec(create_coord(0, 0, inc_p[Z]), inc_p);	
@@ -35,9 +35,9 @@ t_vec3	*get_incident_point_norm(t_coord3 *inc_p, t_closest *obj)
 				norm = create_vec(NULL, obj->el->cap[1].n_vec->dir);
 		}
 	}
-	else if (obj->el->type == SPHERE)
+	else if (obj->el->type == F_SPHERE)
 		norm = create_vec(obj->el->coord, inc_p);
-	else if (obj->el->type == PLANE)
+	else if (obj->el->type == F_PLANE)
 	{	
 		norm = create_vec(NULL, obj->el->n_vec->dir);
 	}
@@ -54,7 +54,7 @@ t_color	trace_ray(t_data *data, long double *origin, t_vec3 *dir,
 	long double			ref_factor;
 	const long double	ref_range[RANGE_SIZE] = {EPS, INF};
 
-	el_arr = get_scn_els(data->scn_el, G_OBJS);
+	el_arr = get_scn_els(data->all_scn_el, G_OBJS);
 	closest_obj = get_closest_el(el_arr, origin, dir, range);
 	if (!closest_obj || !closest_obj->el)
 		return (BACKGROUND_COLOR);
@@ -160,7 +160,7 @@ t_vec3	*rotate_ray(t_data *d, t_vec3 *ray, long double agl, t_vec3 *ax)
 // 	return (create_vec(NULL, create_coord(ray_mx->m[0], ray_mx->m[1], ray_mx->m[2])));
 // }
 
-void	render_img(t_data *data)
+void	render_scene(t_data *data)
 {
 	int	y;
 	int	x;

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:27:54 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/26 10:47:19 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/07 18:02:06 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,23 @@ void	parse_type_identifier(t_scn_el *el, char *line)
 	int	str_len;
 
 	str_len = ft_strlen(line) + 1;
-	el_type = TYPE_UNDEF;
+	el_type = F_TYPE_UNDEF;
 	if (ft_strncmp("A", line, str_len) == 0)
-		el_type = AMB_LIGHT;
+		el_type = F_AMB_LIGHT;
 	else if (ft_strncmp("L", line, str_len) == 0)
-		el_type = POINT_LIGHT;
+		el_type = F_POINT_LIGHT;
 	else if (ft_strncmp("DL", line, str_len) == 0)
-		el_type = DIR_LIGHT;
+		el_type = F_DIR_LIGHT;
 	else if (ft_strncmp("C", line, str_len) == 0)
-		el_type = CAM;
+		el_type = F_CAM;
 	else if (ft_strncmp("TC", line, str_len) == 0)
-		el_type = TG_CAM;
+		el_type = F_TG_CAM;
 	else if (ft_strncmp("sp", line, str_len) == 0)
-		el_type = SPHERE;
+		el_type = F_SPHERE;
 	else if (ft_strncmp("pl", line, str_len) == 0)
-		el_type = PLANE;
+		el_type = F_PLANE;
 	else if (ft_strncmp("cy", line, str_len) == 0)
-		el_type = CYLINDER;
+		el_type = F_CYLINDER;
 	else
 		error(strconcat(3, "Unknown element: '", line,
 					"'. Element must be of type: A, C, TC, L, DL, sp, pl, cy"), EXIT,

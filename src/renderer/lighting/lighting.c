@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/31 10:38:50 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/07 18:01:50 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ t_vec3	*cast_light_ray(t_coord3 *inc_p, t_coord3 *light, int type, long double *
 
 	vec = NULL;
 	range[0] = 0.0001;
-	if (type == DIR_LIGHT)
+	if (type == F_DIR_LIGHT)
 	{
 		vec = create_vec(NULL, light); // revise!
 		range[1] = INF;
 	}
-	else if (type == POINT_LIGHT)
+	else if (type == F_POINT_LIGHT)
 	{
 		vec = create_vec(inc_p, light);
 		range[1] = vec->len;
@@ -43,11 +43,11 @@ long double	get_lighting_intensity(t_data *data, t_coord3 *inc_p, t_scn_el *obj)
 	int			i;
 
 	intensity = 0;
-	lights = get_scn_els(data->scn_el, G_LIGHT);
+	lights = get_scn_els(data->all_scn_el, G_LIGHT);
 	i = 0;
 	while (lights && lights[i])
 	{
-		if (lights[i]->type == AMB_LIGHT)
+		if (lights[i]->type == F_AMB_LIGHT)
 			intensity += lights[i]->intensity;
 		else
 		{

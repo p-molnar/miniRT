@@ -6,84 +6,93 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/26 11:45:13 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/07 18:02:06 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <errno.h>
+#include <fcntl.h>
 #include <libft.h>
 #include <minirt.h>
 #include <mrt_macros.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <errno.h>
-#include <string.h>
-#include <fcntl.h>
+#include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
-int	is_duplicate_el_type(int el_type, t_data *scn)
+bool	is_duplicate_el_type(enum e_scn_el_type_flags el_type, t_data *scn)
 {
-	t_list	*tmp;
-	int		tmp_el_type;
+	t_list		*tmp;
+	t_scn_el	*el;
 
-	tmp = scn->scn_el;
+	tmp = scn->all_scn_el;
 	while (tmp)
 	{
-		tmp_el_type = ((t_scn_el *)tmp->content)->type;
-		if (is_in_range_i(el_type, AMB_LIGHT, TG_CAM) && tmp_el_type == el_type)
-			return (1);
+		el = tmp->content;
+		if (is_in_range_i(el_type, F_AMB_LIGHT, F_TG_CAM))
+		{
+			if (el_type == el->type)
+				return (true);
+			else if (el_type == F_CAM && el->type == F_TG_CAM)
+				return (true);
+			else if (el_type == F_TG_CAM && el->type == F_CAM)
+				return (true);
+		}
 		tmp = tmp->next;
 	}
-	return (0);
+	return (false);
 }
 
 void	validate_scn_el_setup(t_data *scn)
 {
-	t_scn_el		*el;
-	t_list			*tmp;
-	long double		total_light_brightness;
-	int				els;
+	t_scn_el	*el;
+	t_list		*tmp;
+	long double	total_light_brightness;
+	int			els;
 
-	tmp = scn->scn_el;
+	tmp = scn->all_scn_el;
 	total_light_brightness = 0;
 	els = 0;
 	while (tmp)
 	{
 		el = tmp->content;
 		total_light_brightness += el->intensity;
-		els |= 1 << el->type;
+		els |= el->type;
 		tmp = tmp->next;
 	}
 	if (!((els & F_CAM) || (els & F_TG_CAM)))
-		error(ft_strdup("Add a camera to the scene."), EXIT, 1);
+		error(ft_strdup("Required element missing: Camera"), EXIT, 1);
 	if (scn && total_light_brightness < 0.05)
-		warning(ft_strdup("Scene too dark, consider increasing brightness."));
+		warning(
+			ft_strdup("Too dark scene: add lights, or increase brightness.")
+			);
 }
 
 void	parse_data(t_data *scn, t_scn_el *el, char **input)
 {
-	const char	*type[8] = {"Undefined", "Ambient light", "Light", "Dir. Light",
-		"Camera", "Sphere", "Plane", "Cylinder"}; // rewrite
-
 	parse_type_identifier(el, input[0]);
 	if (is_duplicate_el_type(el->type, scn))
-		error(strconcat(2, "Duplicate element type: ", type[el->type]),
-			EXIT, 1);
-	if (el->type == AMB_LIGHT)
-		parse_elements(el, input, F_AMB_LIGHT);
-	else if (el->type == POINT_LIGHT)
-		parse_elements(el, input, F_LIGHT);
-	else if (el->type == DIR_LIGHT)
-		parse_elements(el, input, F_DIR_LIGHT);
-	else if (el->type == CAM)
-		parse_elements(el, input, F_CAM);
-	else if (el->type == TG_CAM)
-		parse_elements(el, input, F_TG_CAM);
-	else if (el->type == SPHERE)
-		parse_elements(el, input, F_SPHERE);
-	else if (el->type == PLANE)
-		parse_elements(el, input, F_PLANE);
-	else if (el->type == CYLINDER)
-		parse_elements(el, input, F_CYLINDER);
+		error(ft_strdup("Duplicate element definition"), EXIT, 1);
+	if (el->type == F_AMB_LIGHT)
+		parse_elements(el, input, AMB_LIGHT_FIELDS);
+	else if (el->type == F_POINT_LIGHT)
+		parse_elements(el, input, LIGHT_FIELDS);
+	else if (el->type == F_DIR_LIGHT)
+		parse_elements(el, input, DIR_LIGHT_FIELDS);
+	else if (el->type == F_CAM)
+		parse_elements(el, input, CAM_FIELDS);
+	else if (el->type == F_TG_CAM)
+		parse_elements(el, input, TG_CAM_FIELDS);
+	else if (el->type == F_SPHERE)
+		parse_elements(el, input, SPHERE_FIELDS);
+	else if (el->type == F_PLANE)
+		parse_elements(el, input, PLANE_FIELDS);
+	else if (el->type == F_CYLINDER)
+	{
+		parse_elements(el, input, CYLINDER_FIELDS);
+		add_cylinder_caps(el);
+	}
 }
 
 void	parse_line(t_data *scn, char *line)
@@ -96,17 +105,19 @@ void	parse_line(t_data *scn, char *line)
 	el = ft_calloc(1, sizeof(t_scn_el));
 	if (!el_info || !el)
 		error(strconcat(4, "Malloc error: ", __FILE__, ":", ft_itoa(__LINE__)),
-			EXIT, 1);
+				EXIT,
+				1);
 	parse_data(scn, el, el_info);
 	list_el = ft_lstnew(el);
 	if (!list_el)
 		error(strconcat(4, "Malloc error: ", __FILE__, ":", ft_itoa(__LINE__)),
-			EXIT, 1);
-	ft_lstadd_back(&scn->scn_el, list_el);
-	free_arr((void **) el_info);
+				EXIT,
+				1);
+	ft_lstadd_back(&scn->all_scn_el, list_el);
+	free_arr((void **)el_info);
 }
 
-void	parse_scene(t_data *scn, int argc, char *argv[])
+void	parse_input(t_data *scn, int argc, char *argv[])
 {
 	int		fd;
 	char	*line;
@@ -124,7 +135,7 @@ void	parse_scene(t_data *scn, int argc, char *argv[])
 			line = ft_strtrim(line, "\n");
 			if (!line)
 				error(strconcat(4, "Malloc error: ", __FILE__, ": ",
-						ft_itoa(__LINE__)), EXIT, 1);
+							ft_itoa(__LINE__)), EXIT, 1);
 			free(tmp);
 			if (*line != '#')
 				parse_line(scn, line);

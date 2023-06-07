@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/30 16:09:27 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/07 18:02:06 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,11 @@ t_closest	*get_closest_el(t_scn_el **el, t_coord3 *origin, t_vec3 *dir, const lo
 	i = 0;
 	while (el && el[i])
 	{
-		if (el[i]->type == SPHERE)
+		if (el[i]->type == F_SPHERE)
 			t = get_sphere_intersections(origin, dir, el[i]);
-		else if (el[i]->type == CYLINDER)
+		else if (el[i]->type == F_CYLINDER)
 			t = get_cylinder_intersection(origin, dir, el[i]);
-		else if (el[i]->type == PLANE)
+		else if (el[i]->type == F_PLANE)
 			t = get_plane_intersection(origin, dir, el[i]);
 		if (is_in_range_f(t, range[MIN], range[MAX]) && t < closest->dist)
 		{

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:59:42 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/31 10:43:25 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/07 18:02:14 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,41 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+void	populate_cylinder_properties(t_scn_el *pl, t_scn_el *cy, char cap_type)
+{
+	int			is_btm;
+	t_coord3	*norm;
+	t_coord3	std_pos[3] = {0, 0, 0};
+
+	is_btm = cap_type == 'B';
+	pl->type = F_CYLINDER_CAP;
+	pl->color = cy->color;
+	pl->reflection = cy->reflection;
+	pl->specular = cy->specular;
+	ft_memcpy(pl->coord, std_pos, COORD_SIZE * sizeof(long double));
+	if (is_btm)
+	{
+		pl->coord[Z] = std_pos[Z] - cy->height / 2;
+		norm = create_coord(pl->coord[X], pl->coord[Y], pl->coord[Z] - 1);
+	}
+	else
+	{
+		pl->coord[Z] = std_pos[Z] + cy->height / 2;
+		norm = create_coord(pl->coord[X], pl->coord[Y], pl->coord[Z] + 1);
+	}
+	pl->n_vec = create_vec(pl->coord, norm);
+}
+
+void	add_cylinder_caps(t_scn_el *cylinder)
+{
+	t_scn_el	*caps;
+
+	caps = ft_calloc(2, sizeof(t_scn_el));
+	populate_cylinder_properties(&caps[0], cylinder, 'B');
+	populate_cylinder_properties(&caps[1], cylinder, 'T');
+	cylinder->cap = caps;
+}
 
 long double	yield_smallest_positive(long double *arr)
 {
