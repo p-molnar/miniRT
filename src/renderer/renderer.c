@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/02 13:22:15 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/06 15:23:36y pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_vec3	*rotate_ray(t_data *d, t_vec3 *ray, long double agl, t_vec3 *ax)
 	t_mx *ray_mx;
 	t_mx *pivot_ax_mx;
 	t_mx *rot_mx;
-	long double	*euler_agls;
+	// long double	*euler_agls;
 	t_vec3	*tmp_vec;
 	(void) d;
 	(void) agl;
@@ -84,7 +84,7 @@ t_vec3	*rotate_ray(t_data *d, t_vec3 *ray, long double agl, t_vec3 *ax)
 	pivot_ax_mx = coord_to_mx(ax->dir, 3, 1);
 	pivot_ax_mx = expand_mx(pivot_ax_mx, 4, 1, 1);
 	rot_mx = get_rotation_mx(pivot_ax_mx, agl);
-	euler_agls = get_euler_agls(rot_mx);
+	// euler_agls = get_euler_agls(rot_mx);
 	// printf("%Lf, %Lf, %Lf\n", euler_agls[0], euler_agls[1], euler_agls[2]);
 	// long double rot_x = atan2(ax->dir[Y], ax->dir[Z]) / 2;
 	// long double rot_y = asin(ax->dir[X]);
@@ -162,39 +162,92 @@ t_vec3	*rotate_ray(t_data *d, t_vec3 *ray, long double agl, t_vec3 *ax)
 
 void	render_img(t_data *data)
 {
-	int					canvas[2];
-	int					screen[2];
-	int					counter;
-	t_color				color;
-	long double			*pplane_coord;
+	int	y;
+	int	x;
+	long double	pixel_x;
+	long double	pixel_y;
+	double		aspect_ratio;
 	const long double	range[RANGE_SIZE] = {1, INF};
-	
-	canvas[X] = -CANVAS_W / 2;
-	counter = 0;
-	while (canvas[X] < CANVAS_W / 2)
+	t_color	color;
+
+	color = 0;
+	aspect_ratio = CANVAS_W / CANVAS_H; 
+	y = 0;
+	t_ray *ray = malloc(sizeof(t_ray));
+	t_mx *origin = coord_to_mx(create_coord(0, 0, 0), 3, 1);
+	origin = expand_mx(origin, 4, 1, 1);
+	printf("origin mx: \n");
+	print_mx(origin);
+	origin = multiply_mx(data->ctw_mx, origin);
+	printf("multiplied mx: \n");
+	print_mx(origin);
+	ray->origin = create_coord(origin->m[X], origin->m[Y], origin->m[Z]);
+	double fov_scale = tan(deg_to_rad(data->cam->fov / 2));
+	while (y < CANVAS_H)
 	{
-		canvas[Y] = CANVAS_H / 2;
-		while (canvas[Y] > -CANVAS_H / 2)
+		x = 0;
+		while (x < CANVAS_W)
 		{
-			screen[X] = canvas[X] + CANVAS_W / 2;
-			screen[Y] = CANVAS_H / 2 - canvas[Y];
-			init_vec(data->v, VEC_SIZE);
-			pplane_coord = convert_to_viewport(canvas[X], canvas[Y],
-					data->viewport, data->cam);
-			data->v[RAY] = create_vec(data->cam->coord, pplane_coord);
-			data->v[RAY] = rotate_ray(data, data->v[RAY], data->rot_angle, data->rot_axis);
-			// printf("%d\n", counter);
-			// if (data->vec[D]->coord[0] == 0 && data->vec[D]->coord[1] == 0 && data->vec[D]->coord[2] == 1)
-			// 	printf("this\n");	
-			// printf("%Lf, %Lf, %Lf\n", data->vec[D]->coord[0], data->vec[D]->coord[1], data->vec[D]->coord[2]);
-			color = trace_ray(data, data->cam->coord, data->v[RAY], range, 0);
-			mlx_put_pixel(data->img, screen[X], screen[Y], color);
-			free(pplane_coord);
-			free_vec(data->v, VEC_SIZE);
-			counter++;
-			canvas[Y]--;
+		    pixel_x = (2 * ((x + 0.5) / CANVAS_W) - 1) * fov_scale * aspect_ratio;
+      		pixel_y = (1 - 2 * (y + 0.5) / CANVAS_H) * fov_scale;
+			
+			t_mx *dir_mx = coord_to_mx(create_coord(pixel_x, pixel_y, 1), 3, 1);
+			dir_mx = expand_mx(dir_mx, 4, 1, 0);
+			// printf("dir mx: \n");
+			// print_mx(dir_mx);
+			dir_mx = multiply_mx(data->ctw_mx, dir_mx);
+			// printf("multiplied mx: \n");
+			// print_mx(dir_mx);
+			ray->dir = create_vec(NULL, create_coord(dir_mx->m[X], dir_mx->m[Y], dir_mx->m[Z]));
+			// printf("origin: %Lf, %Lf, %Lf\n", ray->origin[0], ray->origin[1], ray->origin[2]);
+			// printf("%LF, %Lf, %Lf\n", ray->dir->dir[0], ray->dir->dir[1], ray->dir->dir[2]);
+			normalize(ray->dir);
+			// printf("normalised: %LF, %Lf, %Lf\n", ray->dir->dir[0], ray->dir->dir[1], ray->dir->dir[2]);
+			color = trace_ray(data, ray->origin, ray->dir, range, 0);
+			mlx_put_pixel(data->img, x, y, color);
+			// free(ray.dir);
+			x++;
 		}
-		canvas[X]++;
+		y++;
 	}
-	draw_axes(data);
+		// draw_axes(data);
 }
+
+
+// void	render_img(t_data *data)
+// {
+// 	int					canvas[2];
+// 	int					screen[2];
+// 	int					counter;
+// 	t_color				color;
+// 	long double			*pplane_coord;
+// 	const long double	range[RANGE_SIZE] = {1, INF};
+	
+// 	canvas[X] = -CANVAS_W / 2;
+// 	counter = 0;
+// 	while (canvas[X] < CANVAS_W / 2)
+// 	{
+// 		canvas[Y] = CANVAS_H / 2;
+// 		while (canvas[Y] > -CANVAS_H / 2)
+// 		{
+// 			screen[X] = canvas[X] + CANVAS_W / 2;
+// 			screen[Y] = CANVAS_H / 2 - canvas[Y];
+// 			init_vec(data->v, VEC_SIZE);
+// 			pplane_coord = convert_to_viewport(canvas[X], canvas[Y],
+// 					data->viewport, data->cam);
+// 			data->v[RAY] = create_vec(data->cam->coord, pplane_coord);
+// 			data->v[RAY] = rotate_ray(data, data->v[RAY], data->rot_angle, data->rot_axis);
+// 			// printf("%d\n", counter);
+// 			// if (data->vec[D]->coord[0] == 0 && data->vec[D]->coord[1] == 0 && data->vec[D]->coord[2] == 1)
+// 			// 	printf("this\n");	
+// 			// printf("%Lf, %Lf, %Lf\n", data->vec[D]->coord[0], data->vec[D]->coord[1], data->vec[D]->coord[2]);
+// 			color = trace_ray(data, data->cam->coord, data->v[RAY], range, 0);
+// 			mlx_put_pixel(data->img, screen[X], screen[Y], color);
+// 			free(pplane_coord);
+// 			free_vec(data->v, VEC_SIZE);
+// 			counter++;
+// 			canvas[Y]--;
+// 		}
+// 		canvas[X]++;
+// 	}
+// }
