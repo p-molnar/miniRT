@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/02 11:11:45 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/06 15:18:22 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int			is_valid_number(char *c);
 
 //	initialiser
 void		init_scene(t_data *scn);
+void		print_mx(t_mx *mx);
 void		create_projection_plane(t_data *d);
 void		set_up_vars(t_data *d);
 
@@ -76,6 +77,7 @@ t_coord3	*get_incident_point(t_coord3 *origin, t_vec3 *dir, t_closest *obj);
 t_vec3		*create_vec(long double *init_point, long double *terminal_point);
 long double	get_vec_len(t_vec3 *vec);
 t_vec3		*get_normal_vec(t_vec3 *vec);
+void		normalize(t_vec3 *vec);
 
 t_mx		*get_inverse_mx(t_mx *mx);
 t_mx		*multiply_mx(t_mx *mx1, t_mx *mx2);

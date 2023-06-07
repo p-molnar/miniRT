@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 15:01:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/25 16:31:36 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/05 10:06:53 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,24 @@ long double	get_vec_len(t_vec3 *vec)
 		i++;
 	}
 	return (sqrt(sum_of_sqrs));
+}
+
+void	normalize(t_vec3 *vec)
+{
+	int	i;
+
+	if (!vec)
+		return ;
+	i = 0;
+	while (i < COORD_SIZE)
+	{
+		if (vec->len > 0)
+			vec->dir[i] = vec->dir[i] / vec->len;
+		else
+			vec->dir[i] = 0;	
+		i++;
+	}
+	vec->len = 1;
 }
 
 t_vec3	*get_normal_vec(t_vec3 *vec)
