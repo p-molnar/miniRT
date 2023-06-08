@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 10:46:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/07 18:01:37 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/08 10:04:58 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,15 @@ void	setup_camera(t_data	*d)
 	t_vec3	*fw_vec;
 	t_vec3	*up_vec;
 	t_vec3	*def_up_vec;
+	t_scn_el	*cam;
 
+	cam = *d->scn_el[CAM];
 	def_up_vec = create_vec(NULL, create_coord(0, 1, 0));
-	if (d->cam->type == F_CAM)
-		fw_vec = d->cam->n_vec;
+	if (cam->type == F_CAM)
+		fw_vec = cam->n_vec;
 	else
 	{
-		fw_vec = create_vec(d->cam->coord, d->cam->tg_coord);
+		fw_vec = create_vec(cam->pos, cam->tg_coord);
 		normalize(fw_vec);
 	}
 	if (fw_vec->dir[X] == 0 && fw_vec->dir[Y] == 0 && fw_vec->dir[Z] == 0)
@@ -71,36 +73,22 @@ void	setup_camera(t_data	*d)
 	d->ctw_mx->m[0] = right_vec->dir[X];
 	d->ctw_mx->m[1] = up_vec->dir[X];
 	d->ctw_mx->m[2] = fw_vec->dir[X];
-	d->ctw_mx->m[3] = d->cam->coord[X];
+	d->ctw_mx->m[3] = cam->pos[X];
 
 	d->ctw_mx->m[4] = right_vec->dir[Y];
 	d->ctw_mx->m[5] = up_vec->dir[Y];
 	d->ctw_mx->m[6] = fw_vec->dir[Y];
-	d->ctw_mx->m[7] = d->cam->coord[Y];
+	d->ctw_mx->m[7] = cam->pos[Y];
 
 	d->ctw_mx->m[8] = right_vec->dir[Z];
 	d->ctw_mx->m[9] = up_vec->dir[Z];
 	d->ctw_mx->m[10] = fw_vec->dir[Z];
-	d->ctw_mx->m[11] = d->cam->coord[Z];
+	d->ctw_mx->m[11] = cam->pos[Z];
 	d->ctw_mx->m[15] = 1;
 	print_mx(d->ctw_mx);
 }
 
 void	set_up_scene(t_data *data)
 {
-	t_list *ptr;
-	t_scn_el *obj;
-	t_scn_el **cam;
-
-	ptr = data->all_scn_el;
-	while (ptr)
-	{
-		obj = ptr->content;
-		obj->radius = obj->diameter / 2;
-		ptr = ptr->next;
-	}
-	cam = get_scn_els(data->all_scn_el, F_CAM | F_TG_CAM);
-	if (cam)
-		data->cam = cam[0];
 	setup_camera(data);
 }

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/07 18:10:49 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/08 10:04:24 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,12 +107,9 @@ typedef struct s_ray
 typedef struct s_scn_el
 {
 	enum e_scn_el_type_flags	type;
-	t_coord3			coord[COORD_SIZE];
+	t_coord3			pos[COORD_SIZE];
 	t_coord3			tg_coord[COORD_SIZE];
 	t_vec3				*n_vec;
-	t_vec3				*r_vec;
-	t_vec3				*u_vec;
-	t_vec3				*f_vec;
 	long double			diameter;
 	long double			radius;
 	long double			height;
@@ -133,10 +130,10 @@ typedef struct s_closest
 typedef struct s_data
 {
 	t_list				*all_scn_el;
-	t_scn_el			*cam;
 	t_vec3				*v[VEC_SIZE];
 	t_coord3			*p[POINT_SIZE];
-	// t_list				*[]
+	t_scn_el			**scn_el[SCN_SIZE];
+	t_scn_el			**grp_scn_el[G_SIZE];
 	t_mx				*ctw_mx;
 	mlx_t				*mlx;
 	mlx_image_t			*img;

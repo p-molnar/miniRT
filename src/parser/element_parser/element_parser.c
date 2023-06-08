@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:27:54 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/07 18:02:06 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/08 09:39:51 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	parse_elements(t_scn_el *el, char **input, unsigned int field)
 
 	col = 1;
 	if (field & F_COORD)
-		parse_coordinates(el->coord, input[col++]);
+		parse_coordinates(el->pos, input[col++]);
 	if (field & F_TG_COORD)
 		parse_coordinates(el->tg_coord, input[col++]);
 	if (field & F_N_VEC)

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/07 18:02:23 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/08 10:04:05 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	print_scene_el(t_scn_el *el)
 	printf("- - - - - - - - - - - - - - - - - -\n");
 	printf("type: %s\n", e[el->type]);
 	printf("coord: x=%Lf, y=%Lf, z=%Lf\n",
-			el->coord[0],
-			el->coord[1],
-			el->coord[2]);
+			el->pos[0],
+			el->pos[1],
+			el->pos[2]);
 	printf("tg_coord: x=%Lf, y=%Lf, z=%Lf\n",
 			el->tg_coord[0],
 			el->tg_coord[1],
@@ -66,12 +66,27 @@ void	print_scene_el(t_scn_el *el)
 	}
 }
 
+void	set_up_variables(t_data *d)
+{
+	d->scn_el[AMB_LIGHT] = get_scn_els(d->all_scn_el, F_AMB_LIGHT);
+	d->scn_el[CAM] = get_scn_els(d->all_scn_el, F_CAM | F_TG_CAM);
+	d->scn_el[POINT_LIGHT] = get_scn_els(d->all_scn_el, F_POINT_LIGHT);
+	d->scn_el[DIR_LIGHT] = get_scn_els(d->all_scn_el, F_DIR_LIGHT);
+	d->scn_el[SPHERE] = get_scn_els(d->all_scn_el, F_SPHERE);
+	d->scn_el[PLANE] = get_scn_els(d->all_scn_el, F_PLANE);
+	d->scn_el[CYLINDER] = get_scn_els(d->all_scn_el, F_CYLINDER);
+	d->scn_el[CYLINDER_CAP] = get_scn_els(d->all_scn_el, F_CYLINDER_CAP);
+	d->scn_el[LIGHTS] = get_scn_els(d->all_scn_el, G_LIGHTS);
+	d->scn_el[OBJS] = get_scn_els(d->all_scn_el, G_OBJS);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_data	d;
 
 	ft_memset(&d, 0, sizeof(t_data));
 	parse_input(&d, argc, argv);
+	set_up_variables(&d);
 	t_list *ptr = d.all_scn_el;
 	while (ptr)
 	{

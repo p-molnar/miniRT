@@ -25,18 +25,18 @@ t_vec3	*get_incident_point_norm(t_coord3 *inc_p, t_closest *obj)
 	norm = NULL;
 	if (obj->el->type == F_CYLINDER)
 	{
-		if ((inc_p[Z] > obj->el->cap[0].coord[Z] && inc_p[Z] < obj->el->cap[1].coord[Z]))
+		if ((inc_p[Z] > obj->el->cap[0].pos[Z] && inc_p[Z] < obj->el->cap[1].pos[Z]))
 			norm = create_vec(create_coord(0, 0, inc_p[Z]), inc_p);	
 		else
 		{
-			if (inc_p[Z] <= obj->el->cap[0].coord[Z])
+			if (inc_p[Z] <= obj->el->cap[0].pos[Z])
 				norm = create_vec(NULL, obj->el->cap[0].n_vec->dir);
 			else
 				norm = create_vec(NULL, obj->el->cap[1].n_vec->dir);
 		}
 	}
 	else if (obj->el->type == F_SPHERE)
-		norm = create_vec(obj->el->coord, inc_p);
+		norm = create_vec(obj->el->pos, inc_p);
 	else if (obj->el->type == F_PLANE)
 	{	
 		norm = create_vec(NULL, obj->el->n_vec->dir);
@@ -182,7 +182,7 @@ void	render_scene(t_data *data)
 	printf("multiplied mx: \n");
 	print_mx(origin);
 	ray->origin = create_coord(origin->m[X], origin->m[Y], origin->m[Z]);
-	double fov_scale = tan(deg_to_rad(data->cam->fov / 2));
+	double fov_scale = tan(deg_to_rad((*data->scn_el[CAM])->fov / 2));
 	while (y < CANVAS_H)
 	{
 		x = 0;

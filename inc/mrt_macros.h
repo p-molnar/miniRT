@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/07 18:10:40 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/07 21:50:07 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,11 +123,16 @@ enum	e_field_flags
 	CYLINDER_FIELDS = F_COORD | F_N_VEC | F_DMETER | F_HEIGHT | F_COLOR | \
 											F_SPECULAR | F_REFLECTION,
 };
-
 enum	e_groupped_el
 {
-	G_LIGHT = F_AMB_LIGHT | F_POINT_LIGHT | F_DIR_LIGHT,
-	G_CAM = F_CAM | F_TG_CAM,
+	LIGHTS,
+	OBJS,
+	G_SIZE,
+};
+
+enum	e_groupped_el_flags
+{
+	G_LIGHTS = F_AMB_LIGHT | F_POINT_LIGHT | F_DIR_LIGHT,
 	G_OBJS = F_SPHERE | F_PLANE | F_CYLINDER,
 };
 #endif

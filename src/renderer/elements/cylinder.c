@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:59:42 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/07 18:02:14 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/08 09:39:51 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,18 @@ void	populate_cylinder_properties(t_scn_el *pl, t_scn_el *cy, char cap_type)
 	pl->color = cy->color;
 	pl->reflection = cy->reflection;
 	pl->specular = cy->specular;
-	ft_memcpy(pl->coord, std_pos, COORD_SIZE * sizeof(long double));
+	ft_memcpy(pl->pos, std_pos, COORD_SIZE * sizeof(long double));
 	if (is_btm)
 	{
-		pl->coord[Z] = std_pos[Z] - cy->height / 2;
-		norm = create_coord(pl->coord[X], pl->coord[Y], pl->coord[Z] - 1);
+		pl->pos[Z] = std_pos[Z] - cy->height / 2;
+		norm = create_coord(pl->pos[X], pl->pos[Y], pl->pos[Z] - 1);
 	}
 	else
 	{
-		pl->coord[Z] = std_pos[Z] + cy->height / 2;
-		norm = create_coord(pl->coord[X], pl->coord[Y], pl->coord[Z] + 1);
+		pl->pos[Z] = std_pos[Z] + cy->height / 2;
+		norm = create_coord(pl->pos[X], pl->pos[Y], pl->pos[Z] + 1);
 	}
-	pl->n_vec = create_vec(pl->coord, norm);
+	pl->n_vec = create_vec(pl->pos, norm);
 }
 
 void	add_cylinder_caps(t_scn_el *cylinder)
@@ -90,9 +90,9 @@ long double	get_cylinder_intersection(long double *origin, t_vec3 *dir, t_scn_el
 		ft_memcpy(intersect, t, 2 * sizeof(long double));
 		z[0] = origin[Z] + t[0] * dir->dir[Z];
 		z[1] = origin[Z] + t[1] * dir->dir[Z];
-		if (!(z[0] > obj->cap[0].coord[Z] && z[0] < obj->cap[1].coord[Z]))
+		if (!(z[0] > obj->cap[0].pos[Z] && z[0] < obj->cap[1].pos[Z]))
 			intersect[0] = -1;
-		if (!(z[1] > obj->cap[0].coord[Z] && z[1] < obj->cap[1].coord[Z]))
+		if (!(z[1] > obj->cap[0].pos[Z] && z[1] < obj->cap[1].pos[Z]))
 			intersect[1] = -1;
 		free(t);
 	}

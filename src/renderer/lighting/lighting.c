@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/07 18:01:50 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/08 09:42:54 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ long double	get_lighting_intensity(t_data *data, t_coord3 *inc_p, t_scn_el *obj)
 	int			i;
 
 	intensity = 0;
-	lights = get_scn_els(data->all_scn_el, G_LIGHT);
+	lights = get_scn_els(data->all_scn_el, G_LIGHTS);
 	i = 0;
 	while (lights && lights[i])
 	{
@@ -51,7 +51,7 @@ long double	get_lighting_intensity(t_data *data, t_coord3 *inc_p, t_scn_el *obj)
 			intensity += lights[i]->intensity;
 		else
 		{
-			data->v[LIGHT] = cast_light_ray(inc_p, lights[i]->coord, lights[i]->type, range);
+			data->v[LIGHT] = cast_light_ray(inc_p, lights[i]->pos, lights[i]->type, range);
 			shadow = cast_shadow(data, inc_p, data->v[LIGHT], range);
 			if (shadow->el != NULL)
 			{
