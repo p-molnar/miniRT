@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/05/29 12:25:50 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/06/08 10:20:01 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -119,6 +119,9 @@ COLOR			=	$(addprefix	color/,										\
 								color_ops.c									\
 								)
 
+HELPER			=	$(addprefix	helper/,									\
+								printer.c									\
+								)
 #	SOURCE FILES
 SRC				=	main.c													\
 					$(INITAILISER)											\
@@ -129,6 +132,7 @@ SRC				=	main.c													\
 					$(UTIL)													\
 					$(COLOR)												\
 					$(MATH)													\
+					$(HELPER)												\
 
 OBJ_PATH		=	obj/
 OBJ				=	$(addprefix $(OBJ_PATH), $(SRC:.c=.o))

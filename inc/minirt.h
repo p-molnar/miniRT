@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/07 17:55:53 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/08 10:20:43 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ void		parse_color(t_color *color, char *input, int n_lower, int n_upper);
 
 //	free
 void		free_arr(void **arr);
+
+//	helper
+void	print_mx(t_mx *mx);
+void	print_scene_el(t_scn_el *el);
 
 //	parser utils
 int			get_arr_size(char **arr);
@@ -73,6 +77,7 @@ void		init_vec(t_vec3 **arr, int size);
 void		free_vec(t_vec3 **arr, int size);
 t_vec3		*get_ray_reflection(t_vec3 *ray, t_vec3 *norm);
 t_coord3	*get_incident_point(t_coord3 *origin, t_vec3 *dir, t_closest *obj);
+void		set_up_camera(t_data *d);
 
 //	math
 t_vec3		*create_vec(long double *init_point, long double *terminal_point);

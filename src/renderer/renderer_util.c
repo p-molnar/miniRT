@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/08 09:39:51 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/08 10:26:06 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,44 +25,6 @@ t_coord3	*get_incident_point(t_coord3 *origin, t_vec3 *dir, t_closest *obj)
 	// 	inc_p = get_SiRiTi(inc_p, obj->el->coord);
 	return (inc_p);
 }
-
-void	draw_axes(t_data *data)
-{
-	int		x;
-	int		y;
-	t_color	c;
-
-	c = 0xFF0000FF;
-	x = 0;
-	while (x < CANVAS_W)
-	{
-		mlx_put_pixel(data->img, x, CANVAS_H / 2, c);
-		if (x % 100 == 0)
-		{
-			mlx_put_pixel(data->img, x, CANVAS_H / 2 - 2, c);
-			mlx_put_pixel(data->img, x, CANVAS_H / 2 - 1, c);
-			mlx_put_pixel(data->img, x, CANVAS_H / 2, c);
-			mlx_put_pixel(data->img, x, CANVAS_H / 2 + 1, c);
-			mlx_put_pixel(data->img, x, CANVAS_H / 2 + 2, c);
-		}
-		x++;
-	}
-	y = 0;
-	while (y < CANVAS_H)
-	{
-		mlx_put_pixel(data->img, CANVAS_W / 2, y, c);
-		if (y % 100 == 0)
-		{
-			mlx_put_pixel(data->img, CANVAS_W / 2 - 2, y, c);
-			mlx_put_pixel(data->img, CANVAS_W / 2 - 1, y, c);
-			mlx_put_pixel(data->img, CANVAS_W / 2, y, c);
-			mlx_put_pixel(data->img, CANVAS_W / 2 + 1, y, c);
-			mlx_put_pixel(data->img, CANVAS_W / 2 + 2, y, c);
-		}
-		y++;
-	}
-}
-
 
 t_closest	*get_closest_el(t_scn_el **el, t_coord3 *origin, t_vec3 *dir, const long double *range)
 {
@@ -97,19 +59,6 @@ t_closest	*get_closest_el(t_scn_el **el, t_coord3 *origin, t_vec3 *dir, const lo
 		i++;
 	}
 	return (closest);
-}
-
-long double	*convert_to_viewport(int x, int y, long double *viewport, t_scn_el *cam)
-{
-	long double	*pplane;
-
-	pplane = malloc(COORD_SIZE * sizeof(long double));
-	if (!pplane)
-		error(ft_strdup("Malloc error\n"), EXIT, 1);
-	pplane[X] = x * viewport[X] / CANVAS_W + cam->pos[X];
-	pplane[Y] = y * viewport[Y] / CANVAS_H + cam->pos[Y];
-	pplane[Z] = viewport[Z] + cam->pos[Z];
-	return (pplane);
 }
 
 t_vec3	*get_ray_reflection(t_vec3 *ray, t_vec3 *norm)
