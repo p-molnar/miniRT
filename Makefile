@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/06/08 10:20:01 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/06/08 12:09:52 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,14 +105,17 @@ UTIL			=	$(addprefix	util/,										\
 								)
 
 MATH			=	$(addprefix	math/,										\
-								matrix_ops.c								\
-								matrix_ops_2.c								\
-								vector_ops.c								\
-								vector_ops_2.c								\
-								quadratic_ops.c								\
-								coord_ops.c									\
-								range.c										\
-								trigonometry.c								\
+						$(addprefix coordinate/, coord_ops.c)				\
+						$(addprefix matrix/, 								\
+							matrix_ops.c									\
+							matrix_ops_2.c)									\
+						$(addprefix vector/, 								\
+							vector_ops.c									\
+							vector_ops_2.c)									\
+						$(addprefix misc/,									\
+							quadratic_ops.c									\
+							range.c											\
+							trigonometry.c)									\
 								)
 
 COLOR			=	$(addprefix	color/,										\
