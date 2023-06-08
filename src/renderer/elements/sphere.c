@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:58:37 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/08 09:42:12 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/08 11:25:43 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ long double	get_sphere_intersections(long double *origin, t_vec3 *dir, t_scn_el 
 	t_vec3		*CO;
 	long double	smallest;
 
-	CO = create_vec(obj->pos, origin);
+	CO = create_dir_vec(obj->pos, origin);
 	quad_param[0] = dot(dir, dir);
 	quad_param[1] = 2.0 * dot(CO, dir);
 	quad_param[2] = dot(CO, CO) - pow(obj->diameter / 2, 2);

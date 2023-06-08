@@ -14,35 +14,37 @@
 #include <libft.h>
 #include <math.h>
 #include <minirt.h>
-#include <mrt_macros.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 t_vec3	*get_incident_point_norm(t_coord3 *inc_p, t_closest *obj)
 {
-	t_vec3	*norm;
+	t_vec3	*obj_norm;
 
-	norm = NULL;
+	obj_norm = NULL;
 	if (obj->el->type == F_CYLINDER)
 	{
 		if ((inc_p[Z] > obj->el->cap[0].pos[Z] && inc_p[Z] < obj->el->cap[1].pos[Z]))
-			norm = create_vec(create_coord(0, 0, inc_p[Z]), inc_p);	
+		{
+			t_coord3 *cy_inc_p_depth = create_coord(0, 0, inc_p[Z]);
+			obj_norm = create_dir_vec(cy_inc_p_depth, inc_p);
+		}
 		else
 		{
 			if (inc_p[Z] <= obj->el->cap[0].pos[Z])
-				norm = create_vec(NULL, obj->el->cap[0].n_vec->dir);
+				obj_norm = coord_to_vec(obj->el->cap[0].n_vec->dir);
 			else
-				norm = create_vec(NULL, obj->el->cap[1].n_vec->dir);
+				obj_norm = coord_to_vec(obj->el->cap[1].n_vec->dir);
 		}
 	}
 	else if (obj->el->type == F_SPHERE)
-		norm = create_vec(obj->el->pos, inc_p);
+		obj_norm = create_dir_vec(obj->el->pos, inc_p);
 	else if (obj->el->type == F_PLANE)
 	{	
-		norm = create_vec(NULL, obj->el->n_vec->dir);
+		obj_norm = coord_to_vec(obj->el->n_vec->dir);
 	}
-	norm = get_normal_vec(norm);
-	return (norm); 
+	normalize(obj_norm);
+	return (obj_norm); 
 }
 
 t_color	trace_ray(t_data *data, long double *origin, t_vec3 *dir,
@@ -107,7 +109,7 @@ void	render_scene(t_data *data)
 			dir_mx = multiply_mx(data->ctw_mx, dir_mx);
 			// printf("multiplied mx: \n");
 			// print_mx(dir_mx);
-			ray->dir = create_vec(NULL, create_coord(dir_mx->m[X], dir_mx->m[Y], dir_mx->m[Z]));
+			ray->dir = create_vec(dir_mx->m[X], dir_mx->m[Y], dir_mx->m[Z]);
 			// printf("origin: %Lf, %Lf, %Lf\n", ray->origin[0], ray->origin[1], ray->origin[2]);
 			// printf("%LF, %Lf, %Lf\n", ray->dir->dir[0], ray->dir->dir[1], ray->dir->dir[2]);
 			normalize(ray->dir);

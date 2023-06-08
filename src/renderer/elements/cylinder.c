@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:59:42 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/08 09:39:51 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/08 11:26:03 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	populate_cylinder_properties(t_scn_el *pl, t_scn_el *cy, char cap_type)
 		pl->pos[Z] = std_pos[Z] + cy->height / 2;
 		norm = create_coord(pl->pos[X], pl->pos[Y], pl->pos[Z] + 1);
 	}
-	pl->n_vec = create_vec(pl->pos, norm);
+	pl->n_vec = create_dir_vec(pl->pos, norm);
 }
 
 void	add_cylinder_caps(t_scn_el *cylinder)

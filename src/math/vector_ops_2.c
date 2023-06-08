@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 14:48:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/25 16:39:13 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/08 11:45:37 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,15 @@ t_vec3	*cross(t_vec3 *vec_1, t_vec3 *vec_2)
 	normal[0] = get_normal_vec(vec_1);
 	normal[1] = get_normal_vec(vec_2);
 	i = 0;
-	while (i < 3)
+	while (i < COORD_SIZE)
 	{
 		tmp[i] = normal[0]->dir[(i + 1) % 3] * normal[1]->dir[(i + 2) % 3] -
 			normal[0]->dir[(i + 2) % 3] * normal[1]->dir[(i + 1) % 3];
 		i++;
 	}
-	vec = create_vec(NULL, tmp);
+	vec = coord_to_vec(tmp);
+	free(normal[0]);
+	free(normal[1]);
 	return (vec);
 }
 

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 10:46:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/08 10:22:11 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/08 10:46:24 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,13 @@ void	set_up_camera(t_data *d)
 	t_scn_el	*cam;
 
 	cam = *d->scn_el[CAM];
-	def_up_vec = create_vec(NULL, create_coord(0, 1, 0));
+	def_up_vec = create_vec(0, 1, 0);
 	if (cam->type == F_CAM)
 		fw_vec = cam->n_vec;
 	else
 	{
-		fw_vec = create_vec(cam->pos, cam->tg_coord);
+		t_coord3 *fw_coords = coord_subtract(cam->tg_coord, cam->pos);
+		fw_vec = coord_to_vec(fw_coords);
 		normalize(fw_vec);
 	}
 	if (fw_vec->dir[X] == 0 && fw_vec->dir[Y] == 0 && fw_vec->dir[Z] == 0)

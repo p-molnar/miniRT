@@ -6,37 +6,43 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 15:01:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/05 10:06:53 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/08 11:45:06 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
 #include <minirt.h>
 #include <mrt_macros.h>
-
-#include <math.h>
 #include <stdlib.h>
 
-t_vec3	*create_vec(long double *init_point, long double *terminal_point)
+t_vec3	*create_vec(t_coord x, t_coord y, t_coord z)
 {
-	t_vec3				*vec;
-	int					i;
-	const long double	origin[3] = {0, 0, 0};
+	t_vec3	*vec;
 
-	if (!terminal_point)
-		return (NULL);
-	if (init_point == NULL)
-		init_point = (long double *)origin;
 	vec = malloc(sizeof(t_vec3));
 	if (!vec)
 		return (NULL);
-	i = 0;
-	while (i < COORD_SIZE)
-	{
-		vec->dir[i] = terminal_point[i] - init_point[i];
-		i++;
-	}
+	vec->dir[X] = x;
+	vec->dir[Y] = y;
+	vec->dir[Z] = z;
 	vec->len = get_vec_len(vec);
 	return (vec);
+}
+
+t_vec3	*create_dir_vec(t_coord3 *init_point, t_coord3 *term_point)
+{
+	t_vec3		*dir;
+	t_coord3	*coord_diff;
+
+	if (!init_point || !term_point)
+		return (NULL);
+	dir = malloc(sizeof(t_vec3));
+	if (!dir)
+		return (NULL);
+	coord_diff = coord_subtract(term_point, init_point);
+	dir = coord_to_vec(coord_diff);
+	free(coord_diff);
+	return (dir);
 }
 
 long double	get_vec_len(t_vec3 *vec)
@@ -68,7 +74,7 @@ void	normalize(t_vec3 *vec)
 		if (vec->len > 0)
 			vec->dir[i] = vec->dir[i] / vec->len;
 		else
-			vec->dir[i] = 0;	
+			vec->dir[i] = 0;
 		i++;
 	}
 	vec->len = 1;
@@ -76,25 +82,12 @@ void	normalize(t_vec3 *vec)
 
 t_vec3	*get_normal_vec(t_vec3 *vec)
 {
-	t_vec3	*normal;
-	long double	len;
-	int	i;
+	t_vec3	*new_vec;
 
-	if (!vec)
+	new_vec = malloc(sizeof(t_vec3));
+	if (!new_vec)
 		return (NULL);
-	len = get_vec_len(vec);
-	normal = malloc(sizeof(t_vec3));
-	if (!normal)
-		return (NULL);
-	i = 0;
-	while (i < COORD_SIZE)
-	{
-		if (len > 0)
-			normal->dir[i] = vec->dir[i] / len;
-		else
-			normal->dir[i] = 0;	
-		i++;
-	}
-	normal->len = 1;
-	return (normal);
+	ft_memcpy(new_vec, vec, sizeof(t_vec3));
+	normalize(new_vec);
+	return (new_vec);
 }

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/08 10:20:43 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/08 11:44:59 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void		parse_color(t_color *color, char *input, int n_lower, int n_upper);
 void		free_arr(void **arr);
 
 //	helper
-void	print_mx(t_mx *mx);
-void	print_scene_el(t_scn_el *el);
+void		print_mx(t_mx *mx);
+void		print_scene_el(t_scn_el *el);
 
 //	parser utils
 int			get_arr_size(char **arr);
@@ -80,7 +80,7 @@ t_coord3	*get_incident_point(t_coord3 *origin, t_vec3 *dir, t_closest *obj);
 void		set_up_camera(t_data *d);
 
 //	math
-t_vec3		*create_vec(long double *init_point, long double *terminal_point);
+t_vec3		*create_vec(t_coord x, t_coord y, t_coord z);
 long double	get_vec_len(t_vec3 *vec);
 t_vec3		*get_normal_vec(t_vec3 *vec);
 void		normalize(t_vec3 *vec);
@@ -89,8 +89,6 @@ t_mx		*get_inverse_mx(t_mx *mx);
 t_mx		*multiply_mx(t_mx *mx1, t_mx *mx2);
 t_mx		*get_scaling_mx(t_coord3 sx, t_coord3 sy, t_coord3 sz);
 t_mx		*get_translation_mx(t_coord3 tx, t_coord3 ty, t_coord3 tz);
-t_mx		*get_rotation_mx(t_mx *axis, long double rot_angle);
-t_mx		*get_rotation_mx2(long double a, long double b, long double g);
 t_mx		*coord_to_mx(t_coord3 *coord, int r, int c);
 t_mx		*expand_mx(t_mx *mx, int r, int c, long double val);
 
@@ -115,7 +113,10 @@ t_vec3		*cross(t_vec3 *vec_1, t_vec3 *vec_2);
 t_coord3	*offset(t_coord3 *p, t_vec3 *vec);
 
 t_coord3	*create_coord(long double x, long double y, long double z);
-t_coord3	*get_coord_diff(t_coord3 *p1, t_coord3 *p2);
+t_coord3	*coord_subtract(t_coord3 *c1, t_coord3 *c2);
+t_vec3		*coord_to_vec(t_coord3 *coord);
+t_vec3		*create_dir_vec(t_coord3 *init_point, t_coord3 *term_point);
+t_vec3		*get_normal_vec(t_vec3 *vec);
 
 long double	*quad_eq_solver(long double a,
 							long double b,

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/08 09:42:54 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/08 11:24:25 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ t_vec3	*cast_light_ray(t_coord3 *inc_p, t_coord3 *light, int type, long double *
 	range[0] = 0.0001;
 	if (type == F_DIR_LIGHT)
 	{
-		vec = create_vec(NULL, light); // revise!
+		vec = coord_to_vec(light); // revise!
 		range[1] = INF;
 	}
 	else if (type == F_POINT_LIGHT)
 	{
-		vec = create_vec(inc_p, light);
+		vec = create_dir_vec(inc_p, light);
 		range[1] = vec->len;
 	}
 	return (get_normal_vec(vec));
