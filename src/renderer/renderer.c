@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/06 15:23:36y pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/10 19:26:33 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_color	trace_ray(t_data *data, t_ray *ray, const long double *range, int recurs
 	long double			ref_factor;
 	const long double	ref_range[RANGE_SIZE] = {EPS, INF};
 
-	closest_obj = get_closest_el(data->grp_scn_el[OBJS], ray, range);
+	closest_obj = get_closest_el(data->scn_els[ALL_OBJS], ray, range);
 	// printf("closest_obj: %p\n", closest_obj->el);
 	if (!closest_obj || !closest_obj->el)
 		return (BACKGROUND_COLOR);
@@ -83,8 +83,8 @@ void	render_scene(t_data *data)
 	aspect_ratio = CANVAS_W / CANVAS_H; 
 	y = 0;
 	t_ray *ray = malloc(sizeof(t_ray));
-	ray->origin = &data->scn_el[CAM][0]->pos;
-	double fov_scale = tan(deg_to_rad((*data->scn_el[CAM])->fov / 2));
+	ray->origin = &data->scn_els[CAM][0]->pos;
+	double fov_scale = tan(deg_to_rad((*data->scn_els[CAM])->fov / 2));
 	while (y < CANVAS_H)
 	{
 		x = 0;
@@ -105,7 +105,7 @@ void	render_scene(t_data *data)
 			// printf("%LF, %Lf, %Lf\n", ray->dir->dir.x, ray->dir->dir.y, ray->dir->dir.z);
 			normalize(ray->dir);
 			// printf("normalized: %LF, %Lf, %Lf\n", ray->dir->dir.x, ray->dir->dir.y, ray->dir->dir.z);
-			color = trace_ray(data, ray, range, 0);
+			color = trace_ray(data, ray, range, 2);
 			mlx_put_pixel(data->img, x, y, color);
 			// free(ray.dir);
 			x++;

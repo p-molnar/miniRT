@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/09 15:15:03 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/10 19:15:34 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ long double	get_specular_lighting(t_ray *ray, t_ray *secondary_ray, t_vec3 *obj_
 t_closest	*cast_shadow(t_data *data, t_ray *ray, long double *range);
 
 //	util
-t_scn_el	**get_scn_els(t_list *list, int type);
+// t_scn_el	**get_scn_els(t_list *list, int type);
+t_scn_el	**get_scn_els(t_list *list, enum e_scn_el_type_flags type);
 void		init_vec(t_vec3 **arr, int size);
 void		free_vec(t_vec3 **arr, int size);
 t_vec3		*get_ray_reflection(t_vec3 *ray, t_vec3 *norm);

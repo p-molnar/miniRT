@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 13:09:33 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/10 10:37:32 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/10 19:15:17 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	init_vec(t_vec3 **arr, int size)
 	}
 }
 
-t_scn_el	**get_scn_els(t_list *list, int type)
+t_scn_el	**get_scn_els(t_list *list, enum e_scn_el_type_flags type)
 {
 	t_list		*tmp;
 	t_scn_el	*curr_el;

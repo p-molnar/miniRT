@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/07 21:50:07 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/10 19:14:41 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,9 @@ enum	e_scn_el_type_flags
 	F_PLANE = 1 << 6,
 	F_CYLINDER = 1 << 7,
 	F_CYLINDER_CAP = 1 << 8,
-	F_SCN_SIZE = F_CYLINDER_CAP + 1
+	G_LIGHTS = F_AMB_LIGHT | F_POINT_LIGHT | F_DIR_LIGHT,
+	G_OBJS = F_SPHERE | F_PLANE | F_CYLINDER,
+	F_SCN_SIZE = F_CYLINDER_CAP + 1,
 };
 
 enum	e_scn_el_type
@@ -109,6 +111,8 @@ enum	e_scn_el_type
 	PLANE,
 	CYLINDER,
 	CYLINDER_CAP,
+	ALL_LIGHTS,
+	ALL_OBJS,
 	SCN_SIZE,
 };
 enum	e_field_flags
@@ -123,16 +127,5 @@ enum	e_field_flags
 	CYLINDER_FIELDS = F_COORD | F_N_VEC | F_DMETER | F_HEIGHT | F_COLOR | \
 											F_SPECULAR | F_REFLECTION,
 };
-enum	e_groupped_el
-{
-	LIGHTS,
-	OBJS,
-	G_SIZE,
-};
 
-enum	e_groupped_el_flags
-{
-	G_LIGHTS = F_AMB_LIGHT | F_POINT_LIGHT | F_DIR_LIGHT,
-	G_OBJS = F_SPHERE | F_PLANE | F_CYLINDER,
-};
 #endif

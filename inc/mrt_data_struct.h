@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/10 15:25:05 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/10 19:11:24 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,8 +140,7 @@ typedef struct s_data
 	t_list						*all_scn_el;
 	t_vec3						*v[VEC_SIZE];
 	t_coord3					*p[POINT_SIZE];
-	t_scn_el					**scn_el[SCN_SIZE];
-	t_scn_el					**grp_scn_el[G_SIZE];
+	t_scn_el					**scn_els[SCN_SIZE];
 	t_mx						*ctw_mx;
 	mlx_t						*mlx;
 	mlx_image_t					*img;

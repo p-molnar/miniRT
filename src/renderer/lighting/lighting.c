@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/10 15:36:51 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/10 19:12:13 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ long double	get_lighting_intensity(t_data *data, t_ray *ray, t_coord3 *inc_p, t_
 	t_ray	secondary_ray;
 
 	intensity = 0;
-	lights = data->grp_scn_el[LIGHTS];
+	lights = data->scn_els[ALL_LIGHTS];
 	i = 0;
 	while (lights && lights[i])
 	{
