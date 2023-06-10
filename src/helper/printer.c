@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/08 10:18:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/08 10:26:19 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/08 13:14:59 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,19 @@ void	print_scene_el(t_scn_el *el)
 	printf("- - - - - - - - - - - - - - - - - -\n");
 	printf("type: %s\n", e[el->type]);
 	printf("coord: x=%Lf, y=%Lf, z=%Lf\n",
-			el->pos[0],
-			el->pos[1],
-			el->pos[2]);
-	printf("tg_coord: x=%Lf, y=%Lf, z=%Lf\n",
-			el->tg_coord[0],
-			el->tg_coord[1],
-			el->tg_coord[2]);
+			el->pos.coord[0],
+			el->pos.coord[1],
+			el->pos.coord[2]);
+	printf("target: x=%Lf, y=%Lf, z=%Lf\n",
+			el->target.coord[0],
+			el->target.coord[1],
+			el->target.coord[2]);
 	if (el->n_vec)
 	{
 		printf("n_vec->dir: x=%Lf, y=%Lf, z=%Lf\n",
-				el->n_vec->dir[0],
-				el->n_vec->dir[1],
-				el->n_vec->dir[2]);
+				el->n_vec->dir.coord[0],
+				el->n_vec->dir.coord[1],
+				el->n_vec->dir.coord[2]);
 	}
 	printf("diameter: %Lf\n", el->diameter);
 	printf("radius: %Lf\n", el->radius);

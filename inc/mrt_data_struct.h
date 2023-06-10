@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/08 10:37:35 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/10 15:25:05 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,17 @@
 
 typedef int						t_color;
 typedef long double				t_coord;
-typedef long double				t_coord3;
+
+typedef union u_coord3 
+{
+	struct {
+		t_coord	x;
+		t_coord	y;
+		t_coord	z;
+	};
+	t_coord	coord[3];
+}	t_coord3;
+
 
 typedef struct s_mx
 {
@@ -93,7 +103,7 @@ typedef struct s_mx
 typedef struct s_vec
 {
 	long double					len;
-	t_coord3					dir[COORD_SIZE];
+	t_coord3					dir;
 }								t_vec3;
 
 typedef struct s_ray
@@ -105,8 +115,8 @@ typedef struct s_ray
 typedef struct s_scn_el
 {
 	enum e_scn_el_type_flags	type;
-	t_coord3					pos[COORD_SIZE];
-	t_coord3					tg_coord[COORD_SIZE];
+	t_coord3					pos;
+	t_coord3					target;
 	t_vec3						*n_vec;
 	long double					diameter;
 	long double					radius;

@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/06/08 12:09:52 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/06/09 13:18:42 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -124,6 +124,7 @@ COLOR			=	$(addprefix	color/,										\
 
 HELPER			=	$(addprefix	helper/,									\
 								printer.c									\
+								axis.c										\
 								)
 #	SOURCE FILES
 SRC				=	main.c													\

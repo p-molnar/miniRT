@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/08 10:21:55 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/10 15:25:52 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,24 @@ void	set_up_variables(t_data *d)
 	d->scn_el[PLANE] = get_scn_els(d->all_scn_el, F_PLANE);
 	d->scn_el[CYLINDER] = get_scn_els(d->all_scn_el, F_CYLINDER);
 	d->scn_el[CYLINDER_CAP] = get_scn_els(d->all_scn_el, F_CYLINDER_CAP);
-	d->scn_el[LIGHTS] = get_scn_els(d->all_scn_el, G_LIGHTS);
-	d->scn_el[OBJS] = get_scn_els(d->all_scn_el, G_OBJS);
+	d->grp_scn_el[LIGHTS] = get_scn_els(d->all_scn_el, G_LIGHTS);
+	d->grp_scn_el[OBJS] = get_scn_els(d->all_scn_el, G_OBJS);
 }
 
 int	main(int argc, char *argv[])
 {
+	(void) argc, (void) argv;
+	// t_coord3 a, b;
+	// a.x = 1;
+	// a.y = 2;
+	// a.z = 3;
+	// b.x = 5;
+	// b.y = 2;
+	// b.z = 0;
+	// t_vec3 *c = create_vec(a.x, a.y, a.z);
+	// t_vec3 *d = get_normal_vec(c);
+	// printf("c: %Lf", c->len);
+	// printf("d: %Lf", d->len);
 	t_data	d;
 
 	ft_memset(&d, 0, sizeof(t_data));

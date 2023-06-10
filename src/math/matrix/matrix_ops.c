@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 11:10:49 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/31 13:29:19 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/08 20:01:15 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_mx	*multiply_mx(t_mx *mx1, t_mx *mx2)
 	return (mx);
 }
 
-t_mx	*get_scaling_mx(t_coord3 sx, t_coord3 sy, t_coord3 sz)
+t_mx	*get_scaling_mx(t_coord sx, t_coord sy, t_coord sz)
 {
 	t_mx	*scale_mx;
 
@@ -82,7 +82,7 @@ t_mx	*get_scaling_mx(t_coord3 sx, t_coord3 sy, t_coord3 sz)
 	return (scale_mx);
 }
 
-t_mx	*get_translation_mx(t_coord3 tx, t_coord3 ty, t_coord3 tz)
+t_mx	*get_translation_mx(t_coord tx, t_coord ty, t_coord tz)
 {
 	t_mx	*trans_mx;
 
@@ -105,43 +105,6 @@ t_mx	*get_translation_mx(t_coord3 tx, t_coord3 ty, t_coord3 tz)
 	trans_mx->m[7] = ty;
 	trans_mx->m[11] = tz;
 	return (trans_mx);
-}
-
-t_mx	*get_rotation_mx2(long double a, long double b, long double g)
-{
-	t_mx				*rot_mx;
-	long double			s[3];
-	long double			c[3];
-
-	s[0] = sin(a);
-	s[1] = sin(b);
-	s[2] = sin(g);
-	c[0] = cos(a);
-	c[1] = cos(b);
-	c[2] = cos(g);
-
-	rot_mx = malloc(sizeof(t_mx));
-	if (!rot_mx)
-		return (NULL);
-	rot_mx->r = 4;
-	rot_mx->c = 4;
-	rot_mx->m = ft_calloc(rot_mx->r * rot_mx->c, sizeof(long double));
-	if (!rot_mx->m)
-	{
-		free(rot_mx);
-		return (NULL);
-	}
-	rot_mx->m[0] = c[1] * c[2];
-	rot_mx->m[1] = s[0] * s[1] * c[2] - c[0] * s[2];
-	rot_mx->m[2] = c[0] * s[1] * c[2] + s[0] * s[2];
-	rot_mx->m[4] = c[1] * s[2];
-	rot_mx->m[5] = s[0] * s[1] * s[2] - c[0] * c[2];
-	rot_mx->m[6] = c[0] * s[1] * s[2] - s[0] * s[2];
-	rot_mx->m[8] = -s[1];
-	rot_mx->m[9] = s[0] * c[1];
-	rot_mx->m[10] = c[0] * c[1];
-	rot_mx->m[15] = 1;
-	return (rot_mx);
 }
 
 t_mx	*get_rotation_mx(t_mx *axis, long double agl_r)

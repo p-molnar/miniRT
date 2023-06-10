@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:58:37 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/08 11:25:43 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/09 14:46:44 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 
 
-long double	get_sphere_intersections(long double *origin, t_vec3 *dir, t_scn_el *obj)
+long double	get_sphere_intersections(t_ray *ray, t_scn_el *obj)
 {
 	long double	quad_param[3];
 	long double	d;
@@ -23,9 +23,9 @@ long double	get_sphere_intersections(long double *origin, t_vec3 *dir, t_scn_el 
 	t_vec3		*CO;
 	long double	smallest;
 
-	CO = create_dir_vec(obj->pos, origin);
-	quad_param[0] = dot(dir, dir);
-	quad_param[1] = 2.0 * dot(CO, dir);
+	CO = create_dir_vec(obj->pos, *ray->origin);
+	quad_param[0] = dot(ray->dir, ray->dir);
+	quad_param[1] = 2.0 * dot(CO, ray->dir);
 	quad_param[2] = dot(CO, CO) - pow(obj->diameter / 2, 2);
 	t = quad_eq_solver(quad_param[0], quad_param[1], quad_param[2], &d);
 	free(CO);

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/08 10:26:06 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/09 14:46:08 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,18 @@
 #include <stdio.h>
 #include <math.h>
 
-t_coord3	*get_incident_point(t_coord3 *origin, t_vec3 *dir, t_closest *obj)
+t_coord3	*get_incident_point(t_ray *ray, t_closest *obj)
 {
 	t_coord3	*inc_p;
 
 	// origin = get_inv_SRT(origin, obj->el->coord);
-	inc_p = offset(origin, scale(obj->dist, dir));
+	inc_p = offset(ray->origin, scale(obj->dist, ray->dir));
 	// if (obj->el->type == CYLINDER)
 	// 	inc_p = get_SiRiTi(inc_p, obj->el->coord);
 	return (inc_p);
 }
 
-t_closest	*get_closest_el(t_scn_el **el, t_coord3 *origin, t_vec3 *dir, const long double *range)
+t_closest	*get_closest_el(t_scn_el **el, t_ray *ray, const long double *range)
 {
 	t_closest	*closest;
 	long double	t;
@@ -41,11 +41,11 @@ t_closest	*get_closest_el(t_scn_el **el, t_coord3 *origin, t_vec3 *dir, const lo
 	while (el && el[i])
 	{
 		if (el[i]->type == F_SPHERE)
-			t = get_sphere_intersections(origin, dir, el[i]);
+			t = get_sphere_intersections(ray, el[i]);
 		else if (el[i]->type == F_CYLINDER)
-			t = get_cylinder_intersection(origin, dir, el[i]);
+			t = get_cylinder_intersection(ray, el[i]);
 		else if (el[i]->type == F_PLANE)
-			t = get_plane_intersection(origin, dir, el[i]);
+			t = get_plane_intersection(ray, el[i]);
 		if (is_in_range_f(t, range[MIN], range[MAX]) && t < closest->dist)
 		{
 			closest->dist = t;
