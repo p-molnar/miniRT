@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:59:42 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/12 12:38:16 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/12 21:30:29 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,30 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	populate_cylinder_properties(t_scn_el *pl, t_scn_el *cy, char cap_type)
+void	populate_cylinder_properties(t_scn_el *cap, t_scn_el *cy, char cap_type)
 {
 	int			is_btm;
 	t_coord3	*norm;
 	t_coord		std_pos[3] = {0, 0, 0};
 
 	is_btm = cap_type == 'B';
-	pl->type = F_CYLINDER_CAP;
-	pl->color = cy->color;
-	pl->reflection = cy->reflection;
-	pl->specular = cy->specular;
-	ft_memcpy(&pl->pos, std_pos, COORD_SIZE * sizeof(long double));
+	cap->type = F_CYLINDER_CAP;
+	cap->color = cy->color;
+	cap->reflection = cy->reflection;
+	cap->specular = cy->specular;
+	cap->pos.x = 0;
+	cap->pos.y = 0;
 	if (is_btm)
 	{
-		pl->pos.z = std_pos[Z] - (cy->height / 2);
-		norm = create_coord(pl->pos.x, pl->pos.y, pl->pos.z - 1);
+		cap->pos.z = std_pos[Z] - (cy->height / 2);
+		norm = create_coord(cap->pos.x, cap->pos.y, cap->pos.z - 1);
 	}
 	else
 	{
-		pl->pos.z = std_pos[Z] + (cy->height / 2);
-		norm = create_coord(pl->pos.x, pl->pos.y, pl->pos.z + 1);
+		cap->pos.z = std_pos[Z] + (cy->height / 2);
+		norm = create_coord(cap->pos.x, cap->pos.y, cap->pos.z + 1);
 	}
-	pl->n_vec = create_dir_vec(pl->pos, *norm);
+	cap->n_vec = create_dir_vec(cap->pos, *norm);
 }
 
 void	add_cylinder_caps(t_scn_el *cylinder)
@@ -74,7 +75,7 @@ long double	get_cylinder_intersection(t_ray *ray, t_scn_el *obj)
 	long double *t;
 	long double	z[2];
 	long double	intersect[4] = {-1, -1, -1, -1};
-	// long double	r;
+	long double	r;
 
 	param.a = pow(ray->dir->dir.x, 2) + pow(ray->dir->dir.y, 2);
 	param.b = 2 * (ray->origin->x * ray->dir->dir.x + ray->origin->y * ray->dir->dir.y);
@@ -82,7 +83,9 @@ long double	get_cylinder_intersection(t_ray *ray, t_scn_el *obj)
 	t = quad_eq_solver(param, NULL);
 	if (t != NULL)
 	{
-		ft_memcpy(intersect, t, 2 * sizeof(long double));
+		intersect[0] = t[0];
+		intersect[1] = t[1];
+		printf("i[0] = %Lf, i[1] = %Lf\n", intersect[0], intersect[1]);
 		z[0] = ray->origin->z + t[0] * ray->dir->dir.z;
 		z[1] = ray->origin->z + t[1] * ray->dir->dir.z;
 		if (!(z[0] > obj->cap[0].pos.z && z[0] < obj->cap[1].pos.z))
@@ -90,21 +93,29 @@ long double	get_cylinder_intersection(t_ray *ray, t_scn_el *obj)
 		if (!(z[1] > obj->cap[0].pos.z && z[1] < obj->cap[1].pos.z))
 			intersect[1] = -1;
 		free(t);
+		printf("Z[0] = %Lf, Z[1] = %Lf\n", z[0], z[1]);
 		if ((z[0] < obj->cap[0].pos.z && z[1] > obj->cap[0].pos.z) ||
 			(z[0] > obj->cap[0].pos.z && z[1] < obj->cap[0].pos.z))
 		{
 			intersect[2] = (obj->cap[0].pos.z - ray->origin->z) / ray->dir->dir.z;
+			printf("bottom cap\n");
+			printf("intersect1: %Lf\n", intersect[2]);
 		}
 		if ((z[0] < obj->cap[1].pos.z && z[1] > obj->cap[1].pos.z) ||
 			(z[0] > obj->cap[1].pos.z && z[1] < obj->cap[1].pos.z))
 		{
 			intersect[3] = (obj->cap[1].pos.z - ray->origin->z) / ray->dir->dir.z;
+			printf("top cap\n");
+			printf("intersect2: %Lf\n", intersect[3]);
 		}
-		return (yield_smallest_positive(intersect));
+		r = yield_smallest_positive(intersect);
 	}
 	else
-		return (-1);
+		r = -1;
 
+	if (r != -1)
+		printf("r: %Lf\n", r);
+	return (r);
 	// intersect[2] = get_plane_intersection(ray, &obj->cap[0]);
 	// long double x = ray->origin->x + intersect[2] * ray->dir->dir.x;
 	// long double y = ray->origin->y + intersect[2] * ray->dir->dir.y;
