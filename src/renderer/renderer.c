@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/10 19:26:33 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/12 22:48:50 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-t_vec3	*get_incident_point_norm(t_coord3 *inc_p, t_closest *obj)
+t_vec3	*get_incident_point_norm(t_scn_el *cam, t_coord3 *inc_p, t_closest *obj)
 {
 	t_vec3	*obj_norm;
 
 	obj_norm = NULL;
+	printf("inc_p: %.20Lf, %.20Lf, %.20f\n", inc_p->x, inc_p->y, (float) inc_p->z);
+	printf("cap0z: %.20Lf\n", obj->el->cap[0].pos.z);
+	printf("cap1z: %.20Lf\n", obj->el->cap[1].pos.z);
 	if (obj->el->type == F_CYLINDER)
 	{
-		if ((inc_p->z > obj->el->cap[0].pos.z && inc_p->z < obj->el->cap[1].pos.z))
+		if (((float) inc_p->z > obj->el->cap[0].pos.z && (float) inc_p->z < obj->el->cap[1].pos.z))
 		{
+			printf("cy body\n");
 			t_coord3 *cy_inc_p_depth = create_coord(0, 0, inc_p->z);
 			obj_norm = create_dir_vec(*cy_inc_p_depth, *inc_p);
 		}
 		else
 		{
-			if (inc_p->z <= obj->el->cap[0].pos.z)
-				obj_norm = coord_to_vec(obj->el->cap[0].n_vec->dir);
+			printf("cy cap\n");
+			if (cam->pos.z <= inc_p->z)
+				obj_norm = create_vec(0, 0, -1);
 			else
-				obj_norm = coord_to_vec(obj->el->cap[1].n_vec->dir);
+				obj_norm = create_vec(0, 0, 1);
+
+			// if (inc_p->z <= obj->el->cap[0].pos.z)
+			// 	obj_norm = coord_to_vec(obj->el->cap[0].n_vec->dir);
+			// else
+			// 	obj_norm = coord_to_vec(obj->el->cap[1].n_vec->dir);
 		}
 	}
 	else if (obj->el->type == F_SPHERE)
@@ -44,6 +54,7 @@ t_vec3	*get_incident_point_norm(t_coord3 *inc_p, t_closest *obj)
 		obj_norm = coord_to_vec(obj->el->n_vec->dir);
 	}
 	normalize(obj_norm);
+	printf("norm: %Lf, %Lf, %Lf\n", obj_norm->dir.x, obj_norm->dir.y, obj_norm->dir.z);
 	return (obj_norm); 
 }
 
@@ -59,7 +70,7 @@ t_color	trace_ray(t_data *data, t_ray *ray, const long double *range, int recurs
 	if (!closest_obj || !closest_obj->el)
 		return (BACKGROUND_COLOR);
 	data->p[INCIDENT] = get_incident_point(ray, closest_obj);
-	data->v[NORM] = get_incident_point_norm(data->p[INCIDENT], closest_obj);
+	data->v[NORM] = get_incident_point_norm(*data->scn_els[CAM], data->p[INCIDENT], closest_obj);
 	color[0] = get_incident_point_color(data, ray, data->p[INCIDENT], closest_obj->el);
 	ref_factor = closest_obj->el->reflection;
 	free(closest_obj);

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/09 14:46:08 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/12 17:55:11 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,8 @@ t_coord3	*get_incident_point(t_ray *ray, t_closest *obj)
 {
 	t_coord3	*inc_p;
 
-	// origin = get_inv_SRT(origin, obj->el->coord);
 	inc_p = offset(ray->origin, scale(obj->dist, ray->dir));
-	// if (obj->el->type == CYLINDER)
-	// 	inc_p = get_SiRiTi(inc_p, obj->el->coord);
+	printf("inc_P: %Lf, %Lf, %Lf\n", inc_p->x, inc_p->y, inc_p->z);
 	return (inc_p);
 }
 
