@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/12 22:48:50 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/13 00:18:12 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ t_vec3	*get_incident_point_norm(t_scn_el *cam, t_coord3 *inc_p, t_closest *obj)
 	t_vec3	*obj_norm;
 
 	obj_norm = NULL;
-	printf("inc_p: %.20Lf, %.20Lf, %.20f\n", inc_p->x, inc_p->y, (float) inc_p->z);
-	printf("cap0z: %.20Lf\n", obj->el->cap[0].pos.z);
-	printf("cap1z: %.20Lf\n", obj->el->cap[1].pos.z);
+	// printf("inc_p: %.20Lf, %.20Lf, %.20f\n", inc_p->x, inc_p->y, (float) inc_p->z);
+	// printf("cap0z: %.20Lf\n", obj->el->cap[0].pos.z);
+	// printf("cap1z: %.20Lf\n", obj->el->cap[1].pos.z);
 	if (obj->el->type == F_CYLINDER)
 	{
 		if (((float) inc_p->z > obj->el->cap[0].pos.z && (float) inc_p->z < obj->el->cap[1].pos.z))
