@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/10 19:15:34 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/12 12:32:09 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,10 +117,7 @@ t_vec3		*coord_to_vec(t_coord3 coord);
 t_vec3		*create_dir_vec(t_coord3 init_point, t_coord3 term_point);
 t_vec3		*get_normal_vec(t_vec3 *vec);
 
-long double	*quad_eq_solver(long double a,
-							long double b,
-							long double c,
-							long double *disc);
+long double	*quad_eq_solver(t_quad_param param, long double *discriminant);
 long double	deg_to_rad(long double deg);
 long double	rad_to_deg(long double rad);
 long double	*get_euler_agls(t_mx *rot_mx);

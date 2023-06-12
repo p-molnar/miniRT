@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/10 19:11:24 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/12 12:39:42 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,12 @@ typedef union u_coord3
 	t_coord	coord[3];
 }	t_coord3;
 
+typedef struct s_quad_params
+{
+	long double	a;
+	long double	b;
+	long double	c;
+}	t_quad_param;
 
 typedef struct s_mx
 {

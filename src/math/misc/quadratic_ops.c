@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/26 10:38:04 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/17 10:09:14 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/12 12:33:22 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,12 @@
 #include <stdlib.h>
 #include <math.h>
 
-long double	*quad_eq_solver(long double a, long double b, long double c,
-		long double *disc)
+long double	*quad_eq_solver(t_quad_param param, long double *disc)
 {
 	long double	discriminant;
 	long double	*solution;
 
-	discriminant = pow(b, 2) - 4 * a * c;
+	discriminant = pow(param.b, 2) - 4 * param.a * param.c;
 	if (disc != NULL)
 		*disc = discriminant;
 	if (discriminant < 0) // precision issues may arise! set it to 0.0001
@@ -31,8 +30,8 @@ long double	*quad_eq_solver(long double a, long double b, long double c,
 		solution = malloc(2 * sizeof(long double));
 		if (!solution)
 			return (NULL);
-		solution[0] = (-b + sqrt(discriminant)) / (2.0 * a);
-		solution[1] = (-b - sqrt(discriminant)) / (2.0 * a);
+		solution[0] = (-param.b + sqrt(discriminant)) / (2.0 * param.a);
+		solution[1] = (-param.b - sqrt(discriminant)) / (2.0 * param.a);
 	}
 	return (solution);
 }
