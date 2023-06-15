@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/07 18:02:06 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/13 19:09:11 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	parse_data(t_data *scn, t_scn_el *el, char **input)
 	{
 		parse_elements(el, input, CYLINDER_FIELDS);
 		add_cylinder_caps(el);
+		populate_transformation_mx(scn, el);
 	}
 }
 

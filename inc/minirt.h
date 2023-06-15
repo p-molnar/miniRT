@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/12 12:32:09 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/14 11:35:28 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void		init_scene(t_data *scn);
 void		print_mx(t_mx *mx);
 void		create_projection_plane(t_data *d);
 void		set_up_scene(t_data *d);
+void		populate_transformation_mx(t_data *d, t_scn_el *el);
+t_ray		*apply_transformations(t_ray *ray, t_scn_el *obj_info);
 
 //	error handling
 int			error(char *msg, int exit_method, int exit_code);
@@ -88,6 +90,7 @@ t_mx		*get_inverse_mx(t_mx *mx);
 t_mx		*multiply_mx(t_mx *mx1, t_mx *mx2);
 t_mx		*get_scaling_mx(t_coord sx, t_coord sy, t_coord sz);
 t_mx		*get_translation_mx(t_coord tx, t_coord ty, t_coord tz);
+t_mx		*get_rotation_mx(t_mx *axis, long double agl_r);
 t_mx		*coord_to_mx(t_coord3 *coord, int r, int c);
 t_mx		*expand_mx(t_mx *mx, int r, int c, long double val);
 

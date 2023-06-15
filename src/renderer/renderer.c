@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/13 01:21:45 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/14 15:37:42 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 t_vec3	*get_incident_point_norm(t_scn_el *cam, t_coord3 *inc_p, t_closest *obj)
 {
 	t_vec3	*obj_norm;
+	t_mx	*obj_norm_mx;
 
 	obj_norm = NULL;
 	if (obj->el->type == F_CYLINDER)
@@ -36,6 +37,10 @@ t_vec3	*get_incident_point_norm(t_scn_el *cam, t_coord3 *inc_p, t_closest *obj)
 			else
 				obj_norm = create_vec(0, 0, 1);
 		}
+		obj_norm_mx = coord_to_mx(&obj_norm->dir, 3, 1);
+		obj_norm_mx = expand_mx(obj_norm_mx, 4, 1, 1);
+		obj_norm_mx = multiply_mx(obj->el->rotation, obj_norm_mx);
+		obj_norm = create_vec(obj_norm_mx->m[0], obj_norm_mx->m[1], obj_norm_mx->m[2]);
 	}
 	else if (obj->el->type == F_SPHERE)
 		obj_norm = create_dir_vec(obj->el->pos, *inc_p);

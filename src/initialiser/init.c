@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 10:46:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/10 19:11:24 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/14 12:07:36 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,54 @@
 #include <minirt.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+bool	is_identical_coord(t_coord3 c1, t_coord3 c2)
+{
+	int	i;
+
+	i = 0;
+	while (i < COORD_SIZE)
+	{
+		if (c1.coord[i] != c2.coord[i])
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
+void	populate_translation_mx(t_scn_el *el)
+{
+	el->translation = get_translation_mx(el->pos.x, el->pos.y, el->pos.z);
+	el->inv_translation = get_inverse_mx(el->translation);
+}
+
+void	populate_rotation_mx(t_data *d, t_scn_el *el)
+{
+	long double		agl_r;
+	t_vec3			*pivot_ax;
+	t_mx			*pivot_mx;
+
+	if (is_identical_coord((t_coord3) {{0, 0, 0}}, el->n_vec->dir))
+		el->n_vec->dir.z = 1;
+	agl_r = get_agl_between(d->dft_world_orientation, el->n_vec);
+	printf("agl_r: %Lf\n", agl_r);
+	pivot_ax = cross(d->dft_world_orientation, el->n_vec);
+	normalize(pivot_ax);
+	pivot_mx  = coord_to_mx(&pivot_ax->dir, 3, 1);
+	pivot_mx = expand_mx(pivot_mx, 4, 1, 1);
+	printf("pivot_mx\n");
+	print_mx(pivot_mx);
+	el->rotation = get_rotation_mx(pivot_mx, agl_r);
+	el->inv_rotation = get_inverse_mx(el->rotation);
+	print_mx(el->inv_rotation);
+
+}
+
+void	populate_transformation_mx(t_data *d, t_scn_el *el)
+{
+	populate_translation_mx(el);
+	populate_rotation_mx(d, el);
+}
 
 void	set_up_camera(t_data *d)
 {

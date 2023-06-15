@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/13 01:21:22 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/14 15:47:40 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,17 @@
 t_coord3	*get_incident_point(t_ray *ray, t_closest *obj)
 {
 	t_coord3	*inc_p;
+	t_mx		*inc_p_mx;
 
 	inc_p = offset(ray->origin, scale(obj->dist, ray->dir));
+	if (obj->el->type == F_CYLINDER)
+	{
+		inc_p_mx = coord_to_mx(inc_p, 3, 1);
+		inc_p_mx = expand_mx(inc_p_mx, 4, 1, 1);
+		// inc_p_mx = multiply_mx(obj->el->translation, inc_p_mx);
+		inc_p_mx = multiply_mx(obj->el->rotation, inc_p_mx);
+		return (create_coord(inc_p_mx->m[0], inc_p_mx->m[1], inc_p_mx->m[2]));
+	}
 	return (inc_p);
 }
 

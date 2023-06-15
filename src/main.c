@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/10 19:11:24 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/14 11:43:05 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,16 @@ int	main(int argc, char *argv[])
 	t_data	d;
 
 	ft_memset(&d, 0, sizeof(t_data));
+	d.dft_world_orientation  = create_vec(0, 0, 1);
 	parse_input(&d, argc, argv);
 	set_up_variables(&d);
 	set_up_camera(&d);
-	t_list *ptr = d.all_scn_el;
-	while (ptr)
-	{
-		print_scene_el(ptr->content);
-		ptr = ptr->next;
-	}
+	// t_list *ptr = d.all_scn_el;
+	// while (ptr)
+	// {
+	// 	print_scene_el(ptr->content);
+	// 	ptr = ptr->next;
+	// }
 	d.mlx = mlx_init(CANVAS_W + 5, CANVAS_H + 5, "MiniRT", true);
 	if (!d.mlx)
 		error(ft_strdup(mlx_strerror(mlx_errno)), EXIT, 1);

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/13 01:22:45 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/06/14 15:32:51 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ long double	get_lighting_intensity(t_data *data, t_ray *ray, t_coord3 *inc_p, t_
 				continue ;
 			}
 			long double n_dot_l = dot(data->v[NORM], secondary_ray.dir);
+			// printf("ndotl: %Lf\n", n_dot_l);
 			if (n_dot_l > 0)
 				intensity += lights[i]->intensity * n_dot_l / (secondary_ray.dir->len
 						* data->v[NORM]->len);
