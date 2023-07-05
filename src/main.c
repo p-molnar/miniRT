@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/14 11:43:05 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/05 12:31:45 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,6 @@ void	set_up_variables(t_data *d)
 
 int	main(int argc, char *argv[])
 {
-	(void) argc, (void) argv;
-	// t_coord3 a, b;
-	// a.x = 1;
-	// a.y = 2;
-	// a.z = 3;
-	// b.x = 5;
-	// b.y = 2;
-	// b.z = 0;
-	// t_vec3 *c = create_vec(a.x, a.y, a.z);
-	// t_vec3 *d = get_normal_vec(c);
-	// printf("c: %Lf", c->len);
-	// printf("d: %Lf", d->len);
 	t_data	d;
 
 	ft_memset(&d, 0, sizeof(t_data));

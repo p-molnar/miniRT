@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/29 11:51:58 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/14 15:55:48 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/04 12:44:27 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ t_mx *apply_origin_transformations(t_mx *origin, t_scn_el *obj_info)
 {
 	t_mx	*transformed_mx;
 
-	transformed_mx = multiply_mx(obj_info->inv_rotation, origin);
-	transformed_mx = multiply_mx(obj_info->inv_translation, transformed_mx);
+	transformed_mx = multiply_mx(obj_info->inv_translation, origin);
+	transformed_mx = multiply_mx(obj_info->inv_rotation, transformed_mx);
 	// transformed_mx = multiply_mx(obj_info->scaler, transformed_mx);
 	return (transformed_mx);
 }

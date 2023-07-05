@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:59:42 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/14 14:31:00 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/05 12:21:02 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ long double	yield_smallest_positive(long double *arr)
 	int			i;
 	long double	smallest;
 
-	smallest = (unsigned int)-1;
+	smallest = INF;
 	i = 0;
 	while (i < 4)
 	{
@@ -58,7 +58,7 @@ long double	yield_smallest_positive(long double *arr)
 			smallest = arr[i];
 		i++;
 	}
-	if (smallest == (unsigned int)-1)
+	if (smallest == INF)
 		smallest = -1;
 	return (smallest);
 }
@@ -100,16 +100,24 @@ void	get_cap_intersections(t_ray *ray, t_scn_el *obj, long double *z,
 
 
 
-long double	get_cylinder_intersection(t_ray *ray, t_scn_el *obj_info)
+long double	get_cylinder_intersection(t_ray *ray, t_scn_el *obj_info, t_coord3 **inc_p)
 {
 	long double	z[2];
 	long double	intersects[4] = {-1, -1, -1, -1};
+	long double	smallest_positive;
+	// t_ray	*transformed_ray;
 
+	// transformed_ray = apply_transformations(ray, obj_info);
+	smallest_positive = -1;
 	ray = apply_transformations(ray, obj_info);
+	// printf("transformed ray\n");
+	// printf("origin: %Lf, %Lf, %Lf\n", ray->origin->x, ray->origin->y, ray->origin->z);
+	// printf("dir: %Lf, %Lf, %Lf\n", ray->dir->dir.x, ray->dir->dir.y, ray->dir->dir.z);
 	if (get_body_intersections(ray, obj_info, z, intersects))
 	{
 		get_cap_intersections(ray, obj_info, z, &intersects[2]);
-		return (yield_smallest_positive(intersects));
+		smallest_positive = yield_smallest_positive(intersects);
 	}
-	return (-1);
+	*inc_p = offset(ray->origin, scale(smallest_positive, ray->dir));
+	return (smallest_positive);
 }

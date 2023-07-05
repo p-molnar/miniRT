@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/14 15:37:42 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/05 13:50:15 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,40 +17,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-t_vec3	*get_incident_point_norm(t_scn_el *cam, t_coord3 *inc_p, t_closest *obj)
-{
-	t_vec3	*obj_norm;
-	t_mx	*obj_norm_mx;
-
-	obj_norm = NULL;
-	if (obj->el->type == F_CYLINDER)
-	{
-		if (((float) inc_p->z > obj->el->cap[0].pos.z && (float) inc_p->z < obj->el->cap[1].pos.z))
-		{
-			t_coord3 *cy_inc_p_depth = create_coord(0, 0, inc_p->z);
-			obj_norm = create_dir_vec(*cy_inc_p_depth, *inc_p);
-		}
-		else
-		{
-			if (cam->pos.z <= inc_p->z)
-				obj_norm = create_vec(0, 0, -1);
-			else
-				obj_norm = create_vec(0, 0, 1);
-		}
-		obj_norm_mx = coord_to_mx(&obj_norm->dir, 3, 1);
-		obj_norm_mx = expand_mx(obj_norm_mx, 4, 1, 1);
-		obj_norm_mx = multiply_mx(obj->el->rotation, obj_norm_mx);
-		obj_norm = create_vec(obj_norm_mx->m[0], obj_norm_mx->m[1], obj_norm_mx->m[2]);
-	}
-	else if (obj->el->type == F_SPHERE)
-		obj_norm = create_dir_vec(obj->el->pos, *inc_p);
-	else if (obj->el->type == F_PLANE)
-	{	
-		obj_norm = coord_to_vec(obj->el->n_vec->dir);
-	}
-	normalize(obj_norm);
-	return (obj_norm); 
-}
 
 t_color	trace_ray(t_data *data, t_ray *ray, const long double *range, int recursion_depth)
 {
@@ -62,8 +28,16 @@ t_color	trace_ray(t_data *data, t_ray *ray, const long double *range, int recurs
 	closest_obj = get_closest_el(data->scn_els[ALL_OBJS], ray, range);
 	if (!closest_obj || !closest_obj->el)
 		return (BACKGROUND_COLOR);
+	// printf("original ray\n");
+	// printf("origin: %Lf, %Lf, %Lf\n", ray->origin->x, ray->origin->y, ray->origin->z);
+	// printf("dir: %Lf, %Lf, %Lf\n", ray->dir->dir.x, ray->dir->dir.y, ray->dir->dir.z);
+	// printf("origin: %Lf, %Lf, %Lf\n", ray->origin->x, ray->origin->y, ray->origin->z);
+	// printf("dir: %Lf, %Lf, %Lf\n", ray->dir->dir.x, ray->dir->dir.y, ray->dir->dir.z);
 	data->p[INCIDENT] = get_incident_point(ray, closest_obj);
+	// printf("inc_p: %Lf, %Lf, %Lf\n", data->p[INCIDENT]->x, data->p[INCIDENT]->y, data->p[INCIDENT]->z);
 	data->v[NORM] = get_incident_point_norm(*data->scn_els[CAM], data->p[INCIDENT], closest_obj);
+	// printf("norm: %Lf, %Lf, %Lf\n", data->v[NORM]->dir.x, data->v[NORM]->dir.y, data->v[NORM]->dir.z);
+	// printf("- - - - - - - -\n");
 	color[0] = get_incident_point_color(data, ray, data->p[INCIDENT], closest_obj->el);
 	ref_factor = closest_obj->el->reflection;
 	free(closest_obj);
@@ -109,7 +83,7 @@ void	render_scene(t_data *data)
 			// printf("%LF, %Lf, %Lf\n", ray->dir->dir.x, ray->dir->dir.y, ray->dir->dir.z);
 			normalize(ray->dir);
 			// printf("normalized: %LF, %Lf, %Lf\n", ray->dir->dir.x, ray->dir->dir.y, ray->dir->dir.z);
-			color = trace_ray(data, ray, range, 2);
+			color = trace_ray(data, ray, range, 0);
 			mlx_put_pixel(data->img, x, y, color);
 			// free(ray.dir);
 			x++;

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/14 15:32:51 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/05 13:08:47 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_vec3	*cast_light_ray(t_coord3 *inc_p, t_scn_el *light_obj, long double *range)
 	else if (light_obj->type == F_POINT_LIGHT)
 	{
 		vec = create_dir_vec(*inc_p, light_obj->pos);
-		range[1] = 1; // vec->len
+		range[1] = vec->len; // was 1
 	}
 	normalize(vec);
 	return (vec);
@@ -44,6 +44,7 @@ long double	get_lighting_intensity(t_data *data, t_ray *ray, t_coord3 *inc_p, t_
 	int			i;
 	t_ray	secondary_ray;
 
+	(void) inc_p;
 	intensity = 0;
 	lights = data->scn_els[ALL_LIGHTS];
 	i = 0;
@@ -56,6 +57,7 @@ long double	get_lighting_intensity(t_data *data, t_ray *ray, t_coord3 *inc_p, t_
 			secondary_ray.origin = inc_p;
 			secondary_ray.dir = cast_light_ray(inc_p, lights[i], range);
 			shadow = cast_shadow(data, &secondary_ray, range);
+			// shadow = NULL;
 			if (shadow->el != NULL)
 			{
 				i++;

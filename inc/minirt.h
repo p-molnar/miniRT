@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/14 11:35:28 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/05 12:20:50 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,11 @@ t_color		mix_colors(t_color local_color, t_color reflected_color,
 				long double ref_factor);
 
 //	lighting
-long double	get_lighting_intensity(t_data *data, t_ray *ray, t_coord3 *inc_p, t_scn_el *obj);
+long double	get_lighting_intensity(t_data *data, t_ray *ray, t_coord3 *inc_p,
+				t_scn_el *obj);
 long double	get_diffuse_lighting(t_data *data, t_scn_el *light);
-long double	get_specular_lighting(t_ray *ray, t_ray *secondary_ray, t_vec3 *obj_norm,
-				long double intensity, long double spec);
+long double	get_specular_lighting(t_ray *ray, t_ray *secondary_ray,
+				t_vec3 *obj_norm, long double intensity, long double spec);
 t_closest	*cast_shadow(t_data *data, t_ray *ray, long double *range);
 
 //	util
@@ -78,6 +79,8 @@ void		init_vec(t_vec3 **arr, int size);
 void		free_vec(t_vec3 **arr, int size);
 t_vec3		*get_ray_reflection(t_vec3 *ray, t_vec3 *norm);
 t_coord3	*get_incident_point(t_ray *ray, t_closest *obj);
+t_vec3		*get_incident_point_norm(t_scn_el *cam, t_coord3 *inc_p,
+				t_closest *obj);
 void		set_up_camera(t_data *d);
 
 //	math
@@ -138,7 +141,8 @@ t_color		get_b(int rgba);
 t_color		get_a(int rgba);
 
 //	render color
-t_color		get_incident_point_color(t_data *data, t_ray *ray, t_coord3 *inc_p, t_scn_el *closest_el);
+t_color		get_incident_point_color(t_data *data, t_ray *ray, t_coord3 *inc_p,
+				t_scn_el *closest_el);
 
 // render util
 void		draw_axes(t_data *data);
@@ -150,6 +154,6 @@ long double	*convert_to_viewport(int x, int y, long double *viewport,
 //	elements
 long double	get_sphere_intersections(t_ray *ray, t_scn_el *obj);
 long double	get_plane_intersection(t_ray *ray, t_scn_el *obj);
-long double	get_cylinder_intersection(t_ray *ray, t_scn_el *obj);
+long double	get_cylinder_intersection(t_ray *ray, t_scn_el *obj, t_coord3 **inc_p);
 
 #endif

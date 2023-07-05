@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/13 21:00:38 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/05 11:42:15 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_scn_el
 typedef struct s_closest
 {
 	t_scn_el					*el;
+	t_coord3					*inc_p;
 	long double					dist;
 }								t_closest;
 
