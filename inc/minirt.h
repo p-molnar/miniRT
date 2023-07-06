@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/05 12:20:50 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/06 15:33:25 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void		parse_color(t_color *color, char *input, int n_lower, int n_upper);
 
 //	free
 void		free_arr(void **arr);
+void		free_mx(t_mx *mx);
+void		free_ray(t_ray *ray);
 
 //	helper
 void		print_mx(t_mx *mx);
@@ -79,8 +81,7 @@ void		init_vec(t_vec3 **arr, int size);
 void		free_vec(t_vec3 **arr, int size);
 t_vec3		*get_ray_reflection(t_vec3 *ray, t_vec3 *norm);
 t_coord3	*get_incident_point(t_ray *ray, t_closest *obj);
-t_vec3		*get_incident_point_norm(t_scn_el *cam, t_coord3 *inc_p,
-				t_closest *obj);
+t_vec3		*get_incident_point_norm(t_scn_el *cam, t_coord3 *inc_p, t_closest *obj);
 void		set_up_camera(t_data *d);
 
 //	math
@@ -95,7 +96,7 @@ t_mx		*get_scaling_mx(t_coord sx, t_coord sy, t_coord sz);
 t_mx		*get_translation_mx(t_coord tx, t_coord ty, t_coord tz);
 t_mx		*get_rotation_mx(t_mx *axis, long double agl_r);
 t_mx		*coord_to_mx(t_coord3 *coord, int r, int c);
-t_mx		*expand_mx(t_mx *mx, int r, int c, long double val);
+void		expand_mx(t_mx *mx, int r, int c, long double val);
 
 //	transformation
 t_coord3	*get_SiRiTi(t_coord3 *c, t_coord3 *obj_coord);
@@ -141,7 +142,7 @@ t_color		get_b(int rgba);
 t_color		get_a(int rgba);
 
 //	render color
-t_color		get_incident_point_color(t_data *data, t_ray *ray, t_coord3 *inc_p,
+t_color		get_local_color(t_data *data, t_ray *ray, t_coord3 *inc_p,
 				t_scn_el *closest_el);
 
 // render util

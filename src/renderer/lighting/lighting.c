@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/05 13:08:47 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/06 14:48:52 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ long double	get_lighting_intensity(t_data *data, t_ray *ray, t_coord3 *inc_p, t_
 	int			i;
 	t_ray	secondary_ray;
 
-	(void) inc_p;
 	intensity = 0;
 	lights = data->scn_els[ALL_LIGHTS];
 	i = 0;
@@ -57,20 +56,18 @@ long double	get_lighting_intensity(t_data *data, t_ray *ray, t_coord3 *inc_p, t_
 			secondary_ray.origin = inc_p;
 			secondary_ray.dir = cast_light_ray(inc_p, lights[i], range);
 			shadow = cast_shadow(data, &secondary_ray, range);
-			// shadow = NULL;
 			if (shadow->el != NULL)
 			{
 				i++;
 				free(shadow);
 				continue ;
 			}
-			long double n_dot_l = dot(data->v[NORM], secondary_ray.dir);
-			// printf("ndotl: %Lf\n", n_dot_l);
+			long double n_dot_l = dot(data->v, secondary_ray.dir);
 			if (n_dot_l > 0)
 				intensity += lights[i]->intensity * n_dot_l / (secondary_ray.dir->len
-						* data->v[NORM]->len);
+						* data->v->len);
 			if (obj->specular != -1)
-				intensity += get_specular_lighting(ray, &secondary_ray, data->v[NORM], lights[i]->intensity, obj->specular);
+				intensity += get_specular_lighting(ray, &secondary_ray, data->v, lights[i]->intensity, obj->specular);
 			free(shadow);
 		}
 		i++;

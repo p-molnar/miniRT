@@ -25,7 +25,6 @@ t_vec3	*get_incident_point_norm(t_scn_el *cam, t_coord3 *inc_p, t_closest *obj)
 	{
 		if (((float) obj->inc_p->z > obj->el->cap[0].pos.z && (float) obj->inc_p->z < obj->el->cap[1].pos.z))
 		{
-			// printf("incp between caps\n");
 			t_coord3 *cy_inc_p_depth = create_coord(0, 0, obj->inc_p->z);
 			obj_norm = create_dir_vec(*cy_inc_p_depth, *obj->inc_p);
 		}
@@ -36,13 +35,10 @@ t_vec3	*get_incident_point_norm(t_scn_el *cam, t_coord3 *inc_p, t_closest *obj)
 			else
 				obj_norm = create_vec(0, 0, 1);
 		}
-		// printf("og norm: Lf, %Lf, %Lf\n", obj_norm->dir.x, obj_norm->dir.y, obj_norm->dir.z);
 		obj_norm_mx = coord_to_mx(&obj_norm->dir, 3, 1);
-		obj_norm_mx = expand_mx(obj_norm_mx, 4, 1, 1);
+		expand_mx(obj_norm_mx, 4, 1, 1);
 		obj_norm_mx = multiply_mx(obj->el->rotation, obj_norm_mx);
 		obj_norm = create_vec(obj_norm_mx->m[0], obj_norm_mx->m[1], obj_norm_mx->m[2]);
-		// printf("world norm: %Lf, %Lf, %Lf\n", obj_norm->dir.x, obj_norm->dir.y, obj_norm->dir.z);
-		// printf("---\n");
 	}
 	else if (obj->el->type == F_SPHERE)
 		obj_norm = create_dir_vec(obj->el->pos, *inc_p);
@@ -58,20 +54,25 @@ t_coord3	*get_incident_point(t_ray *ray, t_closest *obj)
 {
 	t_coord3	*inc_p;
 	t_mx		*inc_p_mx;
+	t_mx		*tmp_mx;
+	t_vec3		*tmp_vec;	
 
-	inc_p = offset(ray->origin, scale(obj->dist, ray->dir));
 	if (obj->el->type == F_CYLINDER)
 	{
-		free(inc_p);
-		inc_p = obj->inc_p;
-		// printf("og incp: %Lf, %Lf, %Lf\n", inc_p->x, inc_p->y, inc_p->z);
-		// printf("dist: %Lf\n", obj->dist);
-		inc_p_mx = coord_to_mx(inc_p, 3, 1);
-		inc_p_mx = expand_mx(inc_p_mx, 4, 1, 1);
-		inc_p_mx = multiply_mx(obj->el->rotation, inc_p_mx);
-		inc_p_mx = multiply_mx(obj->el->translation, inc_p_mx);
-		// printf("world incp: %Lf, %Lf, %Lf\n", inc_p_mx->m[0], inc_p_mx->m[1], inc_p_mx->m[2]);
-		return (create_coord(inc_p_mx->m[0], inc_p_mx->m[1], inc_p_mx->m[2]));
+		tmp_mx = coord_to_mx(obj->inc_p, 3, 1);
+		expand_mx(tmp_mx, 4, 1, 1);
+		inc_p_mx = multiply_mx(obj->el->rotation, tmp_mx);
+		free(tmp_mx);
+		tmp_mx = multiply_mx(obj->el->translation, inc_p_mx);
+		free_mx(inc_p_mx);
+		inc_p = create_coord(tmp_mx->m[X], tmp_mx->m[Y], tmp_mx->m[Z]);
+		free(tmp_mx);
+	}
+	else
+	{
+		tmp_vec = scale(obj->dist, ray->dir);
+		inc_p = offset(ray->origin, tmp_vec);
+		free(tmp_vec);
 	}
 	return (inc_p);
 }

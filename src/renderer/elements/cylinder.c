@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:59:42 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/05 12:21:02 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/06 23:36:50 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,10 @@ bool	get_body_intersections(t_ray *ray, t_scn_el *obj, long double *z,
 			intersects[0] = t[0];
 		if (z[1] > obj->cap[0].pos.z && z[1] < obj->cap[1].pos.z)
 			intersects[1] = t[1];
+		free(t);
 		return (true);
 	}
+	free(t);
 	return (false);
 }
 
@@ -105,19 +107,17 @@ long double	get_cylinder_intersection(t_ray *ray, t_scn_el *obj_info, t_coord3 *
 	long double	z[2];
 	long double	intersects[4] = {-1, -1, -1, -1};
 	long double	smallest_positive;
-	// t_ray	*transformed_ray;
-
-	// transformed_ray = apply_transformations(ray, obj_info);
+	t_vec3		*tmp_vec;
+	
 	smallest_positive = -1;
 	ray = apply_transformations(ray, obj_info);
-	// printf("transformed ray\n");
-	// printf("origin: %Lf, %Lf, %Lf\n", ray->origin->x, ray->origin->y, ray->origin->z);
-	// printf("dir: %Lf, %Lf, %Lf\n", ray->dir->dir.x, ray->dir->dir.y, ray->dir->dir.z);
 	if (get_body_intersections(ray, obj_info, z, intersects))
 	{
 		get_cap_intersections(ray, obj_info, z, &intersects[2]);
 		smallest_positive = yield_smallest_positive(intersects);
 	}
-	*inc_p = offset(ray->origin, scale(smallest_positive, ray->dir));
+	tmp_vec = scale(smallest_positive, ray->dir);
+	*inc_p = offset(ray->origin, tmp_vec);
+	free(tmp_vec);
 	return (smallest_positive);
 }

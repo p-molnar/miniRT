@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 11:10:49 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/08 20:01:15 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/06 11:09:34 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_mx	*multiply_mx(t_mx *mx1, t_mx *mx2)
 
 	if (!mx1 || !mx2 || (mx1->c != mx2->r))
 		return (NULL);
-	mx = ft_calloc(1, sizeof(t_mx));
+	mx = malloc(sizeof(t_mx));
 	if (!mx)
 		return (mx);
 	mx->r = mx1->r;

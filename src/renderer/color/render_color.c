@@ -6,14 +6,14 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:57:27 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/09 15:10:25 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/06 16:11:29 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 #include <stdlib.h>
 
-t_color	get_incident_point_color(t_data *data, t_ray *ray, t_coord3 *inc_p, t_scn_el *closest_el)
+t_color	get_local_color(t_data *data, t_ray *ray, t_coord3 *inc_p, t_scn_el *closest_el)
 {
 	t_color		tmp_color;
 	t_color		color;
@@ -54,16 +54,14 @@ t_color	mix_colors(t_color local_color, t_color reflected_color, long double ref
 t_color	get_reflected_color(t_data *data, t_ray *ray, const long double *range, int depth)
 {
 	t_color	reflected_color;
-	t_vec3	*neg_dir;
-	t_vec3	*dir_reflection;
-	t_ray	refl_ray;
+	t_vec3	*obj_to_cam;
+	t_ray	reflected_ray;
 
-	refl_ray.origin = data->p[INCIDENT];
-	neg_dir = scale(-1, ray->dir);
-	dir_reflection = get_ray_reflection(neg_dir, data->v[NORM]);
-	refl_ray.dir = dir_reflection;
-	reflected_color = trace_ray(data, &refl_ray, range, depth - 1);
-	free(neg_dir);
-	free(dir_reflection);
+	reflected_ray.origin = data->p;
+	obj_to_cam = scale(-1, ray->dir);
+	reflected_ray.dir = get_ray_reflection(obj_to_cam, data->v);
+	reflected_color = trace_ray(data, &reflected_ray, range, depth - 1);
+	free(obj_to_cam);
+	free(reflected_ray.dir);
 	return (reflected_color);
 }

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/05 12:31:45 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/06 11:27:24 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,20 @@ void	set_up_variables(t_data *d)
 	d->scn_els[ALL_OBJS] = get_scn_els(d->all_scn_el, G_OBJS);
 }
 
+void	clean_up(t_data *d)
+{
+	int	i;
+
+	i = 0;
+	while (i < SCN_SIZE)
+	{
+		free(d->scn_els[i]);
+		i++;
+	}
+	free(d->ctw_mx);
+	free(d->dft_world_orientation);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_data	d;
@@ -53,6 +67,7 @@ int	main(int argc, char *argv[])
 	if (!d.img || (mlx_image_to_window(d.mlx, d.img, 0, 0) < 0))
 		error(ft_strdup(mlx_strerror(mlx_errno)), EXIT, 1);
 	render_scene(&d);
+	clean_up(&d);
 	// mlx_loop_hook(d.mlx, ft_hook, d.mlx);
 	mlx_loop(d.mlx);
 	mlx_terminate(d.mlx);

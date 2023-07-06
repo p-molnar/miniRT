@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/05 11:42:15 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/06 13:59:37 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,9 @@ typedef struct s_scn_el
 	long double					reflection;
 	struct s_scn_el				*cap;
 	t_mx						*translation;
-	t_mx						*rotation;
-	t_mx						*scaler;
 	t_mx						*inv_translation;
+	t_mx						*rotation;
 	t_mx						*inv_rotation;
-	t_mx						*inv_scaler;
 	t_color						color;
 }								t_scn_el;
 
@@ -89,8 +87,8 @@ typedef struct s_closest
 typedef struct s_data
 {
 	t_list						*all_scn_el;
-	t_vec3						*v[VEC_SIZE];
-	t_coord3					*p[POINT_SIZE];
+	t_vec3						*v;
+	t_coord3					*p;
 	t_scn_el					**scn_els[SCN_SIZE];
 	t_mx						*ctw_mx;
 	mlx_t						*mlx;

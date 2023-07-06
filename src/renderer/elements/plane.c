@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 11:00:13 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/09 14:50:43 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/05 20:53:58 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ long double	get_plane_intersection(t_ray *ray, t_scn_el *obj)
 	denom = dot(obj->n_vec, ray->dir);
 	if (fabsl(denom) > EPS)
 		t = dot(obj->n_vec, EQ) / denom;
+	free(EQ);
 	return (t);
 }

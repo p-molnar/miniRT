@@ -6,12 +6,11 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/05 13:50:15 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/06 15:10:50by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <MLX42.h>
-#include <libft.h>
 #include <math.h>
 #include <minirt.h>
 #include <stdio.h>
@@ -22,29 +21,26 @@ t_color	trace_ray(t_data *data, t_ray *ray, const long double *range, int recurs
 {
 	t_closest			*closest_obj;
 	t_color				color[2];
-	long double			ref_factor;
+	t_color				ret_color;
 	const long double	ref_range[RANGE_SIZE] = {EPS, INF};
 
 	closest_obj = get_closest_el(data->scn_els[ALL_OBJS], ray, range);
 	if (!closest_obj || !closest_obj->el)
 		return (BACKGROUND_COLOR);
-	// printf("original ray\n");
-	// printf("origin: %Lf, %Lf, %Lf\n", ray->origin->x, ray->origin->y, ray->origin->z);
-	// printf("dir: %Lf, %Lf, %Lf\n", ray->dir->dir.x, ray->dir->dir.y, ray->dir->dir.z);
-	// printf("origin: %Lf, %Lf, %Lf\n", ray->origin->x, ray->origin->y, ray->origin->z);
-	// printf("dir: %Lf, %Lf, %Lf\n", ray->dir->dir.x, ray->dir->dir.y, ray->dir->dir.z);
-	data->p[INCIDENT] = get_incident_point(ray, closest_obj);
-	// printf("inc_p: %Lf, %Lf, %Lf\n", data->p[INCIDENT]->x, data->p[INCIDENT]->y, data->p[INCIDENT]->z);
-	data->v[NORM] = get_incident_point_norm(*data->scn_els[CAM], data->p[INCIDENT], closest_obj);
-	// printf("norm: %Lf, %Lf, %Lf\n", data->v[NORM]->dir.x, data->v[NORM]->dir.y, data->v[NORM]->dir.z);
-	// printf("- - - - - - - -\n");
-	color[0] = get_incident_point_color(data, ray, data->p[INCIDENT], closest_obj->el);
-	ref_factor = closest_obj->el->reflection;
+	data->p = get_incident_point(ray, closest_obj);
+	data->v = get_incident_point_norm(*data->scn_els[CAM], data->p, closest_obj);
+	color[0] = get_local_color(data, ray, data->p, closest_obj->el);
+	if (recursion_depth > 0 || closest_obj->el->reflection > 0)
+		color[1] = get_reflected_color(data, ray, ref_range, recursion_depth);
+	if (recursion_depth <= 0 || closest_obj->el->reflection <= 0)
+		ret_color = color[0];
+	else
+		ret_color = mix_colors(color[0], color[1], closest_obj->el->reflection);
+	// free(data->p);
+	// free(data->v);
+	free(closest_obj->inc_p);
 	free(closest_obj);
-	if (recursion_depth <= 0 || ref_factor <= 0)
-		return (color[0]);
-	color[1] = get_reflected_color(data, ray, ref_range, recursion_depth);
-	return (mix_colors(color[0], color[1], ref_factor));
+	return (ret_color);
 }
 
 void	render_scene(t_data *data)
@@ -53,16 +49,19 @@ void	render_scene(t_data *data)
 	int	x;
 	long double	pixel_x;
 	long double	pixel_y;
-	double		aspect_ratio;
+	long double	aspect_ratio;
+	long double	fov_scale;
 	const long double	range[RANGE_SIZE] = {1, INF};
 	t_color	color;
+	t_ray 	ray;
+	t_mx*	dir_mx;
+	t_coord3	*dir;
 
 	color = 0;
 	aspect_ratio = CANVAS_W / CANVAS_H; 
+	ray.origin = &data->scn_els[CAM][0]->pos;
+	fov_scale = tan(deg_to_rad((*data->scn_els[CAM])->fov / 2));
 	y = 0;
-	t_ray *ray = malloc(sizeof(t_ray));
-	ray->origin = &data->scn_els[CAM][0]->pos;
-	double fov_scale = tan(deg_to_rad((*data->scn_els[CAM])->fov / 2));
 	while (y < CANVAS_H)
 	{
 		x = 0;
@@ -70,25 +69,19 @@ void	render_scene(t_data *data)
 		{
 		    pixel_x = (2 * ((x + 0.5) / CANVAS_W) - 1) * fov_scale * aspect_ratio;
       		pixel_y = (1 - 2 * (y + 0.5) / CANVAS_H) * fov_scale;
-			
-			t_mx *dir_mx = coord_to_mx(create_coord(pixel_x, pixel_y, 1), 3, 1);
-			dir_mx = expand_mx(dir_mx, 4, 1, 0);
-			// printf("dir mx: \n");
-			// print_mx(dir_mx);
+			dir = create_coord(pixel_x, pixel_y, 1);
+			dir_mx = coord_to_mx(dir, 3, 1);
+			free(dir);
+			expand_mx(dir_mx, 4, 1, 0);
 			dir_mx = multiply_mx(data->ctw_mx, dir_mx);
-			// printf("multiplied mx: \n");
-			// print_mx(dir_mx);
-			ray->dir = create_vec(dir_mx->m[X], dir_mx->m[Y], dir_mx->m[Z]);
-			// printf("origin: %Lf, %Lf, %Lf\n", ray->origin->x, ray->origin->y, ray->origin->z);
-			// printf("%LF, %Lf, %Lf\n", ray->dir->dir.x, ray->dir->dir.y, ray->dir->dir.z);
-			normalize(ray->dir);
-			// printf("normalized: %LF, %Lf, %Lf\n", ray->dir->dir.x, ray->dir->dir.y, ray->dir->dir.z);
-			color = trace_ray(data, ray, range, 0);
+			ray.dir = create_vec(dir_mx->m[X], dir_mx->m[Y], dir_mx->m[Z]);
+			free_mx(dir_mx);
+			normalize(ray.dir);
+			color = trace_ray(data, &ray, range, 1);
 			mlx_put_pixel(data->img, x, y, color);
-			// free(ray.dir);
 			x++;
 		}
 		y++;
 	}
-		draw_axes(data);
+		// draw_axes(data);
 }

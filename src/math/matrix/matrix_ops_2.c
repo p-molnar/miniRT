@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/24 10:10:58 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/29 16:48:49 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/05 19:36:06 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,41 +90,37 @@ t_mx	*get_inverse_mx(t_mx *mx)
 	return (inv_mx);
 }
 
-t_mx	*expand_mx(t_mx *mx, int r, int c, long double val)
+void	expand_mx(t_mx *mx, int r, int c, long double val)
 {
-	t_mx	*exp_mx;
+	long double	*tmp;
 	int		row;
 	int		col;
-	int		v;
+	int		i;
 
 	if (!mx || (r <= mx->r && c <= mx->c))
-		return (NULL);
-	exp_mx = malloc(sizeof(t_mx));
-	if (r > mx->r)
-		exp_mx->r = r;
-	else
-		exp_mx->r = mx->r;
-	if (c > mx->c)
-		exp_mx->c = c;
-	else
-		exp_mx->c = mx->c;
-	exp_mx->m = ft_calloc(exp_mx->r * exp_mx->c, sizeof(long double));
+		return ;
+	tmp = malloc(r * c * sizeof(long double));
+	if (!tmp)
+		return ;
+	i = 0;
 	row = 0;
-	v = 0;
-	while (row < exp_mx->r)
+	while (row < r)
 	{
 		col = 0;
-		while (col < exp_mx->c)
+		while (col < c)
 		{
 			if (row < mx->r && col < mx->c)
-				exp_mx->m[row * exp_mx->c + col] = mx->m[v++];
+				tmp[row * mx->c + col] = mx->m[i++];
 			else if (row == r - 1 && col == c - 1)
-				exp_mx->m[row * exp_mx->c + col] = val;
+				tmp[row * mx->c + col] = val;
 			col++;
 		}
 		row++;
 	}
-	return (exp_mx);
+	mx->r = r;
+	mx->c = c;
+	free(mx->m);
+	mx->m = tmp;
 }
 
 t_mx	*coord_to_mx(t_coord3 *coord, int r, int c)

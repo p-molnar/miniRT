@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 10:46:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/04 17:46:18 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/05 23:04:25 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ void	populate_rotation_mx(t_data *d, t_scn_el *el)
 	pivot_ax = cross(d->dft_world_orientation, el->n_vec);
 	normalize(pivot_ax);
 	pivot_mx  = coord_to_mx(&pivot_ax->dir, 3, 1);
-	pivot_mx = expand_mx(pivot_mx, 4, 1, 1);
+	expand_mx(pivot_mx, 4, 1, 1);
 	printf("pivot_mx\n");
 	print_mx(pivot_mx);
 	el->rotation = get_rotation_mx(pivot_mx, agl_r);
 	el->inv_rotation = get_inverse_mx(el->rotation);
 	print_mx(el->inv_rotation);
-
+	free_mx(pivot_mx);
 }
 
 void	populate_transformation_mx(t_data *d, t_scn_el *el)
@@ -78,7 +78,6 @@ void	set_up_camera(t_data *d)
 	else
 	{
 		fw_vec = create_dir_vec(cam->pos, cam->target);
-		// printf("fw_vec: %Lf, %Lf, %Lf\n", fw_vec->dir.x, fw_vec->dir.y, fw_vec->dir.z);
 		normalize(fw_vec);
 	}
 	if (fw_vec->dir.x == 0 && fw_vec->dir.y == 0 && fw_vec->dir.z == 0)
@@ -97,12 +96,12 @@ void	set_up_camera(t_data *d)
 	normalize(right_vec);
 	up_vec = cross(fw_vec, right_vec);
 	normalize(up_vec);
-	printf("forward: %Lf, %Lf, %Lf\n", fw_vec->dir.x, fw_vec->dir.y,
-			fw_vec->dir.z);
-	printf("right: %Lf, %Lf, %Lf\n", right_vec->dir.x, right_vec->dir.y,
-			right_vec->dir.z);
-	printf("up: %Lf, %Lf, %Lf\n", up_vec->dir.x, up_vec->dir.y,
-			up_vec->dir.z);
+	// printf("forward: %Lf, %Lf, %Lf\n", fw_vec->dir.x, fw_vec->dir.y,
+	// 		fw_vec->dir.z);
+	// printf("right: %Lf, %Lf, %Lf\n", right_vec->dir.x, right_vec->dir.y,
+	// 		right_vec->dir.z);
+	// printf("up: %Lf, %Lf, %Lf\n", up_vec->dir.x, up_vec->dir.y,
+	// 		up_vec->dir.z);
 	d->ctw_mx = malloc(sizeof(t_mx));
 	d->ctw_mx->r = 4;
 	d->ctw_mx->c = 4;
@@ -120,5 +119,6 @@ void	set_up_camera(t_data *d)
 	d->ctw_mx->m[10] = fw_vec->dir.z;
 	d->ctw_mx->m[11] = cam->pos.z;
 	d->ctw_mx->m[15] = 1;
+	free(fw_vec);
 	print_mx(d->ctw_mx);
 }
