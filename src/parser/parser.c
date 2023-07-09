@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/13 19:09:11 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/09 19:39:24 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,24 +125,24 @@ void	parse_input(t_data *scn, int argc, char *argv[])
 	char	*tmp;
 
 	if (argc != 2)
-		error(ft_strdup("Invalid argument count"), EXIT, 1);
+		error(ft_strdup("Expected argument count: 2"), EXIT, 1);
 	fd = open_file(argv[1]);
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (line[0] != '\n')
+		if (line[0] != '\n' && line[0] != '#')
 		{
 			tmp = line;
-			line = ft_strtrim(line, "\n");
+			line = ft_strtrim(tmp, "\n");
 			if (!line)
-				error(strconcat(4, "Malloc error: ", __FILE__, ": ",
-							ft_itoa(__LINE__)), EXIT, 1);
+				error(ft_strdup("Malloc error"), EXIT, 1);
 			free(tmp);
-			if (*line != '#')
-				parse_line(scn, line);
+			parse_line(scn, line);
 		}
 		free(line);
 		line = get_next_line(fd);
 	}
+	if (line)
+		free(line);
 	validate_scn_el_setup(scn);
 }

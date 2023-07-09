@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 10:46:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/05 23:04:25 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/09 19:29:52 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,11 @@ void	set_up_camera(t_data *d)
 	t_vec3		*right_vec;
 	t_vec3		*fw_vec;
 	t_vec3		*up_vec;
-	t_vec3		*def_up_vec;
 	t_scn_el	*cam;
 
 	cam = *d->scn_els[CAM];
-	def_up_vec = create_vec(0, 1, 0);
 	if (cam->type == F_CAM)
-		fw_vec = cam->n_vec;
+		fw_vec = coord_to_vec(cam->n_vec->dir);
 	else
 	{
 		fw_vec = create_dir_vec(cam->pos, cam->target);
@@ -88,20 +86,14 @@ void	set_up_camera(t_data *d)
 	else if ((fw_vec->dir.x == 0 && fw_vec->dir.z == 0) && (fw_vec->dir.y ==
 				-1 || fw_vec->dir.y == 1))
 	{
-		def_up_vec->dir.y = 0;
-		def_up_vec->dir.z = 1;
+		d->dft_up_vec->dir.y = 0;
+		d->dft_up_vec->dir.z = 1;
 		fw_vec->len = 1;
 	}
-	right_vec = cross(def_up_vec, fw_vec);
+	right_vec = cross(d->dft_up_vec, fw_vec);
 	normalize(right_vec);
 	up_vec = cross(fw_vec, right_vec);
 	normalize(up_vec);
-	// printf("forward: %Lf, %Lf, %Lf\n", fw_vec->dir.x, fw_vec->dir.y,
-	// 		fw_vec->dir.z);
-	// printf("right: %Lf, %Lf, %Lf\n", right_vec->dir.x, right_vec->dir.y,
-	// 		right_vec->dir.z);
-	// printf("up: %Lf, %Lf, %Lf\n", up_vec->dir.x, up_vec->dir.y,
-	// 		up_vec->dir.z);
 	d->ctw_mx = malloc(sizeof(t_mx));
 	d->ctw_mx->r = 4;
 	d->ctw_mx->c = 4;
@@ -120,5 +112,7 @@ void	set_up_camera(t_data *d)
 	d->ctw_mx->m[11] = cam->pos.z;
 	d->ctw_mx->m[15] = 1;
 	free(fw_vec);
+	free(up_vec);
+	free(right_vec);
 	print_mx(d->ctw_mx);
 }

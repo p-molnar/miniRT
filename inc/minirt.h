@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/06 15:33:25 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/08 14:17:55 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void		parse_color(t_color *color, char *input, int n_lower, int n_upper);
 void		free_arr(void **arr);
 void		free_mx(t_mx *mx);
 void		free_ray(t_ray *ray);
+void		free_scn_el(t_scn_el *el);
 
 //	helper
 void		print_mx(t_mx *mx);
@@ -61,25 +62,21 @@ t_color		trace_ray(t_data *data, t_ray *ray, const long double *range,
 				int recursion_depth);
 
 //	renderer/color
-t_color		get_reflected_color(t_data *data, t_ray *ray,
-				const long double *range, int depth);
+t_color	get_reflected_color(t_data *data, t_ray *ray, t_ray sec_ray, int depth);
 t_color		mix_colors(t_color local_color, t_color reflected_color,
 				long double ref_factor);
 
 //	lighting
-long double	get_lighting_intensity(t_data *data, t_ray *ray, t_coord3 *inc_p,
-				t_scn_el *obj);
-long double	get_diffuse_lighting(t_data *data, t_scn_el *light);
-long double	get_specular_lighting(t_ray *ray, t_ray *secondary_ray,
-				t_vec3 *obj_norm, long double intensity, long double spec);
+long double	get_lighting_intensity(t_data *data, t_ray *ray, t_ray reflection_ray, t_scn_el *obj);
+long double	get_specular_lighting(t_ray *ray, t_ray *secondary_ray, t_vec3 *obj_norm,
+				long double intensity, long double spec);
 t_closest	*cast_shadow(t_data *data, t_ray *ray, long double *range);
 
 //	util
 // t_scn_el	**get_scn_els(t_list *list, int type);
 t_scn_el	**get_scn_els(t_list *list, enum e_scn_el_type_flags type);
 void		init_vec(t_vec3 **arr, int size);
-void		free_vec(t_vec3 **arr, int size);
-t_vec3		*get_ray_reflection(t_vec3 *ray, t_vec3 *norm);
+t_vec3		*get_reflection_ray(t_vec3 *ray, t_vec3 *norm);
 t_coord3	*get_incident_point(t_ray *ray, t_closest *obj);
 t_vec3		*get_incident_point_norm(t_scn_el *cam, t_coord3 *inc_p, t_closest *obj);
 void		set_up_camera(t_data *d);
@@ -97,12 +94,6 @@ t_mx		*get_translation_mx(t_coord tx, t_coord ty, t_coord tz);
 t_mx		*get_rotation_mx(t_mx *axis, long double agl_r);
 t_mx		*coord_to_mx(t_coord3 *coord, int r, int c);
 void		expand_mx(t_mx *mx, int r, int c, long double val);
-
-//	transformation
-t_coord3	*get_SiRiTi(t_coord3 *c, t_coord3 *obj_coord);
-t_coord3	*get_TRS(t_coord3 *c, t_coord3 *obj_coord);
-t_coord3	*get_RSi(t_coord3 *c, t_coord3 *obj_coord);
-t_coord3	*get_Siri(t_coord3 *c, t_coord3 *obj_coord);
 
 int			is_in_range_f(long double n, long double n_lower,
 				long double n_upper);
@@ -142,8 +133,7 @@ t_color		get_b(int rgba);
 t_color		get_a(int rgba);
 
 //	render color
-t_color		get_local_color(t_data *data, t_ray *ray, t_coord3 *inc_p,
-				t_scn_el *closest_el);
+t_color	get_local_color(t_data *data, t_ray *ray, t_ray reflection_ray, t_scn_el *closest_el);
 
 // render util
 void		draw_axes(t_data *data);

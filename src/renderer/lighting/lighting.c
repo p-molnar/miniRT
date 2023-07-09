@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/06 14:48:52 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/08 16:24:23 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,40 +35,42 @@ t_vec3	*cast_light_ray(t_coord3 *inc_p, t_scn_el *light_obj, long double *range)
 	return (vec);
 }
 
-long double	get_lighting_intensity(t_data *data, t_ray *ray, t_coord3 *inc_p, t_scn_el *obj)
+long double	get_lighting_intensity(t_data *data, t_ray *ray, t_ray reflection_ray, t_scn_el *obj)
 {
 	long double	intensity;
 	t_closest	*shadow;
-	t_scn_el	**lights;
 	long double	range[RANGE_SIZE];
 	int			i;
 	t_ray	secondary_ray;
 
 	intensity = 0;
-	lights = data->scn_els[ALL_LIGHTS];
 	i = 0;
-	while (lights && lights[i])
+	while (data->scn_els[ALL_LIGHTS] && data->scn_els[ALL_LIGHTS][i])
 	{
-		if (lights[i]->type == F_AMB_LIGHT)
-			intensity += lights[i]->intensity;
+		if (data->scn_els[ALL_LIGHTS][i]->type == F_AMB_LIGHT)
+			intensity += data->scn_els[ALL_LIGHTS][i]->intensity;
 		else
 		{
-			secondary_ray.origin = inc_p;
-			secondary_ray.dir = cast_light_ray(inc_p, lights[i], range);
+			secondary_ray.origin = reflection_ray.origin;
+			secondary_ray.dir = cast_light_ray(reflection_ray.origin, data->scn_els[ALL_LIGHTS][i], range);
 			shadow = cast_shadow(data, &secondary_ray, range);
-			if (shadow->el != NULL)
+			if (shadow && shadow->el != NULL)
 			{
 				i++;
+				free(secondary_ray.dir);
+				free(shadow->el);
+				if (shadow->inc_p)
+					free(shadow->inc_p);
 				free(shadow);
 				continue ;
 			}
-			long double n_dot_l = dot(data->v, secondary_ray.dir);
+			long double n_dot_l = dot(reflection_ray.dir, secondary_ray.dir);
 			if (n_dot_l > 0)
-				intensity += lights[i]->intensity * n_dot_l / (secondary_ray.dir->len
-						* data->v->len);
+				intensity += data->scn_els[ALL_LIGHTS][i]->intensity * n_dot_l / (secondary_ray.dir->len
+						* reflection_ray.dir->len);
 			if (obj->specular != -1)
-				intensity += get_specular_lighting(ray, &secondary_ray, data->v, lights[i]->intensity, obj->specular);
-			free(shadow);
+				intensity += get_specular_lighting(ray, &secondary_ray, reflection_ray.dir, data->scn_els[ALL_LIGHTS][i]->intensity, obj->specular);	
+			free(secondary_ray.dir);
 		}
 		i++;
 	}

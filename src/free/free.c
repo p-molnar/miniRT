@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/16 19:24:09 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/06 11:49:54 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/09 19:53:57 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	free_scn_el(t_scn_el *el)
 		if (el->rotation)
 			free(el->rotation);
 		if (el->inv_rotation)
-			free(el->inv_rotation);
+			free(el->inv_rotation);\
+		free(el);
 	}
 }

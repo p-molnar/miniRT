@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 15:01:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/09 08:19:11 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/08 15:16:46 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,6 @@ t_vec3	*create_dir_vec(t_coord3 init_point, t_coord3 term_point)
 	t_vec3		*dir;
 	t_coord3	*coord_diff;
 
-	dir = malloc(sizeof(t_vec3));
-	if (!dir)
-		return (NULL);
 	coord_diff = coord_subtract(term_point, init_point);
 	dir = coord_to_vec(*coord_diff);
 	free(coord_diff);

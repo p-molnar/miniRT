@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/06 13:59:37 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/09 19:15:34 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,12 @@ typedef struct s_closest
 typedef struct s_data
 {
 	t_list						*all_scn_el;
-	t_vec3						*v;
-	t_coord3					*p;
 	t_scn_el					**scn_els[SCN_SIZE];
 	t_mx						*ctw_mx;
+	t_vec3						*dft_world_orientation;
+	t_vec3						*dft_up_vec;
 	mlx_t						*mlx;
 	mlx_image_t					*img;
-	t_vec3						*dft_world_orientation;
 }								t_data;
 
 #endif

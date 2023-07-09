@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:35:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/08 20:24:34 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/09 18:23:55 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	parse_norm_vec(t_vec3 **vec, char *input)
 		i++;
 	}
 	*vec = coord_to_vec(f);
-	normalize(*vec);
 	if (!vec)
 		error(ft_strdup("Malloc error at vector creation"), EXIT, 1);
+	normalize(*vec);
 	free_arr((void **)coords);
 }
