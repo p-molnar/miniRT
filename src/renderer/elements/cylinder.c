@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:59:42 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/06 23:36:50 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/09 20:36:59 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	populate_cylinder_properties(t_scn_el *cap, t_scn_el *cy, char cap_type)
 		norm = create_coord(cap->pos.x, cap->pos.y, cap->pos.z + 1);
 	}
 	cap->n_vec = create_dir_vec(cap->pos, *norm);
+	free(norm);
 }
 
 void	add_cylinder_caps(t_scn_el *cylinder)

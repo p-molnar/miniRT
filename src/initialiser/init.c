@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 10:46:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/09 19:29:52 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/09 21:15:11 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	populate_rotation_mx(t_data *d, t_scn_el *el)
 	el->inv_rotation = get_inverse_mx(el->rotation);
 	print_mx(el->inv_rotation);
 	free_mx(pivot_mx);
+	free(pivot_ax);
 }
 
 void	populate_transformation_mx(t_data *d, t_scn_el *el)
