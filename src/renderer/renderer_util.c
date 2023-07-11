@@ -20,13 +20,14 @@ t_vec3	*get_incident_point_norm(t_scn_el *cam, t_coord3 *inc_p, t_closest *obj)
 	t_vec3	*obj_norm;
 	t_mx	*obj_norm_mx;
 	t_mx	*tmp;
+	t_coord3 *cy_inc_p_depth;
 
 	obj_norm = NULL;
 	if (obj->el->type == F_CYLINDER)
 	{
 		if (((float) obj->inc_p->z > obj->el->cap[0].pos.z && (float) obj->inc_p->z < obj->el->cap[1].pos.z))
 		{
-			t_coord3 *cy_inc_p_depth = create_coord(0, 0, obj->inc_p->z);
+			cy_inc_p_depth = create_coord(0, 0, obj->inc_p->z);
 			obj_norm = create_dir_vec(*cy_inc_p_depth, *obj->inc_p);
 			free(cy_inc_p_depth);
 		}
@@ -38,11 +39,12 @@ t_vec3	*get_incident_point_norm(t_scn_el *cam, t_coord3 *inc_p, t_closest *obj)
 				obj_norm = create_vec(0, 0, 1);
 		}
 		tmp = coord_to_mx(&obj_norm->dir, 3, 1);
+		free(obj_norm);
 		expand_mx(tmp, 4, 1, 1);
 		obj_norm_mx = multiply_mx(obj->el->rotation, tmp);
-		free(tmp);
+		free_mx(tmp);
 		obj_norm = create_vec(obj_norm_mx->m[0], obj_norm_mx->m[1], obj_norm_mx->m[2]);
-		free(obj_norm_mx);
+		free_mx(obj_norm_mx);
 	}
 	else if (obj->el->type == F_SPHERE)
 		obj_norm = create_dir_vec(obj->el->pos, *inc_p);
@@ -64,11 +66,11 @@ t_coord3	*get_incident_point(t_ray *ray, t_closest *obj)
 		tmp_mx = coord_to_mx(obj->inc_p, 3, 1);
 		expand_mx(tmp_mx, 4, 1, 1);
 		inc_p_mx = multiply_mx(obj->el->rotation, tmp_mx);
-		free(tmp_mx);
+		free_mx(tmp_mx);
 		tmp_mx = multiply_mx(obj->el->translation, inc_p_mx);
 		free_mx(inc_p_mx);
 		inc_p = create_coord(tmp_mx->m[X], tmp_mx->m[Y], tmp_mx->m[Z]);
-		free(tmp_mx);
+		free_mx(tmp_mx);
 	}
 	else
 	{

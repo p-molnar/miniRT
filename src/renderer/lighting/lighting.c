@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/11 11:01:43 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/11 14:07:59 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ long double	get_lighting_intensity(t_data *data, t_ray *ray, t_ray reflection_ra
 			if (obj->specular != -1)
 				intensity += get_specular_lighting(ray, &secondary_ray, reflection_ray.dir, data->scn_els[ALL_LIGHTS][i]->intensity, obj->specular);	
 			free(secondary_ray.dir);
+			if (shadow->inc_p)
+				free(shadow->inc_p);
 			free(shadow);
 		}
 		i++;

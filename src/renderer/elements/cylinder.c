@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:59:42 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/09 22:03:08 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/11 14:00:57 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,16 +109,22 @@ long double	get_cylinder_intersection(t_ray *ray, t_scn_el *obj_info, t_coord3 *
 	long double	intersects[4] = {-1, -1, -1, -1};
 	long double	smallest_positive;
 	t_vec3		*tmp_vec;
+	t_ray		*tmp_ray;
 
 	smallest_positive = -1;
-	ray = apply_transformations(ray, obj_info);
-	if (get_body_intersections(ray, obj_info, z, intersects))
+	tmp_ray = apply_transformations(ray, obj_info);
+	if (get_body_intersections(tmp_ray, obj_info, z, intersects))
 	{
-		get_cap_intersections(ray, obj_info, z, &intersects[2]);
+		get_cap_intersections(tmp_ray, obj_info, z, &intersects[2]);
 		smallest_positive = yield_smallest_positive(intersects);
 	}
-	tmp_vec = scale(smallest_positive, ray->dir);
-	*inc_p = offset(ray->origin, tmp_vec);
+	tmp_vec = scale(smallest_positive, tmp_ray->dir);
+	if (!inc_p)
+		free(*inc_p);
+	*inc_p = offset(tmp_ray->origin, tmp_vec);
 	free(tmp_vec);
+	free(tmp_ray->dir);
+	free(tmp_ray->origin);
+	free(tmp_ray);
 	return (smallest_positive);
 }

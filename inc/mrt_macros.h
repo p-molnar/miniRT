@@ -6,16 +6,16 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/11 09:43:46 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/11 14:09:25 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MRT_MACROS_H
 # define MRT_MACROS_H
-# define CANVAS_W 50
-# define CANVAS_H 50
-// # define CANVAS_W 800
-// # define CANVAS_H 800
+// # define CANVAS_W 5
+// # define CANVAS_H 5
+# define CANVAS_W 800
+# define CANVAS_H 800
 # define INF 99999
 // # define BACKGROUND_COLOR 0xFFFFFFFF
 # define BACKGROUND_COLOR 0x000000FF
