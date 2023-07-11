@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:59:42 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/09 20:36:59 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/09 22:03:08 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ long double	get_cylinder_intersection(t_ray *ray, t_scn_el *obj_info, t_coord3 *
 	long double	intersects[4] = {-1, -1, -1, -1};
 	long double	smallest_positive;
 	t_vec3		*tmp_vec;
-	
+
 	smallest_positive = -1;
 	ray = apply_transformations(ray, obj_info);
 	if (get_body_intersections(ray, obj_info, z, intersects))

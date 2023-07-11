@@ -26,7 +26,13 @@ t_color	trace_ray(t_data *data, t_ray *ray, const long double *range, int recurs
 
 	closest_obj = get_closest_el(data->scn_els[ALL_OBJS], ray, range);
 	if (closest_obj && !closest_obj->el)
+	{
+		if (closest_obj->inc_p)
+			free(closest_obj->inc_p);
+		free(closest_obj);
+		closest_obj = NULL;
 		return (BACKGROUND_COLOR);
+	}
 	sec_ray.origin = get_incident_point(ray, closest_obj);
 	sec_ray.dir = get_incident_point_norm(*data->scn_els[CAM], sec_ray.origin, closest_obj);
 	color[0] = get_local_color(data, ray, sec_ray, closest_obj->el);
@@ -36,10 +42,11 @@ t_color	trace_ray(t_data *data, t_ray *ray, const long double *range, int recurs
 		ret_color = color[0];
 	else
 		ret_color = mix_colors(color[0], color[1], closest_obj->el->reflection);
+	if (closest_obj->inc_p)
+		free(closest_obj->inc_p);
+	free(closest_obj);
 	free(sec_ray.origin);
 	free(sec_ray.dir);
-	free(closest_obj->inc_p);
-	free(closest_obj);
 	return (ret_color);
 }
 
@@ -77,13 +84,14 @@ void	render_scene(t_data *data)
 			tmp = multiply_mx(data->ctw_mx, dir_mx);
 			free_mx(dir_mx);
 			ray.dir = create_vec(tmp->m[X], tmp->m[Y], tmp->m[Z]);
-			free(tmp);
+			free_mx(tmp);
 			normalize(ray.dir);
-			color = trace_ray(data, &ray, range, 1);
+			color = trace_ray(data, &ray, range, 0);
 			mlx_put_pixel(data->img, x, y, color);
+			free(ray.dir);
 			x++;
 		}
 		y++;
 	}
-		draw_axes(data);
+	// draw_axes(data);
 }

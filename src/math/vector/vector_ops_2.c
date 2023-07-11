@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 14:48:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/09 14:34:13 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/09 23:31:13 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ t_vec3	*cross(t_vec3 *vec_1, t_vec3 *vec_2)
 
 t_coord3	*offset(t_coord3 *p, t_vec3 *vec)
 {
-	t_coord3 new_point;
+	t_coord3	new_point;
+	t_coord3	*offset_vec;
 	int i;
 
 	if (!(p && vec))
@@ -117,5 +118,6 @@ t_coord3	*offset(t_coord3 *p, t_vec3 *vec)
 		new_point.coord[i] = p->coord[i] + vec->dir.coord[i];
 		i++;
 	}
-	return (create_coord(new_point.x, new_point.y, new_point.z));
+	offset_vec = create_coord(new_point.x, new_point.y, new_point.z);
+	return (offset_vec);
 };

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/08 16:24:23 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/11 11:01:43 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,11 @@ long double	get_lighting_intensity(t_data *data, t_ray *ray, t_ray reflection_ra
 			shadow = cast_shadow(data, &secondary_ray, range);
 			if (shadow && shadow->el != NULL)
 			{
-				i++;
-				free(secondary_ray.dir);
-				free(shadow->el);
 				if (shadow->inc_p)
 					free(shadow->inc_p);
 				free(shadow);
+				free(secondary_ray.dir);
+				i++;
 				continue ;
 			}
 			long double n_dot_l = dot(reflection_ray.dir, secondary_ray.dir);
@@ -71,6 +70,7 @@ long double	get_lighting_intensity(t_data *data, t_ray *ray, t_ray reflection_ra
 			if (obj->specular != -1)
 				intensity += get_specular_lighting(ray, &secondary_ray, reflection_ray.dir, data->scn_els[ALL_LIGHTS][i]->intensity, obj->specular);	
 			free(secondary_ray.dir);
+			free(shadow);
 		}
 		i++;
 	}
