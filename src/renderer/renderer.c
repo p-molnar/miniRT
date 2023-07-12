@@ -30,7 +30,7 @@ t_color	trace_ray(t_data *data, t_ray *ray, const long double *range, int recurs
 		if (closest_obj->inc_p)
 			free(closest_obj->inc_p);
 		free(closest_obj);
-		return (BACKGROUND_COLOR);
+		return ((t_color) -1);
 	}
 	sec_ray.origin = get_incident_point(ray, closest_obj);
 	sec_ray.dir = get_incident_point_norm(*data->scn_els[CAM], sec_ray.origin, closest_obj);
@@ -64,7 +64,6 @@ void	render_scene(t_data *data)
 	t_mx*	tmp;
 	t_coord3	*dir;
 
-	color = 0;
 	aspect_ratio = CANVAS_W / CANVAS_H; 
 	ray.origin = &data->scn_els[CAM][0]->pos;
 	fov_scale = tan(deg_to_rad((*data->scn_els[CAM])->fov / 2));
@@ -85,8 +84,9 @@ void	render_scene(t_data *data)
 			ray.dir = create_vec(tmp->m[X], tmp->m[Y], tmp->m[Z]);
 			free_mx(tmp);
 			normalize(ray.dir);
-			color = trace_ray(data, &ray, range, 0);
-			mlx_put_pixel(data->img, x, y, color);
+			color= trace_ray(data, &ray, range, 0);
+			if (color.color != -1)
+				mlx_put_pixel(data->img, x, y, color.color);
 			free(ray.dir);
 			x++;
 		}
