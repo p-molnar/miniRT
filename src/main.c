@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/18 11:06:25 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/19 13:09:07 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void	set_up_variables(t_data *d)
+void	set_up_scn_el_ptrs(t_data *d)
 {
 	d->scn_els[AMB_LIGHT] = get_scn_els(d->all_scn_el, F_AMB_LIGHT);
 	d->scn_els[CAM] = get_scn_els(d->all_scn_el, F_CAM | F_TG_CAM);
@@ -53,11 +53,10 @@ int	main(int argc, char *argv[])
 	t_data	d;
 
 	ft_memset(&d, 0, sizeof(t_data));
-	d.dft_world_orientation  = create_vec(0, 0, 1);
 	d.dft_up_vec = create_vec(0, 1, 0);
 	parse_input(&d, argc, argv);
-	set_up_variables(&d);
-	set_up_camera(&d);
+	set_up_scn_el_ptrs(&d);
+	set_up_camera_orientation(&d);
 	d.mlx = mlx_init(CANVAS_W + 5, CANVAS_H + 5, "MiniRT", true);
 	if (!d.mlx)
 		error(ft_strdup(mlx_strerror(mlx_errno)), EXIT, 1);

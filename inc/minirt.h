@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/18 16:05:31 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/19 13:17:27 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int			is_valid_number(char *c);
 void		init_scene(t_data *scn);
 void		create_projection_plane(t_data *d);
 void		set_up_scene(t_data *d);
-void		populate_transformation_mx(t_data *d, t_scn_el *el);
+void		populate_transformation_mx(t_scn_el *el);
 t_ray		apply_transformations(t_ray ray, t_scn_el *obj_info);
 
 //	error handling
@@ -77,7 +77,7 @@ void		init_vec(t_vec3 **arr, int size);
 t_vec3		get_reflection_ray(t_vec3 ray, t_vec3 norm);
 t_coord3	get_incident_point(t_ray ray, t_closest *obj);
 t_vec3		get_incident_point_norm(t_scn_el cam, t_coord3 inc_p, t_closest *obj);
-void		set_up_camera(t_data *d);
+void		set_up_camera_orientation(t_data *d);
 
 //	math
 t_vec3		create_vec(t_coord x, t_coord y, t_coord z);

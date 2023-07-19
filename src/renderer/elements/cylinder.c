@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:59:42 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/19 12:03:06 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/19 12:24:04 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	populate_cylinder_properties(t_scn_el *cap, t_scn_el *cy, char cap_type)
-{
-	int			is_btm;
-	t_coord3	std_pos;
-
-	std_pos = (t_coord3){{0, 0, 0}};
-	is_btm = cap_type == 'B';
-	if (is_btm)
-	{
-		cap->pos.z = std_pos.z - (cy->height / 2);
-		cap->n_vec = create_vec(std_pos.x, std_pos.y, -1);
-	}
-	else
-	{
-		cap->pos.z = std_pos.z + (cy->height / 2);
-		cap->n_vec = create_vec(std_pos.x, std_pos.y, -1);
-	}
-}
-
 void	add_cylinder_caps(t_scn_el *cylinder)
 {
 	t_scn_el	*caps;
+	t_coord3	cap_std_pos;
 
+	cap_std_pos = (t_coord3){{0, 0, 0}};
 	caps = ft_calloc(2, sizeof(t_scn_el));
-	populate_cylinder_properties(&caps[0], cylinder, 'B');
-	populate_cylinder_properties(&caps[1], cylinder, 'T');
+	caps[0].pos.z = cap_std_pos.z - (cylinder->height / 2);
+	caps[0].n_vec = create_vec(cap_std_pos.x, cap_std_pos.y, -1);
+	caps[1].pos.z = cap_std_pos.z + (cylinder->height / 2);
+	caps[1].n_vec = create_vec(cap_std_pos.x, cap_std_pos.y, -1);
 	cylinder->cap = caps;
 }
 

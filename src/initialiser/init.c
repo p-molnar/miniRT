@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 10:46:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/18 17:09:59 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/19 13:17:14 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,21 @@ void	populate_translation_mx(t_scn_el *el)
 	ft_memcpy(&el->inv_translation, &inv_trans_mx, sizeof(t_mx));
 }
 
-void	populate_rotation_mx(t_data *d, t_scn_el *el)
+void	populate_rotation_mx(t_scn_el *el)
 {
 	long double		agl_r;
 	t_vec3			pivot_ax;
 	t_mx			pivot_mx;
 	t_mx			rot_mx;
 	t_mx			inv_rot_mx;
+	t_vec3			dft_world_orientation;
 
+	dft_world_orientation = create_vec(0, 0, 1);
 	if (is_identical_coord((t_coord3) {{0, 0, 0}}, el->n_vec.dir))
 		el->n_vec.dir.z = 1;
-	agl_r = get_agl_between(d->dft_world_orientation, el->n_vec);
+	agl_r = get_agl_between(dft_world_orientation, el->n_vec);
 	printf("agl_r: %Lf\n", agl_r);
-	pivot_ax = cross(d->dft_world_orientation, el->n_vec);
+	pivot_ax = cross(dft_world_orientation, el->n_vec);
 	normalize(&pivot_ax);
 	pivot_mx = coord_to_mx(pivot_ax.dir, 4, 1, 1);
 	printf("pivot_mx\n");
@@ -64,20 +66,22 @@ void	populate_rotation_mx(t_data *d, t_scn_el *el)
 	print_mx(&el->inv_rotation);
 }
 
-void	populate_transformation_mx(t_data *d, t_scn_el *el)
+void	populate_transformation_mx(t_scn_el *el)
 {
 	populate_translation_mx(el);
-	populate_rotation_mx(d, el);
+	populate_rotation_mx(el);
 }
 
-void	set_up_camera(t_data *d)
+void	set_up_camera_orientation(t_data *d)
 {
 	t_vec3		right_vec;
 	t_vec3		fw_vec;
 	t_vec3		up_vec;
 	t_mx		ctw_mx_local;
+	t_vec3		dft_up_vec;
 	t_scn_el	*cam;
 
+	dft_up_vec = create_vec(0, 1, 0);
 	cam = *d->scn_els[CAM];
 	if (cam->type == F_CAM)
 		fw_vec = coord_to_vec(cam->n_vec.dir);
@@ -94,11 +98,11 @@ void	set_up_camera(t_data *d)
 	else if ((fw_vec.dir.x == 0 && fw_vec.dir.z == 0) && (fw_vec.dir.y ==
 				-1 || fw_vec.dir.y == 1))
 	{
-		d->dft_up_vec.dir.y = 0;
-		d->dft_up_vec.dir.z = 1;
+		dft_up_vec.dir.y = 0;
+		dft_up_vec.dir.z = 1;
 		fw_vec.len = 1;
 	}
-	right_vec = cross(d->dft_up_vec, fw_vec);
+	right_vec = cross(dft_up_vec, fw_vec);
 	normalize(&right_vec);
 	up_vec = cross(fw_vec, right_vec);
 	normalize(&up_vec);
