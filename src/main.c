@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/19 13:09:07 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/19 13:20:38 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	main(int argc, char *argv[])
 	t_data	d;
 
 	ft_memset(&d, 0, sizeof(t_data));
-	d.dft_up_vec = create_vec(0, 1, 0);
 	parse_input(&d, argc, argv);
 	set_up_scn_el_ptrs(&d);
 	set_up_camera_orientation(&d);
