@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/11 14:08:31 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/18 11:06:25 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,6 @@ void	clean_up(t_data *d)
 	i = 0;
 	while (i < SCN_SIZE)
 		free(d->scn_els[i++]);
-	free_mx(d->ctw_mx);
-	free(d->dft_world_orientation);
-	free(d->dft_up_vec);
 }
 
 int	main(int argc, char *argv[])

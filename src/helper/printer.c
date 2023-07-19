@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/08 10:18:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/08 13:14:59 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/18 14:49:16 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,10 @@ void	print_scene_el(t_scn_el *el)
 			el->target.coord[0],
 			el->target.coord[1],
 			el->target.coord[2]);
-	if (el->n_vec)
-	{
-		printf("n_vec->dir: x=%Lf, y=%Lf, z=%Lf\n",
-				el->n_vec->dir.coord[0],
-				el->n_vec->dir.coord[1],
-				el->n_vec->dir.coord[2]);
-	}
+	printf("n_vec->dir: x=%Lf, y=%Lf, z=%Lf\n",
+				el->n_vec.dir.coord[0],
+				el->n_vec.dir.coord[1],
+				el->n_vec.dir.coord[2]);
 	printf("diameter: %Lf\n", el->diameter);
 	printf("radius: %Lf\n", el->radius);
 	printf("height: %Lf\n", el->height);

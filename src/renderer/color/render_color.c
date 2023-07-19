@@ -6,14 +6,14 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:57:27 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/07 12:56:40 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/18 14:42:24 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 #include <stdlib.h>
 
-t_color	get_local_color(t_data *data, t_ray *ray, t_ray reflection_ray, t_scn_el *closest_el)
+t_color	get_local_color(t_data *data, t_ray ray, t_ray reflection_ray, t_scn_el *closest_el)
 {
 	t_color		tmp_color;
 	t_color		color;
@@ -51,18 +51,14 @@ t_color	mix_colors(t_color local_color, t_color reflected_color, long double ref
 	return (color);
 }
 
-t_color	get_reflected_color(t_data *data, t_ray *ray, t_ray sec_ray, int depth)
+t_color	get_reflected_color(t_data *data, t_ray ray, t_ray sec_ray, int depth)
 {
 	t_color	reflected_color;
-	t_vec3	*obj_to_cam;
 	t_ray	reflected_ray;
 	const long double	ref_range[RANGE_SIZE] = {EPS, INF};
 
 	reflected_ray.origin = sec_ray.origin;
-	obj_to_cam = scale(-1, ray->dir);
-	reflected_ray.dir = get_reflection_ray(obj_to_cam, sec_ray.dir);
-	reflected_color = trace_ray(data, &reflected_ray, ref_range, depth - 1);
-	free(obj_to_cam);
-	free(reflected_ray.dir);
+	reflected_ray.dir = get_reflection_ray(scale(-1, ray.dir), sec_ray.dir);
+	reflected_color = trace_ray(data, reflected_ray, ref_range, depth - 1);
 	return (reflected_color);
 }

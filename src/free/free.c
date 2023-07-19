@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/16 19:24:09 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/09 21:08:59 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/18 11:20:30 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,12 @@ void	free_mx(t_mx *mx)
 	}
 }
 
-void	free_ray(t_ray *ray)
-{
-	if (ray)
-	{
-		if (ray->origin)
-			free(ray->origin);
-		if (ray->dir)
-			free(ray->dir);
-	}
-	free(ray);
-}
-
 void	free_scn_el(t_scn_el *el)
 {
 	int	i;
 
 	if (el)
 	{
-		if (el->n_vec)
-			free(el->n_vec);
 		if (el->cap)
 		{
 			i = 0;
@@ -60,14 +46,14 @@ void	free_scn_el(t_scn_el *el)
 				free_scn_el(&el->cap[i++]);
 			free(el->cap);
 		}
-		if (el->translation)
-			free_mx(el->translation);
-		if (el->inv_translation)
-			free_mx(el->inv_translation);
-		if (el->rotation)
-			free_mx(el->rotation);
-		if (el->inv_rotation)
-			free_mx(el->inv_rotation);
+		// if (el->translation)
+		// 	free_mx(el->translation);
+		// if (el->inv_translation)
+		// 	free_mx(el->inv_translation);
+		// if (el->rotation)
+		// 	free_mx(el->rotation);
+		// if (el->inv_rotation)
+		// 	free_mx(el->inv_rotation);
 		if (el->type != F_TYPE_UNDEF)
 			free(el);
 	}

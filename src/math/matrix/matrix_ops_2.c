@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/24 10:10:58 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/05 19:36:06 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/18 16:36:54 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,87 +59,70 @@ static void	populate_inv_mx_p1(long double *inv, long double *m)
 		+ m[8] * m[3] * m[14] + m[12] * m[2] * m[11] - m[12] * m[3] * m[10];
 }
 
-t_mx	*get_inverse_mx(t_mx *mx)
+t_mx	get_inverse_mx(t_mx mx)
 {
 	int			i;
 	long double	inv[16];
 	long double	det;
-	t_mx		*inv_mx;
+	t_mx		inv_mx;
 
-	if (!mx)
-		return (NULL);
-	inv_mx = malloc(sizeof(t_mx));
-	if (!inv_mx)
-		return (NULL);
-	inv_mx->c = mx->c;
-	inv_mx->r = mx->r;
-	inv_mx->m = malloc(4 * 4 * sizeof(long double));
-	populate_inv_mx_p1(inv, mx->m);
-	populate_inv_mx_p2(inv, mx->m);
-	det = mx->m[0] * inv[0] + mx->m[1] * inv[4] + mx->m[2] * inv[8] + mx->m[3]
-		* inv[12];
-	if (det == 0)
-		return (NULL);
-	det = 1.0 / det;
+	inv_mx.c = mx.c;
+	inv_mx.r = mx.r;
+	populate_inv_mx_p1(inv, mx.m);
+	populate_inv_mx_p2(inv, mx.m);
+	det = mx.m[0] * inv[0] + mx.m[1] * inv[4] + mx.m[2] * inv[8] + mx.m[3] * inv[12];
+	if (det != 0.0)
+		det = 1.0 / det;
 	i = 0;
 	while (i < 16)
 	{
-		inv_mx->m[i] = inv[i] * det;
+		inv_mx.m[i] = inv[i] * det;
 		i++;
 	}
 	return (inv_mx);
 }
 
-void	expand_mx(t_mx *mx, int r, int c, long double val)
+// t_mx	vec_to_mx(t_mx mx, int r, int c, long double val)
+// {
+// 	long double	tmp;
+// 	int		row;
+// 	int		col;
+// 	int		i;
+// 	t_mx	mx
+
+// 	i = 0;
+// 	row = 0;
+// 	while (row < r)
+// 	{
+// 		col = 0;
+// 		while (col < c)
+// 		{
+// 			if (row < mx->r && col < mx->c)
+// 				tmp[row * mx->c + col] = mx->m[i++];
+// 			else if (row == r - 1 && col == c - 1)
+// 				tmp[row * mx->c + col] = val;
+// 			col++;
+// 		}
+// 		row++;
+// 	}
+// 	mx->r = r;
+// 	mx->c = c;
+// 	mx->m = tmp;
+// }
+
+t_mx	coord_to_mx(t_coord3 coord, int r, int c, int val)
 {
-	long double	*tmp;
-	int		row;
-	int		col;
+	t_mx	mx;
 	int		i;
 
-	if (!mx || (r <= mx->r && c <= mx->c))
-		return ;
-	tmp = malloc(r * c * sizeof(long double));
-	if (!tmp)
-		return ;
+	mx.r = r;
+	mx.c = c;
 	i = 0;
-	row = 0;
-	while (row < r)
+	while (i < 3)
 	{
-		col = 0;
-		while (col < c)
-		{
-			if (row < mx->r && col < mx->c)
-				tmp[row * mx->c + col] = mx->m[i++];
-			else if (row == r - 1 && col == c - 1)
-				tmp[row * mx->c + col] = val;
-			col++;
-		}
-		row++;
+		mx.m[i] = coord.coord[i];
+		i++;
 	}
-	mx->r = r;
-	mx->c = c;
-	free(mx->m);
-	mx->m = tmp;
-}
-
-t_mx	*coord_to_mx(t_coord3 *coord, int r, int c)
-{
-	t_mx	*mx;
-
-	if (!coord)
-		return (NULL);
-	mx = malloc(sizeof(t_mx));
-	if (!mx)
-		return (NULL);
-	mx->r = r;
-	mx->c = c;
-	mx->m = malloc(r * c * sizeof(long double));
-	if (!mx->m)
-	{
-		free(mx);
-		return (NULL);
-	}
-	ft_memcpy(mx->m, coord, r * c * sizeof(long double));
+	mx.m[i] = val;
 	return (mx);
 }

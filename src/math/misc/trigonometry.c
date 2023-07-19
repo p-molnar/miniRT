@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/26 11:20:13 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/09 13:36:49 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/17 14:07:53 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,15 @@ long double	*get_euler_agls(t_mx *rot_mx)
 	return (agls);
 }
 
-long double	get_agl_between(t_vec3 *vec_1, t_vec3 *vec_2)
+long double	get_agl_between(t_vec3 vec_1, t_vec3 vec_2)
 {
 	long double agl;
 
-	if (!vec_1 || !vec_2)
-		return (-1);
-	agl = dot(vec_1, vec_2) / (vec_1->len * vec_2->len);
+	agl = dot(vec_1, vec_2) / (vec_1.len * vec_2.len);
 	return (acos(agl));
 }
 
-long double	get_agl_between_d(t_vec3 *vec_1, t_vec3 *vec_2)
+long double	get_agl_between_d(t_vec3 vec_1, t_vec3 vec_2)
 {
 	long double	agl;
 

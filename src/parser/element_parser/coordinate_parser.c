@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:35:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/09 18:23:55 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/17 21:17:25 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,12 @@ void	parse_coordinates(t_coord3 *coord, char *input)
 	free_arr((void **)coords);
 }
 
-void	parse_norm_vec(t_vec3 **vec, char *input)
+void	parse_norm_vec(t_vec3 *vec, char *input)
 {
 	char		**coords;
 	int			i;
 	t_coord3	f;
+	t_vec3		f_vec;
 
 	coords = ft_split(input, ',');
 	if (!coords)
@@ -60,9 +61,8 @@ void	parse_norm_vec(t_vec3 **vec, char *input)
 						"]: ", coords[i]), EXIT, 1);
 		i++;
 	}
-	*vec = coord_to_vec(f);
-	if (!vec)
-		error(ft_strdup("Malloc error at vector creation"), EXIT, 1);
-	normalize(*vec);
+	f_vec = coord_to_vec(f);
+	normalize(&f_vec);
+	ft_memcpy(vec, &f_vec, sizeof(t_vec3));
 	free_arr((void **)coords);
 }

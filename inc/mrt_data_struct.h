@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/09 19:15:34 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/18 13:59:09 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_quad_params
 
 typedef struct s_mx
 {
-	long double					*m;
+	long double					m[16];
 	int							r;
 	int							c;
 }								t_mx;
@@ -52,8 +52,8 @@ typedef struct s_vec
 
 typedef struct s_ray
 {
-	t_coord3					*origin;
-	t_vec3						*dir;
+	t_coord3					origin;
+	t_vec3						dir;
 }								t_ray;
 
 typedef struct s_scn_el
@@ -61,7 +61,7 @@ typedef struct s_scn_el
 	enum e_scn_el_type_flags	type;
 	t_coord3					pos;
 	t_coord3					target;
-	t_vec3						*n_vec;
+	t_vec3						n_vec;
 	long double					diameter;
 	long double					radius;
 	long double					height;
@@ -70,17 +70,17 @@ typedef struct s_scn_el
 	long double					specular;
 	long double					reflection;
 	struct s_scn_el				*cap;
-	t_mx						*translation;
-	t_mx						*inv_translation;
-	t_mx						*rotation;
-	t_mx						*inv_rotation;
+	t_mx						translation;
+	t_mx						inv_translation;
+	t_mx						rotation;
+	t_mx						inv_rotation;
 	t_color						color;
 }								t_scn_el;
 
 typedef struct s_closest
 {
 	t_scn_el					*el;
-	t_coord3					*inc_p;
+	t_coord3					inc_p;
 	long double					dist;
 }								t_closest;
 
@@ -88,9 +88,9 @@ typedef struct s_data
 {
 	t_list						*all_scn_el;
 	t_scn_el					**scn_els[SCN_SIZE];
-	t_mx						*ctw_mx;
-	t_vec3						*dft_world_orientation;
-	t_vec3						*dft_up_vec;
+	t_mx						ctw_mx;
+	t_vec3						dft_world_orientation;
+	t_vec3						dft_up_vec;
 	mlx_t						*mlx;
 	mlx_image_t					*img;
 }								t_data;
