@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/19 13:20:48 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/19 13:59:34 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,16 @@
 
 typedef int						t_color;
 typedef long double				t_coord;
+
+typedef struct s_err
+{
+	const char			*msg;
+	char				*file;
+	int					line;
+	enum e_exit_method_code exit_method;
+	int					exit_code;
+}	t_err;
+
 
 typedef union u_coord3 
 {

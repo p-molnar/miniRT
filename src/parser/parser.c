@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/19 13:17:39 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/19 14:51:35 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	validate_scn_el_setup(t_data *scn)
 		tmp = tmp->next;
 	}
 	if (!((els & F_CAM) || (els & F_TG_CAM)))
-		error(ft_strdup("Required element missing: Camera"), EXIT, 1);
+		error((t_err){"Required element: Camera", NULL, 0, EXIT, 1});
 	if (scn && total_light_brightness < 0.05)
 		warning(
 			ft_strdup("Too dark scene: add lights, or increase brightness.")
@@ -73,7 +73,7 @@ void	parse_data(t_data *scn, t_scn_el *el, char **input)
 {
 	parse_type_identifier(el, input[0]);
 	if (is_duplicate_el_type(el->type, scn))
-		error(ft_strdup("Duplicate element definition"), EXIT, 1);
+		error((t_err){"Duplicate element", NULL, 0, EXIT, 1});
 	if (el->type == F_AMB_LIGHT)
 		parse_elements(el, input, AMB_LIGHT_FIELDS);
 	else if (el->type == F_POINT_LIGHT)
@@ -105,15 +105,11 @@ void	parse_line(t_data *scn, char *line)
 	el_info = ft_split(line, ' ');
 	el = ft_calloc(1, sizeof(t_scn_el));
 	if (!el_info || !el)
-		error(strconcat(4, "Malloc error: ", __FILE__, ":", ft_itoa(__LINE__)),
-				EXIT,
-				1);
+		error((t_err){"Malloc error", __FILE__, __LINE__, EXIT, 1});
 	parse_data(scn, el, el_info);
 	list_el = ft_lstnew(el);
 	if (!list_el)
-		error(strconcat(4, "Malloc error: ", __FILE__, ":", ft_itoa(__LINE__)),
-				EXIT,
-				1);
+		error((t_err){"Malloc error", __FILE__, __LINE__, EXIT, 1});
 	ft_lstadd_back(&scn->all_scn_el, list_el);
 	free_arr((void **)el_info);
 }
@@ -122,21 +118,21 @@ void	parse_input(t_data *scn, int argc, char *argv[])
 {
 	int		fd;
 	char	*line;
-	char	*tmp;
+	char	*tmp_line;
 
 	if (argc != 2)
-		error(ft_strdup("Expected argument count: 2"), EXIT, 1);
+		error((t_err){"Expected arg count: 2", NULL, 0, EXIT, 1});
 	fd = open_file(argv[1]);
 	line = get_next_line(fd);
 	while (line)
 	{
 		if (line[0] != '\n' && line[0] != '#')
 		{
-			tmp = line;
-			line = ft_strtrim(tmp, "\n");
+			tmp_line = line;
+			line = ft_strtrim(tmp_line, "\n");
 			if (!line)
-				error(ft_strdup("Malloc error"), EXIT, 1);
-			free(tmp);
+				error((t_err){"Malloc error", __FILE__, __LINE__, EXIT, 1});
+			free(tmp_line);
 			parse_line(scn, line);
 		}
 		free(line);

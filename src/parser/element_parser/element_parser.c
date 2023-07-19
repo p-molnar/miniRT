@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:27:54 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/06/08 12:24:30 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/19 14:37:21 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,7 @@ void	parse_type_identifier(t_scn_el *el, char *line)
 	else if (ft_strncmp("cy", line, str_len) == 0)
 		el_type = F_CYLINDER;
 	else
-		error(strconcat(3, "Unknown element: '", line,
-					"'. Element must be of type: A, C, TC, L, DL, sp, pl, cy"), EXIT,
-				1);
+		error((t_err){"Element must be of type: A, L, DL, C, TC, sp, pl, cy", __FILE__, __LINE__, EXIT, 1});
 	el->type = el_type;
 }
 

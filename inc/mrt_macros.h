@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/18 18:51:49 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/19 13:50:51 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,9 @@
 # define CANVAS_W 800
 # define CANVAS_H 800
 # define INF 99999
-// # define BACKGROUND_COLOR 0xFFFFFFFF
 # define BACKGROUND_COLOR 0x000000FF
 # define EPS 0.00001
 
-# ifndef RECURSIVE_DEPTH
-#  define RECURSIVE_DEPTH 0
-# endif
 
 enum	e_range
 {
@@ -32,7 +28,7 @@ enum	e_range
 	RANGE_SIZE,
 };
 
-enum	e_error_handler
+enum	e_exit_method_code
 {
 	EXIT = 1,
 	RETURN = 2,

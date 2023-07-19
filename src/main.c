@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/19 13:20:38 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/19 14:06:07 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,16 @@ int	main(int argc, char *argv[])
 	set_up_camera_orientation(&d);
 	d.mlx = mlx_init(CANVAS_W + 5, CANVAS_H + 5, "MiniRT", true);
 	if (!d.mlx)
-		error(ft_strdup(mlx_strerror(mlx_errno)), EXIT, 1);
+	{
+		clean_up(&d);
+		error((t_err){mlx_strerror(mlx_errno), NULL, 0, EXIT, 1});
+	}
 	d.img = mlx_new_image(d.mlx, CANVAS_W, CANVAS_H);
 	if (!d.img || (mlx_image_to_window(d.mlx, d.img, 0, 0) < 0))
-		error(ft_strdup(mlx_strerror(mlx_errno)), EXIT, 1);
+	{
+		clean_up(&d);
+		error((t_err){mlx_strerror(mlx_errno), NULL, 0, EXIT, 1});
+	}
 	render_scene(&d);
 	clean_up(&d);
 	// mlx_loop_hook(d.mlx, ft_hook, d.mlx);

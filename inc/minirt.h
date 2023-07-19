@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/19 13:17:27 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/19 14:06:07 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void		populate_transformation_mx(t_scn_el *el);
 t_ray		apply_transformations(t_ray ray, t_scn_el *obj_info);
 
 //	error handling
-int			error(char *msg, int exit_method, int exit_code);
+int			error(t_err error);
 void		warning(char *msg);
 
 //	renderer

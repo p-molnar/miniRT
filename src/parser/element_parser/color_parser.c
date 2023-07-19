@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 13:44:13 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/01 21:21:03 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/19 14:12:47 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,12 @@ int	parse_color_code(char *color, int n_lower, int n_upper)
 	char	s_n_upper[4];
 
 	if (!is_valid_number(color))
-		error(strconcat(2, "Invalid number: ", color), EXIT, 1);
+		error((t_err){"Invalid color code representation", __FILE__, __LINE__, EXIT, 1});
 	color_code = ft_atoi(color);
 	snprintf(s_n_lower, 4, "%d", n_lower);
 	snprintf(s_n_upper, 4, "%d", n_upper);
 	if (!is_in_range_i(color_code, n_lower, n_upper))
-		error(strconcat(6, "Number out of range [", s_n_lower,
-				", ", s_n_upper, "]: ", color), EXIT, 1);
+		error((t_err){"Color code out of range: [0-255]", __FILE__, __LINE__, EXIT, 1});
 	return (color_code);
 }
 
@@ -41,13 +40,12 @@ void	parse_color(t_color *color, char *input, int n_lower, int n_upper)
 
 	parsed_color = 0;
 	if (!color || !input)
-		error(ft_strdup("NULL Pointer error"), EXIT, 1);
+		error((t_err){"NULL pointer (color)", __FILE__, __LINE__, EXIT, 1});
 	colors = ft_split(input, ',');
 	if (!colors)
-		error(strconcat(4, "Malloc error: ", __FILE__, ":", ft_itoa(__LINE__)),
-			EXIT, 1);
+		error((t_err){"Malloc error", __FILE__, __LINE__, EXIT, 1});
 	else if (get_arr_size(colors) != 3)
-		error(ft_strdup("Required color components: R, G, B"), EXIT, 1);
+		error((t_err){"Wrong color code separation/incomplete color code, required: R,G,B", __FILE__, __LINE__, EXIT, 1});
 	i = 0;
 	while (colors[i])
 	{
