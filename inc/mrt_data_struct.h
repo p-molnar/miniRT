@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/19 13:59:34 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/19 15:00:56 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@
 
 typedef int						t_color;
 typedef long double				t_coord;
+
+typedef struct s_line
+{
+	char	*content;
+	char	*file;
+	int		num;
+}	t_line;
 
 typedef struct s_err
 {

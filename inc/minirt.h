@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/19 14:06:07 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/19 15:19:41 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,17 @@
 
 //	parser
 void		parse_input(t_data *scn, int argc, char *argv[]);
-void		parse_elements(t_scn_el *el, char **input, unsigned int flags);
-void		parse_type_identifier(t_scn_el *el, char *line);
+void		parse_elements(t_scn_el *el, char **input, unsigned int flags, t_line line_info);
+void		parse_type_identifier(t_scn_el *el, char *line, t_line line_info);
 void		add_cylinder_caps(t_scn_el *cylinder);
 
 //	element parser
-void		parse_coordinates(t_coord3 *coord, char *input);
-void		parse_norm_vec(t_vec3 *vec, char *input);
-void		parse_float(long double *f, char *input);
+void		parse_coordinates(t_coord3 *coord, char *input, t_line line_info);
+void		parse_norm_vec(t_vec3 *vec, char *input, t_line line_info);
+void		parse_float(long double *f, char *input, t_line line_info);
 void		parse_range(long double *f, char *input, long double n_lower,
-				long double n_upper);
-void		parse_color(t_color *color, char *input, int n_lower, int n_upper);
+				long double n_upper, t_line line_info);
+void		parse_color(t_color *color, char *input, int n_lower, int n_upper, t_line line_info);
 
 //	free
 void		free_arr(void **arr);

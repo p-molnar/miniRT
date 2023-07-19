@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/19 14:51:35 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/19 15:22:26 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,76 +69,79 @@ void	validate_scn_el_setup(t_data *scn)
 			);
 }
 
-void	parse_data(t_data *scn, t_scn_el *el, char **input)
+void	parse_data(t_data *scn, t_scn_el *el, char **input, t_line line_info)
 {
-	parse_type_identifier(el, input[0]);
+	parse_type_identifier(el, input[0], line_info);
 	if (is_duplicate_el_type(el->type, scn))
-		error((t_err){"Duplicate element", NULL, 0, EXIT, 1});
+		error((t_err){"Duplicate element", line_info.file, line_info.num, EXIT, 1});
 	if (el->type == F_AMB_LIGHT)
-		parse_elements(el, input, AMB_LIGHT_FIELDS);
+		parse_elements(el, input, AMB_LIGHT_FIELDS, line_info);
 	else if (el->type == F_POINT_LIGHT)
-		parse_elements(el, input, LIGHT_FIELDS);
+		parse_elements(el, input, LIGHT_FIELDS, line_info);
 	else if (el->type == F_DIR_LIGHT)
-		parse_elements(el, input, DIR_LIGHT_FIELDS);
+		parse_elements(el, input, DIR_LIGHT_FIELDS, line_info);
 	else if (el->type == F_CAM)
-		parse_elements(el, input, CAM_FIELDS);
+		parse_elements(el, input, CAM_FIELDS, line_info);
 	else if (el->type == F_TG_CAM)
-		parse_elements(el, input, TG_CAM_FIELDS);
+		parse_elements(el, input, TG_CAM_FIELDS, line_info);
 	else if (el->type == F_SPHERE)
-		parse_elements(el, input, SPHERE_FIELDS);
+		parse_elements(el, input, SPHERE_FIELDS, line_info);
 	else if (el->type == F_PLANE)
-		parse_elements(el, input, PLANE_FIELDS);
+		parse_elements(el, input, PLANE_FIELDS, line_info);
 	else if (el->type == F_CYLINDER)
 	{
-		parse_elements(el, input, CYLINDER_FIELDS);
+		parse_elements(el, input, CYLINDER_FIELDS, line_info);
 		add_cylinder_caps(el);
 		populate_transformation_mx(el);
 	}
 }
 
-void	parse_line(t_data *scn, char *line)
+void	parse_line(t_data *scn, t_line line)
 {
-	char		**el_info;
+	char		**el_data;
 	t_scn_el	*el;
 	t_list		*list_el;
 
-	el_info = ft_split(line, ' ');
+	el_data = ft_split(line.content, ' ');
 	el = ft_calloc(1, sizeof(t_scn_el));
-	if (!el_info || !el)
+	if (!el_data || !el)
 		error((t_err){"Malloc error", __FILE__, __LINE__, EXIT, 1});
-	parse_data(scn, el, el_info);
+	parse_data(scn, el, el_data, line);
 	list_el = ft_lstnew(el);
 	if (!list_el)
 		error((t_err){"Malloc error", __FILE__, __LINE__, EXIT, 1});
 	ft_lstadd_back(&scn->all_scn_el, list_el);
-	free_arr((void **)el_info);
+	free_arr((void **)el_data);
 }
 
 void	parse_input(t_data *scn, int argc, char *argv[])
 {
 	int		fd;
-	char	*line;
+	t_line	line;
 	char	*tmp_line;
 
 	if (argc != 2)
-		error((t_err){"Expected arg count: 2", NULL, 0, EXIT, 1});
+		error((t_err){"Expected arg count: 2", NULL, -1, EXIT, 1});
 	fd = open_file(argv[1]);
-	line = get_next_line(fd);
-	while (line)
+	line.file = argv[1];
+	line.content= get_next_line(fd);
+	line.num = 1;
+	while (line.content)
 	{
-		if (line[0] != '\n' && line[0] != '#')
+		if (line.content[0] != '\n' && line.content[0] != '#')
 		{
-			tmp_line = line;
-			line = ft_strtrim(tmp_line, "\n");
-			if (!line)
+			tmp_line = line.content;
+			line.content = ft_strtrim(tmp_line, "\n");
+			if (!line.content)
 				error((t_err){"Malloc error", __FILE__, __LINE__, EXIT, 1});
 			free(tmp_line);
 			parse_line(scn, line);
 		}
-		free(line);
-		line = get_next_line(fd);
+		free(line.content);
+		line.content = get_next_line(fd);
+		line.num++;
 	}
-	if (line)
-		free(line);
+	if (line.content)
+		free(line.content);
 	validate_scn_el_setup(scn);
 }

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:38:24 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/19 14:07:56 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/19 15:00:00 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	open_file(char *file_name)
 
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)
-		error((t_err){strerror(errno), __FILE__, __LINE__, EXIT, 1});
+		error((t_err){strerror(errno), file_name, -1, EXIT, 1});
 	return (fd);
 }
 
