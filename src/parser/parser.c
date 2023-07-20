@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/19 15:22:26 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/20 12:23:01 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,5 @@ void	parse_input(t_data *scn, int argc, char *argv[])
 		line.content = get_next_line(fd);
 		line.num++;
 	}
-	if (line.content)
-		free(line.content);
 	validate_scn_el_setup(scn);
 }

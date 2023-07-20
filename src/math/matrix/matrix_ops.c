@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 11:10:49 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/18 12:44:30 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/20 16:25:21 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,22 @@ t_mx	multiply_mx(t_mx mx1, t_mx mx2)
 {
 	t_mx	mx;
 	int		mx_pos;
-	int		i;
-	int		j;
+	int		row;
+	int		col;
 
 	mx.r = mx1.r;
 	mx.c = mx2.c;
 	mx_pos = 0;
-	i = 0;
-	while (i < mx1.r)
+	row = 0;
+	while (row < mx1.r)
 	{
-		j = 0;
-		while (j < mx2.c)
+		col = 0;
+		while (col < mx2.c)
 		{
-			mx.m[mx_pos++] = calc_dot(i, j, mx1, mx2);
-			j++;
+			mx.m[mx_pos++] = calc_dot(row, col, mx1, mx2);
+			col++;
 		}
-		i++;
+		row++;
 	}
 	return (mx);
 }
@@ -60,7 +60,7 @@ t_mx	get_translation_mx(t_coord tx, t_coord ty, t_coord tz)
 
 	trans_mx.r = 4;
 	trans_mx.c = 4;
-	ft_bzero(&trans_mx.m, 16);
+	ft_memset(&trans_mx.m, 0, sizeof(trans_mx.m));
 	trans_mx.m[0] = 1;
 	trans_mx.m[5] = 1;
 	trans_mx.m[10] = 1;
@@ -79,7 +79,7 @@ t_mx	get_rotation_mx(t_mx axis, long double agl_r)
 
 	rot_mx.r = 4;
 	rot_mx.c = 4;
-	ft_bzero(&rot_mx.m, 16 * sizeof(long double));
+	ft_memset(&rot_mx.m, 1, sizeof(rot_mx.m));
 	rot_mx.m[0] = agl_c + pow(axis.m[X], 2) * (1 - agl_c);
 	rot_mx.m[1] = axis.m[X] * axis.m[Y] * (1 - agl_c) - axis.m[Z] * agl_s;
 	rot_mx.m[2] = axis.m[X] * axis.m[Z] * (1 - agl_c) + axis.m[Y] * agl_s;

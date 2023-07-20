@@ -33,7 +33,7 @@ t_color	trace_ray(t_data *data, t_ray ray, const long double *range, int recursi
 	sec_ray.origin = get_incident_point(ray, closest_obj);
 	sec_ray.dir = get_incident_point_norm(**data->scn_els[CAM], sec_ray.origin, closest_obj);
 	color[0] = get_local_color(data, ray, sec_ray, closest_obj->el);
-	if (recursion_depth > 0 || closest_obj->el->reflection > 0)
+	if (recursion_depth > 0 && closest_obj->el->reflection > 0)
 		color[1] = get_reflected_color(data, ray, sec_ray, recursion_depth);
 	if (recursion_depth <= 0 || closest_obj->el->reflection <= 0)
 		ret_color = color[0];
