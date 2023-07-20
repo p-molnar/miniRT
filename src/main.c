@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/19 14:06:07 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/20 16:10:40 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,6 @@ int	main(int argc, char *argv[])
 	// mlx_loop_hook(d.mlx, ft_hook, d.mlx);
 	mlx_loop(d.mlx);
 	mlx_terminate(d.mlx);
-	system("leaks minirt");
+	// system("leaks minirt");
 	return (EXIT_SUCCESS);
 }

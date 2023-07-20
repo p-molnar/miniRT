@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/19 15:19:41 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/20 23:49:26 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ void		add_cylinder_caps(t_scn_el *cylinder);
 void		parse_coordinates(t_coord3 *coord, char *input, t_line line_info);
 void		parse_norm_vec(t_vec3 *vec, char *input, t_line line_info);
 void		parse_float(long double *f, char *input, t_line line_info);
-void		parse_range(long double *f, char *input, long double n_lower,
-				long double n_upper, t_line line_info);
-void		parse_color(t_color *color, char *input, int n_lower, int n_upper, t_line line_info);
+void		parse_range(long double *f, char *input, t_range range, t_line line_info);
+void		parse_color(t_color *color, char *input, t_range range, t_line line_info);
 
 //	free
 void		free_arr(void **arr);
@@ -52,7 +51,6 @@ t_ray		apply_transformations(t_ray ray, t_scn_el *obj_info);
 
 //	error handling
 int			error(t_err error);
-void		warning(char *msg);
 
 //	renderer
 void		render_scene(t_data *d);

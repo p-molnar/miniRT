@@ -6,12 +6,13 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:27:54 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/19 15:17:31 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/21 00:08:39 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 #include <mrt_data_struct.h>
+#include <mrt_error.h>
 #include <mrt_macros.h>
 #include <stdio.h>
 
@@ -39,11 +40,12 @@ void	parse_type_identifier(t_scn_el *el, char *line, t_line line_info)
 	else if (ft_strncmp("cy", line, str_len) == 0)
 		el_type = F_CYLINDER;
 	else
-		error((t_err){"Element must be of type: A, L, DL, C, TC, sp, pl, cy", line_info.file, line_info.num, EXIT, 1});
+		error((t_err){WRONG_EL, line_info.file, line_info.num, EXIT, 1});
 	el->type = el_type;
 }
 
-void	parse_elements(t_scn_el *el, char **input, unsigned int field, t_line line_info)
+void	parse_elements(t_scn_el *el, char **input, unsigned int field,
+		t_line line_info)
 {
 	int	col;
 
@@ -59,13 +61,13 @@ void	parse_elements(t_scn_el *el, char **input, unsigned int field, t_line line_
 	if (field & F_HEIGHT)
 		parse_float(&el->height, input[col++], line_info);
 	if (field & F_FOV)
-		parse_range(&el->fov, input[col++], 0.0, 180.0, line_info);
+		parse_range(&el->fov, input[col++], (t_range){0, 180}, line_info);
 	if (field & F_INTENSITY)
-		parse_range(&el->intensity, input[col++], 0.0, 1.0, line_info);
+		parse_range(&el->intensity, input[col++], (t_range){0, 1}, line_info);
 	if (field & F_COLOR)
-		parse_color(&el->color, input[col++], 0, 255, line_info);
+		parse_color(&el->color, input[col++], (t_range){0, 255}, line_info);
 	if (field & F_SPECULAR)
-		parse_range(&el->specular, input[col++], -1, 3000, line_info);
+		parse_range(&el->specular, input[col++], (t_range){-1, 999}, line_info);
 	if (field & F_REFLECTION)
-		parse_range(&el->reflection, input[col++], 0, 1, line_info);
+		parse_range(&el->reflection, input[col++], (t_range){0, 1}, line_info);
 }

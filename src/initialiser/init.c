@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 10:46:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/19 13:17:14 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/20 15:28:41 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,13 @@ void	populate_rotation_mx(t_scn_el *el)
 	pivot_ax = cross(dft_world_orientation, el->n_vec);
 	normalize(&pivot_ax);
 	pivot_mx = coord_to_mx(pivot_ax.dir, 4, 1, 1);
-	printf("pivot_mx\n");
-	print_mx(&pivot_mx);
 	rot_mx = get_rotation_mx(pivot_mx, agl_r);
 	inv_rot_mx = get_inverse_mx(rot_mx);
 	ft_memcpy(&el->rotation, &rot_mx, sizeof(t_mx));
 	ft_memcpy(&el->inv_rotation, &inv_rot_mx, sizeof(t_mx));
+	printf("rotation_mx\n");
+	print_mx(&el->rotation);
+	printf("inverse_rotation mx\n");
 	print_mx(&el->inv_rotation);
 }
 
@@ -106,7 +107,7 @@ void	set_up_camera_orientation(t_data *d)
 	normalize(&right_vec);
 	up_vec = cross(fw_vec, right_vec);
 	normalize(&up_vec);
-	ft_bzero(&ctw_mx_local, sizeof(t_mx));
+	ft_memset(&ctw_mx_local, 0, sizeof(t_mx));
 	ctw_mx_local.m[0] = right_vec.dir.x;
 	ctw_mx_local.m[1] = up_vec.dir.x;
 	ctw_mx_local.m[2] = fw_vec.dir.x;

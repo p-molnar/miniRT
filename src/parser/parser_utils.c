@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <minirt.h>
 #include <string.h>
 
 int	open_file(char *file_name)

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/20 12:23:01 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/20 21:15:01 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <fcntl.h>
 #include <libft.h>
 #include <minirt.h>
+#include <mrt_error.h>
 #include <mrt_macros.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -48,32 +49,25 @@ void	validate_scn_el_setup(t_data *scn)
 {
 	t_scn_el	*el;
 	t_list		*tmp;
-	long double	total_light_brightness;
 	int			els;
 
 	tmp = scn->all_scn_el;
-	total_light_brightness = 0;
 	els = 0;
 	while (tmp)
 	{
 		el = tmp->content;
-		total_light_brightness += el->intensity;
 		els |= el->type;
 		tmp = tmp->next;
 	}
 	if (!((els & F_CAM) || (els & F_TG_CAM)))
-		error((t_err){"Required element: Camera", NULL, 0, EXIT, 1});
-	if (scn && total_light_brightness < 0.05)
-		warning(
-			ft_strdup("Too dark scene: add lights, or increase brightness.")
-			);
+		error((t_err){CAM_REQUIRED, NULL, 0, EXIT, 1});
 }
 
 void	parse_data(t_data *scn, t_scn_el *el, char **input, t_line line_info)
 {
 	parse_type_identifier(el, input[0], line_info);
 	if (is_duplicate_el_type(el->type, scn))
-		error((t_err){"Duplicate element", line_info.file, line_info.num, EXIT, 1});
+		error((t_err){DUPLICATE_EL, line_info.file, line_info.num, EXIT, 1});
 	if (el->type == F_AMB_LIGHT)
 		parse_elements(el, input, AMB_LIGHT_FIELDS, line_info);
 	else if (el->type == F_POINT_LIGHT)
@@ -96,47 +90,45 @@ void	parse_data(t_data *scn, t_scn_el *el, char **input, t_line line_info)
 	}
 }
 
-void	parse_line(t_data *scn, t_line line)
+void	parse_line(t_data *scn, t_line *line)
 {
-	char		**el_data;
+	char		**el_info;
 	t_scn_el	*el;
 	t_list		*list_el;
+	char		*tmp_line;
 
-	el_data = ft_split(line.content, ' ');
+	tmp_line = line->content;
+	line->content = ft_strtrim(tmp_line, "\n");
+	free(tmp_line);
+	if (!line->content)
+		error((t_err){strerror(errno), __FILE__, __LINE__, EXIT, 1});
+	el_info = ft_split(line->content, ' ');
 	el = ft_calloc(1, sizeof(t_scn_el));
-	if (!el_data || !el)
-		error((t_err){"Malloc error", __FILE__, __LINE__, EXIT, 1});
-	parse_data(scn, el, el_data, line);
+	if (!el_info || !el)
+		error((t_err){strerror(errno), __FILE__, __LINE__, EXIT, 1});
+	parse_data(scn, el, el_info, *line);
 	list_el = ft_lstnew(el);
 	if (!list_el)
-		error((t_err){"Malloc error", __FILE__, __LINE__, EXIT, 1});
+		error((t_err){strerror(errno), __FILE__, __LINE__, EXIT, 1});
 	ft_lstadd_back(&scn->all_scn_el, list_el);
-	free_arr((void **)el_data);
+	free_arr((void **)el_info);
 }
 
 void	parse_input(t_data *scn, int argc, char *argv[])
 {
 	int		fd;
 	t_line	line;
-	char	*tmp_line;
 
 	if (argc != 2)
-		error((t_err){"Expected arg count: 2", NULL, -1, EXIT, 1});
+		error((t_err){REQUIRED_ARGC, NULL, -1, EXIT, 1});
 	fd = open_file(argv[1]);
 	line.file = argv[1];
-	line.content= get_next_line(fd);
+	line.content = get_next_line(fd);
 	line.num = 1;
 	while (line.content)
 	{
 		if (line.content[0] != '\n' && line.content[0] != '#')
-		{
-			tmp_line = line.content;
-			line.content = ft_strtrim(tmp_line, "\n");
-			if (!line.content)
-				error((t_err){"Malloc error", __FILE__, __LINE__, EXIT, 1});
-			free(tmp_line);
-			parse_line(scn, line);
-		}
+			parse_line(scn, &line);
 		free(line.content);
 		line.content = get_next_line(fd);
 		line.num++;

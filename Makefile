@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/07/18 16:01:11 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/07/20 21:16:55 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CFLAGS 			= 	-Wall -Werror -Wextra $(addprefix -I, $(INCL))
 LDFLAGS			=	-L$(shell brew --prefix glfw)/lib -lglfw -framework Cocoa -framework OpenGL -framework IOKit
 MACRO_FLAGS		=	-DRECURSIVE_DEPTH=$(RECURSIVE_DEPTH)
 CFLAGS			+=	-g # debug
-# CFLAGS			+=	-fsanitize=address
+CFLAGS			+=	-fsanitize=address
 NAME			=	minirt
 INCL			=	inc libft/inc MLX42/include/MLX42
 
@@ -67,7 +67,6 @@ ELEMENTS		=	$(addprefix	elements/, 									\
 
 ERROR			=	$(addprefix	error/, 									\
 								error.c										\
-								warning.c									\
 								)
 
 FREE			=	$(addprefix	free/,										\
