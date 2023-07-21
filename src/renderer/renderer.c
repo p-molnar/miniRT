@@ -17,7 +17,7 @@
 #include <stdlib.h>
 
 
-t_color	trace_ray(t_data *data, t_ray ray, const long double *range, int recursion_depth)
+t_color	trace_ray(t_data *data, t_ray ray, t_range range, int recursion_depth)
 {
 	t_closest			*closest_obj;
 	t_color				color[2];
@@ -51,7 +51,6 @@ void	render_scene(t_data *data)
 	long double	pixel_y;
 	long double	aspect_ratio;
 	long double	fov_scale;
-	const long double	range[RANGE_SIZE] = {1, INF};
 	t_color	color;
 	t_ray 	ray;
 	t_mx	dir_mx;
@@ -72,7 +71,7 @@ void	render_scene(t_data *data)
 			dir_mx = multiply_mx(data->ctw_mx, dir_mx);
 			ray.dir = create_vec(dir_mx.m[X], dir_mx.m[Y], dir_mx.m[Z]);
 			normalize(&ray.dir);
-			color = trace_ray(data, ray, range, 0);
+			color = trace_ray(data, ray, (t_range){1, INF}, 0);
 			mlx_put_pixel(data->img, x, y, color);
 			x++;
 		}

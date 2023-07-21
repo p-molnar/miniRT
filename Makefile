@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/07/20 21:16:55 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/07/21 13:26:35 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ CC 				= 	gcc
 CFLAGS 			= 	-Wall -Werror -Wextra $(addprefix -I, $(INCL))
 LDFLAGS			=	-L$(shell brew --prefix glfw)/lib -lglfw -framework Cocoa -framework OpenGL -framework IOKit
 MACRO_FLAGS		=	-DRECURSIVE_DEPTH=$(RECURSIVE_DEPTH)
-CFLAGS			+=	-g # debug
-CFLAGS			+=	-fsanitize=address
+# CFLAGS			+=	-g # debug
+# CFLAGS			+=	-fsanitize=address
 NAME			=	minirt
 INCL			=	inc libft/inc MLX42/include/MLX42
 
@@ -43,7 +43,8 @@ STATUS_FMT		=	$(BOLD)$(P_NAME_W) $(DEF) $(STATUS_W) $(SPACE_W)
 
 #	PARSER
 INITAILISER		=	$(addprefix initialiser/,								\
-								init.c)
+								ctw_mx.c									\
+								transformation_mx.c)
 
 PARSER			=	$(addprefix	parser/,									\
 								parser.c									\

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/24 10:10:58 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/18 16:36:54 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/21 13:21:13 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,34 +81,6 @@ t_mx	get_inverse_mx(t_mx mx)
 	}
 	return (inv_mx);
 }
-
-// t_mx	vec_to_mx(t_mx mx, int r, int c, long double val)
-// {
-// 	long double	tmp;
-// 	int		row;
-// 	int		col;
-// 	int		i;
-// 	t_mx	mx
-
-// 	i = 0;
-// 	row = 0;
-// 	while (row < r)
-// 	{
-// 		col = 0;
-// 		while (col < c)
-// 		{
-// 			if (row < mx->r && col < mx->c)
-// 				tmp[row * mx->c + col] = mx->m[i++];
-// 			else if (row == r - 1 && col == c - 1)
-// 				tmp[row * mx->c + col] = val;
-// 			col++;
-// 		}
-// 		row++;
-// 	}
-// 	mx->r = r;
-// 	mx->c = c;
-// 	mx->m = tmp;
-// }
 
 t_mx	coord_to_mx(t_coord3 coord, int r, int c, int val)
 {

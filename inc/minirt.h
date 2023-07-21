@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/20 23:49:26 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/21 13:29:37 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void		parse_color(t_color *color, char *input, t_range range, t_line line_info);
 
 //	free
 void		free_arr(void **arr);
-void		free_mx(t_mx *mx);
 void		free_scn_el(t_scn_el *el);
+void		clean_up(t_data *d);
 
 //	helper
 void		print_mx(t_mx *mx);
@@ -54,8 +54,7 @@ int			error(t_err error);
 
 //	renderer
 void		render_scene(t_data *d);
-t_color		trace_ray(t_data *data, t_ray ray, const long double *range,
-				int recursion_depth);
+t_color		trace_ray(t_data *data, t_ray ray, t_range range, int recursion_depth);
 
 //	renderer/color
 t_color		get_reflected_color(t_data *data, t_ray ray, t_ray sec_ray, int depth);
@@ -66,7 +65,7 @@ t_color		mix_colors(t_color local_color, t_color reflected_color,
 long double	get_lighting_intensity(t_data *data, t_ray ray, t_ray reflection_ray, t_scn_el *obj);
 long double	get_specular_lighting(t_ray ray, t_ray secondary_ray, t_vec3 obj_norm,
 				long double intensity, long double spec);
-t_closest	*cast_shadow(t_data *data, t_ray ray, long double *range);
+t_closest	*cast_shadow(t_data *data, t_ray ray, t_range range);
 
 //	util
 // t_scn_el	**get_scn_els(t_list *list, int type);
@@ -75,7 +74,7 @@ void		init_vec(t_vec3 **arr, int size);
 t_vec3		get_reflection_ray(t_vec3 ray, t_vec3 norm);
 t_coord3	get_incident_point(t_ray ray, t_closest *obj);
 t_vec3		get_incident_point_norm(t_scn_el cam, t_coord3 inc_p, t_closest *obj);
-void		set_up_camera_orientation(t_data *d);
+void		set_up_ctw_mx(t_data *d);
 
 //	math
 t_vec3		create_vec(t_coord x, t_coord y, t_coord z);
@@ -131,7 +130,7 @@ t_color	get_local_color(t_data *data, t_ray ray, t_ray reflection_ray, t_scn_el 
 
 // render util
 void		draw_axes(t_data *data);
-t_closest	*get_closest_el(t_scn_el **el, t_ray ray, const long double *range);
+t_closest	*get_closest_el(t_scn_el **el, t_ray ray, t_range range);
 long double	*convert_to_viewport(int x, int y, long double *viewport,
 				t_scn_el *cam);
 

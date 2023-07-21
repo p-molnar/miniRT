@@ -66,7 +66,7 @@ t_coord3	get_incident_point(t_ray ray, t_closest *obj)
 	return (inc_p);
 }
 
-t_closest	*get_closest_el(t_scn_el **el, t_ray ray, const long double *range)
+t_closest	*get_closest_el(t_scn_el **el, t_ray ray, t_range range)
 {
 	t_closest	*closest;
 	long double	t;
@@ -86,12 +86,12 @@ t_closest	*get_closest_el(t_scn_el **el, t_ray ray, const long double *range)
 			t = get_cylinder_intersection(ray, el[i], &closest->inc_p);
 		else if (el[i]->type == F_PLANE)
 			t = get_plane_intersection(ray, el[i]);
-		if (is_in_range_f(t, range[MIN], range[MAX]) && t < closest->dist)
+		if (is_in_range_f(t, range.min, range.max) && t < closest->dist)
 		{
 			closest->dist = t;
 			closest->el = el[i];
 		}
-		if (is_in_range_f(t, range[MIN], range[MAX]) && t < closest->dist)
+		if (is_in_range_f(t, range.min, range.max) && t < closest->dist)
 		{
 			closest->dist = t;
 			closest->el = el[i];

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/20 16:10:40 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/21 13:26:10 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,6 @@ void	set_up_scn_el_ptrs(t_data *d)
 	d->scn_els[ALL_OBJS] = get_scn_els(d->all_scn_el, G_OBJS);
 }
 
-void	clean_up(t_data *d)
-{
-	int			i;
-	t_list	*next;
-
-	while (d->all_scn_el)
-	{
-		next = d->all_scn_el->next;
-		free_scn_el(d->all_scn_el->content);
-		free(d->all_scn_el);
-		d->all_scn_el = next;
-	}
-	i = 0;
-	while (i < SCN_SIZE)
-		free(d->scn_els[i++]);
-}
-
 int	main(int argc, char *argv[])
 {
 	t_data	d;
@@ -55,7 +38,7 @@ int	main(int argc, char *argv[])
 	ft_memset(&d, 0, sizeof(t_data));
 	parse_input(&d, argc, argv);
 	set_up_scn_el_ptrs(&d);
-	set_up_camera_orientation(&d);
+	set_up_ctw_mx(&d);
 	d.mlx = mlx_init(CANVAS_W + 5, CANVAS_H + 5, "MiniRT", true);
 	if (!d.mlx)
 	{
@@ -73,6 +56,6 @@ int	main(int argc, char *argv[])
 	// mlx_loop_hook(d.mlx, ft_hook, d.mlx);
 	mlx_loop(d.mlx);
 	mlx_terminate(d.mlx);
-	// system("leaks minirt");
+	system("leaks minirt");
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:57:27 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/18 14:42:24 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/21 13:31:59 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,9 @@ t_color	get_reflected_color(t_data *data, t_ray ray, t_ray sec_ray, int depth)
 {
 	t_color	reflected_color;
 	t_ray	reflected_ray;
-	const long double	ref_range[RANGE_SIZE] = {EPS, INF};
 
 	reflected_ray.origin = sec_ray.origin;
 	reflected_ray.dir = get_reflection_ray(scale(-1, ray.dir), sec_ray.dir);
-	reflected_color = trace_ray(data, reflected_ray, ref_range, depth - 1);
+	reflected_color = trace_ray(data, reflected_ray, (t_range){EPS, INF}, depth - 1);
 	return (reflected_color);
 }
