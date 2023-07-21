@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:50:50 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/19 15:24:43 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/21 11:53:23 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@
 int	error(t_err error)
 {
 	printf("%sError%s\n", RED, DEF);
-	if (error.msg)
-		printf("%s: ", error.msg);
 	if (error.file)
 		printf("%s", error.file);
 	if (error.line > 0)
-		printf(":%d\n", error.line);
+		printf(":%d ", error.line);
+	if (error.msg)
+		printf("\t%s", error.msg);
 	printf("\nUsage: ./minirt <path-to-map>\n");
 	if (error.exit_method == EXIT)
 		exit(error.exit_code);
