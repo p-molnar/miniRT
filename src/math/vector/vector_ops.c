@@ -6,13 +6,14 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 15:01:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/18 14:42:47 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/21 15:02:18 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 #include <stdlib.h>
 #include <minirt.h>
+
 
 t_vec3	create_vec(t_coord x, t_coord y, t_coord z)
 {
@@ -28,7 +29,7 @@ t_vec3	create_vec(t_coord x, t_coord y, t_coord z)
 t_vec3	create_dir_vec(t_coord3 init_point, t_coord3 term_point)
 {
 	t_vec3		dir;
-	
+
 	dir = coord_to_vec(coord_subtract(term_point, init_point));
 	return (dir);
 }

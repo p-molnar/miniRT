@@ -6,14 +6,14 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:57:27 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/21 13:31:59 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/21 15:29:19 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 #include <stdlib.h>
 
-t_color	get_local_color(t_data *data, t_ray ray, t_ray reflection_ray, t_scn_el *closest_el)
+t_color	get_local_color(t_data *data, t_ray ray, t_ray reflection_ray, t_scn_el closest_el)
 {
 	t_color		tmp_color;
 	t_color		color;
@@ -25,7 +25,7 @@ t_color	get_local_color(t_data *data, t_ray ray, t_ray reflection_ray, t_scn_el 
 	i = 1;
 	while (i < COLOR_SIZE)
 	{
-		tmp_color = get_color(closest_el->color, i);
+		tmp_color = get_color(closest_el.color, i);
 		color = update_color_channel(color, tmp_color * intensity, i);
 		i++;
 	}

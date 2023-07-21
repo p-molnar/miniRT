@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/20 23:41:51 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/21 15:03:10 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,46 +20,53 @@
 typedef int						t_color;
 typedef long double				t_coord;
 
-typedef struct	s_range 
+typedef struct s_coord_sys
 {
-	long double	min;
-	long double	max;
-}	t_range;
+	int							pixel_x;
+	int							pixel_y;
+	long double					x;
+	long double					y;
+}								t_coord_sys;
 
+typedef struct s_range
+{
+	long double					min;
+	long double					max;
+}								t_range;
 
 typedef struct s_line
 {
-	char	*content;
-	char	*file;
-	int		num;
-}	t_line;
+	char						*content;
+	char						*file;
+	int							num;
+}								t_line;
 
 typedef struct s_err
 {
-	const char			*msg;
-	char				*file;
-	int					line;
-	enum e_exit_method_code exit_method;
-	int					exit_code;
-}	t_err;
+	const char					*msg;
+	char						*file;
+	int							line;
+	enum e_exit_method_code		exit_method;
+	int							exit_code;
+}								t_err;
 
-
-typedef union u_coord3 
+typedef union u_coord3
 {
-	struct {
-		t_coord	x;
-		t_coord	y;
-		t_coord	z;
+	struct
+	{
+		t_coord					x;
+		t_coord					y;
+		t_coord					z;
 	};
-	t_coord	coord[3];
-}	t_coord3;
+	t_coord						coord[3];
+}								t_coord3;
 
 typedef struct s_quad_params
 {
-	long double	a;
-	long double	b;
-	long double	c;
-}	t_quad_param;
+	long double					a;
+	long double					b;
+	long double					c;
+}								t_quad_param;
 
 typedef struct s_mx
 {
