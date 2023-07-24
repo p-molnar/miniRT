@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   shadow.c                                           :+:    :+:            */
+/*   vector_ops_3.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/05/03 15:44:35 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/21 15:39:15 by pmolnar       ########   odam.nl         */
+/*   Created: 2023/07/21 22:11:02 by pmolnar       #+#    #+#                 */
+/*   Updated: 2023/07/23 00:24:13 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
-#include <stdio.h>
 
-t_closest	cast_shadow(t_data *data, t_ray ray, t_range range)
+t_coord3	offset(t_coord3 p, t_vec3 vec)
 {
-	t_closest	closest_el;
+	int			i;
+	t_coord3	new_point;
+	t_coord3	offset_vec;
 
-	closest_el = get_closest_el(data->scn_els[ALL_OBJS], ray, range);
-	return (closest_el);
+	i = 0;
+	while (i < COORD_SIZE)
+	{
+		new_point.coord[i] = p.coord[i] + vec.dir.coord[i];
+		i++;
+	}
+	offset_vec = create_coord(new_point.x, new_point.y, new_point.z);
+	return (offset_vec);
 }

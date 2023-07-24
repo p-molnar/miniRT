@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:59:42 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/20 15:32:46 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/21 21:50:45 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ bool	get_body_intersections(t_ray ray, t_scn_el *obj, long double z[2],
 	long double		*t;
 
 	param.a = pow(ray.dir.dir.x, 2) + pow(ray.dir.dir.y, 2);
-	param.b = 2 * (ray.origin.x * ray.dir.dir.x + ray.origin.y
-			* ray.dir.dir.y);
-	param.c = pow(ray.origin.x, 2) + pow(ray.origin.y, 2) - pow(obj->diameter / 2,  2);
+	param.b = 2 * (ray.origin.x * ray.dir.dir.x + ray.origin.y * ray.dir.dir.y);
+	param.c = pow(ray.origin.x, 2) + pow(ray.origin.y, 2) - pow(obj->diameter
+			/ 2, 2);
 	t = quad_eq_solver(param, NULL);
 	if (t)
 	{
@@ -84,16 +84,19 @@ void	get_cap_intersections(t_ray ray, t_scn_el *obj, long double z[2],
 		intersects[1] = (obj->cap[1].pos.z - ray.origin.z) / ray.dir.dir.z;
 }
 
-
-
-long double	get_cylinder_intersection(t_ray ray, t_scn_el *obj_info, t_coord3 *inc_p)
+long double	get_cylinder_intersection(t_ray ray, t_scn_el *obj_info,
+		t_coord3 *inc_p)
 {
 	long double	z[2];
-	long double	intersects[4] = {-1, -1, -1, -1};
+	long double	intersects[4];
 	long double	smallest_positive;
-	t_coord3		tmp_coord;
+	t_coord3	tmp_coord;
 	t_ray		transformed_ray;
 
+	intersects[0] = -1;
+	intersects[1] = -1;
+	intersects[2] = -1;
+	intersects[3] = -1;
 	smallest_positive = -1;
 	transformed_ray = apply_transformations(ray, obj_info);
 	if (get_body_intersections(transformed_ray, obj_info, z, intersects))
@@ -103,7 +106,8 @@ long double	get_cylinder_intersection(t_ray ray, t_scn_el *obj_info, t_coord3 *i
 	}
 	if (smallest_positive >= 0.0)
 	{
-		tmp_coord = offset(transformed_ray.origin, scale(smallest_positive, transformed_ray.dir));
+		tmp_coord = offset(transformed_ray.origin, scale(smallest_positive,
+					transformed_ray.dir));
 		ft_memcpy(inc_p, &tmp_coord, sizeof(t_coord3));
 	}
 	return (smallest_positive);

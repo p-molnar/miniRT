@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/08 10:18:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/18 14:49:16 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/21 16:44:27 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 
 void	print_mx(t_mx *mx)
 {
+	int	dim;
+
 	printf("[\n");
-	int dim = mx->r * mx->c;
+	dim = mx->r * mx->c;
 	for (int i = 0; i < dim; i++)
 	{
 		printf("% .4Lf   ", mx->m[i]);
@@ -50,9 +52,9 @@ void	print_scene_el(t_scn_el *el)
 			el->target.coord[1],
 			el->target.coord[2]);
 	printf("n_vec->dir: x=%Lf, y=%Lf, z=%Lf\n",
-				el->n_vec.dir.coord[0],
-				el->n_vec.dir.coord[1],
-				el->n_vec.dir.coord[2]);
+			el->n_vec.dir.coord[0],
+			el->n_vec.dir.coord[1],
+			el->n_vec.dir.coord[2]);
 	printf("diameter: %Lf\n", el->diameter);
 	printf("radius: %Lf\n", el->radius);
 	printf("height: %Lf\n", el->height);
@@ -61,10 +63,10 @@ void	print_scene_el(t_scn_el *el)
 	printf("specular: %Lf\n", el->specular);
 	printf("reflection: %Lf\n", el->reflection);
 	printf("color: r=%d, g=%d, b=%d, a=%d\n",
-		get_color(el->color, R),
-		get_color(el->color, G),
-		get_color(el->color, B),
-		get_color(el->color, A));
+			get_color(el->color, R),
+			get_color(el->color, G),
+			get_color(el->color, B),
+			get_color(el->color, A));
 	if (el->cap)
 	{
 		print_scene_el(&el->cap[0]);

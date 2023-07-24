@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/07/21 13:26:35 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/07/24 16:05:13 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CC 				= 	gcc
 CFLAGS 			= 	-Wall -Werror -Wextra $(addprefix -I, $(INCL))
 LDFLAGS			=	-L$(shell brew --prefix glfw)/lib -lglfw -framework Cocoa -framework OpenGL -framework IOKit
 MACRO_FLAGS		=	-DRECURSIVE_DEPTH=$(RECURSIVE_DEPTH)
-# CFLAGS			+=	-g # debug
+CFLAGS			+=	-g # debug
 # CFLAGS			+=	-fsanitize=address
 NAME			=	minirt
 INCL			=	inc libft/inc MLX42/include/MLX42
@@ -83,9 +83,6 @@ RENDERER_COLOR	=	$(addprefix	color/,										\
 								render_color.c								\
 								)
 
-SHADOW			=	$(addprefix	shadow/,									\
-								shadow.c)									\
-
 TRANSFORMATION	=	$(addprefix	transformations/,							\
 								transformation.c)							\
 
@@ -110,7 +107,8 @@ MATH			=	$(addprefix	math/,										\
 							matrix_ops_2.c)									\
 						$(addprefix vector/, 								\
 							vector_ops.c									\
-							vector_ops_2.c)									\
+							vector_ops_2.c									\
+							vector_ops_3.c)									\
 						$(addprefix misc/,									\
 							quadratic_ops.c									\
 							range.c											\

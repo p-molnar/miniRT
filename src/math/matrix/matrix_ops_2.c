@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/24 10:10:58 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/21 13:21:13 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/21 18:18:41 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ t_mx	get_inverse_mx(t_mx mx)
 	inv_mx.r = mx.r;
 	populate_inv_mx_p1(inv, mx.m);
 	populate_inv_mx_p2(inv, mx.m);
-	det = mx.m[0] * inv[0] + mx.m[1] * inv[4] + mx.m[2] * inv[8] + mx.m[3] * inv[12];
+	det = mx.m[0] * inv[0] + mx.m[1] * inv[4] + mx.m[2] * inv[8] + mx.m[3]
+		* inv[12];
 	if (det != 0.0)
 		det = 1.0 / det;
 	i = 0;

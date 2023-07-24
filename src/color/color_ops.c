@@ -6,15 +6,30 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 20:52:46 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/05/03 14:10:26 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/21 16:38:59 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-t_color	get_rgba(int r, int g, int b, int a)
+t_color	mix_colors(t_color local_color, t_color reflected_color,
+		long double ref_factor)
 {
-	return (r << 24 | g << 16 | b << 8 | a);
+	t_color	color;
+	t_color	c1;
+	t_color	c2;
+	int		i;
+
+	color = 0xFFFFFFFF;
+	i = 1;
+	while (i < COLOR_SIZE)
+	{
+		c1 = get_color(local_color, i) * (1 - ref_factor);
+		c2 = get_color(reflected_color, i) * ref_factor;
+		color = update_color_channel(color, c1 + c2, i);
+		i++;
+	}
+	return (color);
 }
 
 t_color	get_color(t_color color, int channel)

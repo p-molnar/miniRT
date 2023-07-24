@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/21 15:39:02 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/23 00:19:30 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 
 //	parser
 void		parse_input(t_data *scn, int argc, char *argv[]);
-void		parse_elements(t_scn_el *el, char **input, unsigned int flags, t_line line_info);
+void		parse_elements(t_scn_el *el, char **input, unsigned int flags,
+				t_line line_info);
 void		parse_type_identifier(t_scn_el *el, char *line, t_line line_info);
 void		add_cylinder_caps(t_scn_el *cylinder);
 
@@ -25,8 +26,10 @@ void		add_cylinder_caps(t_scn_el *cylinder);
 void		parse_coordinates(t_coord3 *coord, char *input, t_line line_info);
 void		parse_norm_vec(t_vec3 *vec, char *input, t_line line_info);
 void		parse_float(long double *f, char *input, t_line line_info);
-void		parse_range(long double *f, char *input, t_range range, t_line line_info);
-void		parse_color(t_color *color, char *input, t_range range, t_line line_info);
+void		parse_range(long double *f, char *input, t_range range,
+				t_line line_info);
+void		parse_color(t_color *color, char *input, t_range range,
+				t_line line_info);
 
 //	free
 void		free_arr(void **arr);
@@ -54,18 +57,20 @@ int			error(t_err error);
 
 //	renderer
 void		render_scene(t_data *d);
-t_color		trace_ray(t_data *data, t_ray ray, t_range range, int recursion_depth);
+t_color		trace_ray(t_data *data, t_ray ray, t_range range,
+				int recursion_depth);
 
 //	renderer/color
-t_color		get_reflected_color(t_data *data, t_ray ray, t_ray sec_ray, int depth);
+t_color		get_reflected_color(t_data *data, t_ray ray, t_ray sec_ray,
+				int depth);
 t_color		mix_colors(t_color local_color, t_color reflected_color,
 				long double ref_factor);
 
 //	lighting
-long double	get_lighting_intensity(t_data *data, t_ray ray, t_ray reflection_ray, t_scn_el obj);
-long double	get_specular_lighting(t_ray ray, t_ray secondary_ray, t_vec3 obj_norm,
-				long double intensity, long double spec);
-t_closest	cast_shadow(t_data *data, t_ray ray, t_range range);
+long double	get_lighting_intensity(t_data *data, t_ray ray,
+				t_ray reflection_ray, t_scn_el obj);
+long double	get_specular_intensity(t_ray *rays, long double intensity, long double spec);
+t_closest	is_element_in_way(t_data *data, t_ray ray, t_range range);
 
 //	util
 // t_scn_el	**get_scn_els(t_list *list, int type);
@@ -73,7 +78,7 @@ t_scn_el	**get_scn_els(t_list *list, enum e_scn_el_type_flags type);
 void		init_vec(t_vec3 **arr, int size);
 t_vec3		get_reflection_ray(t_vec3 ray, t_vec3 norm);
 t_coord3	get_incident_point(t_ray ray, t_closest obj);
-t_vec3		get_incident_point_norm(t_scn_el cam, t_coord3 inc_p, t_closest obj);
+t_vec3		get_obj_norm(t_scn_el cam, t_coord3 inc_p, t_closest obj);
 void		set_up_ctw_mx(t_data *d);
 
 //	math
@@ -99,7 +104,7 @@ int			is_within_range_f(long double n, long double n_lower,
 long double	dot(t_vec3 vec_1, t_vec3 vec_2);
 t_vec3		add(t_vec3 vec_1, t_vec3 vec_2);
 t_vec3		scale(long double scaler, t_vec3 vec);
-t_vec3		subtract(t_vec3 vec_1, t_vec3 vec_2);
+t_vec3		vec_subtract(t_vec3 vec_1, t_vec3 vec_2);
 t_vec3		cross(t_vec3 vec_1, t_vec3 vec_2);
 t_coord3	offset(t_coord3 p, t_vec3 vec);
 
@@ -110,9 +115,6 @@ t_vec3		create_dir_vec(t_coord3 init_point, t_coord3 term_point);
 
 long double	*quad_eq_solver(t_quad_param param, long double *discriminant);
 long double	deg_to_rad(long double deg);
-long double	rad_to_deg(long double rad);
-long double	*get_euler_agls(t_mx *rot_mx);
-long double	get_agl_between_d(t_vec3 vec_1, t_vec3 vec_2);
 long double	get_agl_between(t_vec3 vec_1, t_vec3 vec_2);
 
 //	color
@@ -126,7 +128,8 @@ t_color		get_b(int rgba);
 t_color		get_a(int rgba);
 
 //	render color
-t_color	get_local_color(t_data *data, t_ray ray, t_ray reflection_ray, t_scn_el closest_el);
+t_color		get_local_color(t_data *data, t_ray ray, t_ray reflection_ray,
+				t_scn_el closest_el);
 
 // render util
 void		draw_axes(t_data *data);
@@ -137,6 +140,7 @@ long double	*convert_to_viewport(int x, int y, long double *viewport,
 //	elements
 long double	get_sphere_intersections(t_ray ray, t_scn_el *obj);
 long double	get_plane_intersection(t_ray ray, t_scn_el *obj);
-long double	get_cylinder_intersection(t_ray ray, t_scn_el *obj, t_coord3 *inc_p);
+long double	get_cylinder_intersection(t_ray ray, t_scn_el *obj,
+				t_coord3 *inc_p);
 
 #endif

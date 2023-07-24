@@ -6,22 +6,21 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:58:37 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/18 12:31:01 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/21 16:43:51 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt.h>
 #include <math.h>
+#include <minirt.h>
 #include <stdlib.h>
-
 
 long double	get_sphere_intersections(t_ray ray, t_scn_el *obj)
 {
-	t_quad_param param;
-	long double	d;
-	long double	*t;
-	t_vec3		obj_to_cam;
-	long double	smallest;
+	t_quad_param	param;
+	long double		d;
+	long double		*t;
+	t_vec3			obj_to_cam;
+	long double		smallest;
 
 	obj_to_cam = create_dir_vec(obj->pos, ray.origin);
 	param.a = dot(ray.dir, ray.dir);

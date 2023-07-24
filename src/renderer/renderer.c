@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/06 15:10:50by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/22 22:56:57 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,17 @@ t_color	trace_ray(t_data *data, t_ray ray, t_range range, int recursion_depth)
 	t_closest	closest_obj;
 	t_color		color[2];
 	t_color		ret_color;
-	t_ray		sec_ray;
+	t_ray		reflection;
 
 	closest_obj = get_closest_el(data->scn_els[ALL_OBJS], ray, range);
 	if (!closest_obj.el)
 		return (BACKGROUND_COLOR);
-	sec_ray.origin = get_incident_point(ray, closest_obj);
-	sec_ray.dir = get_incident_point_norm(**data->scn_els[CAM], sec_ray.origin,
+	reflection.origin = get_incident_point(ray, closest_obj);
+	reflection.dir = get_obj_norm(**data->scn_els[CAM], reflection.origin,
 			closest_obj);
-	color[0] = get_local_color(data, ray, sec_ray, *closest_obj.el);
+	color[0] = get_local_color(data, ray, reflection, *closest_obj.el);
 	if (recursion_depth > 0 && closest_obj.el->reflection > 0)
-		color[1] = get_reflected_color(data, ray, sec_ray, recursion_depth);
+		color[1] = get_reflected_color(data, ray, reflection, recursion_depth);
 	if (recursion_depth <= 0 || closest_obj.el->reflection <= 0)
 		ret_color = color[0];
 	else

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 14:48:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/18 14:46:21 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/21 22:10:39 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ long double	dot(t_vec3 vec_1, t_vec3 vec_2)
 t_vec3	add(t_vec3 vec_1, t_vec3 vec_2)
 {
 	t_coord3	tmp;
-	int		i;
+	int			i;
 
 	i = 0;
 	while (i < COORD_SIZE)
@@ -56,7 +56,7 @@ t_vec3	add(t_vec3 vec_1, t_vec3 vec_2)
 	return (coord_to_vec(tmp));
 }
 
-t_vec3	subtract(t_vec3 vec_1, t_vec3 vec_2)
+t_vec3	vec_subtract(t_vec3 vec_1, t_vec3 vec_2)
 {
 	t_vec3	return_vec;
 
@@ -77,26 +77,10 @@ t_vec3	cross(t_vec3 vec_1, t_vec3 vec_2)
 	while (i < COORD_SIZE)
 	{
 		return_vec.coord[i] = normal[0].dir.coord[(i + 1) % 3]
-			* normal[1].dir.coord[(i + 2) % 3] -
-			normal[0].dir.coord[(i + 2) % 3] * normal[1].dir.coord[(i + 1)
-				% 3];
+			* normal[1].dir.coord[(i + 2) % 3]
+			- normal[0].dir.coord[(i + 2) % 3]
+			* normal[1].dir.coord[(i + 1) % 3];
 		i++;
 	}
 	return (coord_to_vec(return_vec));
 }
-
-t_coord3	offset(t_coord3 p, t_vec3 vec)
-{
-	t_coord3	new_point;
-	t_coord3	offset_vec;
-	int i;
-
-	i = 0;
-	while (i < COORD_SIZE)
-	{
-		new_point.coord[i] = p.coord[i] + vec.dir.coord[i];
-		i++;
-	}
-	offset_vec = create_coord(new_point.x, new_point.y, new_point.z);
-	return (offset_vec);
-};

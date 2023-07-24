@@ -6,14 +6,13 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 15:01:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/21 15:02:18 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/21 18:18:55 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 #include <stdlib.h>
 #include <minirt.h>
-
 
 t_vec3	create_vec(t_coord x, t_coord y, t_coord z)
 {
