@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/22 22:56:57 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/24 17:57:13 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_color	trace_ray(t_data *data, t_ray ray, t_range range, int recursion_depth)
 	return (ret_color);
 }
 
-void	render_scene(t_data *data)
+void	render_scene(t_data *data, int width, int height)
 {
 	t_coord_sys	c;
 	long double	aspect_ratio;
@@ -57,17 +57,17 @@ void	render_scene(t_data *data)
 	t_color		color;
 	t_ray		ray;
 
-	aspect_ratio = CANVAS_W / CANVAS_H;
+	aspect_ratio = width / height;
 	fov_scale = tan(deg_to_rad((*data->scn_els[CAM])->fov / 2));
 	c.pixel_y = 0;
-	while (c.pixel_y < CANVAS_H)
+	while (c.pixel_y < height)
 	{
 		c.pixel_x = 0;
-		while (c.pixel_x < CANVAS_W)
+		while (c.pixel_x < width)
 		{
-			c.x = (2 * ((c.pixel_x + 0.5) / CANVAS_W) - 1) * fov_scale
+			c.x = (2 * ((c.pixel_x + 0.5) / width) - 1) * fov_scale
 				* aspect_ratio;
-			c.y = (1 - 2 * (c.pixel_y + 0.5) / CANVAS_H) * fov_scale;
+			c.y = (1 - 2 * (c.pixel_y + 0.5) / height) * fov_scale;
 			ray = transform_ray(data, c, ray);
 			color = trace_ray(data, ray, (t_range){1, INF}, 0);
 			mlx_put_pixel(data->img, c.pixel_x, c.pixel_y, color);
