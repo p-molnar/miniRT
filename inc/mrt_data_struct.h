@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/24 20:59:14 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/25 11:45:26 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,12 +115,6 @@ typedef struct s_closest
 	long double					dist;
 }								t_closest;
 
-typedef struct s_window
-{
-	int							width;
-	int							height;
-}								t_window;
-
 typedef struct s_data
 {
 	t_list						*all_scn_el;
@@ -128,7 +122,6 @@ typedef struct s_data
 	t_mx						ctw_mx;
 	mlx_t						*mlx;
 	mlx_image_t					*img;
-	t_window					window;
 }								t_data;
 
 #endif
