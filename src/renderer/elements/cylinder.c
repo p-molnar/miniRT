@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:59:42 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/21 21:50:45 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/25 12:27:18 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ void	add_cylinder_caps(t_scn_el *cylinder)
 	cylinder->cap = caps;
 }
 
-long double	yield_smallest_positive(long double *arr)
+long double	yield_smallest_positive(long double *arr, int arr_size)
 {
 	int			i;
 	long double	smallest;
 
 	smallest = INF;
 	i = 0;
-	while (i < 4)
+	while (i < arr_size)
 	{
 		if (arr[i] > 0 && arr[i] < smallest)
 			smallest = arr[i];
@@ -102,7 +102,7 @@ long double	get_cylinder_intersection(t_ray ray, t_scn_el *obj_info,
 	if (get_body_intersections(transformed_ray, obj_info, z, intersects))
 	{
 		get_cap_intersections(transformed_ray, obj_info, z, &intersects[2]);
-		smallest_positive = yield_smallest_positive(intersects);
+		smallest_positive = yield_smallest_positive(intersects, 4);
 	}
 	if (smallest_positive >= 0.0)
 	{
