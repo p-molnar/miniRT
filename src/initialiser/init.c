@@ -6,18 +6,12 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/24 20:50:32 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/24 21:00:19 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/25 12:05:20 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 #include <mrt_data_struct.h>
-
-void	populate_window_properties(t_data *d)
-{
-	d->window.width = CANVAS_W;
-	d->window.height = CANVAS_H;
-}
 
 void	set_up_scn_el_ptrs(t_data *d)
 {
