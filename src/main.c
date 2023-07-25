@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/25 11:45:18 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/25 11:46:48 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	main(int argc, char *argv[])
 	parse_input(&d, argc, argv);
 	set_up_scn_el_ptrs(&d);
 	set_up_ctw_mx(&d);
+	mlx_set_setting(MLX_STRETCH_IMAGE, true);
 	d.mlx = mlx_init(CANVAS_W, CANVAS_H, "MiniRT", true);
 	if (!d.mlx)
 	{
