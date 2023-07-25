@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/24 21:01:40 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/25 23:23:04 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void		parse_elements(t_scn_el *el, char **input, unsigned int flags,
 				t_line line_info);
 void		parse_type_identifier(t_scn_el *el, char *line, t_line line_info);
 void		add_cylinder_caps(t_scn_el *cylinder);
+void		validate_scn_el_setup(t_data *data);
+bool		is_duplicate_el_type(enum e_scn_el_type_flags el_type, t_data *scn);
 
 //	element parser
 void		parse_coordinates(t_coord3 *coord, char *input, t_line line_info);
@@ -73,6 +75,7 @@ long double	get_specular_intensity(t_ray *rays, long double intensity,
 				long double spec);
 t_closest	is_element_in_way(t_data *data, t_ray ray, t_range range);
 
+long double	yield_smallest_positive(long double *arr, int arr_size);
 //	util
 // t_scn_el	**get_scn_els(t_list *list, int type);
 t_scn_el	**get_scn_els(t_list *list, enum e_scn_el_type_flags type);

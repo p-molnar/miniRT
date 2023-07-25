@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/20 21:01:01 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/21 00:02:13 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/25 16:43:13 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <string.h>
 
 # define CAM_REQUIRED "Required element: Camera"
+# define CAM_INSIDE_OBJ "Camera can't be inside an object"
 # define DUPLICATE_EL "Duplicate element"
 # define REQUIRED_ARGC "Expected argument count: 2"
 # define OUT_OF_RANGE "Value out of range"

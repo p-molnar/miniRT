@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 11:10:49 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/20 16:25:21 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/25 22:57:11 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_mx	get_rotation_mx(t_mx axis, long double agl_r)
 
 	rot_mx.r = 4;
 	rot_mx.c = 4;
-	ft_memset(&rot_mx.m, 1, sizeof(rot_mx.m));
+	ft_memset(&rot_mx.m, 0, sizeof(rot_mx.m));
 	rot_mx.m[0] = agl_c + pow(axis.m[X], 2) * (1 - agl_c);
 	rot_mx.m[1] = axis.m[X] * axis.m[Y] * (1 - agl_c) - axis.m[Z] * agl_s;
 	rot_mx.m[2] = axis.m[X] * axis.m[Z] * (1 - agl_c) + axis.m[Y] * agl_s;
