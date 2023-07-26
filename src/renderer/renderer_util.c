@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/26 11:32:00 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/26 11:38:27 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,12 @@ t_vec3	get_cylinder_norm(t_closest obj)
 	t_vec3	obj_norm;
 	t_mx	obj_norm_mx;
 
-	if (((float)obj.inc_p.z > obj.el->cap[0].pos.z
-			&& (float)obj.inc_p.z < obj.el->cap[1].pos.z))
-		obj_norm = create_dir_vec((t_coord3){{0, 0, obj.inc_p.z}}, obj.inc_p);
-	else if ((float)obj.inc_p.z == (float)obj.el->cap[0].pos.z)
+	if ((float)obj.inc_p.z == (float)obj.el->cap[0].pos.z)
 		obj_norm = obj.el->cap[0].n_vec;
 	else if ((float)obj.inc_p.z == (float)obj.el->cap[1].pos.z)
 		obj_norm = obj.el->cap[1].n_vec;
+	else
+		obj_norm = create_dir_vec((t_coord3){{0, 0, obj.inc_p.z}}, obj.inc_p);
 	obj_norm_mx = multiply_mx(obj.el->rotation, coord_to_mx(obj_norm.dir, 4, 1,
 				1));
 	return (create_vec(obj_norm_mx.m[X], obj_norm_mx.m[Y], obj_norm_mx.m[Z]));
