@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/26 13:14:43 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/26 15:16:33 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,28 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+void	set_camera_to_position(t_scn_el *el)
+{
+	t_vec3	cam_dir;
+
+	if (el->type == F_TG_CAM)
+	{
+		el->type = F_CAM;
+		cam_dir = create_dir_vec(el->pos, el->target);
+		normalize(&cam_dir);
+		ft_memcpy(&el->n_vec, &cam_dir, sizeof(t_vec3));
+	}
+	if (el->type == F_CAM)
+	{
+		if (el->n_vec.dir.x == 0 && el->n_vec.dir.y == 0
+			&& el->n_vec.dir.z == 0)
+		{
+			cam_dir = create_vec(0, 0, 1);
+			ft_memcpy(&el->n_vec, &cam_dir, sizeof(t_vec3));
+		}
+	}
+}
 
 static void	validate_line_formatting(t_scn_el el, char **input,
 		t_line line_info)
@@ -41,7 +63,7 @@ static void	validate_line_formatting(t_scn_el el, char **input,
 		error((t_err){FMT_E_SPHERE, line_info.file, line_info.num, EXIT, 1});
 	else if (el.type == F_PLANE && arr_size != 6)
 		error((t_err){FMT_E_PLANE, line_info.file, line_info.num, EXIT, 1});
-	else if (el.type == F_CYLINDER && arr_size != 6)
+	else if (el.type == F_CYLINDER && arr_size != 8)
 		error((t_err){FMT_E_CYLINDER, line_info.file, line_info.num, EXIT, 1});
 }
 
@@ -49,8 +71,7 @@ static void	parse_data(t_data *data, t_scn_el *el, char **input,
 		t_line line_info)
 {
 	parse_type_identifier(el, input[0], line_info);
-	if (is_duplicate_el_type(el->type, data))
-		error((t_err){DUPLICATE_EL, line_info.file, line_info.num, EXIT, 1});
+	validate_for_duplicate_el(el->type, data, line_info);
 	validate_line_formatting(*el, input, line_info);
 	if (el->type == F_AMB_LIGHT)
 		parse_elements(el, input, AMB_LIGHT_FIELDS, line_info);
@@ -72,6 +93,8 @@ static void	parse_data(t_data *data, t_scn_el *el, char **input,
 		add_cylinder_caps(el);
 		populate_transformation_mx(el);
 	}
+	if (el->type == F_CAM || el->type == F_TG_CAM)
+		set_camera_to_position(el);
 }
 
 static void	parse_line(t_data *scn, t_line *line)
