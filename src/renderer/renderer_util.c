@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/26 11:38:27 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/26 15:31:26 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,25 +34,25 @@ t_vec3	get_cylinder_norm(t_closest obj)
 t_vec3	get_obj_norm(t_scn_el cam, t_coord3 inc_p, t_closest obj)
 {
 	t_vec3		obj_norm;
-	t_coord3	coord_diff;
+	long double	agl;
 
-	coord_diff = coord_subtract(cam.pos, inc_p);
 	if (obj.el->type == F_CYLINDER)
 		obj_norm = get_cylinder_norm(obj);
 	else if (obj.el->type == F_SPHERE)
 		obj_norm = create_dir_vec(obj.el->pos, inc_p);
 	else if (obj.el->type == F_PLANE)
 	{
+		agl = get_agl_between(obj.el->n_vec, cam.n_vec);
 		obj_norm = coord_to_vec(obj.el->n_vec.dir);
 		if (obj_norm.dir.x)
 			obj_norm.dir.x = obj_norm.dir.x - (2 * obj_norm.dir.x
-					* (coord_diff.x < 0));
+					* (agl > M_PI || agl < 0));
 		if (obj_norm.dir.y)
 			obj_norm.dir.y = obj_norm.dir.y - (2 * obj_norm.dir.y
-					* (coord_diff.y < 0));
+					* (agl > M_PI || agl < 0));
 		if (obj_norm.dir.z)
 			obj_norm.dir.z = obj_norm.dir.z - (2 * obj_norm.dir.z
-					* (coord_diff.z < 0));
+					* (agl > M_PI || agl < 0));
 	}
 	normalize(&obj_norm);
 	return (obj_norm);
