@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 23:20:51 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/26 12:29:23 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/26 14:42:51 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,8 @@ static bool	is_cam_inside_sphere(t_scn_el cam, t_scn_el el)
 	t_coord3	diff;
 
 	diff = coord_subtract(el.pos, cam.pos);
-	return (pow(diff.x, 2)
-		+ pow(diff.y, 2)
-		+ pow(diff.z, 2)
-		< pow(el.diameter / 2, 2));
+	return (pow(diff.x, 2) + pow(diff.y, 2) + pow(diff.z, 2) < pow(el.diameter
+			/ 2, 2));
 }
 
 static bool	is_cam_in_cylinder(t_scn_el cam, t_scn_el el)
@@ -56,7 +54,7 @@ static bool	is_cam_inside_obj(t_data data)
 		if (el[i]->type == F_SPHERE && is_cam_inside_sphere(*cam[0], *el[i]))
 			is_inside = 1;
 		else if (el[i]->type == F_CYLINDER && is_cam_in_cylinder(*cam[0],
-				*el[i]))
+					*el[i]))
 			is_inside = 1;
 		i++;
 	}
@@ -85,25 +83,29 @@ void	validate_scn_el_setup(t_data *data)
 		error((t_err){CAM_INSIDE_OBJ, NULL, 0, EXIT, 1});
 }
 
-bool	is_duplicate_el_type(enum e_scn_el_type_flags el_type, t_data *scn)
+void	validate_for_duplicate_el(enum e_scn_el_type_flags el_type, t_data *scn,
+		t_line line_info)
 {
+	bool		dupl_found;
 	t_list		*tmp;
 	t_scn_el	*el;
 
+	dupl_found = false;
 	tmp = scn->all_scn_el;
-	while (tmp)
+	while (tmp && !dupl_found)
 	{
 		el = tmp->content;
 		if (is_in_range_i(el_type, F_AMB_LIGHT, F_TG_CAM))
 		{
 			if (el_type == el->type)
-				return (true);
+				dupl_found = 1;
 			else if (el_type == F_CAM && el->type == F_TG_CAM)
-				return (true);
+				dupl_found = 1;
 			else if (el_type == F_TG_CAM && el->type == F_CAM)
-				return (true);
+				dupl_found = 1;
 		}
 		tmp = tmp->next;
 	}
-	return (false);
+	if (dupl_found)
+		error((t_err){DUPLICATE_EL, line_info.file, line_info.num, EXIT, 1});
 }
