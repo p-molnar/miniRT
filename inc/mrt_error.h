@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/20 21:01:01 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/25 16:43:13 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/26 13:13:42 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,17 @@
 # define NULL_PTR "NULL Pointer error"
 # define WRONG_EL "Element must be of type: A, L, DL, C, TC, sp, pl, cy"
 
+# define FMT_E_AMB_LIGHT "Required line format: A <light intensity> <color>"
+# define FMT_E_PNT_LIGHT "Required line format: L <coordinate> \
+<light intensity> <color>"
+# define FMT_E_DIR_LIGHT "Required line format: DL <coordinate> \
+<light intensity> <color>"
+# define FMT_E_CAM "Required line format: C <coordinate> <coordinate> <FOV>"
+# define FMT_E_TGCAM "Required line format: TC <coordinate> <coordinate> <FOV>"
+# define FMT_E_SPHERE "Required line format: sp <coordinate> <diameter> \
+<color> <specular factor> <reflection factor>"
+# define FMT_E_PLANE "Required line format: pl <coordinate> <coordinate> \
+<color> <specular factor> <reflection factor>"
+# define FMT_E_CYLINDER "Required line format: cy <coordinate> <coordinate> \
+<diameter> <height> <color> <specular factor> <reflection factor>"
 #endif
