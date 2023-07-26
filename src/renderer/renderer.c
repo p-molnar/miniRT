@@ -6,13 +6,13 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/24 17:57:13 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/26 23:07:57 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt.h>
 #include <MLX42.h>
 #include <math.h>
+#include <minirt.h>
 
 t_ray	transform_ray(t_data *d, t_coord_sys c, t_ray ray)
 {
@@ -57,7 +57,7 @@ void	render_scene(t_data *data, int width, int height)
 	t_color		color;
 	t_ray		ray;
 
-	aspect_ratio = width / height;
+	aspect_ratio = width / (float)height;
 	fov_scale = tan(deg_to_rad((*data->scn_els[CAM])->fov / 2));
 	c.pixel_y = 0;
 	while (c.pixel_y < height)
@@ -65,9 +65,9 @@ void	render_scene(t_data *data, int width, int height)
 		c.pixel_x = 0;
 		while (c.pixel_x < width)
 		{
-			c.x = (2 * ((c.pixel_x + 0.5) / width) - 1) * fov_scale
-				* aspect_ratio;
-			c.y = (1 - 2 * (c.pixel_y + 0.5) / height) * fov_scale;
+			c.x = (2 * ((c.pixel_x + 0.5) / (float)width) - 1) * aspect_ratio
+				* fov_scale;
+			c.y = (1 - 2 * (c.pixel_y + 0.5) / (float)height) * fov_scale;
 			ray = transform_ray(data, c, ray);
 			color = trace_ray(data, ray, (t_range){1, INF}, 0);
 			mlx_put_pixel(data->img, c.pixel_x, c.pixel_y, color);
