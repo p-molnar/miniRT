@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/25 23:40:19 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/26 11:32:00 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-t_vec3	get_cylinder_norm(t_scn_el cam, t_closest obj)
+t_vec3	get_cylinder_norm(t_closest obj)
 {
 	t_vec3	obj_norm;
 	t_mx	obj_norm_mx;
@@ -23,13 +23,10 @@ t_vec3	get_cylinder_norm(t_scn_el cam, t_closest obj)
 	if (((float)obj.inc_p.z > obj.el->cap[0].pos.z
 			&& (float)obj.inc_p.z < obj.el->cap[1].pos.z))
 		obj_norm = create_dir_vec((t_coord3){{0, 0, obj.inc_p.z}}, obj.inc_p);
-	else
-	{
-		if (cam.pos.z <= obj.inc_p.z)
-			obj_norm = create_vec(0, 0, -1);
-		else
-			obj_norm = create_vec(0, 0, 1);
-	}
+	else if ((float)obj.inc_p.z == (float)obj.el->cap[0].pos.z)
+		obj_norm = obj.el->cap[0].n_vec;
+	else if ((float)obj.inc_p.z == (float)obj.el->cap[1].pos.z)
+		obj_norm = obj.el->cap[1].n_vec;
 	obj_norm_mx = multiply_mx(obj.el->rotation, coord_to_mx(obj_norm.dir, 4, 1,
 				1));
 	return (create_vec(obj_norm_mx.m[X], obj_norm_mx.m[Y], obj_norm_mx.m[Z]));
@@ -42,7 +39,7 @@ t_vec3	get_obj_norm(t_scn_el cam, t_coord3 inc_p, t_closest obj)
 
 	coord_diff = coord_subtract(cam.pos, inc_p);
 	if (obj.el->type == F_CYLINDER)
-		obj_norm = get_cylinder_norm(cam, obj);
+		obj_norm = get_cylinder_norm(obj);
 	else if (obj.el->type == F_SPHERE)
 		obj_norm = create_dir_vec(obj.el->pos, inc_p);
 	else if (obj.el->type == F_PLANE)
