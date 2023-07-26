@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 23:20:51 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/25 23:36:09 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/26 12:29:23 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static bool	is_cam_inside_sphere(t_scn_el cam, t_scn_el el)
 	return (pow(diff.x, 2)
 		+ pow(diff.y, 2)
 		+ pow(diff.z, 2)
-		< el.diameter / 2);
+		< pow(el.diameter / 2, 2));
 }
 
 static bool	is_cam_in_cylinder(t_scn_el cam, t_scn_el el)
