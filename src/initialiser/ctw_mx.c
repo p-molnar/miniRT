@@ -6,12 +6,12 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 10:46:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/21 12:54:03 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/26 15:17:42 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt.h>
 #include <math.h>
+#include <minirt.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -41,24 +41,12 @@ t_mx	get_ctw_mx(t_vec3 right, t_vec3 up, t_vec3 fw, t_scn_el cam)
 void	get_directional_vectors(t_vec3 *up, t_vec3 *fw, t_scn_el *cam)
 {
 	*up = create_vec(0, 1, 0);
-	if (cam->type == F_CAM)
-		*fw = coord_to_vec(cam->n_vec.dir);
-	else
-	{
-		*fw = create_dir_vec(cam->pos, cam->target);
-		normalize(fw);
-	}
-	if (fw->dir.x == 0 && fw->dir.y == 0 && fw->dir.z == 0)
-	{
-		fw->dir.z = 1;
-		fw->len = 1;
-	}
-	else if ((fw->dir.x == 0 && fw->dir.z == 0) && (fw->dir.y == -1
-			|| fw->dir.y == 1))
+	*fw = coord_to_vec(cam->n_vec.dir);
+	if ((fw->dir.x == 0 && fw->dir.z == 0) && (fw->dir.y == -1
+				|| fw->dir.y == 1))
 	{
 		up->dir.y = 0;
 		up->dir.z = 1;
-		fw->len = 1;
 	}
 }
 
