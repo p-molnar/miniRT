@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/24 16:05:41 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/27 17:42:28 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ long double	get_intensity(t_scn_el **objs, t_scn_el *light, t_ray rays[3],
 	{
 		rays[2].origin = rays[1].origin;
 		rays[2].dir = get_light_ray(rays[1].origin, light, &range);
-		if (get_closest_el(objs, rays[2], range).el == NULL)
+		if (intersect(rays[2], objs, range).el == NULL)
 		{
 			n_dot_l = dot(rays[1].dir, rays[2].dir);
 			if (n_dot_l > 0)

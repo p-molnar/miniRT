@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/25 11:45:26 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/27 17:41:13 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,12 +108,12 @@ typedef struct s_scn_el
 	t_color						color;
 }								t_scn_el;
 
-typedef struct s_closest
+typedef struct s_hit_obj
 {
 	t_scn_el					*el;
 	t_coord3					inc_p;
 	long double					dist;
-}								t_closest;
+}								t_hit_obj;
 
 typedef struct s_data
 {

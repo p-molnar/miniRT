@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/26 14:38:38 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/27 17:41:53 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ long double	get_lighting_intensity(t_data *data, t_ray ray,
 				t_ray reflection_ray, t_scn_el obj);
 long double	get_specular_intensity(t_ray *rays, long double intensity,
 				long double spec);
-t_closest	is_element_in_way(t_data *data, t_ray ray, t_range range);
+t_hit_obj	is_element_in_way(t_data *data, t_ray ray, t_range range);
 
 long double	yield_smallest_positive(long double *arr, int arr_size);
 //	util
@@ -82,8 +82,8 @@ t_scn_el	**get_scn_els(t_list *list, enum e_scn_el_type_flags type);
 void		set_up_scn_el_ptrs(t_data *d);
 void		populate_window_properties(t_data *d);
 t_vec3		get_reflection_ray(t_vec3 ray, t_vec3 norm);
-t_coord3	get_incident_point(t_ray ray, t_closest obj);
-t_vec3		get_obj_norm(t_scn_el cam, t_coord3 inc_p, t_closest obj);
+t_coord3	get_incident_point(t_ray ray, t_hit_obj obj);
+t_vec3		get_obj_norm(t_scn_el cam, t_coord3 inc_p, t_hit_obj obj);
 void		set_up_ctw_mx(t_data *d);
 
 //	math
@@ -138,7 +138,7 @@ t_color		get_local_color(t_data *data, t_ray ray, t_ray reflection_ray,
 
 // render util
 void		draw_axes(t_data *data);
-t_closest	get_closest_el(t_scn_el **el, t_ray ray, t_range range);
+t_hit_obj	intersect(t_ray ray, t_scn_el **el, t_range range);
 long double	*convert_to_viewport(int x, int y, long double *viewport,
 				t_scn_el *cam);
 

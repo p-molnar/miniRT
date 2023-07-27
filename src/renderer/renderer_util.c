@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/26 15:31:26 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/27 17:41:34 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-t_vec3	get_cylinder_norm(t_closest obj)
+t_vec3	get_cylinder_norm(t_hit_obj obj)
 {
 	t_vec3	obj_norm;
 	t_mx	obj_norm_mx;
@@ -31,7 +31,7 @@ t_vec3	get_cylinder_norm(t_closest obj)
 	return (create_vec(obj_norm_mx.m[X], obj_norm_mx.m[Y], obj_norm_mx.m[Z]));
 }
 
-t_vec3	get_obj_norm(t_scn_el cam, t_coord3 inc_p, t_closest obj)
+t_vec3	get_obj_norm(t_scn_el cam, t_coord3 inc_p, t_hit_obj obj)
 {
 	t_vec3		obj_norm;
 	long double	agl;
@@ -58,7 +58,7 @@ t_vec3	get_obj_norm(t_scn_el cam, t_coord3 inc_p, t_closest obj)
 	return (obj_norm);
 }
 
-t_coord3	get_incident_point(t_ray ray, t_closest obj)
+t_coord3	get_incident_point(t_ray ray, t_hit_obj obj)
 {
 	t_coord3	inc_p;
 	t_mx		inc_p_mx;
@@ -75,9 +75,9 @@ t_coord3	get_incident_point(t_ray ray, t_closest obj)
 	return (inc_p);
 }
 
-t_closest	get_closest_el(t_scn_el **el, t_ray ray, t_range range)
+t_hit_obj	intersect(t_ray ray, t_scn_el **el, t_range range)
 {
-	t_closest	obj;
+	t_hit_obj	obj;
 	long double	t;
 	int			i;
 
