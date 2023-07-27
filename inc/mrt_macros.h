@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/19 13:50:51 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/26 22:56:31 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define MRT_MACROS_H
 // # define CANVAS_W 10
 // # define CANVAS_H 10
-# define CANVAS_W 800
-# define CANVAS_H 800
+# define CANVAS_W 1280
+# define CANVAS_H 720
 # define INF 99999
 # define BACKGROUND_COLOR 0x000000FF
 # define EPS 0.00001
