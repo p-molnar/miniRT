@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/27 17:41:13 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/28 14:52:10 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,19 @@
 
 typedef int						t_color;
 typedef long double				t_coord;
+
+typedef union	u_color 
+{
+	struct 
+	{
+		uint8_t	r;
+		uint8_t	g;
+		uint8_t	b;
+		uint8_t	a;
+	};
+	uint32_t	color;
+}				t_color2;
+
 
 typedef struct s_coord_sys
 {
@@ -110,9 +123,10 @@ typedef struct s_scn_el
 
 typedef struct s_hit_obj
 {
-	t_scn_el					*el;
-	t_coord3					inc_p;
 	long double					dist;
+	t_scn_el					*attr;
+	t_coord3					inc_p;
+	t_vec3						norm;
 }								t_hit_obj;
 
 typedef struct s_data

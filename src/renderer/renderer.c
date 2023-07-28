@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/27 17:42:15 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/28 14:52:10 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,19 @@ t_color	trace_ray(t_data *data, t_ray ray, t_range range, int recursion_depth)
 	t_ray		reflection;
 
 	hit_obj = intersect(ray, data->scn_els[ALL_OBJS], range);
-	if (!hit_obj.el)
+	if (!hit_obj.attr)
 		return (BACKGROUND_COLOR);
 	reflection.origin = get_incident_point(ray, hit_obj);
 	reflection.dir = get_obj_norm(**data->scn_els[CAM], reflection.origin,
 			hit_obj);
-	color[0] = get_local_color(data, ray, reflection, *hit_obj.el);
-	if (recursion_depth > 0 && hit_obj.el->reflection > 0)
+	// color[0] = get_local_color(data, ray, reflection, *hit_obj.el);
+	color[0] = get_local_color(data, ray, reflection, *hit_obj.attr);
+	if (recursion_depth > 0 && hit_obj.attr->reflection > 0)
 		color[1] = get_reflected_color(data, ray, reflection, recursion_depth);
-	if (recursion_depth <= 0 || hit_obj.el->reflection <= 0)
+	if (recursion_depth <= 0 || hit_obj.attr->reflection <= 0)
 		ret_color = color[0];
 	else
-		ret_color = mix_colors(color[0], color[1], hit_obj.el->reflection);
+		ret_color = mix_colors(color[0], color[1], hit_obj.attr->reflection);
 	return (ret_color);
 }
 

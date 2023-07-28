@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/27 17:42:28 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/28 14:52:10 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ long double	get_intensity(t_scn_el **objs, t_scn_el *light, t_ray rays[3],
 	{
 		rays[2].origin = rays[1].origin;
 		rays[2].dir = get_light_ray(rays[1].origin, light, &range);
-		if (intersect(rays[2], objs, range).el == NULL)
+		if (intersect(rays[2], objs, range).attr == NULL)
 		{
 			n_dot_l = dot(rays[1].dir, rays[2].dir);
 			if (n_dot_l > 0)
@@ -81,3 +81,29 @@ long double	get_lighting_intensity(t_data *data, t_ray ray,
 	}
 	return (intensity);
 }
+
+// t_color	get_local_color_2(t_data *data, t_ray ray, t_ray normal,
+// 		t_scn_el hit_obj)
+// {
+// 	// long double	facing_ratio;
+// 	long double	intensity;
+// 	t_scn_el	*light;
+// 	t_vec3		light_dir;
+// 	t_color		hit_color;
+// 	int			i;
+
+// 	// facing_ratio = fmax(0, dot(scale(-1, ray.dir), normal.dir));
+// 	i = 0;
+// 	while (data->scn_els[ALL_LIGHTS] && data->scn_els[ALL_LIGHTS][i])
+// 	{
+// 		light = data->scn_els[ALL_LIGHTS][i];
+// 		if (light->type == F_DIR_LIGHT)
+// 		{
+// 			light_dir = scale(-1, light->n_vec);
+// 			intensity = hit_obj.reflection / M_PI * light->intensity * dot(normal.dir, light_dir);
+// 			for (int i = 0; i < 3, i++)
+				
+// 		}
+// 		i++;
+// 	}
+// }
