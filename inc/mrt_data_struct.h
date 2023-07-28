@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/28 15:03:03 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/28 16:36:55 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ typedef struct s_hit_obj
 {
 	t_scn_el					*attr;
 	bool						is_hit;
+	t_coord3					inc_p_raw;
 	t_coord3					inc_p;
 	t_vec3						norm;
 	long double					dist;
