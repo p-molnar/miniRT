@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:27:54 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/21 00:08:39 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/28 13:54:36 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	parse_type_identifier(t_scn_el *el, char *line, t_line line_info)
 	el->type = el_type;
 }
 
-void	parse_elements(t_scn_el *el, char **input, unsigned int field,
+void	populate_data_fields(t_scn_el *el, char **input, unsigned int field,
 		t_line line_info)
 {
 	int	col;

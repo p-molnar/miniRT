@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/26 15:16:33 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/28 14:39:07 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,52 +21,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void	set_camera_to_position(t_scn_el *el)
-{
-	t_vec3	cam_dir;
-
-	if (el->type == F_TG_CAM)
-	{
-		el->type = F_CAM;
-		cam_dir = create_dir_vec(el->pos, el->target);
-		normalize(&cam_dir);
-		ft_memcpy(&el->n_vec, &cam_dir, sizeof(t_vec3));
-	}
-	if (el->type == F_CAM)
-	{
-		if (el->n_vec.dir.x == 0 && el->n_vec.dir.y == 0
-			&& el->n_vec.dir.z == 0)
-		{
-			cam_dir = create_vec(0, 0, 1);
-			ft_memcpy(&el->n_vec, &cam_dir, sizeof(t_vec3));
-		}
-	}
-}
-
-static void	validate_line_formatting(t_scn_el el, char **input,
-		t_line line_info)
-{
-	int	arr_size;
-
-	arr_size = get_arr_size(input);
-	if (el.type == F_AMB_LIGHT && arr_size != 3)
-		error((t_err){FMT_E_AMB_LIGHT, line_info.file, line_info.num, EXIT, 1});
-	else if (el.type == F_POINT_LIGHT && arr_size != 4)
-		error((t_err){FMT_E_PNT_LIGHT, line_info.file, line_info.num, EXIT, 1});
-	else if (el.type == F_DIR_LIGHT && arr_size != 4)
-		error((t_err){FMT_E_DIR_LIGHT, line_info.file, line_info.num, EXIT, 1});
-	else if (el.type == F_CAM && arr_size != 4)
-		error((t_err){FMT_E_CAM, line_info.file, line_info.num, EXIT, 1});
-	else if (el.type == F_TG_CAM && arr_size != 4)
-		error((t_err){FMT_E_TGCAM, line_info.file, line_info.num, EXIT, 1});
-	else if (el.type == F_SPHERE && arr_size != 6)
-		error((t_err){FMT_E_SPHERE, line_info.file, line_info.num, EXIT, 1});
-	else if (el.type == F_PLANE && arr_size != 6)
-		error((t_err){FMT_E_PLANE, line_info.file, line_info.num, EXIT, 1});
-	else if (el.type == F_CYLINDER && arr_size != 8)
-		error((t_err){FMT_E_CYLINDER, line_info.file, line_info.num, EXIT, 1});
-}
-
 static void	parse_data(t_data *data, t_scn_el *el, char **input,
 		t_line line_info)
 {
@@ -74,27 +28,26 @@ static void	parse_data(t_data *data, t_scn_el *el, char **input,
 	validate_for_duplicate_el(el->type, data, line_info);
 	validate_line_formatting(*el, input, line_info);
 	if (el->type == F_AMB_LIGHT)
-		parse_elements(el, input, AMB_LIGHT_FIELDS, line_info);
+		populate_data_fields(el, input, AMB_LIGHT_FIELDS, line_info);
 	else if (el->type == F_POINT_LIGHT)
-		parse_elements(el, input, LIGHT_FIELDS, line_info);
+		populate_data_fields(el, input, LIGHT_FIELDS, line_info);
 	else if (el->type == F_DIR_LIGHT)
-		parse_elements(el, input, DIR_LIGHT_FIELDS, line_info);
+		populate_data_fields(el, input, DIR_LIGHT_FIELDS, line_info);
 	else if (el->type == F_CAM)
-		parse_elements(el, input, CAM_FIELDS, line_info);
+		populate_data_fields(el, input, CAM_FIELDS, line_info);
 	else if (el->type == F_TG_CAM)
-		parse_elements(el, input, TG_CAM_FIELDS, line_info);
+		populate_data_fields(el, input, TG_CAM_FIELDS, line_info);
 	else if (el->type == F_SPHERE)
-		parse_elements(el, input, SPHERE_FIELDS, line_info);
+		populate_data_fields(el, input, SPHERE_FIELDS, line_info);
 	else if (el->type == F_PLANE)
-		parse_elements(el, input, PLANE_FIELDS, line_info);
+		populate_data_fields(el, input, PLANE_FIELDS, line_info);
 	else if (el->type == F_CYLINDER)
 	{
-		parse_elements(el, input, CYLINDER_FIELDS, line_info);
+		populate_data_fields(el, input, CYLINDER_FIELDS, line_info);
 		add_cylinder_caps(el);
 		populate_transformation_mx(el);
 	}
-	if (el->type == F_CAM || el->type == F_TG_CAM)
-		set_camera_to_position(el);
+	populate_derived_fields(el);
 }
 
 static void	parse_line(t_data *scn, t_line *line)
