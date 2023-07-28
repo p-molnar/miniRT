@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/28 14:47:03 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/28 15:35:22 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,14 @@ void		add_cylinder_caps(t_scn_el *cylinder);
 
 //	validator
 void		validate_scn_el_setup(t_data *data);
-void		validate_for_duplicate_el(enum e_scn_el_type_flags el_type, t_data *scn, t_line line_info);
-void		validate_line_formatting(t_scn_el el, char **input, t_line line_info);
+void	validate_for_duplicate_el(enum e_scn_el_type_flags el_type,
+								t_data *scn,
+								t_line line_info);
+void		validate_line_formatting(t_scn_el el, char **input,
+				t_line line_info);
 
 //	data_field_derivator
-void	populate_derived_fields(t_scn_el *el);
+void		populate_derived_fields(t_scn_el *el);
 
 //	element parser
 void		parse_coordinates(t_coord3 *coord, char *input, t_line line_info);
@@ -69,14 +72,14 @@ t_color		trace_ray(t_data *data, t_ray ray, t_range range,
 				int recursion_depth);
 
 //	renderer/color
-t_color		get_reflected_color(t_data *data, t_ray ray, t_ray sec_ray,
+t_color		get_reflected_color(t_data *data, t_ray ray, t_hit_obj hit_obj,
 				int depth);
 t_color		mix_colors(t_color local_color, t_color reflected_color,
 				long double ref_factor);
 
 //	lighting
-long double	get_lighting_intensity(t_data *data, t_ray ray,
-				t_ray reflection_ray, t_scn_el obj);
+
+long double	get_lighting_intensity(t_data *data, t_ray ray, t_hit_obj hit_obj);
 long double	get_specular_intensity(t_ray *rays, long double intensity,
 				long double spec);
 t_hit_obj	is_element_in_way(t_data *data, t_ray ray, t_range range);
@@ -88,8 +91,8 @@ t_scn_el	**get_scn_els(t_list *list, enum e_scn_el_type_flags type);
 void		set_up_scn_el_ptrs(t_data *d);
 void		populate_window_properties(t_data *d);
 t_vec3		get_reflection_ray(t_vec3 ray, t_vec3 norm);
-t_coord3	get_incident_point(t_ray ray, t_hit_obj obj);
-t_vec3		get_obj_norm(t_scn_el cam, t_coord3 inc_p, t_hit_obj obj);
+void		get_incident_point(t_ray ray, t_hit_obj *obj);
+void		get_surface_norm(t_scn_el cam, t_hit_obj *hit_obj);
 void		set_up_ctw_mx(t_data *d);
 
 //	math
@@ -139,8 +142,7 @@ t_color		get_b(int rgba);
 t_color		get_a(int rgba);
 
 //	render color
-t_color		get_local_color(t_data *data, t_ray ray, t_ray reflection_ray,
-				t_scn_el closest_el);
+t_color		get_local_color(t_data *data, t_ray ray, t_hit_obj hit_obj);
 
 // render util
 void		draw_axes(t_data *data);
