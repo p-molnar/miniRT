@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/24 20:50:32 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/25 12:05:20 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/28 14:35:15 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	set_up_scn_el_ptrs(t_data *d)
 	d->scn_els[PLANE] = get_scn_els(d->all_scn_el, F_PLANE);
 	d->scn_els[CYLINDER] = get_scn_els(d->all_scn_el, F_CYLINDER);
 	d->scn_els[CYLINDER_CAP] = get_scn_els(d->all_scn_el, F_CYLINDER_CAP);
-	d->scn_els[ALL_LIGHTS] = get_scn_els(d->all_scn_el, G_LIGHTS);
-	d->scn_els[ALL_OBJS] = get_scn_els(d->all_scn_el, G_OBJS);
+	d->scn_els[ALL_LIGHTS] = get_scn_els(d->all_scn_el,
+			F_AMB_LIGHT | F_POINT_LIGHT | F_DIR_LIGHT);
+	d->scn_els[ALL_OBJS] = get_scn_els(d->all_scn_el,
+			F_SPHERE | F_PLANE | F_CYLINDER);
 }
