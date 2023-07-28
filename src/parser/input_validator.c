@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 23:20:51 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/26 14:42:51 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/28 14:15:06 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static bool	is_cam_inside_obj(t_data data)
 	int			is_inside;
 
 	cam = get_scn_els(data.all_scn_el, F_CAM);
-	el = get_scn_els(data.all_scn_el, G_OBJS);
+	el = get_scn_els(data.all_scn_el, F_SPHERE | F_PLANE | F_CYLINDER);
 	i = 0;
 	is_inside = 0;
 	while (el && el[i] && !is_inside)
