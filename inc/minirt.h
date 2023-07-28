@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/27 17:41:53 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/28 14:47:03 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,18 @@
 
 //	parser
 void		parse_input(t_data *scn, int argc, char *argv[]);
-void		parse_elements(t_scn_el *el, char **input, unsigned int flags,
+void		populate_data_fields(t_scn_el *el, char **input, unsigned int flags,
 				t_line line_info);
 void		parse_type_identifier(t_scn_el *el, char *line, t_line line_info);
 void		add_cylinder_caps(t_scn_el *cylinder);
+
+//	validator
 void		validate_scn_el_setup(t_data *data);
 void		validate_for_duplicate_el(enum e_scn_el_type_flags el_type, t_data *scn, t_line line_info);
+void		validate_line_formatting(t_scn_el el, char **input, t_line line_info);
+
+//	data_field_derivator
+void	populate_derived_fields(t_scn_el *el);
 
 //	element parser
 void		parse_coordinates(t_coord3 *coord, char *input, t_line line_info);
