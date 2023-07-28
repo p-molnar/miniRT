@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/26 22:56:31 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/28 14:15:32 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ enum	e_scn_el_type_flags
 	F_PLANE = 1 << 6,
 	F_CYLINDER = 1 << 7,
 	F_CYLINDER_CAP = 1 << 8,
-	G_LIGHTS = F_AMB_LIGHT | F_POINT_LIGHT | F_DIR_LIGHT,
-	G_OBJS = F_SPHERE | F_PLANE | F_CYLINDER,
 	F_SCN_SIZE = F_CYLINDER_CAP + 1,
 };
 
@@ -102,7 +100,7 @@ enum	e_field_flags
 {
 	AMB_LIGHT_FIELDS = F_INTENSITY | F_COLOR,
 	LIGHT_FIELDS = F_COORD | F_INTENSITY | F_COLOR,
-	DIR_LIGHT_FIELDS = F_COORD | F_INTENSITY | F_COLOR,
+	DIR_LIGHT_FIELDS = F_COORD | F_TG_COORD | F_INTENSITY | F_COLOR,
 	CAM_FIELDS = F_COORD | F_N_VEC | F_FOV,
 	TG_CAM_FIELDS = F_COORD | F_TG_COORD | F_FOV,
 	SPHERE_FIELDS = F_COORD | F_DMETER | F_COLOR | F_SPECULAR | F_REFLECTION,
