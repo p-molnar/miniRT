@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/28 14:52:10 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/28 15:03:35 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ t_hit_obj	intersect(t_ray ray, t_scn_el **el, t_range range)
 
 	obj.attr = NULL;
 	obj.dist = INF;
+	obj.is_hit = false;
 	i = 0;
 	while (el && el[i])
 	{
@@ -94,6 +95,7 @@ t_hit_obj	intersect(t_ray ray, t_scn_el **el, t_range range)
 			t = get_plane_intersection(ray, el[i]);
 		if (is_in_range_f(t, range.min, range.max) && t < obj.dist)
 		{
+			obj.is_hit = true;
 			obj.dist = t;
 			obj.attr = el[i];
 		}

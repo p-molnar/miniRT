@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/28 14:52:10 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/28 15:03:53 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_color	trace_ray(t_data *data, t_ray ray, t_range range, int recursion_depth)
 	t_ray		reflection;
 
 	hit_obj = intersect(ray, data->scn_els[ALL_OBJS], range);
-	if (!hit_obj.attr)
+	if (!hit_obj.is_hit)
 		return (BACKGROUND_COLOR);
 	reflection.origin = get_incident_point(ray, hit_obj);
 	reflection.dir = get_obj_norm(**data->scn_els[CAM], reflection.origin,
