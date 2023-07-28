@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/28 15:04:27 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/28 15:35:05 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,15 @@ long double	get_intensity(t_scn_el **objs, t_scn_el *light, t_ray rays[3],
 	return (intensity);
 }
 
-long double	get_lighting_intensity(t_data *data, t_ray ray,
-		t_ray reflection_ray, t_scn_el hit_obj)
+long double	get_lighting_intensity(t_data *data, t_ray ray, t_hit_obj hit_obj)
 {
 	long double	intensity;
 	int			i;
 	t_ray		rays[3];
+	t_ray		reflection_ray;
+
+	reflection_ray.origin = hit_obj.inc_p;
+	reflection_ray.dir = hit_obj.norm;
 
 	rays[0] = ray;
 	rays[1] = reflection_ray;
@@ -76,7 +79,7 @@ long double	get_lighting_intensity(t_data *data, t_ray ray,
 	while (data->scn_els[ALL_LIGHTS] && data->scn_els[ALL_LIGHTS][i])
 	{
 		intensity += get_intensity(data->scn_els[ALL_OBJS],
-				data->scn_els[ALL_LIGHTS][i], rays, hit_obj);
+				data->scn_els[ALL_LIGHTS][i], rays, *hit_obj.attr);
 		i++;
 	}
 	return (intensity);
