@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 13:44:13 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/21 00:08:32 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/29 16:45:03 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,8 @@ void	parse_color(t_color *color, char *input, t_range range,
 {
 	char	**colors;
 	int		i;
-	int		color_code;
-	int		parsed_color;
+	t_color	parsed_color;
 
-	parsed_color = 0;
 	if (!color || !input)
 		error((t_err){NULL_PTR, __FILE__, __LINE__, EXIT, 1});
 	colors = ft_split(input, ',');
@@ -45,14 +43,14 @@ void	parse_color(t_color *color, char *input, t_range range,
 	else if (get_arr_size(colors) != 3)
 		error((t_err){WRONG_SEP, line_info.file, line_info.num, EXIT, 1});
 	i = 0;
-	while (colors[i])
-	{
-		color_code = parse_color_code(colors[i], range.min, range.max,
-				line_info);
-		parsed_color |= color_code << (24 - (i * 8));
-		i++;
-	}
-	parsed_color |= 0x000000FF;
+	parsed_color.r = parse_color_code(colors[0], range.min, range.max,
+			line_info);
+	parsed_color.g = parse_color_code(colors[1], range.min, range.max,
+			line_info);
+	parsed_color.b = parse_color_code(colors[2], range.min, range.max,
+			line_info);
+	i++;
+	parsed_color.a = 255;
 	free_arr((void **)colors);
 	*color = parsed_color;
 }
