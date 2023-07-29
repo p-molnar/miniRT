@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/16 19:24:09 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/21 13:25:41 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/29 12:10:22 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,11 @@ void	free_arr(void **arr)
 
 void	free_scn_el(t_scn_el *el)
 {
-	int	i;
-
 	if (el)
 	{
 		if (el->cap)
-		{
-			i = 0;
-			while (i < 2)
-				free_scn_el(&el->cap[i++]);
 			free(el->cap);
-		}
-		if (el->type != F_TYPE_UNDEF)
-			free(el);
+		free(el);
 	}
 }
 
