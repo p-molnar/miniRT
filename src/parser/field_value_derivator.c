@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/28 14:46:16 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/28 14:46:36 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/29 18:06:38 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@ static void	populate_dir_light_derived_fields(t_scn_el *el)
 {
 	t_vec3	light_dir;
 
-	light_dir = coord_to_vec(coord_subtract(el->target, el->pos));
+	light_dir = create_dir_vec(el->pos, el->target);
 	if (light_dir.dir.x == 0 && light_dir.dir.y == 0 && light_dir.dir.z == 0)
 	{
 		el->type = F_TYPE_UNDEF;
 		return ;
 	}
+	normalize(&light_dir);
 	ft_memcpy(&el->n_vec, &light_dir, sizeof(t_vec3));
 }
 
