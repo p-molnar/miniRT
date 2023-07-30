@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/28 16:38:14 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/29 13:19:55 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	get_incident_point(t_ray ray, t_hit_obj *hit_obj)
 	ft_memcpy(&hit_obj->inc_p, &inc_p, sizeof(t_coord3));
 }
 
-t_hit_obj	intersect(t_ray ray, t_scn_el **el, t_range range)
+t_hit_obj	intersect(t_ray ray, t_scn_el **el, t_range range, enum e_isect mode)
 {
 	t_hit_obj	obj;
 	long double	t;
@@ -99,6 +99,8 @@ t_hit_obj	intersect(t_ray ray, t_scn_el **el, t_range range)
 			obj.is_hit = true;
 			obj.dist = t;
 			obj.attr = el[i];
+			if (mode == SHADOW)
+				return (obj);
 		}
 		i++;
 	}
