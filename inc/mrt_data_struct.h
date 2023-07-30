@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/28 16:36:55 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/28 19:10:43 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,19 @@
 # include <libft.h>
 # include <mrt_macros.h>
 
-typedef int						t_color;
 typedef long double				t_coord;
 
-typedef union	u_color 
+typedef union u_color
 {
-	struct 
+	uint32_t					color;
+	struct
 	{
-		uint8_t	r;
-		uint8_t	g;
-		uint8_t	b;
-		uint8_t	a;
+		uint8_t					a;
+		uint8_t					b;
+		uint8_t					g;
+		uint8_t					r;
 	};
-	uint32_t	color;
-}				t_color2;
-
+}								t_color;
 
 typedef struct s_coord_sys
 {

@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/07/25 23:23:28 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/07/30 15:40:40 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,26 +42,32 @@ P_NAME_W		=	%-10s
 STATUS_FMT		=	$(BOLD)$(P_NAME_W) $(DEF) $(STATUS_W) $(SPACE_W)
 
 #	PARSER
+
 INITAILISER		=	$(addprefix initialiser/,								\
 								ctw_mx.c									\
 								init.c										\
 								transformation_mx.c)
 
-PARSER			=	$(addprefix	parser/,									\
-								parser.c									\
-								parser_utils.c								\
-								$(EL_PARSER)								\
+VALIDATOR		=	$(addprefix validator/,									\
 								input_validator.c							\
+								format_validator.c							\
 								)
-
 EL_PARSER		=	$(addprefix	element_parser/,							\
 								color_parser.c								\
 								coordinate_parser.c							\
 								element_parser.c							\
 								float_parser.c								\
 								)
+																
+PARSER			=	$(addprefix	parser/,									\
+								parser.c									\
+								parser_utils.c								\
+								field_value_derivator.c						\
+								$(EL_PARSER)								\
+								$(VALIDATOR)								\
+								)
 
-ELEMENTS		=	$(addprefix	elements/, 									\
+ELEMENTS		=	$(addprefix	intersections/, 							\
 								sphere.c									\
 								plane.c										\
 								cylinder.c									\
@@ -76,9 +82,8 @@ FREE			=	$(addprefix	free/,										\
 								free.c										\
 								)
 
-LIGHTING		=	$(addprefix	lighting/,									\
+LIGHTING		=	$(addprefix	shader/,									\
 								lighting.c									\
-								specular_lighting.c							\
 								)
 
 RENDERER_COLOR	=	$(addprefix	color/,										\
@@ -94,7 +99,6 @@ RENDERER		=	$(addprefix	renderer/,									\
 								$(LIGHTING)									\
 								$(RENDERER_COLOR)							\
 								$(ELEMENTS)									\
-								$(SHADOW)									\
 								$(TRANSFORMATION)							\
 								)
 

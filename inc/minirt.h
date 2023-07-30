@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/28 15:35:22 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/30 15:38:42 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void		parse_range(long double *f, char *input, t_range range,
 void		parse_color(t_color *color, char *input, t_range range,
 				t_line line_info);
 
+
 //	free
 void		free_arr(void **arr);
 void		free_scn_el(t_scn_el *el);
@@ -74,8 +75,11 @@ t_color		trace_ray(t_data *data, t_ray ray, t_range range,
 //	renderer/color
 t_color		get_reflected_color(t_data *data, t_ray ray, t_hit_obj hit_obj,
 				int depth);
-t_color		mix_colors(t_color local_color, t_color reflected_color,
-				long double ref_factor);
+t_color		mix_colors(uint32_t local_color, uint32_t reflected_color,
+		long double ref_factor);
+t_color		intensify_color(long double intensity, t_color color);
+t_color		mix_colors2(t_color c1, t_color c2);
+t_color		sum_colors(t_color c1, t_color c2);
 
 //	lighting
 
@@ -132,21 +136,15 @@ long double	deg_to_rad(long double deg);
 long double	get_agl_between(t_vec3 vec_1, t_vec3 vec_2);
 
 //	color
-t_color		get_rgba(int r, int g, int b, int a);
-t_color		update_color_channel(t_color curr_color, t_color new_color,
-				int channel);
-t_color		get_color(t_color color, int channel);
-t_color		get_r(int rgba);
-t_color		get_g(int rgba);
-t_color		get_b(int rgba);
-t_color		get_a(int rgba);
+uint32_t	update_color_channel(uint32_t curr_color, uint32_t new_val, int channel);
+t_color		get_color(uint32_t color, int channel);
 
-//	render color
-t_color		get_local_color(t_data *data, t_ray ray, t_hit_obj hit_obj);
+//	shader 
+t_color	get_local_color(t_data *data, t_hit_obj hit_obj);
 
 // render util
 void		draw_axes(t_data *data);
-t_hit_obj	intersect(t_ray ray, t_scn_el **el, t_range range);
+t_hit_obj	intersect(t_ray ray, t_scn_el **el, t_range range, enum e_isect mode);
 long double	*convert_to_viewport(int x, int y, long double *viewport,
 				t_scn_el *cam);
 

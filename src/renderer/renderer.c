@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/28 15:33:16 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/30 15:38:50 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,29 @@ t_ray	transform_ray(t_data *d, t_coord_sys c, t_ray ray)
 t_color	trace_ray(t_data *data, t_ray ray, t_range range, int recursion_depth)
 {
 	t_hit_obj	hit_obj;
-	t_color		color[2];
+	// t_color		color[2];
 	t_color		ret_color;
+	(void) recursion_depth;
 
-	hit_obj = intersect(ray, data->scn_els[ALL_OBJS], range);
+	hit_obj = intersect(ray, data->scn_els[ALL_OBJS], range, CLOSEST_EL);
 	if (!hit_obj.is_hit)
-		return (BACKGROUND_COLOR);
+		return ((t_color){.r = 0, .g = 0, .b = 0, .a = 0});
 	get_incident_point(ray, &hit_obj);
 	get_surface_norm(**data->scn_els[CAM], &hit_obj);
 	// color[0] = get_local_color(data, ray, reflection, *hit_obj.el);
-	color[0] = get_local_color(data, ray, hit_obj);
-	if (recursion_depth > 0 && hit_obj.attr->reflection > 0)
-		color[1] = get_reflected_color(data, ray, hit_obj, recursion_depth);
-	if (recursion_depth <= 0 || hit_obj.attr->reflection <= 0)
-		ret_color = color[0];
-	else
-		ret_color = mix_colors(color[0], color[1], hit_obj.attr->reflection);
+	// color[0] = get_local_color(data, ray, hit_obj);
+	return (get_local_color(data, hit_obj));
+	// if (recursion_depth > 0 && hit_obj.attr->reflection > 0)
+	// 	color[1] = get_reflected_color(data, ray, hit_obj, recursion_depth);
+	// if (recursion_depth <= 0 || hit_obj.attr->reflection <= 0)
+	// 	ret_color = color[0];
+	// else
+	// 	ret_color = mix_colors(color[0].color, color[1].color,
+	// 			hit_obj.attr->reflection);
 	return (ret_color);
 }
+
+#include <stdio.h>
 
 void	render_scene(t_data *data, int width, int height)
 {
@@ -69,7 +74,7 @@ void	render_scene(t_data *data, int width, int height)
 			c.y = (1 - 2 * (c.pixel_y + 0.5) / (float)height) * fov_scale;
 			ray = transform_ray(data, c, ray);
 			color = trace_ray(data, ray, (t_range){1, INF}, 0);
-			mlx_put_pixel(data->img, c.pixel_x, c.pixel_y, color);
+			mlx_put_pixel(data->img, c.pixel_x, c.pixel_y, color.color);
 			c.pixel_x++;
 		}
 		c.pixel_y++;
