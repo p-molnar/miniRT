@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/20 21:01:01 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/28 14:49:25 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/28 19:28:35 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define FMT_E_AMB_LIGHT "Required line format: A <light intensity> <color>"
 # define FMT_E_PNT_LIGHT "Required line format: L <coordinate> \
 <light intensity> <color>"
-# define FMT_E_DIR_LIGHT "Required line format: DL <coordinate> <coordinate>\
+# define FMT_E_DIR_LIGHT "Required line format: DL <coordinate> <coordinate> \
 <light intensity> <color>"
 # define FMT_E_CAM "Required line format: C <coordinate> <coordinate> <FOV>"
 # define FMT_E_TGCAM "Required line format: TC <coordinate> <coordinate> <FOV>"
