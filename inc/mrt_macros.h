@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/28 14:15:32 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/29 13:19:21 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ enum	e_range
 	MIN,
 	MAX,
 	RANGE_SIZE,
+};
+
+enum	e_isect
+{
+	CLOSEST_EL,
+	SHADOW
 };
 
 enum	e_exit_method_code
@@ -96,6 +102,7 @@ enum	e_scn_el_type
 	ALL_OBJS,
 	SCN_SIZE,
 };
+
 enum	e_field_flags
 {
 	AMB_LIGHT_FIELDS = F_INTENSITY | F_COLOR,
