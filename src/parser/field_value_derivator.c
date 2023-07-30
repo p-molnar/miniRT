@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/28 14:46:16 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/29 18:06:38 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/31 00:53:19 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static void	populate_dir_light_derived_fields(t_scn_el *el)
 	normalize(&light_dir);
 	ft_memcpy(&el->n_vec, &light_dir, sizeof(t_vec3));
 }
-
 
 static void	populate_camera_derived_fields(t_scn_el *el)
 {

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/30 15:38:42 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/31 01:22:52 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void		parse_range(long double *f, char *input, t_range range,
 void		parse_color(t_color *color, char *input, t_range range,
 				t_line line_info);
 
-
 //	free
 void		free_arr(void **arr);
 void		free_scn_el(t_scn_el *el);
@@ -73,13 +72,8 @@ t_color		trace_ray(t_data *data, t_ray ray, t_range range,
 				int recursion_depth);
 
 //	renderer/color
-t_color		get_reflected_color(t_data *data, t_ray ray, t_hit_obj hit_obj,
-				int depth);
-t_color		mix_colors(uint32_t local_color, uint32_t reflected_color,
-		long double ref_factor);
 t_color		intensify_color(long double intensity, t_color color);
-t_color		mix_colors2(t_color c1, t_color c2);
-t_color		sum_colors(t_color c1, t_color c2);
+t_color		mix_colors(t_color c1, t_color c2);
 
 //	lighting
 
@@ -94,7 +88,6 @@ long double	yield_smallest_positive(long double *arr, int arr_size);
 t_scn_el	**get_scn_els(t_list *list, enum e_scn_el_type_flags type);
 void		set_up_scn_el_ptrs(t_data *d);
 void		populate_window_properties(t_data *d);
-t_vec3		get_reflection_ray(t_vec3 ray, t_vec3 norm);
 void		get_incident_point(t_ray ray, t_hit_obj *obj);
 void		get_surface_norm(t_scn_el cam, t_hit_obj *hit_obj);
 void		set_up_ctw_mx(t_data *d);
@@ -136,19 +129,21 @@ long double	deg_to_rad(long double deg);
 long double	get_agl_between(t_vec3 vec_1, t_vec3 vec_2);
 
 //	color
-uint32_t	update_color_channel(uint32_t curr_color, uint32_t new_val, int channel);
+uint32_t	update_color_channel(uint32_t curr_color, uint32_t new_val,
+				int channel);
 t_color		get_color(uint32_t color, int channel);
 
-//	shader 
-t_color	get_local_color(t_data *data, t_hit_obj hit_obj);
+//	shader
+t_color		get_local_color(t_data *data, t_ray ray, t_hit_obj hit_obj);
+t_color		get_reflected_color(t_data *data, t_ray ray, t_hit_obj hit_obj,
+				int refl_depth);
 
 // render util
 void		draw_axes(t_data *data);
-t_hit_obj	intersect(t_ray ray, t_scn_el **el, t_range range, enum e_isect mode);
-long double	*convert_to_viewport(int x, int y, long double *viewport,
-				t_scn_el *cam);
 
 //	elements
+t_hit_obj	intersect(t_ray ray, t_scn_el **el, t_range range,
+				enum e_isect mode);
 long double	get_sphere_intersections(t_ray ray, t_scn_el *obj);
 long double	get_plane_intersection(t_ray ray, t_scn_el *obj);
 long double	get_cylinder_intersection(t_ray ray, t_scn_el *obj,

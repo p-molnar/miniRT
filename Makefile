@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/07/30 15:40:40 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/07/30 16:01:20 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,6 @@ ELEMENTS		=	$(addprefix	intersections/, 							\
 								cylinder.c									\
 								)
 
-
 ERROR			=	$(addprefix	error/, 									\
 								error.c										\
 								)
@@ -84,10 +83,7 @@ FREE			=	$(addprefix	free/,										\
 
 LIGHTING		=	$(addprefix	shader/,									\
 								lighting.c									\
-								)
-
-RENDERER_COLOR	=	$(addprefix	color/,										\
-								render_color.c								\
+								reflection.c								\
 								)
 
 TRANSFORMATION	=	$(addprefix	transformations/,							\

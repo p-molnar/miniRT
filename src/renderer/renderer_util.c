@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/29 13:19:55 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/31 01:08:53 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,14 @@ void	get_incident_point(t_ray ray, t_hit_obj *hit_obj)
 	ft_memcpy(&hit_obj->inc_p, &inc_p, sizeof(t_coord3));
 }
 
-t_hit_obj	intersect(t_ray ray, t_scn_el **el, t_range range, enum e_isect mode)
+t_hit_obj	intersect(t_ray ray, t_scn_el **el, t_range range,
+		enum e_isect mode)
 {
 	t_hit_obj	obj;
 	long double	t;
 	int			i;
 
-	obj.attr = NULL;
-	obj.dist = INF;
-	obj.is_hit = false;
+	obj = (t_hit_obj){.is_hit = false, .dist = INF, .attr = NULL};
 	i = 0;
 	while (el && el[i])
 	{
@@ -96,9 +95,7 @@ t_hit_obj	intersect(t_ray ray, t_scn_el **el, t_range range, enum e_isect mode)
 			t = get_plane_intersection(ray, el[i]);
 		if (is_in_range_f(t, range.min, range.max) && t < obj.dist)
 		{
-			obj.is_hit = true;
-			obj.dist = t;
-			obj.attr = el[i];
+			obj = (t_hit_obj){.is_hit = true, .dist = t, .attr = el[i]};
 			if (mode == SHADOW)
 				return (obj);
 		}

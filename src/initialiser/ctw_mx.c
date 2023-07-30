@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 10:46:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/26 15:17:42 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/31 00:58:16 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	get_directional_vectors(t_vec3 *up, t_vec3 *fw, t_scn_el *cam)
 	*up = create_vec(0, 1, 0);
 	*fw = coord_to_vec(cam->n_vec.dir);
 	if ((fw->dir.x == 0 && fw->dir.z == 0) && (fw->dir.y == -1
-				|| fw->dir.y == 1))
+			|| fw->dir.y == 1))
 	{
 		up->dir.y = 0;
 		up->dir.z = 1;

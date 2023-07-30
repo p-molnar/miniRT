@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 23:20:51 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/28 14:36:50 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/31 00:53:00 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static bool	is_cam_inside_obj(t_data data)
 		if (el[i]->type == F_SPHERE && is_cam_inside_sphere(*cam[0], *el[i]))
 			is_inside = 1;
 		else if (el[i]->type == F_CYLINDER && is_cam_in_cylinder(*cam[0],
-					*el[i]))
+				*el[i]))
 			is_inside = 1;
 		i++;
 	}

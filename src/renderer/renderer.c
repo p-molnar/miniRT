@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/30 15:38:50 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/31 00:58:54 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,29 +29,25 @@ t_ray	transform_ray(t_data *d, t_coord_sys c, t_ray ray)
 t_color	trace_ray(t_data *data, t_ray ray, t_range range, int recursion_depth)
 {
 	t_hit_obj	hit_obj;
-	// t_color		color[2];
-	t_color		ret_color;
-	(void) recursion_depth;
+	t_color		local_color;
+	t_color		reflected_color;
 
 	hit_obj = intersect(ray, data->scn_els[ALL_OBJS], range, CLOSEST_EL);
 	if (!hit_obj.is_hit)
-		return ((t_color){.r = 0, .g = 0, .b = 0, .a = 0});
+		return ((t_color){.r = 0, .g = 0, .b = 0, .a = 255});
 	get_incident_point(ray, &hit_obj);
 	get_surface_norm(**data->scn_els[CAM], &hit_obj);
-	// color[0] = get_local_color(data, ray, reflection, *hit_obj.el);
-	// color[0] = get_local_color(data, ray, hit_obj);
-	return (get_local_color(data, hit_obj));
-	// if (recursion_depth > 0 && hit_obj.attr->reflection > 0)
-	// 	color[1] = get_reflected_color(data, ray, hit_obj, recursion_depth);
-	// if (recursion_depth <= 0 || hit_obj.attr->reflection <= 0)
-	// 	ret_color = color[0];
-	// else
-	// 	ret_color = mix_colors(color[0].color, color[1].color,
-	// 			hit_obj.attr->reflection);
-	return (ret_color);
+	local_color = get_local_color(data, ray, hit_obj);
+	reflected_color = get_reflected_color(data, ray, hit_obj, recursion_depth);
+	if (recursion_depth != 0 && hit_obj.attr->refl_coeff > 0)
+	{
+		local_color = intensify_color(1 - hit_obj.attr->refl_coeff,
+				local_color);
+		reflected_color = intensify_color(hit_obj.attr->refl_coeff,
+				reflected_color);
+	}
+	return (mix_colors(local_color, reflected_color));
 }
-
-#include <stdio.h>
 
 void	render_scene(t_data *data, int width, int height)
 {

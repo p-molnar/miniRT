@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/28 19:10:43 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/30 22:03:40 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,8 @@ typedef struct s_scn_el
 	long double					height;
 	long double					fov;
 	long double					intensity;
-	long double					specular;
-	long double					reflection;
+	long double					spec_coeff;
+	long double					refl_coeff;
 	struct s_scn_el				*cap;
 	t_mx						translation;
 	t_mx						inv_translation;
@@ -118,6 +118,7 @@ typedef struct s_scn_el
 	t_mx						inv_rotation;
 	t_color						color;
 }								t_scn_el;
+
 
 typedef struct s_hit_obj
 {
@@ -128,6 +129,16 @@ typedef struct s_hit_obj
 	t_vec3						norm;
 	long double					dist;
 }								t_hit_obj;
+
+typedef struct s_light_fn_arg
+{
+	t_scn_el					**objs;
+	t_scn_el					light;
+	t_ray						ray;
+	t_hit_obj					hit_obj;
+	t_vec3						light_dir;
+	bool						visibility;
+}								t_light_fn_arg;
 
 typedef struct s_data
 {

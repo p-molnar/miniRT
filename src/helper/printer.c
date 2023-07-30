@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/08 10:18:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/28 17:28:06 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/31 01:24:40 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,13 @@ void	print_scene_el(t_scn_el *el)
 	printf("height: %Lf\n", el->height);
 	printf("fov: %Lf\n", el->fov);
 	printf("intensity: %Lf\n", el->intensity);
-	printf("specular: %Lf\n", el->specular);
-	printf("reflection: %Lf\n", el->reflection);
+	printf("specular: %Lf\n", el->spec_coeff);
+	printf("reflection: %Lf\n", el->refl_coeff);
 	printf("color: r=%d, g=%d, b=%d, a=%d\n",
-			get_color(el->color.color, R).color,
-			get_color(el->color.color, G).color,
-			get_color(el->color.color, B).color,
-			get_color(el->color.color, A).color);
+		el->color.r, 
+		el->color.g, 
+		el->color.b, 
+		el->color.a); 
 	if (el->cap)
 	{
 		print_scene_el(&el->cap[0]);

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:27:54 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/28 13:54:36 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/31 00:52:52 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ void	populate_data_fields(t_scn_el *el, char **input, unsigned int field,
 	if (field & F_COLOR)
 		parse_color(&el->color, input[col++], (t_range){0, 255}, line_info);
 	if (field & F_SPECULAR)
-		parse_range(&el->specular, input[col++], (t_range){-1, 999}, line_info);
+		parse_range(&el->spec_coeff, input[col++], (t_range){-1, 999},
+			line_info);
 	if (field & F_REFLECTION)
-		parse_range(&el->reflection, input[col++], (t_range){0, 1}, line_info);
+		parse_range(&el->refl_coeff, input[col++], (t_range){0, 1}, line_info);
 }

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/25 23:19:43 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/27 16:59:19 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,17 @@ void	close_window(mlx_key_data_t keydata, t_data d)
 	}
 }
 
+void	fn(void)
+{
+	system("leaks minirt");
+}
+
 int	main(int argc, char *argv[])
 {
 	t_data	d;
 
 	ft_memset(&d, 0, sizeof(t_data));
+	atexit(fn);
 	parse_input(&d, argc, argv);
 	set_up_scn_el_ptrs(&d);
 	set_up_ctw_mx(&d);
@@ -53,6 +59,5 @@ int	main(int argc, char *argv[])
 	mlx_loop(d.mlx);
 	mlx_terminate(d.mlx);
 	clean_up(&d);
-	system("leaks minirt");
 	return (EXIT_SUCCESS);
 }
