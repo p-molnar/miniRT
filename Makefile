@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/07/30 16:01:20 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/07/31 12:43:12 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,22 +52,29 @@ VALIDATOR		=	$(addprefix validator/,									\
 								input_validator.c							\
 								format_validator.c							\
 								)
+
 EL_PARSER		=	$(addprefix	element_parser/,							\
 								color_parser.c								\
 								coordinate_parser.c							\
 								element_parser.c							\
 								float_parser.c								\
 								)
+
+PARSER_UTILS		=	$(addprefix	utils/,									\
+								$(EL_PARSER)								\
+								field_value_derivator.c						\
+								parser_utils.c								\
+								)
 																
 PARSER			=	$(addprefix	parser/,									\
 								parser.c									\
-								parser_utils.c								\
-								field_value_derivator.c						\
-								$(EL_PARSER)								\
+								$(PARSER_UTILS)								\
 								$(VALIDATOR)								\
 								)
 
 ELEMENTS		=	$(addprefix	intersections/, 							\
+								intersection.c								\
+								incident_point_norm.c						\
 								sphere.c									\
 								plane.c										\
 								cylinder.c									\
@@ -81,7 +88,8 @@ FREE			=	$(addprefix	free/,										\
 								free.c										\
 								)
 
-LIGHTING		=	$(addprefix	shader/,									\
+SHADER			=	$(addprefix	shader/,									\
+								$(COLOR)									\
 								lighting.c									\
 								reflection.c								\
 								)
@@ -91,15 +99,16 @@ TRANSFORMATION	=	$(addprefix	transformations/,							\
 
 RENDERER		=	$(addprefix	renderer/,									\
 								renderer.c									\
-								renderer_util.c								\
-								$(LIGHTING)									\
-								$(RENDERER_COLOR)							\
+								$(SHADER)									\
 								$(ELEMENTS)									\
 								$(TRANSFORMATION)							\
 								)
 
-UTIL			=	$(addprefix	util/,										\
+UTILS			=	$(addprefix	utils/,										\
 								util.c										\
+								$(FREE)										\
+								$(HELPER)									\
+								$(INITAILISER)								\
 								)
 
 MATH			=	$(addprefix	math/,										\
@@ -127,15 +136,11 @@ HELPER			=	$(addprefix	helper/,									\
 								)
 #	SOURCE FILES
 SRC				=	main.c													\
-					$(INITAILISER)											\
-					$(PARSER)												\
 					$(ERROR)												\
-					$(FREE)													\
+					$(PARSER)												\
 					$(RENDERER)												\
-					$(UTIL)													\
-					$(COLOR)												\
+					$(UTILS)													\
 					$(MATH)													\
-					$(HELPER)												\
 
 OBJ_PATH		=	obj/
 OBJ				=	$(addprefix $(OBJ_PATH), $(SRC:.c=.o))
