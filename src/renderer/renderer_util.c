@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/31 01:08:53 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/31 12:04:57 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	get_surface_norm(t_scn_el cam, t_hit_obj *hit_obj)
 {
 	t_vec3		obj_norm;
 	long double	agl;
+	(void) cam;
 
 	if (hit_obj->attr->type == F_CYLINDER)
 		obj_norm = get_cylinder_norm(*hit_obj);
@@ -76,6 +77,14 @@ void	get_incident_point(t_ray ray, t_hit_obj *hit_obj)
 	ft_memcpy(&hit_obj->inc_p, &inc_p, sizeof(t_coord3));
 }
 
+void	update_hit_obj(t_hit_obj *hit_obj, t_scn_el *el, long double dist,
+		bool is_hit)
+{
+	hit_obj->attr = el;
+	hit_obj->dist = dist;
+	hit_obj->is_hit = is_hit;
+}
+
 t_hit_obj	intersect(t_ray ray, t_scn_el **el, t_range range,
 		enum e_isect mode)
 {
@@ -95,7 +104,7 @@ t_hit_obj	intersect(t_ray ray, t_scn_el **el, t_range range,
 			t = get_plane_intersection(ray, el[i]);
 		if (is_in_range_f(t, range.min, range.max) && t < obj.dist)
 		{
-			obj = (t_hit_obj){.is_hit = true, .dist = t, .attr = el[i]};
+			update_hit_obj(&obj, el[i], t, true);
 			if (mode == SHADOW)
 				return (obj);
 		}
