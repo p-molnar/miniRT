@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/31 01:28:30 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/07/31 12:14:58 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-t_color	get_ambient_light_color(t_light_fn_arg *arg)
+static t_color	get_ambient_light_color(t_light_fn_arg arg)
 {
 	t_color	color;
 
-	color.r = fmin(arg->hit_obj.attr->color.r * arg->light.intensity
-			* arg->light.color.r / 255., 255);
-	color.g = fmin(arg->hit_obj.attr->color.g * arg->light.intensity
-			* arg->light.color.g / 255., 255);
-	color.b = fmin(arg->hit_obj.attr->color.b * arg->light.intensity
-			* arg->light.color.b / 255., 255);
+	color.r = fmin(arg.hit_obj.attr->color.r * arg.light.intensity
+			* arg.light.color.r / 255., 255);
+	color.g = fmin(arg.hit_obj.attr->color.g * arg.light.intensity
+			* arg.light.color.g / 255., 255);
+	color.b = fmin(arg.hit_obj.attr->color.b * arg.light.intensity
+			* arg.light.color.b / 255., 255);
 	color.a = 255;
 	return (color);
 }
 
-t_color	get_dir_light_col(t_light_fn_arg *arg)
+static t_color	get_dir_light_col(t_light_fn_arg *arg)
 {
 	long double	intensity;
 	t_color		color;
@@ -49,15 +49,18 @@ t_color	get_dir_light_col(t_light_fn_arg *arg)
 	return (color);
 }
 
-t_color	get_point_light_color(t_light_fn_arg *arg)
+static t_color	get_point_light_color(t_light_fn_arg *arg)
 {
 	long double	intensity;
 	t_color		color;
+	long double	len;
 
 	arg->light_dir = create_dir_vec(arg->hit_obj.inc_p, arg->light.pos);
-	arg->visibility = intersect((t_ray){arg->hit_obj.inc_p, arg->light_dir},
-			arg->objs, (t_range){EPS, INF}, SHADOW).is_hit == false;
+	len = arg->light_dir.len;
 	normalize(&arg->light_dir);
+	arg->visibility = intersect((t_ray){arg->hit_obj.inc_p, arg->light_dir},
+			arg->objs, (t_range){EPS, len},
+			SHADOW).is_hit == false;
 	intensity = arg->visibility * arg->light.intensity * fmax(0,
 			dot(arg->hit_obj.norm, arg->light_dir));
 	color.r = fmin(intensity * arg->hit_obj.attr->color.r * arg->light.color.r
@@ -70,14 +73,14 @@ t_color	get_point_light_color(t_light_fn_arg *arg)
 	return (color);
 }
 
-t_color	get_specular_lighting(t_light_fn_arg arg)
+static t_color	get_specular_lighting(t_light_fn_arg arg)
 {
 	long double	specular;
 	t_vec3		reflection;
 	long double	intensity;
 	t_color		color;
 
-	if (arg.hit_obj.attr->spec_coeff < 0)
+	if (arg.hit_obj.attr->spec_coeff < 1)
 		return ((t_color){.color = 0x00000000});
 	reflection = scale(2 * dot(arg.hit_obj.norm, arg.light_dir),
 			arg.hit_obj.norm);
@@ -110,7 +113,7 @@ t_color	get_local_color(t_data *data, t_ray ray, t_hit_obj hit_obj)
 	{
 		arg.light = *data->scn_els[ALL_LIGHTS][i];
 		if (arg.light.type == F_AMB_LIGHT)
-			hit_color = mix_colors(hit_color, get_ambient_light_color(&arg));
+			hit_color = mix_colors(hit_color, get_ambient_light_color(arg));
 		else
 		{
 			if (arg.light.type == F_DIR_LIGHT)
