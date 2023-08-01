@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/31 12:30:09 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/01 12:36:16 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ t_color	trace_ray(t_data *data, t_ray ray, t_range range, int recursion_depth)
 	if (!hit_obj.is_hit)
 		return ((t_color){.r = 0, .g = 0, .b = 0, .a = 255});
 	get_incident_point(ray, &hit_obj);
-	// printf("incp: %Lf, %Lf, %Lf\n", hit_obj.inc_p.x, hit_obj.inc_p.y, hit_obj.inc_p.z);
 	get_surface_norm(**data->scn_els[CAM], &hit_obj);
-	// printf("norm: %Lf, %Lf, %Lf\n", hit_obj.norm.dir.x, hit_obj.norm.dir.x, hit_obj.norm.dir.z);
 	local_color = get_local_color(data, ray, hit_obj);
 	reflected_color = get_reflected_color(data, ray, hit_obj, recursion_depth);
 	if (recursion_depth != 0 && hit_obj.attr->refl_coeff > 0)
@@ -61,11 +59,11 @@ void	render_scene(t_data *data, int width, int height)
 
 	aspect_ratio = width / (float)height;
 	fov_scale = tan(deg_to_rad((*data->scn_els[CAM])->fov / 2));
-	c.pixel_y = 0;
-	while (c.pixel_y < height)
+	c.pixel_y = -1;
+	while (++c.pixel_y < height)
 	{
-		c.pixel_x = 0;
-		while (c.pixel_x < width)
+		c.pixel_x = -1;
+		while (++c.pixel_x < width)
 		{
 			c.x = (2 * ((c.pixel_x + 0.5) / (float)width) - 1) * aspect_ratio
 				* fov_scale;
@@ -73,8 +71,6 @@ void	render_scene(t_data *data, int width, int height)
 			ray = transform_ray(data, c, ray);
 			color = trace_ray(data, ray, (t_range){1, INF}, 1);
 			mlx_put_pixel(data->img, c.pixel_x, c.pixel_y, color.color);
-			c.pixel_x++;
 		}
-		c.pixel_y++;
 	}
 }
