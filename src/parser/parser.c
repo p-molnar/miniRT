@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/28 14:39:07 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/01 12:55:39 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static void	parse_data(t_data *data, t_scn_el *el, char **input,
+static void	parse_column_data(t_data *data, t_scn_el *el, char **input,
 		t_line line_info)
 {
 	parse_type_identifier(el, input[0], line_info);
@@ -52,8 +52,8 @@ static void	parse_data(t_data *data, t_scn_el *el, char **input,
 
 static void	parse_line(t_data *scn, t_line *line)
 {
-	char		**el_info;
-	t_scn_el	*el;
+	char		**line_content;
+	t_scn_el	*element_info;
 	t_list		*list_el;
 	char		*tmp_line;
 
@@ -62,16 +62,16 @@ static void	parse_line(t_data *scn, t_line *line)
 	free(tmp_line);
 	if (!line->content)
 		error((t_err){strerror(errno), __FILE__, __LINE__, EXIT, 1});
-	el_info = ft_split(line->content, ' ');
-	el = ft_calloc(1, sizeof(t_scn_el));
-	if (!el_info || !el)
+	line_content = ft_split(line->content, ' ');
+	element_info = ft_calloc(1, sizeof(t_scn_el));
+	if (!line_content || !element_info)
 		error((t_err){strerror(errno), __FILE__, __LINE__, EXIT, 1});
-	parse_data(scn, el, el_info, *line);
-	list_el = ft_lstnew(el);
+	parse_column_data(scn, element_info, line_content, *line);
+	list_el = ft_lstnew(element_info);
 	if (!list_el)
 		error((t_err){strerror(errno), __FILE__, __LINE__, EXIT, 1});
 	ft_lstadd_back(&scn->all_scn_el, list_el);
-	free_arr((void **)el_info);
+	free_arr((void **)line_content);
 }
 
 void	parse_input(t_data *scn, int argc, char *argv[])
