@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 12:37:52 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/21 00:08:23 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/01 15:24:18 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,6 @@
 #include <mrt_error.h>
 #include <mrt_macros.h>
 #include <stdio.h>
-
-void	parse_float(long double *f, char *input, t_line line_info)
-{
-	if (!f || !input)
-		error((t_err){NULL_PTR, __FILE__, __LINE__, EXIT, 1});
-	if (!is_valid_number(input))
-		error((t_err){INVALID_NUM, line_info.file, line_info.num, EXIT, 1});
-	*f = ft_atof(input);
-	if (f < 0)
-		error((t_err){OUT_OF_RANGE, line_info.file, line_info.num, EXIT, 1});
-}
 
 void	parse_range(long double *f, char *input, t_range range,
 		t_line line_info)

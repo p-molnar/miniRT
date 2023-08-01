@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:27:54 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/01 13:13:49 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/01 15:28:57 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ void	populate_data_fields(t_scn_el *el, char **input, unsigned int field,
 	if (field & F_N_VEC)
 		parse_norm_vec(&el->n_vec, input[col++], line_info);
 	if (field & F_DMETER)
-		parse_float(&el->diameter, input[col++], line_info);
+		parse_range(&el->diameter, input[col++], (t_range){0, INF}, line_info);
 	if (field & F_HEIGHT)
-		parse_float(&el->height, input[col++], line_info);
+		parse_range(&el->height, input[col++], (t_range){0, INF}, line_info);
 	if (field & F_FOV)
 		parse_range(&el->fov, input[col++], (t_range){0, 180}, line_info);
 	if (field & F_INTENSITY)
@@ -67,7 +67,7 @@ void	populate_data_fields(t_scn_el *el, char **input, unsigned int field,
 	if (field & F_COLOR)
 		parse_color(&el->color, input[col++], (t_range){0, 255}, line_info);
 	if (field & F_SPECULAR)
-		parse_range(&el->spec_coeff, input[col++], (t_range){-1, 999},
+		parse_range(&el->spec_coeff, input[col++], (t_range){-1, INF},
 			line_info);
 	if (field & F_REFLECTION)
 		parse_range(&el->refl_coeff, input[col++], (t_range){0, 1}, line_info);
