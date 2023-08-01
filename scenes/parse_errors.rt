@@ -1,0 +1,33 @@
+
+#	wrong identifier
+# b     0.2                                       255,255,255
+
+#	duplicate element
+# A     0.2                                       255,255,255 
+# A     0.2                                       255,255,255
+
+# ambient intensity out of range
+# A     1.2                                       255,255,255
+# A     -0.2                                       255,255,255
+
+# colour val out of range
+# A     0.2                                       255,255,256
+# A     0.2                                       255,255,-256
+
+#	duplicate camera
+# C    0,0,0    0,0,0    53
+# C    0,0,0    0,0,0    53
+
+#	cam FOV out of range
+# C    0,0,0    0,0,0    181
+# C    0,0,0    0,0,0    -1
+
+#	cam normal vec out of range
+# C    0,0,0    1.1,0,0    53
+# C    0,0,0    -1.1,0,0    54
+
+# 	cylinder negative height and diameter
+# C   0,16,0    1,0,0    54
+# cy  0,5,0      0,0.7,-0.7     -1   40     102,255,255     -1  0
+# cy  0,5,0      0,0.7,-0.7     1   -40     102,255,255     -1  0
+
