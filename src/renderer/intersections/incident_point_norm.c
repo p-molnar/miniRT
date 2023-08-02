@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   renderer_util.c                                    :+:    :+:            */
+/*   incident_point_norm.c                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/31 12:23:02 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 10:28:50 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_vec3	get_cylinder_norm(t_hit_obj obj)
 		obj_norm = obj.attr->cap[1].n_vec;
 	else
 		obj_norm = create_dir_vec((t_coord3){{0, 0, obj.inc_p_raw.z}},
-				obj.inc_p_raw);
+									obj.inc_p_raw);
 	obj_norm_mx = multiply_mx(obj.attr->rotation, coord_to_mx(obj_norm.dir, 4,
 				1, 1));
 	return (create_vec(obj_norm_mx.m[X], obj_norm_mx.m[Y], obj_norm_mx.m[Z]));
@@ -45,15 +45,9 @@ void	get_surface_norm(t_scn_el cam, t_hit_obj *hit_obj)
 	{
 		agl = get_agl_between(hit_obj->attr->n_vec, cam.n_vec);
 		obj_norm = coord_to_vec(hit_obj->attr->n_vec.dir);
-		if (obj_norm.dir.x)
-			obj_norm.dir.x = obj_norm.dir.x - (2 * obj_norm.dir.x * (agl > M_PI
-						|| agl < 0));
-		if (obj_norm.dir.y)
-			obj_norm.dir.y = obj_norm.dir.y - (2 * obj_norm.dir.y * (agl > M_PI
-						|| agl < 0));
-		if (obj_norm.dir.z)
-			obj_norm.dir.z = obj_norm.dir.z - (2 * obj_norm.dir.z * (agl > M_PI
-						|| agl < 0));
+		obj_norm.dir.x = obj_norm.dir.x - (2 * obj_norm.dir.x * (agl < M_PI_2));
+		obj_norm.dir.y = obj_norm.dir.y - (2 * obj_norm.dir.y * (agl < M_PI_2));
+		obj_norm.dir.z = obj_norm.dir.z - (2 * obj_norm.dir.z * (agl < M_PI_2));
 	}
 	normalize(&obj_norm);
 	ft_memcpy(&hit_obj->norm, &obj_norm, sizeof(t_vec3));
