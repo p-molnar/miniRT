@@ -6,21 +6,18 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/08/02 10:37:03 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/08/02 11:02:02 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 CC 				= 	gcc
 CFLAGS 			= 	-Wall -Werror -Wextra $(addprefix -I, $(INCL))
-LDFLAGS			=	-L$(shell brew --prefix glfw)/lib -lglfw -framework Cocoa -framework OpenGL -framework IOKit
-MACRO_FLAGS		=	-DRECURSIVE_DEPTH=$(RECURSIVE_DEPTH)
+LDFLAGS			=	-L$(shell brew --prefix glfw)/lib -lglfw -framework Cocoa\
+					-framework OpenGL -framework IOKit
 CFLAGS			+=	-g # debug
 # CFLAGS			+=	-fsanitize=address
 NAME			=	minirt
 INCL			=	inc libft/inc MLX42/include/MLX42
-
-#	ENV VAR
-RECURSIVE_DEPTH	?=	0
 
 #	DEPENDENDENCIES
 LIBFT_DIR		=	libft
@@ -29,7 +26,7 @@ MLX42_DIR		=	MLX42
 MLX42_BUILD_DIR	=	build
 MLX42			=	$(MLX42_BUILD_DIR)/libmlx42.a
 
-# PRINT G
+#	STATUS PRINTER
 P_NAME			=	[$(NAME)]
 RED				=	\033[0;31m
 GREEN			=	\033[0;32m
@@ -40,108 +37,86 @@ SPACE_W 		= 	%-50s
 STATUS_W		=	%-10s
 P_NAME_W		=	%-10s
 STATUS_FMT		=	$(BOLD)$(P_NAME_W) $(DEF) $(STATUS_W) $(SPACE_W)
-
-#	PARSER
-
-INITAILISER		=	$(addprefix initialiser/,								\
-								ctw_mx.c									\
-								init.c										\
-								transformation_mx.c)
-
-VALIDATOR		=	$(addprefix validator/,									\
-								input_validator.c							\
-								format_validator.c							\
-								)
-
-EL_PARSER		=	$(addprefix	field_parser/,								\
-								color_parser.c								\
-								coordinate_parser.c							\
-								element_parser.c							\
-								float_parser.c								\
-								)
-
-PARSER_UTILS		=	$(addprefix	utils/,									\
-								parser_utils.c								\
-								field_value_derivator.c						\
-								$(EL_PARSER)								\
-								)
-																
+										
 PARSER			=	$(addprefix	parser/,									\
 								parser.c									\
-								$(PARSER_UTILS)								\
-								$(POST_PARSER_OPS)							\
-								$(VALIDATOR)								\
-								)
-
-ELEMENTS		=	$(addprefix	intersections/, 							\
-								intersection.c								\
-								incident_point_norm.c						\
-								sphere.c									\
-								plane.c										\
-								cylinder.c									\
-								)
-
-ERROR			=	$(addprefix	error/, 									\
-								error.c										\
-								)
-
-FREE			=	$(addprefix	free/,										\
-								free.c										\
-								)
-
-SHADER			=	$(addprefix	shader/,									\
-								$(COLOR)									\
-								lighting.c									\
-								reflection.c								\
-								)
-
-TRANSFORMATION	=	$(addprefix	transformations/,							\
-								transformation.c)							\
+						$(addprefix validator/,								\
+									input_validator.c						\
+									format_validator.c						\
+									)										\
+						$(addprefix	utils/,									\
+									parser_utils.c							\
+									field_value_derivator.c					\
+							$(addprefix	field_parser/,						\
+										color_parser.c						\
+										coordinate_parser.c					\
+										element_parser.c					\
+										float_parser.c						\
+										)									\
+									)										\
+								)											\
 
 RENDERER		=	$(addprefix	renderer/,									\
 								renderer.c									\
-								$(SHADER)									\
-								$(ELEMENTS)									\
-								$(TRANSFORMATION)							\
+						$(addprefix	shader/,								\
+									lighting.c								\
+									reflection.c							\
+							$(addprefix	color/,								\
+										color_ops.c							\
+										)									\
+									)										\
+						$(addprefix	intersections/, 						\
+									intersection.c							\
+									incident_point_norm.c					\
+									sphere.c								\
+									plane.c									\
+									cylinder.c								\
+									)										\
+						$(addprefix	transformations/,						\
+									transformation.c)						\
 								)
 
 UTILS			=	$(addprefix	utils/,										\
 								util.c										\
-								$(FREE)										\
-								$(HELPER)									\
-								$(INITAILISER)								\
+						$(addprefix	free/,									\
+									free.c									\
+									)										\
+						$(addprefix	helper/,								\
+									printer.c								\
+									axis.c									\
+									)										\
+						$(addprefix initialiser/,							\
+									ctw_mx.c								\
+									init.c									\
+									transformation_mx.c						\
+									)										\
 								)
 
 MATH			=	$(addprefix	math/,										\
 						$(addprefix coordinate/, coord_ops.c)				\
 						$(addprefix matrix/, 								\
-							matrix_ops.c									\
-							matrix_ops_2.c)									\
+									matrix_ops.c							\
+									matrix_ops_2.c)							\
 						$(addprefix vector/, 								\
-							vector_ops.c									\
-							vector_ops_2.c									\
-							vector_ops_3.c)									\
+									vector_ops.c							\
+									vector_ops_2.c							\
+									vector_ops_3.c)							\
 						$(addprefix misc/,									\
-							quadratic_ops.c									\
-							range.c											\
-							trigonometry.c)									\
+									quadratic_ops.c							\
+									range.c									\
+									trigonometry.c)							\
+									)
+
+ERROR			=	$(addprefix	error/, 									\
+								error.c										\
 								)
 
-COLOR			=	$(addprefix	color/,										\
-								color_ops.c									\
-								)
-
-HELPER			=	$(addprefix	helper/,									\
-								printer.c									\
-								axis.c										\
-								)
-#	SOURCE FILES
 SRC				=	main.c													\
-					$(ERROR)												\
 					$(PARSER)												\
 					$(RENDERER)												\
-					$(UTILS)													\
+					$(UTILS)												\
 					$(MATH)													\
+					$(ERROR)												\
 
 OBJ_PATH		=	obj/
 OBJ				=	$(addprefix $(OBJ_PATH), $(SRC:.c=.o))
