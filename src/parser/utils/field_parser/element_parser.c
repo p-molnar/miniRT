@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:27:54 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/01 15:28:57 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/03 00:12:37 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	populate_data_fields(t_scn_el *el, char **input, unsigned int field,
 	if (field & F_TG_COORD)
 		parse_coordinates(&el->target, input[col++], line_info);
 	if (field & F_N_VEC)
-		parse_norm_vec(&el->n_vec, input[col++], line_info);
+		parse_norm_vec(&el->orientation, input[col++], line_info);
 	if (field & F_DMETER)
 		parse_range(&el->diameter, input[col++], (t_range){0, INF}, line_info);
 	if (field & F_HEIGHT)

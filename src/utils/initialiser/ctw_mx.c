@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 10:46:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/02 11:41:03 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/03 00:12:37 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_mx	get_ctw_mx(t_vec3 right, t_vec3 up, t_vec3 fw, t_scn_el cam)
 void	get_directional_vectors(t_vec3 *up, t_vec3 *fw, t_scn_el *cam)
 {
 	*up = create_vec(0, 1, 0);
-	*fw = coord_to_vec(cam->n_vec.dir);
+	*fw = coord_to_vec(cam->orientation.dir);
 	if ((fw->dir.x == 0 && fw->dir.z == 0) && (fw->dir.y == -1
 			|| fw->dir.y == 1))
 	{

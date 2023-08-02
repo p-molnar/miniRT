@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/28 14:46:16 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/02 11:41:03 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/03 00:12:37 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	populate_dir_light_derived_fields(t_scn_el *el)
 		return ;
 	}
 	normalize_vec(&light_dir);
-	ft_memcpy(&el->n_vec, &light_dir, sizeof(t_vec3));
+	ft_memcpy(&el->orientation, &light_dir, sizeof(t_vec3));
 }
 
 static void	populate_camera_derived_fields(t_scn_el *el)
@@ -37,15 +37,15 @@ static void	populate_camera_derived_fields(t_scn_el *el)
 		el->type = F_CAM;
 		cam_dir = create_dir_vec(el->pos, el->target);
 		normalize_vec(&cam_dir);
-		ft_memcpy(&el->n_vec, &cam_dir, sizeof(t_vec3));
+		ft_memcpy(&el->orientation, &cam_dir, sizeof(t_vec3));
 	}
 	if (el->type == F_CAM)
 	{
-		if (el->n_vec.dir.x == 0 && el->n_vec.dir.y == 0
-			&& el->n_vec.dir.z == 0)
+		if (el->orientation.dir.x == 0 && el->orientation.dir.y == 0
+			&& el->orientation.dir.z == 0)
 		{
 			cam_dir = create_vec(0, 0, 1);
-			ft_memcpy(&el->n_vec, &cam_dir, sizeof(t_vec3));
+			ft_memcpy(&el->orientation, &cam_dir, sizeof(t_vec3));
 		}
 	}
 }

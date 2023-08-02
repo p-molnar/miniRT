@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/02 22:39:31 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/03 00:12:37 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ typedef struct s_scn_el
 	enum e_scn_el_type_flags	type;
 	t_coord3					pos;
 	t_coord3					target;
-	t_vec3						n_vec;
+	t_vec3						orientation;
 	long double					diameter;
 	long double					radius;
 	long double					height;

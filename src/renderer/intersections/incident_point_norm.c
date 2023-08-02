@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/02 21:06:53 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/03 00:12:37 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ static t_vec3	get_cylinder_norm(t_hit_obj obj)
 	t_mx	obj_norm_mx;
 
 	if ((float)obj.inc_p_raw.z == (float)obj.attr->cap[0].pos.z)
-		obj_norm = obj.attr->cap[0].n_vec;
+		obj_norm = obj.attr->cap[0].orientation;
 	else if ((float)obj.inc_p_raw.z == (float)obj.attr->cap[1].pos.z)
-		obj_norm = obj.attr->cap[1].n_vec;
+		obj_norm = obj.attr->cap[1].orientation;
 	else
 		obj_norm = create_dir_vec((t_coord3){{0, 0, obj.inc_p_raw.z}},
 				obj.inc_p_raw);
@@ -43,8 +43,8 @@ void	get_surface_norm(t_scn_el cam, t_hit_obj *hit_obj)
 		obj_norm = create_dir_vec(hit_obj->attr->pos, hit_obj->inc_p);
 	else if (hit_obj->attr->type == F_PLANE)
 	{
-		agl = get_agl_between(hit_obj->attr->n_vec, cam.n_vec);
-		obj_norm = coord_to_vec(hit_obj->attr->n_vec.dir);
+		agl = get_agl_between(hit_obj->attr->orientation, cam.orientation);
+		obj_norm = coord_to_vec(hit_obj->attr->orientation.dir);
 		obj_norm.dir.x = obj_norm.dir.x - (2 * obj_norm.dir.x * (agl < M_PI_2));
 		obj_norm.dir.y = obj_norm.dir.y - (2 * obj_norm.dir.y * (agl < M_PI_2));
 		obj_norm.dir.z = obj_norm.dir.z - (2 * obj_norm.dir.z * (agl < M_PI_2));

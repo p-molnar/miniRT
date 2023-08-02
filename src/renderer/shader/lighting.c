@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/02 22:45:05 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/03 00:12:37 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static t_color	get_dir_light_col(t_light_fn_arg *arg)
 	long double	intensity;
 	t_color		color;
 
-	arg->light_dir = scale_vec(-1, arg->light.n_vec);
+	arg->light_dir = scale_vec(-1, arg->light.orientation);
 	arg->visibility = intersect((t_ray){arg->hit_obj.inc_p, arg->light_dir},
 			arg->objs, (t_range){EPS, INF}, SHADOW).is_hit == false;
 	intensity = arg->visibility * arg->light.intensity * fmax(0,

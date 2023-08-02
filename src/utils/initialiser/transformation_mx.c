@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/21 12:49:21 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/02 11:41:03 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/03 00:12:37 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ void	populate_rotation_mx(t_scn_el *el)
 	t_mx		rot_mx;
 	t_mx		inv_rot_mx;
 
-	if (is_identical_coord((t_coord3){{0, 0, 0}}, el->n_vec.dir))
-		el->n_vec.dir.z = 1;
-	agl_r = get_agl_between(create_vec(0, 0, 1), el->n_vec);
+	if (is_identical_coord((t_coord3){{0, 0, 0}}, el->orientation.dir))
+		el->orientation.dir.z = 1;
+	agl_r = get_agl_between(create_vec(0, 0, 1), el->orientation);
 	printf("agl_r: %Lf\n", agl_r);
-	pivot_ax = cross(create_vec(0, 0, 1), el->n_vec);
+	pivot_ax = cross(create_vec(0, 0, 1), el->orientation);
 	normalize_vec(&pivot_ax);
 	pivot_mx = coord_to_mx(pivot_ax.dir, 4, 1, 1);
 	rot_mx = get_rotation_mx(pivot_mx, agl_r);
