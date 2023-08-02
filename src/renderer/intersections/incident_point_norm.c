@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/02 11:41:03 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 21:06:53 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-t_vec3	get_cylinder_norm(t_hit_obj obj)
+static t_vec3	get_cylinder_norm(t_hit_obj obj)
 {
 	t_vec3	obj_norm;
 	t_mx	obj_norm_mx;
@@ -26,7 +26,7 @@ t_vec3	get_cylinder_norm(t_hit_obj obj)
 		obj_norm = obj.attr->cap[1].n_vec;
 	else
 		obj_norm = create_dir_vec((t_coord3){{0, 0, obj.inc_p_raw.z}},
-									obj.inc_p_raw);
+				obj.inc_p_raw);
 	obj_norm_mx = multiply_mx(obj.attr->rotation, coord_to_mx(obj_norm.dir, 4,
 				1, 1));
 	return (create_vec(obj_norm_mx.m[X], obj_norm_mx.m[Y], obj_norm_mx.m[Z]));

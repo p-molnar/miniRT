@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/30 22:03:40 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 22:39:31 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,6 @@ typedef struct s_scn_el
 	t_mx						inv_rotation;
 	t_color						color;
 }								t_scn_el;
-
 
 typedef struct s_hit_obj
 {

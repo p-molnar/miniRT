@@ -6,26 +6,13 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/02 11:33:44 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 22:38:59 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <MLX42.h>
-#include <math.h>
 #include <minirt.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-
-void	close_window(mlx_key_data_t keydata, t_data d)
-{
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-	{
-		clean_up(&d);
-		mlx_terminate(d.mlx);
-		exit(0);
-	}
-}
 
 void	fn(void)
 {
@@ -37,7 +24,7 @@ int	main(int argc, char *argv[])
 	t_data	d;
 
 	ft_memset(&d, 0, sizeof(t_data));
-	// atexit(fn);
+	atexit(fn);
 	parse_input(&d, argc, argv);
 	set_up_scn_el_ptrs(&d);
 	set_up_ctw_mx(&d);

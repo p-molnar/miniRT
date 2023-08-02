@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/08/02 11:02:02 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/08/02 21:26:19 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -111,12 +111,17 @@ ERROR			=	$(addprefix	error/, 									\
 								error.c										\
 								)
 
+MLX				=	$(addprefix	mlx/,										\
+								key_event.c									\
+								)								
+
 SRC				=	main.c													\
 					$(PARSER)												\
 					$(RENDERER)												\
 					$(UTILS)												\
 					$(MATH)													\
 					$(ERROR)												\
+					$(MLX)													\
 
 OBJ_PATH		=	obj/
 OBJ				=	$(addprefix $(OBJ_PATH), $(SRC:.c=.o))
@@ -142,7 +147,6 @@ $(MLX42_BUILD_DIR):
 	# @git submodule update --init --remote --recursive MLX42
 	@cmake -S MLX42 -B $(MLX42_BUILD_DIR)
 	
-
 $(LIBFT):
 	# @git submodule update --init --remote --recursive libft
 	@make libft.a -C libft

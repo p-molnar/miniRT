@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/02 11:41:03 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 22:41:06 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <math.h>
 #include <minirt.h>
 
-t_ray	transform_ray(t_data *d, t_coord_sys c, t_ray ray)
+static t_ray	transform_ray(t_data *d, t_coord_sys c, t_ray ray)
 {
 	t_mx	dir_mx;
 
@@ -34,7 +34,7 @@ t_color	trace_ray(t_data *data, t_ray ray, t_range range, int recursion_depth)
 
 	hit_obj = intersect(ray, data->scn_els[ALL_OBJS], range, CLOSEST_EL);
 	if (!hit_obj.is_hit)
-		return ((t_color){.r = 0, .g = 0, .b = 0, .a = 255});
+		return ((t_color){.color = BACKGROUND_COLOR});
 	get_incident_point(ray, &hit_obj);
 	get_surface_norm(**data->scn_els[CAM], &hit_obj);
 	local_color = get_local_color(data, ray, hit_obj);

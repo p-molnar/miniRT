@@ -6,13 +6,13 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/31 12:21:41 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/02 11:27:56 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 21:07:03 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-void	update_hit_obj(t_hit_obj *hit_obj, t_hit_obj updated_val)
+static void	update_hit_obj(t_hit_obj *hit_obj, t_hit_obj updated_val)
 {
 	hit_obj->attr = updated_val.attr;
 	hit_obj->dist = updated_val.dist;

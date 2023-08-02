@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/02 11:41:03 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 22:45:05 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static t_color	get_specular_lighting(t_light_fn_arg arg)
 	t_color		color;
 
 	if (arg.hit_obj.attr->spec_coeff < 1)
-		return ((t_color){.color = 0x00000000});
+		return ((t_color){.color = BACKGROUND_COLOR});
 	reflection = scale_vec(2 * dot(arg.hit_obj.norm, arg.light_dir),
 			arg.hit_obj.norm);
 	reflection = subtract_vec(reflection, arg.light_dir);

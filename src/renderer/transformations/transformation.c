@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/29 11:51:58 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/21 16:40:47 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 21:08:29 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-t_mx	apply_origin_transformations(t_mx origin, t_scn_el *obj_info)
+static t_mx	apply_origin_transformations(t_mx origin, t_scn_el *obj_info)
 {
 	t_mx	transformed_mx;
 	t_mx	tmp;
@@ -25,7 +25,7 @@ t_mx	apply_origin_transformations(t_mx origin, t_scn_el *obj_info)
 	return (transformed_mx);
 }
 
-t_mx	apply_direction_transformations(t_mx dir, t_scn_el *obj_info)
+static t_mx	apply_direction_transformations(t_mx dir, t_scn_el *obj_info)
 {
 	t_mx	transformed_mx;
 

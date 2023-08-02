@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 23:20:51 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/02 11:37:59 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 12:18:09 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,26 +86,25 @@ void	validate_scn_el_setup(t_data *data)
 void	validate_for_duplicate_el(enum e_scn_el_type_flags el_type, t_data *scn,
 		t_line line_info)
 {
-	bool		dupl_found;
+	bool		duplicate_found;
 	t_list		*tmp;
-	t_scn_el	*el;
+	t_scn_el	*curr_el;
 
-	dupl_found = false;
+	duplicate_found = false;
 	tmp = scn->all_scn_el;
-	while (tmp && !dupl_found)
+	while (tmp && !duplicate_found)
 	{
-		el = tmp->content;
+		curr_el = tmp->content;
 		if (is_in_range_f(el_type, F_AMB_LIGHT, F_POINT_LIGHT, "[)"))
 		{
-			if (el_type == el->type)
-				dupl_found = 1;
-			else if (el_type == F_CAM && el->type == F_TG_CAM)
-				dupl_found = 1;
-			else if (el_type == F_TG_CAM && el->type == F_CAM)
-				dupl_found = 1;
+			if (curr_el->type == el_type)
+				duplicate_found = 1;
+			else if ((el_type == F_TG_CAM && curr_el->type == F_CAM) || 
+				(el_type == F_CAM && curr_el->type == F_TG_CAM))
+				duplicate_found = 1;
 		}
 		tmp = tmp->next;
 	}
-	if (dupl_found)
+	if (duplicate_found)
 		error((t_err){DUPLICATE_EL, line_info.file, line_info.num, EXIT, 1});
 }
