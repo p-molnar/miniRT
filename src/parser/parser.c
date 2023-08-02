@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/01 12:55:39 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 10:27:38 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static void	parse_column_data(t_data *data, t_scn_el *el, char **input,
-		t_line line_info)
+static void	populate_column_data(t_data *data, t_scn_el *el, char **input, t_line line_info)
 {
-	parse_type_identifier(el, input[0], line_info);
-	validate_for_duplicate_el(el->type, data, line_info);
-	validate_line_formatting(*el, input, line_info);
+	(void) data;
 	if (el->type == F_AMB_LIGHT)
 		populate_data_fields(el, input, AMB_LIGHT_FIELDS, line_info);
 	else if (el->type == F_POINT_LIGHT)
@@ -47,6 +44,15 @@ static void	parse_column_data(t_data *data, t_scn_el *el, char **input,
 		add_cylinder_caps(el);
 		populate_transformation_mx(el);
 	}
+}
+
+static void	parse_column_data(t_data *data, t_scn_el *el, char **input,
+		t_line line_info)
+{
+	parse_type_identifier(el, input[0], line_info);
+	validate_for_duplicate_el(el->type, data, line_info);
+	validate_line_formatting(*el, input, line_info);
+	populate_column_data(data, el, input, line_info);
 	populate_derived_fields(el);
 }
 

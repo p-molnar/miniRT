@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/07/31 12:43:12 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/08/02 10:37:03 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ MLX42_DIR		=	MLX42
 MLX42_BUILD_DIR	=	build
 MLX42			=	$(MLX42_BUILD_DIR)/libmlx42.a
 
-# PRINT FORMATTING
+# PRINT G
 P_NAME			=	[$(NAME)]
 RED				=	\033[0;31m
 GREEN			=	\033[0;32m
@@ -53,7 +53,7 @@ VALIDATOR		=	$(addprefix validator/,									\
 								format_validator.c							\
 								)
 
-EL_PARSER		=	$(addprefix	element_parser/,							\
+EL_PARSER		=	$(addprefix	field_parser/,								\
 								color_parser.c								\
 								coordinate_parser.c							\
 								element_parser.c							\
@@ -61,14 +61,15 @@ EL_PARSER		=	$(addprefix	element_parser/,							\
 								)
 
 PARSER_UTILS		=	$(addprefix	utils/,									\
-								$(EL_PARSER)								\
-								field_value_derivator.c						\
 								parser_utils.c								\
+								field_value_derivator.c						\
+								$(EL_PARSER)								\
 								)
 																
 PARSER			=	$(addprefix	parser/,									\
 								parser.c									\
 								$(PARSER_UTILS)								\
+								$(POST_PARSER_OPS)							\
 								$(VALIDATOR)								\
 								)
 
