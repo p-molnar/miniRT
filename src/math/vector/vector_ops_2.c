@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 14:48:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/21 22:10:39 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 11:08:16 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,10 @@ t_vec3	cross(t_vec3 vec_1, t_vec3 vec_2)
 	t_coord3	return_vec;
 	int			i;
 
-	normal[0] = get_normal_vec(vec_1);
-	normal[1] = get_normal_vec(vec_2);
+	normalize(&vec_1);
+	normalize(&vec_2);
+	normal[0] = vec_1;
+	normal[1] = vec_2;
 	i = 0;
 	while (i < COORD_SIZE)
 	{

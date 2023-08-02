@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 15:01:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/21 18:18:55 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 11:08:21 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,4 @@ void	normalize(t_vec3 *vec)
 		i++;
 	}
 	vec->len = 1;
-}
-
-t_vec3	get_normal_vec(t_vec3 vec)
-{
-	t_vec3	new_vec;
-
-	ft_memcpy(&new_vec, &vec, sizeof(t_vec3));
-	normalize(&new_vec);
-	return (new_vec);
 }
