@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/08/02 21:26:19 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/08/03 00:11:21 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ LDFLAGS			=	-L$(shell brew --prefix glfw)/lib -lglfw -framework Cocoa\
 					-framework OpenGL -framework IOKit
 CFLAGS			+=	-g # debug
 # CFLAGS			+=	-fsanitize=address
-NAME			=	minirt
+NAME			=	miniRT
 INCL			=	inc libft/inc MLX42/include/MLX42
 
 #	DEPENDENDENCIES
