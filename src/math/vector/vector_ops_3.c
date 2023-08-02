@@ -6,13 +6,13 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/21 22:11:02 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/23 00:24:13 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 11:37:43 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-t_coord3	offset(t_coord3 p, t_vec3 vec)
+t_coord3	offset_pt(t_coord3 p, t_vec3 vec)
 {
 	int			i;
 	t_coord3	new_point;

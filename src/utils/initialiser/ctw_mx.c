@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 10:46:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/31 00:58:16 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 11:41:03 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ void	set_up_ctw_mx(t_data *d)
 
 	get_directional_vectors(&up, &fw, *d->scn_els[CAM]);
 	right = cross(up, fw);
-	normalize(&right);
+	normalize_vec(&right);
 	up = cross(fw, right);
-	normalize(&up);
+	normalize_vec(&up);
 	ctw = get_ctw_mx(right, up, fw, **d->scn_els[CAM]);
 	ft_memcpy(&d->ctw_mx, &ctw, sizeof(t_mx));
 	print_mx(&d->ctw_mx);

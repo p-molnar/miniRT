@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 23:20:51 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/02 11:27:39 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 11:37:59 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static bool	is_cam_inside_sphere(t_scn_el cam, t_scn_el el)
 {
 	t_coord3	diff;
 
-	diff = coord_subtract(el.pos, cam.pos);
+	diff = subtract_coord(el.pos, cam.pos);
 	return (pow(diff.x, 2) + pow(diff.y, 2) + pow(diff.z, 2) < pow(el.diameter
 			/ 2, 2));
 }

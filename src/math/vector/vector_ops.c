@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 15:01:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/02 11:08:21 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 11:41:03 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_vec3	create_dir_vec(t_coord3 init_point, t_coord3 term_point)
 {
 	t_vec3		dir;
 
-	dir = coord_to_vec(coord_subtract(term_point, init_point));
+	dir = coord_to_vec(subtract_coord(term_point, init_point));
 	return (dir);
 }
 
@@ -48,7 +48,7 @@ long double	get_vec_len(t_vec3 vec)
 	return (sqrt(sum_of_sqrs));
 }
 
-void	normalize(t_vec3 *vec)
+void	normalize_vec(t_vec3 *vec)
 {
 	int	i;
 

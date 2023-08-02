@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/28 14:46:16 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/31 00:53:19 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 11:41:03 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	populate_dir_light_derived_fields(t_scn_el *el)
 		el->type = F_TYPE_UNDEF;
 		return ;
 	}
-	normalize(&light_dir);
+	normalize_vec(&light_dir);
 	ft_memcpy(&el->n_vec, &light_dir, sizeof(t_vec3));
 }
 
@@ -36,7 +36,7 @@ static void	populate_camera_derived_fields(t_scn_el *el)
 	{
 		el->type = F_CAM;
 		cam_dir = create_dir_vec(el->pos, el->target);
-		normalize(&cam_dir);
+		normalize_vec(&cam_dir);
 		ft_memcpy(&el->n_vec, &cam_dir, sizeof(t_vec3));
 	}
 	if (el->type == F_CAM)

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/21 12:49:21 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/21 13:20:39 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 11:41:03 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	populate_rotation_mx(t_scn_el *el)
 	agl_r = get_agl_between(create_vec(0, 0, 1), el->n_vec);
 	printf("agl_r: %Lf\n", agl_r);
 	pivot_ax = cross(create_vec(0, 0, 1), el->n_vec);
-	normalize(&pivot_ax);
+	normalize_vec(&pivot_ax);
 	pivot_mx = coord_to_mx(pivot_ax.dir, 4, 1, 1);
 	rot_mx = get_rotation_mx(pivot_mx, agl_r);
 	inv_rot_mx = get_inverse_mx(rot_mx);

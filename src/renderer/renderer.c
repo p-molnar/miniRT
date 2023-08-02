@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/01 12:36:16 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 11:41:03 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_ray	transform_ray(t_data *d, t_coord_sys c, t_ray ray)
 	dir_mx = coord_to_mx((t_coord3){{c.x, c.y, 1}}, 4, 1, 0);
 	dir_mx = multiply_mx(d->ctw_mx, dir_mx);
 	ray.dir = create_vec(dir_mx.m[X], dir_mx.m[Y], dir_mx.m[Z]);
-	normalize(&ray.dir);
+	normalize_vec(&ray.dir);
 	return (ray);
 }
 

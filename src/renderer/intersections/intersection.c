@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/31 12:21:41 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/01 12:35:52 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 11:27:56 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_hit_obj	intersect(t_ray ray, t_scn_el **el, t_range range,
 			t = get_cylinder_intersection(ray, el[i], &inc_p);
 		else if (el[i]->type == F_PLANE)
 			t = get_plane_intersection(ray, el[i]);
-		if (is_in_range_f(t, range.min, range.max) && t < hit_obj.dist)
+		if (is_in_range_f(t, range.min, range.max, "[]") && t < hit_obj.dist)
 		{
 			update_hit_obj(&hit_obj, (t_hit_obj){.attr = el[i], .dist = t,
 				.inc_p_raw = inc_p, .is_hit = true});

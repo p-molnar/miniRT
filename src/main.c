@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/27 16:59:19 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 11:33:44 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int argc, char *argv[])
 	t_data	d;
 
 	ft_memset(&d, 0, sizeof(t_data));
-	atexit(fn);
+	// atexit(fn);
 	parse_input(&d, argc, argv);
 	set_up_scn_el_ptrs(&d);
 	set_up_ctw_mx(&d);

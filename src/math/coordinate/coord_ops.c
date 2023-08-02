@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/16 10:49:45 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/17 20:22:05 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 11:37:59 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_vec3	coord_to_vec(t_coord3 coord)
 	return (vec);
 }
 
-t_coord3	coord_subtract(t_coord3 c1, t_coord3 c2)
+t_coord3	subtract_coord(t_coord3 c1, t_coord3 c2)
 {
 	t_coord3	diff;
 	int			i;

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/31 12:14:58 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 11:41:03 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static t_color	get_dir_light_col(t_light_fn_arg *arg)
 	long double	intensity;
 	t_color		color;
 
-	arg->light_dir = scale(-1, arg->light.n_vec);
+	arg->light_dir = scale_vec(-1, arg->light.n_vec);
 	arg->visibility = intersect((t_ray){arg->hit_obj.inc_p, arg->light_dir},
 			arg->objs, (t_range){EPS, INF}, SHADOW).is_hit == false;
 	intensity = arg->visibility * arg->light.intensity * fmax(0,
@@ -57,7 +57,7 @@ static t_color	get_point_light_color(t_light_fn_arg *arg)
 
 	arg->light_dir = create_dir_vec(arg->hit_obj.inc_p, arg->light.pos);
 	len = arg->light_dir.len;
-	normalize(&arg->light_dir);
+	normalize_vec(&arg->light_dir);
 	arg->visibility = intersect((t_ray){arg->hit_obj.inc_p, arg->light_dir},
 			arg->objs, (t_range){EPS, len},
 			SHADOW).is_hit == false;
@@ -82,11 +82,11 @@ static t_color	get_specular_lighting(t_light_fn_arg arg)
 
 	if (arg.hit_obj.attr->spec_coeff < 1)
 		return ((t_color){.color = 0x00000000});
-	reflection = scale(2 * dot(arg.hit_obj.norm, arg.light_dir),
+	reflection = scale_vec(2 * dot(arg.hit_obj.norm, arg.light_dir),
 			arg.hit_obj.norm);
-	reflection = vec_subtract(reflection, arg.light_dir);
-	normalize(&reflection);
-	specular = fmaxl(0, dot(reflection, scale(-1, arg.ray.dir)));
+	reflection = subtract_vec(reflection, arg.light_dir);
+	normalize_vec(&reflection);
+	specular = fmaxl(0, dot(reflection, scale_vec(-1, arg.ray.dir)));
 	intensity = arg.visibility * arg.light.intensity * pow(specular,
 			arg.hit_obj.attr->spec_coeff);
 	color.r = fmin(intensity * arg.hit_obj.attr->color.r * arg.light.color.r

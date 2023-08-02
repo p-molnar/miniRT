@@ -2,7 +2,7 @@
 #	wrong identifier
 # b     0.2                                       255,255,255
 
-#	duplicate element
+# # duplicate element
 # A     0.2                                       255,255,255 
 # A     0.2                                       255,255,255
 
@@ -19,8 +19,8 @@
 # C    0,0,0    0,0,0    53
 
 #	cam FOV out of range
-# C    0,0,0    0,0,0    181
-# C    0,0,0    0,0,0    -1
+C    0,0,0    0,0,0    181
+C    0,0,0    0,0,0    -1
 
 #	cam normal vec out of range
 # C    0,0,0    1.1,0,0    53

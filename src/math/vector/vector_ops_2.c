@@ -6,14 +6,14 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 14:48:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/02 11:08:16 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 11:41:03 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 #include <stdlib.h>
 
-t_vec3	scale(long double scaler, t_vec3 vec)
+t_vec3	scale_vec(long double scaler, t_vec3 vec)
 {
 	t_coord3	tmp;
 	int			i;
@@ -42,7 +42,7 @@ long double	dot(t_vec3 vec_1, t_vec3 vec_2)
 	return (result);
 }
 
-t_vec3	add(t_vec3 vec_1, t_vec3 vec_2)
+t_vec3	add_vec(t_vec3 vec_1, t_vec3 vec_2)
 {
 	t_coord3	tmp;
 	int			i;
@@ -56,11 +56,11 @@ t_vec3	add(t_vec3 vec_1, t_vec3 vec_2)
 	return (coord_to_vec(tmp));
 }
 
-t_vec3	vec_subtract(t_vec3 vec_1, t_vec3 vec_2)
+t_vec3	subtract_vec(t_vec3 vec_1, t_vec3 vec_2)
 {
 	t_vec3	return_vec;
 
-	return_vec = add(vec_1, scale(-1, vec_2));
+	return_vec = add_vec(vec_1, scale_vec(-1, vec_2));
 	return_vec.len = get_vec_len(return_vec);
 	return (return_vec);
 }
@@ -71,8 +71,8 @@ t_vec3	cross(t_vec3 vec_1, t_vec3 vec_2)
 	t_coord3	return_vec;
 	int			i;
 
-	normalize(&vec_1);
-	normalize(&vec_2);
+	normalize_vec(&vec_1);
+	normalize_vec(&vec_2);
 	normal[0] = vec_1;
 	normal[1] = vec_2;
 	i = 0;
