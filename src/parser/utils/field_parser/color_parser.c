@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 13:44:13 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/29 16:45:03 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 11:26:27 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@
 #include <mrt_macros.h>
 #include <stdio.h>
 
-int	parse_color_code(char *color, int n_lower, int n_upper, t_line line_info)
+int	parse_color_code(char *color, int rgb_min, int rgb_max, t_line line_info)
 {
-	int	color_code;
+	int	rgb_val;
 
 	if (!is_valid_number(color))
 		error((t_err){INVALID_NUM, line_info.file, line_info.num, EXIT, 1});
-	color_code = ft_atoi(color);
-	if (!is_in_range_i(color_code, n_lower, n_upper))
+	rgb_val = ft_atoi(color);
+	if (!is_in_range_f(rgb_val, rgb_min, rgb_max, "[]"))
 		error((t_err){OUT_OF_RANGE, line_info.file, line_info.num, EXIT, 1});
-	return (color_code);
+	return (rgb_val);
 }
 
 void	parse_color(t_color *color, char *input, t_range range,

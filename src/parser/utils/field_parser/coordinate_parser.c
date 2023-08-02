@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:35:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/20 23:40:10 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 11:26:46 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	parse_norm_vec(t_vec3 *vec, char *input, t_line line_info)
 		if (!is_valid_number(coords[i]))
 			error((t_err){INVALID_NUM, line_info.file, line_info.num, EXIT, 1});
 		f.coord[i] = ft_atof(coords[i]);
-		if (!is_in_range_f(f.coord[i], -1.0, 1.0))
+		if (!is_in_range_f(f.coord[i], -1.0, 1.0, "[]"))
 			error((t_err){OUT_OF_RANGE, line_info.file,
 				line_info.num, EXIT, 1});
 		i++;

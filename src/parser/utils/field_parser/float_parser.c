@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 12:37:52 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/01 15:24:18 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 11:26:57 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ void	parse_range(long double *f, char *input, t_range range,
 	if (!is_valid_number(input))
 		error((t_err){INVALID_NUM, line_info.file, line_info.num, EXIT, 1});
 	*f = ft_atof(input);
-	if (!is_in_range_f(*f, range.min, range.max))
+	if (!is_in_range_f(*f, range.min, range.max, "[]"))
 		error((t_err){OUT_OF_RANGE, line_info.file, line_info.num, EXIT, 1});
 }

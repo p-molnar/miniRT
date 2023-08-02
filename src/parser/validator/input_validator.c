@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 23:20:51 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/31 00:53:00 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/02 11:27:39 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	validate_for_duplicate_el(enum e_scn_el_type_flags el_type, t_data *scn,
 	while (tmp && !dupl_found)
 	{
 		el = tmp->content;
-		if (is_in_range_i(el_type, F_AMB_LIGHT, F_TG_CAM))
+		if (is_in_range_f(el_type, F_AMB_LIGHT, F_POINT_LIGHT, "[)"))
 		{
 			if (el_type == el->type)
 				dupl_found = 1;
