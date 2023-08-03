@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/08/03 00:11:21 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/08/03 10:07:50 by pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -130,25 +130,27 @@ all:	$(NAME)
 	@printf "$(GREEN)$(NAME) is created at $(shell pwd)$(DEF)\n"
 
 $(NAME):	$(LIBFT) $(MLX42) $(OBJ)
-	@printf "$(STATUS_FMT)" "$(P_NAME)" "building" "$(NAME)"
+	@printf "$(STATUS_FMT)" "$(P_NAME)" "linking" "$(NAME)"
 	@$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $(NAME)
 	@printf "[$(GREEN)DONE$(DEF)]\n"
 
 $(OBJ_PATH)%.o:	src/%.c
 	@mkdir -p $(dir $@)
-	@printf "$(STATUS_FMT)" "$(P_NAME)" "building" "$<"
+	@printf "$(STATUS_FMT)" "$(P_NAME)" "compiling" "$<"
 	@$(CC) $(CFLAGS) $(MACRO_FLAGS) -c $^ -o $@ 
 	@printf "[$(GREEN)DONE$(DEF)]\n"
 
 $(MLX42):	$(MLX42_BUILD_DIR)
 	@make -C $(MLX42_BUILD_DIR)
 
-$(MLX42_BUILD_DIR):
-	# @git submodule update --init --remote --recursive MLX42
+$(MLX42_BUILD_DIR):	$(MLX42_DIR)
 	@cmake -S MLX42 -B $(MLX42_BUILD_DIR)
 	
+$(MLX42_DIR):
+	@git submodule update --init --recursive MLX42
+
 $(LIBFT):
-	# @git submodule update --init --remote --recursive libft
+	@git submodule update --init --recursive libft
 	@make libft.a -C libft
 
 clean:
@@ -157,7 +159,11 @@ clean:
 	@printf "[$(GREEN)DONE$(DEF)]\n"
 	@make clean -C $(LIBFT_DIR)
 
-fclean:	
+fclean:
+	@printf "$(STATUS_FMT)" "$(P_NAME)" "removing" "$(MLX42_BUILD_DIR)"
+	@make clean -C $(MLX42_BUILD_DIR)
+	@printf "[$(GREEN)DONE$(DEF)]\n"
+
 	@printf "$(STATUS_FMT)" "$(P_NAME)" "removing" "$(NAME)"
 	@rm -f $(NAME)
 	@printf "[$(GREEN)DONE$(DEF)]\n"
