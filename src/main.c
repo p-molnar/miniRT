@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:00:14 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/03 00:15:29 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/03 09:48:48 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void	fn(void)
 {
-	system("leaks minirt");
+	system("leaks miniRT");
 }
 
 int	main(int argc, char *argv[])
