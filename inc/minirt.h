@@ -6,14 +6,14 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/07 11:05:22 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/07 13:34:16 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
-# include <mrt_data_struct.h>
 # include <mrt_macros.h>
+# include <mrt_data_struct.h>
 
 //	PARSER
 void		parse_input(t_data *scn, int argc, char *argv[]);
@@ -60,6 +60,7 @@ t_ray		apply_transformations(t_ray ray, t_scn_el *obj_info);
 
 //	ERROR
 int			error(t_err error);
+void		mlx_err(t_data *data);
 
 //	RENDERER
 void		render_scene(t_data *data, int width, int height);

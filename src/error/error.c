@@ -6,17 +6,22 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:50:50 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/21 16:44:15 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/07 13:19:33 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <mrt_macros.h>
-#include <mrt_data_struct.h>
+#include <minirt.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 #define RED "\033[0;31m"
 #define DEF "\033[0m"
+
+void	mlx_err(t_data *data)
+{
+	clean_up(data);
+	error((t_err){mlx_strerror(mlx_errno), NULL, 0, EXIT, 1});
+}
 
 int	error(t_err error)
 {
