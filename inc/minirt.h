@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/02 22:39:50 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/07 11:05:22 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,6 @@ long double	get_cylinder_intersection(t_ray ray, t_scn_el *obj,
 				t_coord3 *inc_p);
 
 //	MLX
-void		close_window(mlx_key_data_t keydata, t_data d);
+mlx_keyfunc	close_window(mlx_key_data_t keydata, t_data *d);
 
 #endif
