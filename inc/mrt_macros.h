@@ -6,12 +6,13 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/07 10:07:22 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/07 13:39:37 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MRT_MACROS_H
 # define MRT_MACROS_H
+# define NAME "miniRT"
 # define CANVAS_W 1280
 # define CANVAS_H 720
 # define INF 99999
@@ -109,7 +110,7 @@ enum	e_field_flags
 	SPHERE_FIELDS = F_COORD | F_DMETER | F_COLOR | F_SPECULAR | F_REFLECTION,
 	PLANE_FIELDS = F_COORD | F_N_VEC | F_COLOR | F_SPECULAR | F_REFLECTION,
 	CYLINDER_FIELDS = F_COORD | F_N_VEC | F_DMETER | F_HEIGHT | F_COLOR | \
-											F_SPECULAR | F_REFLECTION,
+	F_SPECULAR | F_REFLECTION,
 };
 
 #endif
