@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/20 21:01:01 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/01 13:14:18 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/07 20:18:43 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@
 # define WRONG_SEP "Wrong value separation / incomplete set of values"
 # define NULL_PTR "NULL Pointer error"
 # define WRONG_EL "Element must be of type: A, L, DL, C, TC, sp, pl, cy"
-# define EMPTY_LINE "Empty line must only consist of a new line character" 
+# define EMPTY_LINE "Empty line must only consist of a new line character"
+# define INVALID_EXT "Invalid file extension."
+
 
 # define FMT_E_AMB_LIGHT "Required line format: A <light intensity> <color>"
 # define FMT_E_PNT_LIGHT "Required line format: L <coordinate> \

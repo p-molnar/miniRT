@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/07 13:34:16 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/07 20:19:20 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINIRT_H
 # include <mrt_macros.h>
 # include <mrt_data_struct.h>
+# include <mrt_error.h>
 
 //	PARSER
 void		parse_input(t_data *scn, int argc, char *argv[]);
@@ -29,6 +30,7 @@ void		validate_for_duplicate_el(enum e_scn_el_type_flags el_type,
 				t_line line_info);
 void		validate_line_formatting(t_scn_el el, char **input,
 				t_line line_info);
+bool		is_valid_extension(char *file_name);
 void		populate_derived_fields(t_scn_el *el);
 
 //	element parser

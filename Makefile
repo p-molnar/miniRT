@@ -43,6 +43,7 @@ PARSER			=	$(addprefix	parser/,									\
 						$(addprefix validator/,								\
 									input_validator.c						\
 									format_validator.c						\
+									extension_validator.c						\
 									)										\
 						$(addprefix	utils/,									\
 									parser_utils.c							\

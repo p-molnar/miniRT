@@ -6,19 +6,21 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:38:24 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/19 15:00:00 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/07 20:19:12 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <minirt.h>
 #include <errno.h>
 #include <fcntl.h>
-#include <minirt.h>
 #include <string.h>
 
 int	open_file(char *file_name)
 {
 	int	fd;
 
+	if (!is_valid_extension(file_name))
+		error((t_err){INVALID_EXT, file_name, -1, EXIT, 1});
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)
 		error((t_err){strerror(errno), file_name, -1, EXIT, 1});

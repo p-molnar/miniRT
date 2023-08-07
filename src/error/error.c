@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:50:50 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/07 13:19:33 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/07 20:19:48 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	error(t_err error)
 		printf(":%d ", error.line);
 	if (error.msg)
 		printf("\t%s", error.msg);
-	printf("\nUsage: ./minirt <path-to-map>\n");
+	printf("\nUsage: ./minirt <path-to-scene>.rt\n");
 	if (error.exit_method == EXIT)
 		exit(error.exit_code);
 	else if (error.exit_method == RETURN)
