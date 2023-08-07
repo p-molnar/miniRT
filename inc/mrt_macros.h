@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:52:36 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/02 22:40:11 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/07 10:07:22 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ enum	e_scn_el_type
 	TYPE_UNDEF,
 	AMB_LIGHT,
 	CAM,
-	TG_CAM,
 	POINT_LIGHT,
 	DIR_LIGHT,
 	SPHERE,
