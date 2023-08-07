@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 13:09:33 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/07 09:56:28 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/07 10:44:43 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <mrt_data_struct.h>
 #include <mrt_error.h>
 
-t_scn_el	**get_scn_els(t_list *list, enum e_scn_el_type_flags type)
+t_scn_el	**get_scn_els(t_list *list, enum e_scn_el_type_flags lookup_type)
 {
 	t_list		*tmp;
 	t_scn_el	*curr_el;
@@ -29,7 +29,7 @@ t_scn_el	**get_scn_els(t_list *list, enum e_scn_el_type_flags type)
 	while (tmp)
 	{
 		curr_el = tmp->content;
-		if (curr_el && type & curr_el->type)
+		if (curr_el && curr_el->type & lookup_type)
 		{
 			arr = ft_realloc(arr, i * sizeof(t_scn_el *),
 					(i + 2) * sizeof(t_scn_el *));
