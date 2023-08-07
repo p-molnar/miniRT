@@ -127,7 +127,7 @@ OBJ_PATH		=	obj/
 OBJ				=	$(addprefix $(OBJ_PATH), $(SRC:.c=.o))
 
 all:	$(NAME)
-	@printf "$(GREEN)$(NAME) is created at $(shell pwd)$(DEF)"
+	@printf "$(GREEN)$(NAME) is created at $(shell pwd)$(DEF)\n"
 
 $(NAME):	$(LIBFT) $(MLX42) $(OBJ)
 	@printf "$(STATUS_FMT)" "$(P_NAME)" "linking" "$(NAME)"
