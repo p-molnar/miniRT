@@ -81,7 +81,7 @@ UTILS			=	$(addprefix	utils/,										\
 						$(addprefix	free/,									\
 									free.c									\
 									)										\
-						$(addprefix	helper/,								\
+						$(addprefix	.helper/,								\
 									printer.c								\
 									axis.c									\
 									)										\
