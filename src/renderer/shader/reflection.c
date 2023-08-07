@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/30 16:01:31 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/02 22:40:51 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/07 12:48:17 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,5 @@ t_color	get_reflected_color(t_data *data, t_ray ray, t_hit_obj hit_obj,
 	normalize_vec(&reflection);
 	hit_color = trace_ray(data, (t_ray){hit_obj.inc_p, reflection},
 			(t_range){EPS, INF}, refl_recursion - 1);
-	hit_color = intensify_color(hit_obj.attr->refl_coeff, hit_color);
 	return (hit_color);
 }
