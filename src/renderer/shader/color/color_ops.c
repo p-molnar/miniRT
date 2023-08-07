@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 20:52:46 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/31 01:08:34 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/07 12:28:35 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ t_color	intensify_color(long double intensity, t_color color)
 	new_color.g = fmin(intensity * color.g, 255);
 	new_color.b = fmin(intensity * color.b, 255);
 	new_color.a = 255;
-	return (color);
+	return (new_color);
 }
