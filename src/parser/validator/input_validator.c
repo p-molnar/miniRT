@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 23:20:51 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/02 12:18:09 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/07 09:57:47 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ static bool	is_cam_inside_obj(t_data data)
 	int			i;
 	int			is_inside;
 
-	cam = get_scn_els(data.all_scn_el, F_CAM);
-	el = get_scn_els(data.all_scn_el, F_SPHERE | F_PLANE | F_CYLINDER);
+	cam = get_scn_els(data.scn_el_list, F_CAM);
+	el = get_scn_els(data.scn_el_list, F_SPHERE | F_PLANE | F_CYLINDER);
 	i = 0;
 	is_inside = 0;
 	while (el && el[i] && !is_inside)
@@ -69,7 +69,7 @@ void	validate_scn_el_setup(t_data *data)
 	t_list		*tmp;
 	int			els;
 
-	tmp = data->all_scn_el;
+	tmp = data->scn_el_list;
 	els = 0;
 	while (tmp)
 	{
@@ -91,7 +91,7 @@ void	validate_for_duplicate_el(enum e_scn_el_type_flags el_type, t_data *scn,
 	t_scn_el	*curr_el;
 
 	duplicate_found = false;
-	tmp = scn->all_scn_el;
+	tmp = scn->scn_el_list;
 	while (tmp && !duplicate_found)
 	{
 		curr_el = tmp->content;

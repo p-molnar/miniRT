@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:06:43 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/03 00:12:37 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/07 09:58:45 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,8 @@ typedef struct s_light_fn_arg
 
 typedef struct s_data
 {
-	t_list						*all_scn_el;
-	t_scn_el					**scn_els[SCN_SIZE];
+	t_list						*scn_el_list;
+	t_scn_el					**scn_el[SCN_SIZE];
 	t_mx						ctw_mx;
 	mlx_t						*mlx;
 	mlx_image_t					*img;

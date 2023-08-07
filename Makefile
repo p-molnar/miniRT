@@ -6,7 +6,7 @@
 #    By: pmolnar <pmolnar@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/12 14:20:52 by pmolnar       #+#    #+#                  #
-#    Updated: 2023/08/03 10:07:50 by pmolnar       ########   odam.nl          #
+#    Updated: 2023/08/07 09:46:53y pmolnar       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CFLAGS 			= 	-Wall -Werror -Wextra $(addprefix -I, $(INCL))
 LDFLAGS			=	-L$(shell brew --prefix glfw)/lib -lglfw -framework Cocoa\
 					-framework OpenGL -framework IOKit
 CFLAGS			+=	-g # debug
-# CFLAGS			+=	-fsanitize=address
+FLAGS			+=	-fsanitize=address
 NAME			=	miniRT
 INCL			=	inc libft/inc MLX42/include/MLX42
 
@@ -127,7 +127,7 @@ OBJ_PATH		=	obj/
 OBJ				=	$(addprefix $(OBJ_PATH), $(SRC:.c=.o))
 
 all:	$(NAME)
-	@printf "$(GREEN)$(NAME) is created at $(shell pwd)$(DEF)\n"
+	@printf "$(GREEN)$(NAME) is created at $(shell pwd)$(DEF)"
 
 $(NAME):	$(LIBFT) $(MLX42) $(OBJ)
 	@printf "$(STATUS_FMT)" "$(P_NAME)" "linking" "$(NAME)"

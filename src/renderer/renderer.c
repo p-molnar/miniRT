@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/02 22:41:06 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/07 09:58:45 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static t_ray	transform_ray(t_data *d, t_coord_sys c, t_ray ray)
 {
 	t_mx	dir_mx;
 
-	ray.origin = d->scn_els[CAM][0]->pos;
+	ray.origin = d->scn_el[CAM][0]->pos;
 	dir_mx = coord_to_mx((t_coord3){{c.x, c.y, 1}}, 4, 1, 0);
 	dir_mx = multiply_mx(d->ctw_mx, dir_mx);
 	ray.dir = create_vec(dir_mx.m[X], dir_mx.m[Y], dir_mx.m[Z]);
@@ -32,11 +32,11 @@ t_color	trace_ray(t_data *data, t_ray ray, t_range range, int recursion_depth)
 	t_color		local_color;
 	t_color		reflected_color;
 
-	hit_obj = intersect(ray, data->scn_els[ALL_OBJS], range, CLOSEST_EL);
+	hit_obj = intersect(ray, data->scn_el[ALL_OBJS], range, CLOSEST_EL);
 	if (!hit_obj.is_hit)
 		return ((t_color){.color = BACKGROUND_COLOR});
 	get_incident_point(ray, &hit_obj);
-	get_surface_norm(**data->scn_els[CAM], &hit_obj);
+	get_surface_norm(**data->scn_el[CAM], &hit_obj);
 	local_color = get_local_color(data, ray, hit_obj);
 	reflected_color = get_reflected_color(data, ray, hit_obj, recursion_depth);
 	if (recursion_depth != 0 && hit_obj.attr->refl_coeff > 0)
@@ -58,7 +58,7 @@ void	render_scene(t_data *data, int width, int height)
 	t_ray		ray;
 
 	aspect_ratio = width / (float)height;
-	fov_scale = tan(deg_to_rad((*data->scn_els[CAM])->fov / 2));
+	fov_scale = tan(deg_to_rad((*data->scn_el[CAM])->fov / 2));
 	c.pixel_y = -1;
 	while (++c.pixel_y < height)
 	{

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/16 19:24:09 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/29 12:10:22 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/07 09:58:45 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ void	clean_up(t_data *d)
 	int			i;
 	t_list		*next;
 
-	while (d->all_scn_el)
+	while (d->scn_el_list)
 	{
-		next = d->all_scn_el->next;
-		free_scn_el(d->all_scn_el->content);
-		free(d->all_scn_el);
-		d->all_scn_el = next;
+		next = d->scn_el_list->next;
+		free_scn_el(d->scn_el_list->content);
+		free(d->scn_el_list);
+		d->scn_el_list = next;
 	}
 	i = 0;
 	while (i < SCN_SIZE)
-		free(d->scn_els[i++]);
+		free(d->scn_el[i++]);
 }

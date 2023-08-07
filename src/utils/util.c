@@ -6,13 +6,14 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 13:09:33 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/24 20:52:06 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/07 09:56:28 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 #include <libft.h>
 #include <mrt_data_struct.h>
+#include <mrt_error.h>
 
 t_scn_el	**get_scn_els(t_list *list, enum e_scn_el_type_flags type)
 {
@@ -32,6 +33,8 @@ t_scn_el	**get_scn_els(t_list *list, enum e_scn_el_type_flags type)
 		{
 			arr = ft_realloc(arr, i * sizeof(t_scn_el *),
 					(i + 2) * sizeof(t_scn_el *));
+			if (arr == NULL)
+				error((t_err){strerror(errno), __FILE__, __LINE__, EXIT, 1});
 			arr[i] = curr_el;
 			arr[i + 1] = NULL;
 			i++;

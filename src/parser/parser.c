@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/02 12:20:57 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/07 09:57:47 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void	parse_line(t_data *scn, t_line *line)
 	list_el = ft_lstnew(element_info);
 	if (!list_el)
 		error((t_err){strerror(errno), __FILE__, __LINE__, EXIT, 1});
-	ft_lstadd_back(&scn->all_scn_el, list_el);
+	ft_lstadd_back(&scn->scn_el_list, list_el);
 	free_arr((void **)line_content);
 }
 

@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 10:01:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/03 00:12:37 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/07 09:58:45 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,11 @@ t_color	get_local_color(t_data *data, t_ray ray, t_hit_obj hit_obj)
 
 	hit_color = (t_color){.r = 0, .g = 0, .b = 0, .a = 255};
 	arg = (t_light_fn_arg){.hit_obj = hit_obj, .ray = ray,
-		.objs = data->scn_els[ALL_OBJS]};
+		.objs = data->scn_el[ALL_OBJS]};
 	i = -1;
-	while (data->scn_els[ALL_LIGHTS] && data->scn_els[ALL_LIGHTS][++i])
+	while (data->scn_el[ALL_LIGHTS] && data->scn_el[ALL_LIGHTS][++i])
 	{
-		arg.light = *data->scn_els[ALL_LIGHTS][i];
+		arg.light = *data->scn_el[ALL_LIGHTS][i];
 		if (arg.light.type == F_AMB_LIGHT)
 			hit_color = mix_colors(hit_color, get_ambient_light_color(arg));
 		else
