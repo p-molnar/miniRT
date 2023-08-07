@@ -6,12 +6,13 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/16 19:24:09 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/07 09:58:45 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/07 11:08:22 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <minirt.h>
+#include <stdio.h>
 
 void	free_arr(void **arr)
 {
@@ -48,5 +49,9 @@ void	clean_up(t_data *d)
 	}
 	i = 0;
 	while (i < SCN_SIZE)
-		free(d->scn_el[i++]);
+	{
+		if (d->scn_el[i])
+			free(d->scn_el[i]);
+		i++;
+	}
 }
