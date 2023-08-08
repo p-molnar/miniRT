@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/03 00:12:37 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/08 11:20:24 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	get_surface_norm(t_scn_el cam, t_hit_obj *hit_obj)
 		obj_norm.dir.z = obj_norm.dir.z - (2 * obj_norm.dir.z * (agl < M_PI_2));
 	}
 	normalize_vec(&obj_norm);
-	ft_memcpy(&hit_obj->norm, &obj_norm, sizeof(t_vec3));
+	hit_obj->norm = obj_norm;
 }
 
 void	get_incident_point(t_ray ray, t_hit_obj *hit_obj)
@@ -67,5 +67,5 @@ void	get_incident_point(t_ray ray, t_hit_obj *hit_obj)
 	}
 	else
 		inc_p = offset_pt(ray.origin, scale_vec(hit_obj->dist, ray.dir));
-	ft_memcpy(&hit_obj->inc_p, &inc_p, sizeof(t_coord3));
+	hit_obj->inc_p = inc_p;
 }

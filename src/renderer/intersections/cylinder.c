@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:59:42 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/03 00:12:37 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/08 11:19:55 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ long double	get_cylinder_intersection(t_ray ray, t_scn_el *obj_info,
 	{
 		tmp_coord = offset_pt(transformed_ray.origin,
 				scale_vec(smallest_positive, transformed_ray.dir));
-		ft_memcpy(inc_p, &tmp_coord, sizeof(t_coord3));
+		*inc_p = tmp_coord;
 	}
 	return (smallest_positive);
 }
