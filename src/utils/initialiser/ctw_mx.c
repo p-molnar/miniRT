@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 10:46:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/07 13:45:07 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/08 11:17:32 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-t_mx	get_ctw_mx(t_vec3 right, t_vec3 up, t_vec3 fw, t_scn_el cam)
+static t_mx	get_ctw_mx(t_vec3 right, t_vec3 up, t_vec3 fw, t_scn_el cam)
 {
 	t_mx	ctw_mx;
 
@@ -38,30 +38,21 @@ t_mx	get_ctw_mx(t_vec3 right, t_vec3 up, t_vec3 fw, t_scn_el cam)
 	return (ctw_mx);
 }
 
-void	get_directional_vectors(t_vec3 *up, t_vec3 *fw, t_scn_el *cam)
-{
-	*up = create_vec(0, 1, 0);
-	*fw = coord_to_vec(cam->orientation.dir);
-	if ((fw->dir.x == 0 && fw->dir.z == 0) && (fw->dir.y == -1
-			|| fw->dir.y == 1))
-	{
-		up->dir.y = 0;
-		up->dir.z = 1;
-	}
-}
-
 void	set_up_ctw_mx(t_data *d)
 {
 	t_vec3	right;
 	t_vec3	fw;
 	t_vec3	up;
-	t_mx	ctw;
 
-	get_directional_vectors(&up, &fw, *d->scn_el[CAM]);
+	up = create_vec(0, 1, 0);
+	fw = coord_to_vec(d->scn_el[CAM][0]->orientation.dir);
+	if ((fw.dir.x == 0 && fw.dir.z == 0) && fw.dir.y == -1)
+		up = create_vec(0, 0, 1);
+	else if ((fw.dir.x == 0 && fw.dir.z == 0) && fw.dir.y == 1)
+		up = create_vec(0, 0, -1);
 	right = cross(up, fw);
 	normalize_vec(&right);
 	up = cross(fw, right);
 	normalize_vec(&up);
-	ctw = get_ctw_mx(right, up, fw, **d->scn_el[CAM]);
-	ft_memcpy(&d->ctw_mx, &ctw, sizeof(t_mx));
+	d->ctw_mx = get_ctw_mx(right, up, fw, **d->scn_el[CAM]);
 }
