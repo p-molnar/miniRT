@@ -6,13 +6,12 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/26 11:20:13 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/22 19:12:06 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:12:07 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
 #include <minirt.h>
-#include <stdlib.h>
+#include <math.h>
 
 long double	deg_to_rad(long double deg)
 {

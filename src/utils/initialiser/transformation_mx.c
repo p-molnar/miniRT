@@ -6,12 +6,11 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/21 12:49:21 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/08 11:23:49 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:22:19 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
-#include <stdio.h>
 
 bool	is_identical_coord(t_coord3 c1, t_coord3 c2)
 {

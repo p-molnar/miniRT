@@ -6,15 +6,11 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 13:44:13 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/02 11:26:27 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:13:35 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
 #include <minirt.h>
-#include <mrt_error.h>
-#include <mrt_macros.h>
-#include <stdio.h>
 
 int	parse_color_code(char *color, int rgb_min, int rgb_max, t_line line_info)
 {

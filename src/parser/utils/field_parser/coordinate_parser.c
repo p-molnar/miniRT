@@ -6,13 +6,11 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:35:12 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/08 11:22:28 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:13:45 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
-#include <mrt_macros.h>
-#include <mrt_error.h>
 
 void	parse_coordinates(t_coord3 *coord, char *input, t_line line_info)
 {

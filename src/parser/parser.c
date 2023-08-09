@@ -6,20 +6,12 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 11:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/07 09:57:47 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:18:52 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <errno.h>
-#include <fcntl.h>
-#include <libft.h>
-#include <math.h>
 #include <minirt.h>
-#include <mrt_error.h>
-#include <mrt_macros.h>
-#include <stdbool.h>
 #include <stdlib.h>
-#include <unistd.h>
 
 static void	populate_column_data(t_scn_el *el, char **input,
 		t_line line_info)

@@ -6,14 +6,12 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 11:10:49 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/25 22:57:11 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:09:15 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
 #include <minirt.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <math.h>
 
 static long double	calc_dot(int row, int col, t_mx mx1, t_mx mx2)
 {

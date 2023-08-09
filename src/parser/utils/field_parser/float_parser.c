@@ -6,15 +6,11 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 12:37:52 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/02 11:26:57 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:14:02 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
 #include <minirt.h>
-#include <mrt_error.h>
-#include <mrt_macros.h>
-#include <stdio.h>
 
 void	parse_range(long double *f, char *input, t_range range,
 		t_line line_info)

@@ -6,12 +6,12 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:58:37 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/09 18:04:09 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:20:18 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
 #include <minirt.h>
+#include <math.h>
 #include <stdlib.h>
 
 long double	get_sphere_intersections(t_ray ray, t_scn_el *obj)

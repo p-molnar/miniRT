@@ -6,14 +6,11 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/28 14:39:15 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/28 14:49:51 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:17:41 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
-#include <mrt_macros.h>
-#include <mrt_data_struct.h>
-#include <mrt_error.h>
 
 void	validate_line_formatting(t_scn_el el, char **input,
 		t_line line_info)

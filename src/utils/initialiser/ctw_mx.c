@@ -6,14 +6,11 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 10:46:11 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/08 11:17:32 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:22:08 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
 #include <minirt.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 static t_mx	get_ctw_mx(t_vec3 right, t_vec3 up, t_vec3 fw, t_scn_el cam)
 {

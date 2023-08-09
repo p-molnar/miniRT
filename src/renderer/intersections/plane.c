@@ -6,13 +6,12 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 11:00:13 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/03 00:13:07 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:20:07 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 #include <math.h>
-#include <stdlib.h>
 
 long double	get_plane_intersection(t_ray ray, t_scn_el *obj)
 {

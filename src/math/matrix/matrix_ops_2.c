@@ -6,14 +6,12 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/24 10:10:58 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/21 18:18:41 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:08:16 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 #include <minirt.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 static void	populate_inv_mx_p2(long double *inv, long double *m)
 {

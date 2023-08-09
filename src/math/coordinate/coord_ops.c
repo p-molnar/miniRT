@@ -6,12 +6,11 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/16 10:49:45 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/02 11:37:59 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:08:05 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
-#include <stdlib.h>
 
 t_coord3	create_coord(long double x, long double y, long double z)
 {

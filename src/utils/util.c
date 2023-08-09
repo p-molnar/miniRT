@@ -6,14 +6,11 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 13:09:33 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/07 10:44:43 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:22:28 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
-#include <libft.h>
-#include <mrt_data_struct.h>
-#include <mrt_error.h>
 
 t_scn_el	**get_scn_els(t_list *list, enum e_scn_el_type_flags lookup_type)
 {

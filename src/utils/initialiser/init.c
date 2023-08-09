@@ -6,12 +6,11 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/24 20:50:32 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/07 09:58:45 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:22:14 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
-#include <mrt_data_struct.h>
 
 void	set_up_scn_el_ptrs(t_data *d)
 {

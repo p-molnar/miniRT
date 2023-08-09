@@ -6,13 +6,12 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:59:42 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/09 18:02:53 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:19:31 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
 #include <minirt.h>
-#include <stdio.h>
+#include <math.h>
 #include <stdlib.h>
 
 void	add_cylinder_caps(t_scn_el *cylinder)

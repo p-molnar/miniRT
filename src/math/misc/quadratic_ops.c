@@ -6,11 +6,10 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/26 10:38:04 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/11 10:17:48 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:10:29 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
 #include <minirt.h>
 #include <stdlib.h>
 #include <math.h>

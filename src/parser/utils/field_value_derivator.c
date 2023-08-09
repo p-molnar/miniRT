@@ -6,13 +6,11 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/28 14:46:16 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/08 11:19:12 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:14:10 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
-#include <mrt_data_struct.h>
-#include <mrt_macros.h>
 
 static void	populate_dir_light_derived_fields(t_scn_el *el)
 {

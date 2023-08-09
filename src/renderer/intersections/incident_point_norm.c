@@ -6,14 +6,12 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 15:55:08 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/08 11:20:24 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:19:55 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
 #include <minirt.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <math.h>
 
 static t_vec3	get_cylinder_norm(t_hit_obj obj)
 {

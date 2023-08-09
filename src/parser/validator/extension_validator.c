@@ -6,12 +6,11 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/07 19:18:21 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/07 20:26:27 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:17:26 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
-#include <libft.h>
 
 bool	is_valid_extension(char *file_name)
 {

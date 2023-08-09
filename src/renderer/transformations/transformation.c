@@ -6,14 +6,12 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/29 11:51:58 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/02 21:08:29 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:21:04 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
 #include <minirt.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <math.h>
 
 static t_mx	apply_origin_transformations(t_mx origin, t_scn_el *obj_info)
 {

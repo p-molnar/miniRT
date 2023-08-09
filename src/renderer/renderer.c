@@ -6,13 +6,13 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/21 11:13:10 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/07 09:58:45 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:21:30 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <MLX42.h>
-#include <math.h>
 #include <minirt.h>
+#include <math.h>
 
 static t_ray	transform_ray(t_data *d, t_coord_sys c, t_ray ray)
 {

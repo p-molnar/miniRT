@@ -6,14 +6,12 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:38:24 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/07 20:19:12 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:14:55 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
-#include <errno.h>
 #include <fcntl.h>
-#include <string.h>
 
 int	open_file(char *file_name)
 {

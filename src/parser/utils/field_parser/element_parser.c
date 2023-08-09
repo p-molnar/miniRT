@@ -6,15 +6,11 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 09:27:54 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/03 00:12:37 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:13:53 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
-#include <mrt_data_struct.h>
-#include <mrt_error.h>
-#include <mrt_macros.h>
-#include <stdio.h>
 
 void	parse_type_identifier(t_scn_el *el, char *line, t_line line_info)
 {
