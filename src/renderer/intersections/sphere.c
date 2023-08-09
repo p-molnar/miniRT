@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:58:37 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/07/25 14:34:29 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:04:09 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ long double	get_sphere_intersections(t_ray ray, t_scn_el *obj)
 	param.c = dot(obj_to_cam, obj_to_cam) - pow(obj->diameter / 2, 2);
 	t = quad_eq_solver(param, &d);
 	smallest = -1;
-	if (d >= 0)
+	if (t && d >= 0)
 		smallest = yield_smallest_positive(t, 2);
 	if (t)
 		free(t);

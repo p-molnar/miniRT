@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 10:59:42 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/08 11:19:55 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/09 18:02:53 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	add_cylinder_caps(t_scn_el *cylinder)
 
 	cap_std_pos = (t_coord3){{0, 0, 0}};
 	caps = ft_calloc(2, sizeof(t_scn_el));
+	if (!caps)
+		error((t_err){strerror(errno), __FILE__, __LINE__, EXIT, 1});
 	caps[0].pos.z = cap_std_pos.z - (cylinder->height / 2);
 	caps[0].orientation = create_vec(cap_std_pos.x, cap_std_pos.y, -1);
 	caps[1].pos.z = cap_std_pos.z + (cylinder->height / 2);
