@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 12:01:05 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/07 20:19:20 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/11 10:02:26 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void		parse_type_identifier(t_scn_el *el, char *line, t_line line_info);
 void		add_cylinder_caps(t_scn_el *cylinder);
 
 //	validator
-void		validate_scn_el_setup(t_data *data);
+void		validate_scn_el_setup(t_data *data, t_line line_info);
 void		validate_for_duplicate_el(enum e_scn_el_type_flags el_type,
 				t_data *scn,
 				t_line line_info);

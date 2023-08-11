@@ -6,7 +6,7 @@
 /*   By: pmolnar <pmolnar@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 23:20:51 by pmolnar       #+#    #+#                 */
-/*   Updated: 2023/08/09 18:18:08 by pmolnar       ########   odam.nl         */
+/*   Updated: 2023/08/11 10:00:37 by pmolnar       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,13 @@ static bool	is_cam_inside_obj(t_data data)
 	t_scn_el	**el;
 	int			i;
 	int			is_inside;
+	t_coord3	offset_cam_position;
 
 	cam = get_scn_els(data.scn_el_list, F_CAM);
 	el = get_scn_els(data.scn_el_list, F_SPHERE | F_PLANE | F_CYLINDER);
+	normalize_vec(&cam[0]->orientation);
+	offset_cam_position = offset_pt(cam[0]->pos, cam[0]->orientation);
+	cam[0]->pos = offset_cam_position;
 	i = 0;
 	is_inside = 0;
 	while (el && el[i] && !is_inside)
@@ -62,7 +66,7 @@ static bool	is_cam_inside_obj(t_data data)
 	return (is_inside == 1);
 }
 
-void	validate_scn_el_setup(t_data *data)
+void	validate_scn_el_setup(t_data *data, t_line line_info)
 {
 	t_scn_el	*el;
 	t_list		*tmp;
@@ -79,7 +83,7 @@ void	validate_scn_el_setup(t_data *data)
 	if (!((els & F_CAM) || (els & F_TG_CAM)))
 		error((t_err){CAM_REQUIRED, NULL, 0, EXIT, 1});
 	if (is_cam_inside_obj(*data))
-		error((t_err){CAM_INSIDE_OBJ, NULL, 0, EXIT, 1});
+		error((t_err){CAM_INSIDE_OBJ, line_info.file, -1, EXIT, 1});
 }
 
 void	validate_for_duplicate_el(enum e_scn_el_type_flags el_type, t_data *scn,
