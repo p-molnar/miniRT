@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+make miniRT
+
 declare -i count
 count=1
 for scene in scenes/*; do
